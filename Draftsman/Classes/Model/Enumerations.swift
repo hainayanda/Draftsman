@@ -63,12 +63,6 @@ public enum AnonymousRelation {
     }
 }
 
-@objc public enum AfterPlanningRoutine: Int {
-    case autoApply
-    case autoMapped
-    case none
-}
-
 public enum PlanningOption {
     case append
     case renew
@@ -139,39 +133,9 @@ public enum RelatedPosition {
     case rightOfAndParallelWith(UIView)
 }
 
-public enum BondingState {
-    case mapping
-    case applying
-    case none
-}
-
 public enum LayoutStackedStrategy {
     case emptying
     case append
     case replaceDifferences
-}
-
-public enum CellReloadStrategy {
-    case reloadAll
-    case reloadArrangementDifference
-    case reloadArrangementDifferenceAndRefresh
-    
-    var shouldRefresh: Bool {
-        switch self {
-        case .reloadArrangementDifferenceAndRefresh:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    var shouldReloadAll: Bool {
-        switch self {
-        case .reloadAll:
-            return true
-        default:
-            return false
-        }
-    }
 }
 #endif

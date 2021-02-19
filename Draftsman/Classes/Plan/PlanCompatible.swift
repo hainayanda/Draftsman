@@ -9,9 +9,7 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public protocol PlanCompatible {
-    var afterPlanningRoutine: AfterPlanningRoutine { get }
-}
+public protocol PlanCompatible { }
 
 public extension PlanCompatible where Self: UIView {
     
@@ -26,7 +24,7 @@ public extension PlanCompatible where Self: UIView {
         }
     }
     
-    internal func planing(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlaner<Self>) -> Void) {
+    func planing(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlaner<Self>) -> Void) {
         if options.shouldRemoveOldPlannedConstraints {
             removeAllPlannedConstraints()
         }
@@ -61,15 +59,7 @@ public extension PlanCompatible where Self: UIViewController {
     }
 }
 
-extension UIView: PlanCompatible {
-    
-    @objc open var afterPlanningRoutine: AfterPlanningRoutine { .none }
-    
-}
+extension UIView: PlanCompatible { }
 
-extension UIViewController: PlanCompatible {
-    
-    @objc open var afterPlanningRoutine: AfterPlanningRoutine { .autoApply }
-    
-}
+extension UIViewController: PlanCompatible { }
 #endif

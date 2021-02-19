@@ -133,8 +133,6 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
     
     open var planningBehavior: CellPlanningBehavior { .planOnce }
     
-    var collectionContentSize: CGSize = UIScreen.main.bounds.size
-    
     open func planContent(_ layout: InsertablePlan) { }
     
     open func fragmentWillPlanContent() {}
@@ -157,16 +155,16 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
         return true
     }
     
-    open override class func defaultCellSize(for collectionContentSize: CGSize) -> CGSize { .automatic }
+    open override class func defaultCellSize(for layoutItemSize: CGSize) -> CGSize { .automatic }
     
-    open func calculatedCellSize(for collectionContentSize: CGSize) -> CGSize { .automatic }
+    open func calculatedCellSize(for layoutItemSize: CGSize) -> CGSize { .automatic }
     
     open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let layouted = layoutContentIfNeeded()
         if layouted {
             setNeedsDisplay()
         }
-        let calculatedSize = getSize(for: collectionContentSize)
+        let calculatedSize = getSize(for: layoutAttributes.size)
         let automatedSize = contentView.systemLayoutSizeFitting(layoutAttributes.size)
         let size: CGSize = .init(
             width: calculatedSize.width.isAutomatic || calculatedSize.isAutomatic ?
@@ -180,9 +178,9 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
         return layoutAttributes
     }
     
-    func getSize(for collectionContentSize: CGSize) -> CGSize {
-        let defaultSize = Self.defaultCellSize(for: collectionContentSize)
-        let calculatedSize = calculatedCellSize(for: collectionContentSize)
+    func getSize(for layoutItemSize: CGSize) -> CGSize {
+        let defaultSize = Self.defaultCellSize(for: layoutItemSize)
+        let calculatedSize = calculatedCellSize(for: layoutItemSize)
         return calculatedSize.isCalculated ? calculatedSize : defaultSize
     }
     
