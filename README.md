@@ -1,5 +1,7 @@
 # Draftsman
 
+Draftsman is a DSL framework for Swift focussed on builder pattern
+
 ![build](https://github.com/nayanda1/Draftsman/workflows/build/badge.svg)
 ![test](https://github.com/nayanda1/Draftsman/workflows/test/badge.svg)
 [![Version](https://img.shields.io/cocoapods/v/Draftsman.svg?style=flat)](https://cocoapods.org/pods/Draftsman)
