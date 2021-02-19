@@ -1,0 +1,14 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'Draftsman_Example' do
+  pod 'Draftsman', :path => '../'
+
+  target 'Draftsman_Tests' do
+    inherit! :search_paths
+
+    pod 'Quick', '~> 3.0.0'
+    pod 'Nimble', '~> 9.0.0'
+  end
+end

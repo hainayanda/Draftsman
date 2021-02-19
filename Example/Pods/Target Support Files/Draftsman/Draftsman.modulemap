@@ -1,0 +1,6 @@
+framework module Draftsman {
+  umbrella header "Draftsman-umbrella.h"
+
+  export *
+  module * { export * }
+}

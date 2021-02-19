@@ -1,0 +1,6 @@
+framework module Pods_Draftsman_Tests {
+  umbrella header "Pods-Draftsman_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
