@@ -34,6 +34,8 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
     
     var layouted: Bool = false
     
+    var customHeightCalculator: (CGFloat) -> CGFloat = { _ in .automatic }
+    
     open var planningBehavior: CellPlanningBehavior { .planOnce }
     
     open func planContent(_ plan: InsertablePlan) { }
@@ -62,6 +64,10 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
     
     open func calculatedCellHeight(for cellWidth: CGFloat) -> CGFloat { .automatic }
     
+    public func whenNeedCellHeight(calculate: @escaping (CGFloat) -> CGFloat) {
+        customHeightCalculator = calculate
+    }
+    
     open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         let layouted = layoutContentIfNeeded()
         if layouted {
@@ -78,6 +84,10 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
     }
     
     func getHeight(for cellWidth: CGFloat) -> CGFloat {
+        let customHeight = customHeightCalculator(cellWidth)
+        guard customHeight.isAutomatic else {
+            return customHeight
+        }
         let defaultHeight = Self.defaultCellHeight(for: cellWidth)
         let calculatedHeight = calculatedCellHeight(for: cellWidth)
         return calculatedHeight.isCalculated ? calculatedHeight : defaultHeight
@@ -131,6 +141,8 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
     
     var layouted: Bool = false
     
+    var customSizeCalculator: (CGSize) -> CGSize = { _ in .automatic }
+    
     open var planningBehavior: CellPlanningBehavior { .planOnce }
     
     open func planContent(_ layout: InsertablePlan) { }
@@ -159,6 +171,10 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
     
     open func calculatedCellSize(for layoutItemSize: CGSize) -> CGSize { .automatic }
     
+    public func whenNeedCellSize(calculate: @escaping (CGSize) -> CGSize) {
+        customSizeCalculator = calculate
+    }
+    
     open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let layouted = layoutContentIfNeeded()
         if layouted {
@@ -179,6 +195,10 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
     }
     
     func getSize(for layoutItemSize: CGSize) -> CGSize {
+        let customSize = customSizeCalculator(layoutItemSize)
+        guard customSize.isAutomatic else {
+            return customSize
+        }
         let defaultSize = Self.defaultCellSize(for: layoutItemSize)
         let calculatedSize = calculatedCellSize(for: layoutItemSize)
         return calculatedSize.isCalculated ? calculatedSize : defaultSize
