@@ -28,16 +28,30 @@ it, simply add the following line to your Podfile:
 pod 'Draftsman'
 ```
 
-### Swift Package Manager
+### Swift Package Manager from XCode
 
-Draftsman is available through [Swift Package Manager](https://swift.org/package-manager/). To install it, 
-simply go to File > Swift Package > Add Swift Package Dependency and add "https://github.com/nayanda1/Draftsman.git" as Swift Package URL.
-Or add the following line to Package.swift:
+- Add it using xcode menu **File > Swift Package > Add Package Dependency**
+- Add **https://github.com/nayanda1/Draftsman.git** as Swift Package url
+- Set rules at **version**, with **Up to Next Major** option and put **1.0.0** as its version
+- Click next and wait
+
+### Swift Package Manager from Package.swift
+
+Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Draftsman.git", from: "1.0.0")
+    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.0.0"))
 ]
+```
+
+Use it in your target as `Draftsman`
+
+```swift
+ .target(
+    name: "MyModule",
+    dependencies: ["Draftsman"]
+)
 ```
 
 ## Author
