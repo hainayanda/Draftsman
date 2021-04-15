@@ -364,6 +364,227 @@ otherView.plan {
 
 ***
 
+# Draftsman Fragment
+
+Draftsman Fragment is the base of Component Based View in Draftsman. The fragment is actually just UIView, UITableViewCell and UICollectionViewCell but with planned subviews.
+
+***
+
+## Fragment
+
+Fragment in Draftsman is actually an ordinary UIView (or TableViewCell/CollectionViewCell) which can do plan for itself and its subviews.
+
+```swift
+public protocol Fragment {
+    func fragmentWillPlanContent()
+    func planContent(_ plan: InsertablePlan)
+    func fragmentDidPlanContent()
+}
+```
+- `fragmentWillPlanContent()` will be called before `planContent(_:)` is called. its optional
+- `planContent(_:)` is the mandatory method which will be called to plan the content of Fragment.
+- `fragmentDidPlanContent()` will be called after `planContent(_:)` is called. its optional
+
+The mechanism is very straightforward. lets say you have this simple fragment:
+
+```swift
+class MySimpleFragment: UIView, Fragment {
+    var marginedButton: UIButton = .init()
+
+    var margin = UIEdgeInsets(insets: 8)
+
+    func planContent(_ plan: InsertablePlan) {
+        plan.fit(marginedButton).edges(equalTo(margin), to: .parent)
+    }
+}
+```
+
+to put it in ViewController bottom edges:
+
+```swift
+class MySimpleViewController: UIViewController {
+    var simpleFragment: MySimpleFragment = .init()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        planContent { plan in
+            plan.fit(simpleFragment)
+                .at(.fullBottom, .equal, to: .parent)
+        }
+}
+```
+
+what happening here is when you fit simpleFragment into view, it will call simpleFragment's `planContent(_:)` where the `InsertablePlan` is the simpleFragment's `LayoutPlaner`. If it's described as hierarchal pseudocode and where the part is executed. It will be looked like this: 
+
+* viewDidLoad
+> * planContent
+> > * fit simpleFragment inside view
+> > > * add simpleFragment as subviews of view controller view
+> > > * create LayoutPlaner with simpleFragment as its view
+> > > * call simpleFragment's `fragmentWillPlanContent()` method which not implemented so its doing nothing
+> > > * call simpleFragment's `planContent(_:)` method
+> > > > * fit marginedButton inside simpleFragment
+> > > > * create edges contraints
+> > > * call simpleFragment's `fragmentDidPlanContent()` method which not implemented so its doing nothing
+> > * create fullBottom constraints
+> > * activate all constraints created inside
+
+The simpleFragment's `planContent(_:)` will be called inside `fit(_:)` so all its subviews constraints will already be created after `fit(_:)` is called.
+
+There are two other extensions method you could use to call planContent indirectly:
+* `func planFragment(delegate: PlanDelegate? = nil)` which will be call `fragmentWillPlanContent()`, `planContent(_:)` and `fragmentDidPlanContent()` and activate all created constraints right away
+* `func replanContent(delegate: PlanDelegate? = nil)` which will remove all its and subviews constraints which created by Draftsman and call `planFragment(delegate:)`
+
+***
+
+## Fragment Cell
+
+There is Fragment created specially for cell which named `FragmentCell`:
+
+```swift
+public protocol FragmentCell: Fragment {
+    var layoutPhase: CellLayoutingPhase { get }
+    var planningBehavior: CellPlanningBehavior { get }
+    func planningOption(on phase: CellLayoutingPhase) -> PlanningOption
+}
+```
+
+You're not supposed to implement FragmentCell by yourself but by extend `TableFragmentCell` which is `UITableViewCell` that implement `FragmentCell` or `CollectionFragmentCell` which is `UICollectionViewCell` that implement `FragmentCell`. The reason is because all of the `FragmentCell` implementation is implemented there as part of how those `FragmentCell` should behave.
+
+### Behavior and Phase
+
+As we could see before, the `FragmentCell` have two properties and one added method:
+* `var layoutPhase: CellLayoutingPhase { get }`
+* `var planningBehavior: CellPlanningBehavior { get }`
+* `func planningOption(on phase: CellLayoutingPhase) -> PlanningOption`
+
+The `layoutPhase` is the phase of the Cell, which is enumeration:
+* **firstLoad** which indicated that the `Cell` is just created
+* **setNeedsLayout** which indicated that the `Cell` `setNeedsLayout()` is just called
+* **reused** which indicated that the `Cell` is being reused
+* **none
+
+the `planningBehavior` is the behavior of the cell during layouting which could be overridden if needed. It is enumeration which contains:
+* **planOnce** which will only call `planContent(_:)` during `firstLoad` phase
+* **planOn(CellLayoutingPhase)** which will only call `planContent(_:)` during the given `CellLayoutingPhase`
+* **planOnEach([CellLayoutingPhase])** which will only call `planContent(_:)` during each given `CellLayoutingPhase`
+* **planIfPossible** which will always call `planContent(_:)` for any `CellLayoutingPhase`
+
+the `planningOption(on:)` will be called before `planContent(_:)` is called by any phase. It will asked what `PlanningOption` you want to use when call `planContent(_:)`. The default is append when `firstLoad` phase and `starFresh` on the other phases. You could read more about `PlanningOption` [here](https://github.com/nayanda1/Draftsman/wiki/Draftsman-Plan#planningoption). Example:
+
+```swift
+class EventCollectionCell: CollectionFragmentCell {
+    override var planningBehavior: CellPlanningBehavior { .planIfPossible }
+
+    lazy var imageView: UIImageView = .init()
+    
+    override func planContent(_ plan: InsertablePlan) {
+        plan.fit(imageView)
+            .edges(.equal, to: .parent)
+    }
+
+    override func planningOption(on phase: CellLayoutingPhase) -> PlanningOption {
+        switch phase {
+        case .firstLoad:
+            return .append
+        default:
+            return .renew
+        }
+    }
+}
+```
+
+Cell at the example above will always call `planContent(_:)` at any phases, but will only do `append` on `firstLoad` and the rest will be `renew` the current constraints.
+
+If you want to manually call `planContent(_:)` during any phases, you could just call `layoutContentIfNeeded()` it will layout content if the current phase is whitelisted in `planningBehavior` and return `Bool` indicated that the `planContent(_:)` is called or not.
+
+### Table Fragment Cell
+
+`TableFragmentCell` is the `UITableViewCell` that implement `FragmentCell`. Other than what `UITableViewCell`, `Fragment` and `FragmentCell` feature, it have one method that  could help you determine cell dimension:
+
+**func calculatedCellHeight(for cellWidth: CGFloat) -> CGFloat**
+
+`cellWidth` is the width of the cell which already calculated according to the tableView content width and insets. The default return value is automatic, but it could be came in handy if the cell `NSLayoutConstraints` alone cannot give the exact dimension of the cell. Example:
+
+```swift
+class MyCell: TableFragmentCell {
+    lazy var collectionLayout: UICollectionViewFlowLayout = .init()
+    lazy var collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: collectionLayout)
+    
+    override func fragmentWillPlanContent() {
+        collectionView.allowsSelection = true
+        collectionView.backgroundColor = .clear
+        collectionView.allowsSelection = true
+        collectionLayout.scrollDirection = .horizontal
+        collectionLayout.itemSize = .init(width: .x64, height: .x48)
+        collectionLayout.minimumInteritemSpacing = .zero
+        collectionLayout.minimumLineSpacing = .zero
+    }
+    
+    override func planContent(_ plan: InsertablePlan) {
+        plan.fit(collectionView)
+            .edges(.equal, to: .parent)
+    }
+    
+    override func calculatedCellHeight(for cellWidth: CGFloat) -> CGFloat {
+        128
+    }
+}
+```
+
+If you want to inject cellSize calculator, just pass closure to `whenNeedCellSize` method at cell
+
+```swift
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableFragmentCell
+    cell.whenNeedCellSize { width in
+        return 128
+    }
+    return cell
+}
+```
+
+Cell above will have height 128 regarding of how long is cellWidth.
+
+### Collection Fragment Cell
+
+`CollectionFragmentCell` is the `UICollectionViewCell` that implement `FragmentCell`. Other than what `UICollectionViewCell`, `Fragment` and `FragmentCell` feature, it have one method that  could help you determine cell dimension:
+
+**func calculatedCellSize(for collectionContentSize: CGSize) -> CGSize**
+
+`collectionContentSize` is the size of the calculated collectionView content minus insets. The default return value is automatic, but it could be came in handy if the cell `NSLayoutConstraints` alone cannot give the exact dimension of the cell. Example:
+
+```swift
+class EventCollectionCell: CollectionFragmentCell {
+    lazy var imageView: UIImageView = .init()
+    
+    override func planContent(_ plan: InsertablePlan) {
+        plan.fit(imageView)
+            .edges(.equal, to: .parent)
+    }
+    
+    override func calculatedCellSize(for collectionContentSize: CGSize) -> CGSize {
+        return .init(width: collectionContentSize.width / 3, height: collectionContentSize.width / 3)
+    }
+}
+```
+
+Cell above will be square with side equal to 1/3 `collectionContentSize` side
+
+If you want to inject cellSize calculator, just pass closure to `whenNeedCellSize` method at cell
+
+```swift
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableFragmentCell
+    cell.whenNeedCellSize { collectionContentSize in
+        return .init(width: collectionContentSize.width / 3, height: collectionContentSize.width / 3)
+    }
+    return cell
+}
+```
+
+***
+
 ## Contribute
 
 You know how, just clone and do pull request
