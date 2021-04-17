@@ -24,7 +24,6 @@
 		BBF537A925DFCFB000A6BC6B /* LayoutPlanerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375525DFCF2400A6BC6B /* LayoutPlanerSpec.swift */; };
 		BBF537B425DFCFB700A6BC6B /* PlanCompatibleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375B25DFCF2400A6BC6B /* PlanCompatibleSpec.swift */; };
 		BBF537B525DFCFBB00A6BC6B /* PlanContextSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375E25DFCF2400A6BC6B /* PlanContextSpec.swift */; };
-		BBF537C125DFCFC100A6BC6B /* UIKitExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375925DFCF2400A6BC6B /* UIKitExtensionSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +58,6 @@
 		BBF5375225DFCF2400A6BC6B /* InsertablePlanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertablePlanSpec.swift; sourceTree = "<group>"; };
 		BBF5375325DFCF2400A6BC6B /* FragmentCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentCellSpec.swift; sourceTree = "<group>"; };
 		BBF5375525DFCF2400A6BC6B /* LayoutPlanerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutPlanerSpec.swift; sourceTree = "<group>"; };
-		BBF5375925DFCF2400A6BC6B /* UIKitExtensionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitExtensionSpec.swift; sourceTree = "<group>"; };
 		BBF5375B25DFCF2400A6BC6B /* PlanCompatibleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanCompatibleSpec.swift; sourceTree = "<group>"; };
 		BBF5375E25DFCF2400A6BC6B /* PlanContextSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanContextSpec.swift; sourceTree = "<group>"; };
 		BBF5376025DFCF2400A6BC6B /* InsertableScrollPlanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertableScrollPlanSpec.swift; sourceTree = "<group>"; };
@@ -145,7 +143,6 @@
 				BBF5375525DFCF2400A6BC6B /* LayoutPlanerSpec.swift */,
 				BBF5375B25DFCF2400A6BC6B /* PlanCompatibleSpec.swift */,
 				BBF5375E25DFCF2400A6BC6B /* PlanContextSpec.swift */,
-				BBF5375925DFCF2400A6BC6B /* UIKitExtensionSpec.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -397,7 +394,6 @@
 				BBF537A925DFCFB000A6BC6B /* LayoutPlanerSpec.swift in Sources */,
 				BBF537A125DFCFAB00A6BC6B /* InsertableStackPlanSpec.swift in Sources */,
 				BBF537B525DFCFBB00A6BC6B /* PlanContextSpec.swift in Sources */,
-				BBF537C125DFCFC100A6BC6B /* UIKitExtensionSpec.swift in Sources */,
 				BBF5379125DFCF9E00A6BC6B /* FragmentCellSpec.swift in Sources */,
 				BBF537A425DFCFAE00A6BC6B /* InsertableViewPlanSpec.swift in Sources */,
 				BBF5378C25DFCF9C00A6BC6B /* CommonSpec.swift in Sources */,
