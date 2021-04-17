@@ -13,23 +13,23 @@ public protocol Buildable {
     init()
 }
 
-public func build<B: Buildable>(_ builder: (inout B) -> Void) -> B {
+public func builder<B: Buildable>(_ builder: (inout B) -> Void) -> B {
     var buildable = B.init()
     builder(&buildable)
     return buildable
 }
 
-public func build<Object>(_ object: Object, _ builder: (inout Object) -> Void) -> Object {
+public func builder<Object>(_ object: Object, _ builder: (inout Object) -> Void) -> Object {
     var object = object
     builder(&object)
     return object
 }
 
-public func build<B: Buildable>(_ type: B.Type) -> BuildableBuilder<B> {
+public func builder<B: Buildable>(_ type: B.Type) -> BuildableBuilder<B> {
     .init(object: .init())
 }
 
-public func build<Object>(_ object: Object) -> BuildableBuilder<Object> {
+public func builder<Object>(_ object: Object) -> BuildableBuilder<Object> {
     .init(object: object)
 }
 
