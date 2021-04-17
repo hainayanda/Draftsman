@@ -13,6 +13,8 @@ public protocol Buildable {
     init()
 }
 
+extension UIView: Buildable { }
+
 public func builder<B: Buildable>(_ builder: (inout B) -> Void) -> B {
     var buildable = B.init()
     builder(&buildable)
