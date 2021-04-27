@@ -35,18 +35,22 @@ public struct AnchorWithOffset<LayoutAnchor> {
     }
 }
 
-public extension RelatedAnchor where LayoutAnchor == NSLayoutYAxisAnchor {
-    func getOffsettedAnchor(from context: PlanContext) -> AnchorWithOffset<LayoutAnchor>? {
-        var view: UIView?
+extension RelatedAnchor {
+    func extractRelatedView(from context: PlanContext) -> UIView? {
         switch related {
         case .parent, .safeArea:
-            view = context.currentView.superview ?? context.delegate.planer(viewHaveNoSuperview: context.currentView)
+            return context.currentView.superview ?? context.delegate.planer(viewHaveNoSuperview: context.currentView)
         case .myself, .mySafeArea:
-            view = context.currentView
+            return context.currentView
         case .previous, .previousSafeArea:
-            view = context.previousView
+            return context.previousView
         }
-        guard let relatedView = view else { return nil }
+    }
+}
+
+public extension RelatedAnchor where LayoutAnchor == NSLayoutYAxisAnchor {
+    func getOffsettedAnchor(from context: PlanContext) -> AnchorWithOffset<LayoutAnchor>? {
+        guard let relatedView = extractRelatedView(from: context) else { return nil }
         let anchor = relatedView[keyPath: anchorKeyPath]
         if related.isSafeArea {
             if #available(iOS 11.0, *) {
@@ -61,16 +65,7 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutYAxisAnchor {
 
 public extension RelatedAnchor where LayoutAnchor == NSLayoutXAxisAnchor {
     func getOffsettedAnchor(from context: PlanContext) -> AnchorWithOffset<LayoutAnchor>? {
-        var view: UIView?
-        switch related {
-        case .parent, .safeArea:
-            view = context.currentView.superview ?? context.delegate.planer(viewHaveNoSuperview: context.currentView)
-        case .myself, .mySafeArea:
-            view = context.currentView
-        case .previous, .previousSafeArea:
-            view = context.previousView
-        }
-        guard let relatedView = view else { return nil }
+        guard let relatedView = extractRelatedView(from: context) else { return nil }
         let anchor = relatedView[keyPath: anchorKeyPath]
         if related.isSafeArea {
             if #available(iOS 11.0, *) {
@@ -84,16 +79,7 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutXAxisAnchor {
 
 public extension RelatedAnchor where LayoutAnchor == NSLayoutDimension {
     func getOffsettedAnchor(from context: PlanContext) -> AnchorWithOffset<LayoutAnchor>? {
-        var view: UIView?
-        switch related {
-        case .parent, .safeArea:
-            view = context.currentView.superview ?? context.delegate.planer(viewHaveNoSuperview: context.currentView)
-        case .myself, .mySafeArea:
-            view = context.currentView
-        case .previous, .previousSafeArea:
-            view = context.previousView
-        }
-        guard let relatedView = view else { return nil }
+        guard let relatedView = extractRelatedView(from: context) else { return nil }
         let anchor = relatedView[keyPath: anchorKeyPath]
         if related.isSafeArea {
             if #available(iOS 11.0, *) {

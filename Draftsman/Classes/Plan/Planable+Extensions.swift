@@ -28,7 +28,10 @@ extension Planer {
     }
     
     @discardableResult
-    public func center(_ relation: LayoutRelation<CoordinateOffsets>, to view: UIView, priority: UILayoutPriority? = nil) -> Self {
+    public func center(
+        _ relation: LayoutRelation<CoordinateOffsets>,
+        to view: UIView,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         centerX(relation.asXRelation, to: view.centerXAnchor, priority: priority)
         centerY(relation.asYRelation, to: view.centerYAnchor, priority: priority)
@@ -36,7 +39,10 @@ extension Planer {
     }
     
     @discardableResult
-    public func center(_ relation: LayoutRelation<CoordinateOffsets>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self {
+    public func center(
+        _ relation: LayoutRelation<CoordinateOffsets>,
+        to anchor: AnonymousRelation,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         centerX(relation.asXRelation, to: anchor, priority: priority)
         centerY(relation.asYRelation, to: anchor, priority: priority)
@@ -46,7 +52,10 @@ extension Planer {
     // MARK: Vertical Anchor
     
     @discardableResult
-    public func vertical(_ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self {
+    public func vertical(
+        _ relation: LayoutRelation<InsetsConvertible>,
+        to anchor: AnonymousRelation,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         top(relation.asTopRelation, to: anchor, priority: priority)
         bottom(relation.asBottomRelation, to: anchor, priority: priority)
@@ -54,7 +63,10 @@ extension Planer {
     }
     
     @discardableResult
-    public func vertical(_ relation: LayoutRelation<InsetsConvertible>, to view: UIView, priority: UILayoutPriority? = nil) -> Self {
+    public func vertical(
+        _ relation: LayoutRelation<InsetsConvertible>,
+        to view: UIView,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         top(relation.asTopRelation, to: view.topAnchor, priority: priority)
         bottom(relation.asBottomRelation, to: view.bottomAnchor, priority: priority)
@@ -64,7 +76,10 @@ extension Planer {
     // MARK: Horizontal Anchor
     
     @discardableResult
-    public func horizontal(_ relation: LayoutRelation<InsetsConvertible>, to view: UIView, priority: UILayoutPriority? = nil) -> Self {
+    public func horizontal(
+        _ relation: LayoutRelation<InsetsConvertible>,
+        to view: UIView,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         left(relation.asLeftRelation, to: view.leftAnchor, priority: priority)
         right(relation.asRightRelation, to: view.rightAnchor, priority: priority)
@@ -72,7 +87,10 @@ extension Planer {
     }
     
     @discardableResult
-    public func horizontal(_ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self {
+    public func horizontal(
+        _ relation: LayoutRelation<InsetsConvertible>,
+        to anchor: AnonymousRelation,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         left(relation.asLeftRelation, to: anchor, priority: priority)
         right(relation.asRightRelation, to: anchor, priority: priority)
@@ -82,7 +100,10 @@ extension Planer {
     // MARK: Edges Anchor
     
     @discardableResult
-    public func edges(_ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self {
+    public func edges(
+        _ relation: LayoutRelation<InsetsConvertible>,
+        to anchor: AnonymousRelation,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         vertical(relation, to: anchor, priority: priority)
         horizontal(relation, to: anchor, priority: priority)
@@ -92,7 +113,9 @@ extension Planer {
     // MARK: Size Anchor
     
     @discardableResult
-    public func size(_ relation: InterRelation<CGSize>, priority: UILayoutPriority? = nil) -> Self {
+    public func size(
+        _ relation: InterRelation<CGSize>,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         height(relation.asHeightRelation, priority: priority)
         width(relation.asHeightRelation, priority: priority)
@@ -100,7 +123,11 @@ extension Planer {
     }
     
     @discardableResult
-    public func size(_ relation: InterRelation<UIView>, multiplyBy multipier: CGFloat = 1, constant: CGFloat = 0, priority: UILayoutPriority? = nil) -> Self {
+    public func size(
+        _ relation: InterRelation<UIView>,
+        multiplyBy multipier: CGFloat = 1,
+        constant: CGFloat = 0,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         height(relation.asHeightRelation, multiplyBy: multipier, constant: constant, priority: priority)
         width(relation.asWidthRelation, multiplyBy: multipier, constant: constant, priority: priority)
@@ -110,7 +137,11 @@ extension Planer {
     // MARK: Position Anchor
     
     @discardableResult
-    public func at(_ positions: [LayoutEdge], _ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self {
+    public func at(
+        _ positions: [LayoutEdge],
+        _ relation: LayoutRelation<InsetsConvertible>,
+        to anchor: AnonymousRelation,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         for position in positions {
             switch position {
@@ -128,7 +159,10 @@ extension Planer {
     }
     
     @discardableResult
-    public func at(_ viewRelation: RelatedPosition, _ relation: LayoutRelation<InsetsConvertible>, priority: UILayoutPriority? = nil) -> Self {
+    public func at(
+        _ viewRelation: RelatedPosition,
+        _ relation: LayoutRelation<InsetsConvertible>,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         let position = viewRelation.position
         let relatedView = viewRelation.view
@@ -156,7 +190,11 @@ extension Planer {
     // MARK: Between Anchor
     
     @discardableResult
-    public func inBetween(of view: UIView, and otherView: UIView, _ position: MiddlePosition, priority: UILayoutPriority? = nil) -> Self {
+    public func inBetween(
+        of view: UIView,
+        and otherView: UIView,
+        _ position: MiddlePosition,
+        priority: UILayoutPriority? = nil) -> Self {
         let priority: UILayoutPriority = priority ?? context.mutatingPriority
         switch position {
         case .vertically(let relation):
