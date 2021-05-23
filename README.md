@@ -5,6 +5,7 @@ Draftsman is a DSL framework for Swift focussed on builder pattern
 [![codebeat badge](https://codebeat.co/badges/e0358dc0-7445-47a9-8f81-5c57a11fa9e8)](https://codebeat.co/projects/github-com-nayanda1-draftsman-master)
 ![build](https://github.com/nayanda1/Draftsman/workflows/build/badge.svg)
 ![test](https://github.com/nayanda1/Draftsman/workflows/test/badge.svg)
+[![SwiftPM Compatible](https://img.shields.io/badge/SwiftPM-Compatible-brightgreen)](https://swift.org/package-manager/)
 [![Version](https://img.shields.io/cocoapods/v/Draftsman.svg?style=flat)](https://cocoapods.org/pods/Draftsman)
 [![License](https://img.shields.io/cocoapods/l/Draftsman.svg?style=flat)](https://cocoapods.org/pods/Draftsman)
 [![Platform](https://img.shields.io/cocoapods/p/Draftsman.svg?style=flat)](https://cocoapods.org/pods/Draftsman)
