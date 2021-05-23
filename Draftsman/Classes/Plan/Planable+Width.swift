@@ -16,9 +16,9 @@ public extension Planer {
     @discardableResult
     func width(
         _ relation: InterRelation<NSLayoutDimension>,
-        multiplyBy multipier: CGFloat,
-        constant: CGFloat,
-        priority: UILayoutPriority) -> Self {
+        multiplyBy multipier: CGFloat = 1,
+        constant: CGFloat = 0,
+        priority: UILayoutPriority? = nil) -> Self {
         let constraint: NSLayoutConstraint
         switch relation {
         case .moreThanTo(let dimension):
@@ -40,25 +40,11 @@ public extension Planer {
                 constant: constant
             )
         }
-        constraint.priority = priority
+        constraint.priority = priority ?? context.mutatingPriority
         constraint.identifier = "draftsman_\(view.uniqueKey)_width_to_\(identifier(ofSecondItemIn: constraint))"
         plannedConstraints.removeAll { $0.identifier == constraint.identifier }
         plannedConstraints.append(constraint)
         return self
-    }
-    
-    @discardableResult
-    func width(
-        _ relation: InterRelation<NSLayoutDimension>,
-        multiplyBy multipier: CGFloat = 1,
-        constant: CGFloat = 0,
-        priority: UILayoutPriority? = nil) -> Self {
-        return width(
-            relation,
-            multiplyBy: multipier,
-            constant: constant,
-            priority: priority ?? context.mutatingPriority
-        )
     }
     
     @discardableResult
@@ -88,10 +74,10 @@ public extension Planer {
     @discardableResult
     func width(
         _ relation: InterRelation<AnonymousRelation>,
-        _ dimension: LayoutDimension,
-        multiplyBy multipier: CGFloat,
-        constant: CGFloat,
-        priority: UILayoutPriority) -> Self {
+        _ dimension: LayoutDimension = .width,
+        multiplyBy multipier: CGFloat = 1,
+        constant: CGFloat = 0,
+        priority: UILayoutPriority? = nil) -> Self {
         guard let relatedView = getView(from: relation.related) else {
             context.delegate.planer(
                 view,
@@ -102,6 +88,7 @@ public extension Planer {
             )
             return self
         }
+        let priority = priority ?? context.mutatingPriority
         switch relation {
         case .moreThanTo(let related):
             widthMoreThan(
@@ -135,52 +122,7 @@ public extension Planer {
     }
     
     @discardableResult
-    func width(
-        _ relation: InterRelation<AnonymousRelation>,
-        _ dimension: LayoutDimension,
-        multiplyBy multipier: CGFloat = 1,
-        constant: CGFloat = 0,
-        priority: UILayoutPriority? = nil) -> Self {
-        let priority = priority ?? context.mutatingPriority
-        return width(
-            relation, dimension,
-            multiplyBy: multipier,
-            constant: constant,
-            priority: priority
-        )
-    }
-    
-    @discardableResult
-    func width(
-        _ relation: InterRelation<AnonymousRelation>,
-        multiplyBy multipier: CGFloat,
-        constant: CGFloat,
-        priority: UILayoutPriority) -> Self {
-        return width(
-            relation, .width,
-            multiplyBy: multipier,
-            constant: constant,
-            priority: priority
-        )
-    }
-    
-    @discardableResult
-    func width(
-        _ relation: InterRelation<AnonymousRelation>,
-        multiplyBy multipier: CGFloat = 1,
-        constant: CGFloat = 0,
-        priority: UILayoutPriority? = nil) -> Self {
-        let priority = priority ?? context.mutatingPriority
-        return width(
-            relation,
-            multiplyBy: multipier,
-            constant: constant,
-            priority: priority
-        )
-    }
-    
-    @discardableResult
-    func width(_ relation: InterRelation<CGFloat>, priority: UILayoutPriority) -> Self {
+    func width(_ relation: InterRelation<CGFloat>, priority: UILayoutPriority? = nil) -> Self {
         let constraint: NSLayoutConstraint
         let identifier: String
         switch relation {
@@ -194,16 +136,11 @@ public extension Planer {
             identifier = "equal_with_dimension"
             constraint = view.widthAnchor.constraint(equalToConstant: dimension)
         }
-        constraint.priority = priority
+        constraint.priority = priority ?? context.mutatingPriority
         constraint.identifier = "draftsman_\(view.uniqueKey)_width_\(identifier)"
         plannedConstraints.removeAll { $0.identifier == constraint.identifier }
         plannedConstraints.append(constraint)
         return self
-    }
-    
-    @discardableResult
-    func width(_ relation: InterRelation<CGFloat>) -> Self {
-        return width(relation, priority: context.mutatingPriority)
     }
 }
 

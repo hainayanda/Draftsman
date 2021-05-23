@@ -1,12 +1,12 @@
 PODS:
-  - Draftsman (1.0.0)
-  - Nimble (9.0.0)
-  - Quick (3.0.1)
+  - Draftsman (1.0.6)
+  - Nimble (9.2.0)
+  - Quick (4.0.0)
 
 DEPENDENCIES:
   - Draftsman (from `../`)
-  - Nimble (~> 9.0.0)
-  - Quick (~> 3.0.0)
+  - Nimble (~> 9.2.0)
+  - Quick (~> 4.0.0)
 
 SPEC REPOS:
   trunk:
@@ -18,10 +18,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Draftsman: af6872f4448ee92a4b0ec036b61b67cb14605890
-  Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
-  Quick: 947834f0d0f43fc933d0e9dd00086a76e783e4fb
+  Draftsman: 8aa5d5f68f9054a6d7ac61fbcf3be8bd511b51b8
+  Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
+  Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
 
-PODFILE CHECKSUM: 9df80a8366e765cf9f22213f61af633512cb45ed
+PODFILE CHECKSUM: 4c0537d621a17b728db2d6e23952f5b05a45ac11
 
 COCOAPODS: 1.10.1

@@ -16,9 +16,9 @@ public extension Planer {
     @discardableResult
     func height(
         _ relation: InterRelation<NSLayoutDimension>,
-        multiplyBy multipier: CGFloat,
-        constant: CGFloat,
-        priority: UILayoutPriority) -> Self {
+        multiplyBy multipier: CGFloat = 1,
+        constant: CGFloat = 0,
+        priority: UILayoutPriority? = nil) -> Self {
         let constraint: NSLayoutConstraint
         switch relation {
         case .moreThanTo(let dimension):
@@ -40,21 +40,11 @@ public extension Planer {
                 constant: constant
             )
         }
-        constraint.priority = priority
+        constraint.priority = priority ?? context.mutatingPriority
         constraint.identifier = "draftsman_\(view.uniqueKey)_height_to_\(identifier(ofSecondItemIn: constraint))"
         plannedConstraints.removeAll { $0.identifier == constraint.identifier }
         plannedConstraints.append(constraint)
         return self
-    }
-    
-    @discardableResult
-    func height(
-        _ relation: InterRelation<NSLayoutDimension>,
-        multiplyBy multipier: CGFloat = 1,
-        constant: CGFloat = 0,
-        priority: UILayoutPriority? = nil) -> Self {
-        let priority = priority ?? context.mutatingPriority
-        return height(relation, multiplyBy: multipier, constant: constant, priority: priority)
     }
     
     @discardableResult
@@ -84,10 +74,10 @@ public extension Planer {
     @discardableResult
     func height(
         _ relation: InterRelation<AnonymousRelation>,
-        _ dimension: LayoutDimension,
-        multiplyBy multipier: CGFloat,
-        constant: CGFloat,
-        priority: UILayoutPriority) -> Self {
+        _ dimension: LayoutDimension = .height,
+        multiplyBy multipier: CGFloat = 1,
+        constant: CGFloat = 0,
+        priority: UILayoutPriority? = nil) -> Self {
         guard let relatedView = getView(from: relation.related) else {
             context.delegate.planer(
                 view,
@@ -98,6 +88,7 @@ public extension Planer {
             )
             return self
         }
+        let priority = priority ?? context.mutatingPriority
         switch relation {
         case .moreThanTo(let related):
             heightMoreThan(
@@ -132,53 +123,8 @@ public extension Planer {
     
     @discardableResult
     func height(
-        _ relation: InterRelation<AnonymousRelation>,
-        _ dimension: LayoutDimension,
-        multiplyBy multipier: CGFloat = 1,
-        constant: CGFloat = 0,
-        priority: UILayoutPriority? = nil) -> Self {
-        let priority = priority ?? context.mutatingPriority
-        return height(
-            relation, dimension,
-            multiplyBy: multipier,
-            constant: constant,
-            priority: priority
-        )
-    }
-    
-    @discardableResult
-    func height(
-        _ relation: InterRelation<AnonymousRelation>,
-        multiplyBy multipier: CGFloat,
-        constant: CGFloat,
-        priority: UILayoutPriority) -> Self {
-        return height(
-            relation, .height,
-            multiplyBy: multipier,
-            constant: constant,
-            priority: priority
-        )
-    }
-    
-    @discardableResult
-    func height(
-        _ relation: InterRelation<AnonymousRelation>,
-        multiplyBy multipier: CGFloat = 1,
-        constant: CGFloat = 0,
-        priority: UILayoutPriority? = nil) -> Self {
-        let priority = priority ?? context.mutatingPriority
-        return height(
-            relation,
-            multiplyBy: multipier,
-            constant: constant,
-            priority: priority
-        )
-    }
-    
-    @discardableResult
-    func height(
         _ relation: InterRelation<CGFloat>,
-        priority: UILayoutPriority) -> Self {
+        priority: UILayoutPriority? = nil) -> Self {
         let constraint: NSLayoutConstraint
         let identifier: String
         switch relation {
@@ -192,17 +138,11 @@ public extension Planer {
             identifier = "equal_with_dimension"
             constraint = view.heightAnchor.constraint(equalToConstant: dimension)
         }
-        constraint.priority = priority
+        constraint.priority = priority ?? context.mutatingPriority
         constraint.identifier = "draftsman_\(view.uniqueKey)_height_\(identifier)"
         plannedConstraints.removeAll { $0.identifier == constraint.identifier }
         plannedConstraints.append(constraint)
         return self
-    }
-    
-    @discardableResult
-    func height(
-        _ relation: InterRelation<CGFloat>) -> Self {
-        return height(relation, priority: context.mutatingPriority)
     }
 }
 
