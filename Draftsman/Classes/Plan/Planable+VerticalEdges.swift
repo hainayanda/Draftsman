@@ -17,7 +17,7 @@ public extension Planer {
     func top(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: NSLayoutYAxisAnchor,
-        priority: UILayoutPriority) -> Self {
+        priority: UILayoutPriority? = nil) -> Self {
         let constraint: NSLayoutConstraint
         switch relation {
         case .moreThanTo(let space):
@@ -33,7 +33,7 @@ public extension Planer {
         case .equal:
             constraint = view.topAnchor.constraint(equalTo: anchor)
         }
-        constraint.priority = priority
+        constraint.priority = priority ?? context.mutatingPriority
         constraint.identifier = "draftsman_\(view.uniqueKey)_top_to_\(identifier(ofSecondItemIn: constraint))"
         plannedConstraints.removeAll { $0.identifier == constraint.identifier }
         plannedConstraints.append(constraint)
@@ -43,14 +43,8 @@ public extension Planer {
     @discardableResult
     func top(
         _ relation: LayoutRelation<CGFloat>,
-        to anchor: NSLayoutYAxisAnchor) -> Self {
-        return top(relation, to: anchor, priority: context.mutatingPriority)
-    }
-    
-    @discardableResult
-    func top(
-        _ relation: LayoutRelation<CGFloat>,
-        to anchor: RelatedAnchor<NSLayoutYAxisAnchor>) -> Self {
+        to anchor: RelatedAnchor<NSLayoutYAxisAnchor>,
+        priority: UILayoutPriority? = nil) -> Self {
         guard let offsettedAnchor = anchor.getOffsettedAnchor(from: context) else {
             context.delegate.planer(
                 view,
@@ -64,7 +58,7 @@ public extension Planer {
         return top(
             relation.add(offset: offsettedAnchor.offset),
             to: offsettedAnchor.anchor,
-            priority: context.mutatingPriority
+            priority: priority
         )
     }
     
@@ -72,7 +66,7 @@ public extension Planer {
     func top(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: AnonymousRelation,
-        priority: UILayoutPriority) -> Self {
+        priority: UILayoutPriority? = nil) -> Self {
         guard let relatedView = getView(from: anchor) else {
             context.delegate.planer(
                 view,
@@ -84,15 +78,10 @@ public extension Planer {
             return self
         }
         if anchor.isSafeArea {
-            return topToSafeArea(of: relatedView, relation: relation, priority: priority)
+            return topToSafeArea(of: relatedView, relation: relation, priority: priority ?? context.mutatingPriority)
         } else {
             return top(relation, to: relatedView.topAnchor, priority: priority)
         }
-    }
-    
-    @discardableResult
-    func top(_ relation: LayoutRelation<CGFloat>, to anchor: AnonymousRelation) -> Self {
-        return top(relation, to: anchor, priority: context.mutatingPriority)
     }
     
     // MARK: Bottom Anchor
@@ -101,7 +90,7 @@ public extension Planer {
     func bottom(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: NSLayoutYAxisAnchor,
-        priority: UILayoutPriority) -> Self {
+        priority: UILayoutPriority? = nil) -> Self {
         let constraint: NSLayoutConstraint
         switch relation {
         case .moreThanTo(let space):
@@ -117,7 +106,7 @@ public extension Planer {
         case .equal:
             constraint = view.bottomAnchor.constraint(equalTo: anchor)
         }
-        constraint.priority = priority
+        constraint.priority = priority ?? context.mutatingPriority
         constraint.identifier = "draftsman_\(view.uniqueKey)_bottom_to_\(identifier(ofSecondItemIn: constraint))"
         plannedConstraints.removeAll { $0.identifier == constraint.identifier }
         plannedConstraints.append(constraint)
@@ -127,14 +116,8 @@ public extension Planer {
     @discardableResult
     func bottom(
         _ relation: LayoutRelation<CGFloat>,
-        to anchor: NSLayoutYAxisAnchor) -> Self {
-        return bottom(relation, to: anchor, priority: context.mutatingPriority)
-    }
-    
-    @discardableResult
-    func bottom(
-        _ relation: LayoutRelation<CGFloat>,
-        to anchor: RelatedAnchor<NSLayoutYAxisAnchor>) -> Self {
+        to anchor: RelatedAnchor<NSLayoutYAxisAnchor>,
+        priority: UILayoutPriority? = nil) -> Self {
         guard let offsettedAnchor = anchor.getOffsettedAnchor(from: context) else {
             context.delegate.planer(
                 view,
@@ -148,7 +131,7 @@ public extension Planer {
         return bottom(
             relation.add(offset: offsettedAnchor.offset),
             to: offsettedAnchor.anchor,
-            priority: context.mutatingPriority
+            priority: priority
         )
     }
     
@@ -156,7 +139,7 @@ public extension Planer {
     func bottom(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: AnonymousRelation,
-        priority: UILayoutPriority) -> Self {
+        priority: UILayoutPriority? = nil) -> Self {
         guard let relatedView = getView(from: anchor) else {
             context.delegate.planer(
                 view,
@@ -168,17 +151,10 @@ public extension Planer {
             return self
         }
         if anchor.isSafeArea {
-            return bottomToSafeArea(of: relatedView, relation: relation, priority: priority)
+            return bottomToSafeArea(of: relatedView, relation: relation, priority: priority ?? context.mutatingPriority)
         } else {
             return bottom(relation, to: relatedView.bottomAnchor, priority: priority)
         }
-    }
-    
-    @discardableResult
-    func bottom(
-        _ relation: LayoutRelation<CGFloat>,
-        to anchor: AnonymousRelation) -> Self {
-        return bottom(relation, to: anchor, priority: context.mutatingPriority)
     }
 }
 

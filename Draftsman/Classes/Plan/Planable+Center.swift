@@ -14,7 +14,10 @@ public extension Planer {
     // MARK: Center Anchor
     
     @discardableResult
-    func centerX(_ relation: LayoutRelation<CGFloat>, to anchor: NSLayoutXAxisAnchor, priority: UILayoutPriority) -> Self {
+    func centerX(
+        _ relation: LayoutRelation<CGFloat>,
+        to anchor: NSLayoutXAxisAnchor,
+        priority: UILayoutPriority? = nil) -> Self {
         let constraint: NSLayoutConstraint
         switch relation {
         case .moreThanTo(let offset):
@@ -30,7 +33,7 @@ public extension Planer {
         case .equal:
             constraint = view.centerXAnchor.constraint(equalTo: anchor)
         }
-        constraint.priority = priority
+        constraint.priority = priority ?? context.mutatingPriority
         constraint.identifier = "draftsman_\(view.uniqueKey)_center_x_to_\(identifier(ofSecondItemIn: constraint))"
         plannedConstraints.removeAll { $0.identifier == constraint.identifier }
         plannedConstraints.append(constraint)
@@ -38,12 +41,10 @@ public extension Planer {
     }
     
     @discardableResult
-    func centerX(_ relation: LayoutRelation<CGFloat>, to anchor: NSLayoutXAxisAnchor) -> Self {
-        return centerX(relation, to: anchor, priority: context.mutatingPriority)
-    }
-    
-    @discardableResult
-    func centerX(_ relation: LayoutRelation<CGFloat>, to anchor: RelatedAnchor<NSLayoutXAxisAnchor>) -> Self {
+    func centerX(
+        _ relation: LayoutRelation<CGFloat>,
+        to anchor: RelatedAnchor<NSLayoutXAxisAnchor>,
+        priority: UILayoutPriority? = nil) -> Self {
         guard let offsetedAnchor = anchor.getOffsettedAnchor(from: context)  else {
             context.delegate.planer(
                 view,
@@ -54,11 +55,14 @@ public extension Planer {
             )
             return self
         }
-        return centerX(relation.add(offset: offsetedAnchor.offset), to: offsetedAnchor.anchor, priority: context.mutatingPriority)
+        return centerX(relation.add(offset: offsetedAnchor.offset), to: offsetedAnchor.anchor, priority: priority)
     }
     
     @discardableResult
-    func centerY(_ relation: LayoutRelation<CGFloat>, to anchor: NSLayoutYAxisAnchor, priority: UILayoutPriority) -> Self {
+    func centerY(
+        _ relation: LayoutRelation<CGFloat>,
+        to anchor: NSLayoutYAxisAnchor,
+        priority: UILayoutPriority? = nil) -> Self {
         let constraint: NSLayoutConstraint
         switch relation {
         case .moreThanTo(let offset):
@@ -74,7 +78,7 @@ public extension Planer {
         case .equal:
             constraint = view.centerYAnchor.constraint(equalTo: anchor)
         }
-        constraint.priority = priority
+        constraint.priority = priority ?? context.mutatingPriority
         constraint.identifier = "draftsman_\(view.uniqueKey)_center_y_to_\(identifier(ofSecondItemIn: constraint))"
         plannedConstraints.removeAll { $0.identifier == constraint.identifier }
         plannedConstraints.append(constraint)
@@ -82,12 +86,10 @@ public extension Planer {
     }
     
     @discardableResult
-    func centerY(_ relation: LayoutRelation<CGFloat>, to anchor: NSLayoutYAxisAnchor) -> Self {
-        return centerY(relation, to: anchor, priority: context.mutatingPriority)
-    }
-    
-    @discardableResult
-    func centerY(_ relation: LayoutRelation<CGFloat>, to anchor: RelatedAnchor<NSLayoutYAxisAnchor>) -> Self {
+    func centerY(
+        _ relation: LayoutRelation<CGFloat>,
+        to anchor: RelatedAnchor<NSLayoutYAxisAnchor>,
+        priority: UILayoutPriority? = nil) -> Self {
         guard let offsetedAnchor = anchor.getOffsettedAnchor(from: context) else {
             context.delegate.planer(
                 view,
@@ -98,11 +100,14 @@ public extension Planer {
             )
             return self
         }
-        return centerY(relation.add(offset: offsetedAnchor.offset), to: offsetedAnchor.anchor, priority: context.mutatingPriority)
+        return centerY(relation.add(offset: offsetedAnchor.offset), to: offsetedAnchor.anchor, priority: priority)
     }
     
     @discardableResult
-    func centerX(_ relation: LayoutRelation<CGFloat>, to anchor: AnonymousRelation, priority: UILayoutPriority) -> Self {
+    func centerX(
+        _ relation: LayoutRelation<CGFloat>,
+        to anchor: AnonymousRelation,
+        priority: UILayoutPriority? = nil) -> Self {
         guard let relatedView = getView(from: anchor) else {
             context.delegate.planer(
                 view,
@@ -125,12 +130,10 @@ public extension Planer {
     }
     
     @discardableResult
-    func centerX(_ relation: LayoutRelation<CGFloat>, to anchor: AnonymousRelation) -> Self {
-        return centerX(relation, to: anchor, priority: context.mutatingPriority)
-    }
-    
-    @discardableResult
-    func centerY(_ relation: LayoutRelation<CGFloat>, to anchor: AnonymousRelation, priority: UILayoutPriority) -> Self {
+    func centerY(
+        _ relation: LayoutRelation<CGFloat>,
+        to anchor: AnonymousRelation,
+        priority: UILayoutPriority? = nil) -> Self {
         guard let relatedView = getView(from: anchor) else {
             context.delegate.planer(
                 view,
@@ -150,11 +153,6 @@ public extension Planer {
             return centerX(relation.add(offset: offset), to: relatedView.centerXAnchor, priority: priority)
         }
         return centerY(relation, to: relatedView.centerYAnchor, priority: priority)
-    }
-    
-    @discardableResult
-    func centerY(_ relation: LayoutRelation<CGFloat>, to anchor: AnonymousRelation) -> Self {
-        return centerY(relation, to: anchor, priority: context.mutatingPriority)
     }
 }
 #endif
