@@ -26,14 +26,14 @@ Draftsman is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Draftsman'
+pod 'Draftsman', '~> 1.0.6'
 ```
 
 ### Swift Package Manager from XCode
 
 - Add it using xcode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/nayanda1/Draftsman.git** as Swift Package url
-- Set rules at **version**, with **Up to Next Major** option and put **1.0.5** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **1.0.6** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -42,7 +42,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.0.5"))
+    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.0.6"))
 ]
 ```
 
