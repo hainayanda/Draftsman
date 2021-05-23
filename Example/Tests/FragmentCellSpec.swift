@@ -164,7 +164,8 @@ class FragmentCellSpec: QuickSpec {
                     )
                     expect(planFitted).to(beTrue())
                     expect(calculated).to(beTrue())
-                    expect(size).to(equal(.init(width: tableWidth, height: tableHeight)))
+                    expect(size.width).to(equal(tableWidth))
+                    expect(size.height).to(equal(tableHeight))
                 }
             }
             context("collection molecule cell") {
