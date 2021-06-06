@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Draftsman'
-  s.version          = '1.0.6'
+  s.version          = '1.0.7'
   s.summary          = 'Draftsman is a DSL framework for Swift'
 
 # This description is used to generate tags and improve search results.
