@@ -48,9 +48,10 @@ public enum AnonymousRelation {
     case mySafeArea
     case previous
     case previousSafeArea
+    case keyboard
     
     public var isView: Bool {
-        return !isSafeArea
+        return !isSafeArea && !isKeyboard
     }
     
     public var isSafeArea: Bool {
@@ -60,6 +61,10 @@ public enum AnonymousRelation {
         default:
             return false
         }
+    }
+    
+    public var isKeyboard: Bool {
+        self == .keyboard
     }
 }
 
