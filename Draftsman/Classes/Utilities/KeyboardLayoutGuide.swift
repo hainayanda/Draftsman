@@ -126,16 +126,7 @@ public class KeyboardLayoutGuide: UILayoutGuide {
         guard let view = owningView else { return }
         let insets = keyboardEdgeInsetsInView
         if edgesConstraints.count != 4 {
-            edgesConstraints = [
-                leftAnchor.constraint(equalTo: view.leftAnchor, constant: insets.left),
-                topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top),
-                rightAnchor.constraint(equalTo: view.rightAnchor, constant: -insets.right),
-                bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -insets.bottom)
-            ]
-            for constraint in edgesConstraints {
-                constraint.priority = .required
-                constraint.isActive = true
-            }
+            createEdgeConstraints(for: view, with: insets)
         } else {
             edgesConstraints[0].constant = insets.left
             edgesConstraints[1].constant = insets.top
@@ -143,6 +134,19 @@ public class KeyboardLayoutGuide: UILayoutGuide {
             edgesConstraints[3].constant = -insets.bottom
         }
         view.layoutIfNeeded()
+    }
+    
+    func createEdgeConstraints(for view: UIView, with insets: UIEdgeInsets) {
+        edgesConstraints = [
+            leftAnchor.constraint(equalTo: view.leftAnchor, constant: insets.left),
+            topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top),
+            rightAnchor.constraint(equalTo: view.rightAnchor, constant: -insets.right),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -insets.bottom)
+        ]
+        for constraint in edgesConstraints {
+            constraint.priority = .required
+            constraint.isActive = true
+        }
     }
     
     @objc func keyboardFrameChanged(notification: Notification) {
