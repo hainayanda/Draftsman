@@ -33,7 +33,7 @@ public extension UIView {
     }
     
     internal struct AssociatedKey {
-        static var plannedClosure: String = "Draftsman_Tapped_Closure"
+        static var plannedClosure: String = "draftsman_Tapped_Closure"
     }
     
     @objc internal class PlannedClosure: NSObject {
