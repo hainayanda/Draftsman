@@ -269,4 +269,16 @@ public func hInsets(left: CGFloat, right: CGFloat) -> InsetsConvertible {
 public func vInsets(top: CGFloat, bottom: CGFloat) -> InsetsConvertible {
     return UIVerticalInsets(top: top, bottom: bottom)
 }
+
+public extension CGRect {
+    func insets(of innerFrame: CGRect) -> UIEdgeInsets {
+        let topInset = innerFrame.origin.y
+        let leftInset = innerFrame.origin.x
+        let maxX = topInset + innerFrame.size.height
+        let bottomInset = size.height - maxX
+        let maxY = leftInset + innerFrame.size.width
+        let rightInset = size.width - maxY
+        return UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+    }
+}
 #endif
