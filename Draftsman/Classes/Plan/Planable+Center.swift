@@ -125,6 +125,9 @@ public extension Planer {
             let horizontal = relatedView.layoutMargins.horizontal
             let offset = horizontal.left - horizontal.right
             return centerX(relation.add(offset: offset), to: relatedView.centerXAnchor, priority: priority)
+        } else if anchor.isKeyboard {
+            let guide = relatedView.keyboardLayoutGuide
+            return centerX(relation, to: guide.centerXAnchor, priority: priority)
         }
         return centerX(relation, to: relatedView.centerXAnchor, priority: priority)
     }
@@ -151,6 +154,9 @@ public extension Planer {
             let horizontal = relatedView.layoutMargins.vertical
             let offset = horizontal.top - horizontal.bottom
             return centerX(relation.add(offset: offset), to: relatedView.centerXAnchor, priority: priority)
+        } else if anchor.isKeyboard {
+            let guide = relatedView.keyboardLayoutGuide
+            return centerY(relation, to: guide.centerYAnchor, priority: priority)
         }
         return centerY(relation, to: relatedView.centerYAnchor, priority: priority)
     }

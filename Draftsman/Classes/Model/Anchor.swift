@@ -17,6 +17,7 @@ public struct Anchor<LayoutAnchor: AnyObject> {
         .init(related: related, anchorKeyPath: keyPath)
     }
     
+    @available(*, deprecated, message: "use static function of RelatedAnchor eg: .top(of: .keyboard) instead of Anchor(of: .keyboard).topAnchor")
     public init(of related: AnonymousRelation) {
         self.related = related
     }
@@ -25,6 +26,22 @@ public struct Anchor<LayoutAnchor: AnyObject> {
 public struct RelatedAnchor<LayoutAnchor> {
     var related: AnonymousRelation
     var anchorKeyPath: KeyPath<UIView, LayoutAnchor>
+    
+    public static func left(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.leftAnchor)
+    }
+    
+    public static func top(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.topAnchor)
+    }
+    
+    public static func right(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.rightAnchor)
+    }
+    
+    public static func bottom(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.bottomAnchor)
+    }
 }
 
 public struct AnchorWithOffset<LayoutAnchor> {
@@ -38,7 +55,7 @@ public struct AnchorWithOffset<LayoutAnchor> {
 extension RelatedAnchor {
     func extractRelatedView(from context: PlanContext) -> UIView? {
         switch related {
-        case .parent, .safeArea:
+        case .parent, .safeArea, .keyboard:
             return context.currentView.superview ?? context.delegate.planer(viewHaveNoSuperview: context.currentView)
         case .myself, .mySafeArea:
             return context.currentView
@@ -58,6 +75,8 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutYAxisAnchor {
             } else {
                 return .init(anchor: anchor, offset: relatedView.layoutMargins[equal: anchorKeyPath])
             }
+        } else if related.isKeyboard {
+            return .init(anchor: relatedView.keyboardLayoutGuide[equal: anchorKeyPath])
         }
         return .init(anchor: anchor)
     }
@@ -72,6 +91,8 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutXAxisAnchor {
                 return .init(anchor: relatedView.safeAreaLayoutGuide[equal: anchorKeyPath])
             }
             return .init(anchor: anchor, offset: relatedView.layoutMargins[equal: anchorKeyPath])
+        } else if related.isKeyboard {
+            return .init(anchor: relatedView.keyboardLayoutGuide[equal: anchorKeyPath])
         }
         return .init(anchor: anchor)
     }
@@ -86,6 +107,8 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutDimension {
                 return .init(anchor: relatedView.safeAreaLayoutGuide[equal: anchorKeyPath])
             }
             return .init(anchor: anchor, offset: relatedView.layoutMargins[equal: anchorKeyPath])
+        } else if related.isKeyboard {
+            return .init(anchor: relatedView.keyboardLayoutGuide[equal: anchorKeyPath])
         }
         return .init(anchor: anchor)
     }

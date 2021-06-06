@@ -79,6 +79,9 @@ public extension Planer {
         }
         if anchor.isSafeArea {
             return topToSafeArea(of: relatedView, relation: relation, priority: priority ?? context.mutatingPriority)
+        } else if anchor.isKeyboard {
+            let guide = relatedView.keyboardLayoutGuide
+            return top(relation, to: guide.topAnchor, priority: priority)
         } else {
             return top(relation, to: relatedView.topAnchor, priority: priority)
         }
@@ -152,6 +155,9 @@ public extension Planer {
         }
         if anchor.isSafeArea {
             return bottomToSafeArea(of: relatedView, relation: relation, priority: priority ?? context.mutatingPriority)
+        } else if anchor.isKeyboard {
+            let guide = relatedView.keyboardLayoutGuide
+            return top(relation, to: guide.topAnchor, priority: priority)
         } else {
             return bottom(relation, to: relatedView.bottomAnchor, priority: priority)
         }

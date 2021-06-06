@@ -18,7 +18,7 @@ extension Planer {
     
     func getView(from anonymousRelation: AnonymousRelation) -> UIView? {
         switch anonymousRelation {
-        case .parent, .safeArea:
+        case .parent, .safeArea, .keyboard:
             return view.superview ?? context.delegate.planer(viewHaveNoSuperview: view)
         case .myself, .mySafeArea:
             return view

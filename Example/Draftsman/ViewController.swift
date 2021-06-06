@@ -7,17 +7,40 @@
 //
 
 import UIKit
+import Draftsman
 
 class ViewController: UIViewController {
-
+    
+    var textView: UITextView = builder(UITextView.self)
+        .backgroundColor(.lightGray)
+        .build()
+    
+    var buttonOnTopKeyboard: UIButton = builder(UIButton.self)
+        .backgroundColor(.blue)
+        .build()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        buttonOnTopKeyboard.setTitle("Button on top keyboard", for: .normal)
+        planContent {
+            $0.fit(textView)
+                .at(.fullTop, .equalTo(16), to: .safeArea)
+                .bottom(.equalTo(16), to: buttonOnTopKeyboard.topAnchor)
+            $0.fit(buttonOnTopKeyboard)
+                .horizontal(.equal, to: .parent)
+                .bottom(.moreThan, to: .safeArea, priority: .required)
+                .bottom(.equal, to: .top(of: .keyboard))
+                .height(.equalTo(45))
+        }
+        buttonOnTopKeyboard.addTarget(self, action: #selector(didTap(_:)), for: .touchUpInside)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @objc func didTap(_ sender: Any) {
+        if textView.isFirstResponder {
+            textView.resignFirstResponder()
+        } else {
+            textView.becomeFirstResponder()
+        }
     }
 
 }

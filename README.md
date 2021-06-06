@@ -27,14 +27,14 @@ Draftsman is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Draftsman', '~> 1.0.6'
+pod 'Draftsman', '~> 1.0.7'
 ```
 
 ### Swift Package Manager from XCode
 
 - Add it using xcode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/nayanda1/Draftsman.git** as Swift Package url
-- Set rules at **version**, with **Up to Next Major** option and put **1.0.6** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **1.0.7** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -43,7 +43,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.0.6"))
+    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.0.7"))
 ]
 ```
 
@@ -214,6 +214,7 @@ the `AnonymousRelation` is enumeration which contains:
 * **mySafeArea** which are where the same anchor of current safe area `UIView`
 * **previous** which are where the same anchor of previous planned `UIView`
 * **previousSafeArea** which are where the same anchor of previous planned `UIView`
+* **keyboard** which are the same anchor of parent keyboard guide of UIView
 
 You could also passing `UILayoutPriority` if you need. If you ignore it, it will be lesser than previous priority started by mandatory.
 
@@ -228,14 +229,15 @@ myView.plan {
 ```
 
 ### Related Anchor
-If your `AnonymousRelation` anchor is different than your anchor, you could use `RelatedAnchor<NSLayoutXAxisAnchor>`. Its actually the anchor extractor from `AnonymousRelation`:
+If your `AnonymousRelation` anchor is different than your anchor, you could use `RelatedAnchor<NSLayoutXAxisAnchor>`. Its actually the anchor extractor from `AnonymousRelation`.
+
+So lets say you want to make your view always on top of keyboard, just do this:
 
 ```swift
 myView.plan {
-    $0.top(.equalTo(8), to: Anchor(of: .previous).bottomAnchor)
-        .right(.equal(8), to: Anchor(of: .previous).leftAnchor)
-        .bottom(.equal, to: .safeArea)
-        .left(.equal(8), to: .safeArea)
+    $0.bottom(.equal, to: .top(of: .keyboard))
+        .right(.equalTo(8), to: .safeArea)
+        .left(.equalTo(8), to: .safeArea)
 }
 ```
 
