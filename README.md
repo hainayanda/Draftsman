@@ -27,14 +27,14 @@ Draftsman is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Draftsman', '~> 1.0.7'
+pod 'Draftsman', '~> 1.0.8'
 ```
 
 ### Swift Package Manager from XCode
 
 - Add it using xcode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/nayanda1/Draftsman.git** as Swift Package url
-- Set rules at **version**, with **Up to Next Major** option and put **1.0.7** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **1.0.8** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -43,7 +43,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.0.7"))
+    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.0.8"))
 ]
 ```
 
@@ -455,9 +455,42 @@ There are two other extensions method you could use to call planContent indirect
 
 ***
 
+## Fragment View
+
+There is UIView that already implemented Fragment that you can extend named `FragmentView`. It have some more open method that you can use:
+* `func fragmentWillLayoutForTheFirstTime()` which will be called inside `layoutSubviews()` and only once at the first time before `super.layoutSubviews()`
+* `func fragmentDidLayoutForTheFirstTime()` which will be called inside `layoutSubviews()` and only once at the first time after  `super.layoutSubviews()`
+
+The advantages of the FragmentView are:
+
+| Capabilities | Fragment View  | Implementing Own Fragment |
+| :---: | :---: | :---: |
+| have `fragmentWillLayoutForTheFirstTime()`  | YES | NO |
+| have `fragmentDidLayoutForTheFirstTime()`  | YES | NO |
+| automatically run `planFragment` when inserted to any `UIView` | YES | NO |
+| automatically run  `planFragment` when planned using Draftsman | YES | YES |
+
+example: 
+
+```swift
+class MySimpleFragment: FragmentView {
+    var marginedButton: UIButton = .init()
+
+    var margin = UIEdgeInsets(insets: 8)
+
+    func planContent(_ plan: InsertablePlan) {
+        plan.fit(marginedButton).edges(equalTo(margin), to: .parent)
+    }
+    
+    func fragmentDidLayoutForTheFirstTime() {
+        addGradient(with: self.bounds)
+    }
+}
+```
+
 ## Fragment Cell
 
-There is Fragment created specially for cell which named `FragmentCell`:
+There is Fragment created specifically for cell which named `FragmentCell`:
 
 ```swift
 public protocol FragmentCell: Fragment {
