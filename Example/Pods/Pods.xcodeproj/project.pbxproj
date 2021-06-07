@@ -112,6 +112,7 @@
 		B844C53365327CB75CC1645AE73CDCED /* CwlMachBadInstructionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4533A88B2DE8230A61D3FE3F4CD5BC98 /* CwlMachBadInstructionHandler.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BB373A21266C8573005A0C2A /* KeyboardLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB373A20266C8573005A0C2A /* KeyboardLayoutGuide.swift */; };
 		BB9B3D784D2CD59E1928AA5C0F87CE1D /* AnchorExtraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C09B565A35E939702F8009D9146496 /* AnchorExtraction.swift */; };
+		BBC1F287266DF7C000D93B6D /* FragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC1F286266DF7C000D93B6D /* FragmentView.swift */; };
 		C0D3EDC5F8D2546D5B5CB583230606B7 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9D232917B7F9161AD32800BD7188F6 /* Errors.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		C12A5EDA29052D6AB6B5C08EB827147F /* mach_excServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B2EF8A720D0EAA49000115560DF7BBC /* mach_excServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D906D76A9597A6C5B496D316893560 /* AllPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECCD0DFA1B5AC88BE310179E43A5722 /* AllPass.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -320,6 +321,7 @@
 		BAE263041362D074978BB3B577DF0A05 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2DD27CB90704924D6D50162205BD97 /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		BB373A20266C8573005A0C2A /* KeyboardLayoutGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutGuide.swift; sourceTree = "<group>"; };
+		BBC1F286266DF7C000D93B6D /* FragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FragmentView.swift; sourceTree = "<group>"; };
 		BEE0135D5FDA5A4415EADADB336B9246 /* FailureMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FailureMessage.swift; path = Sources/Nimble/FailureMessage.swift; sourceTree = "<group>"; };
 		C0EE0182653D00926C08100E31BD3795 /* Filter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = Sources/Quick/Filter.swift; sourceTree = "<group>"; };
 		C234427DC01A4C983F67F5875E295B28 /* CwlCatchException.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CwlCatchException.h; path = Carthage/Checkouts/CwlCatchException/Sources/CwlCatchExceptionSupport/include/CwlCatchException.h; sourceTree = "<group>"; };
@@ -693,6 +695,7 @@
 				03C09B565A35E939702F8009D9146496 /* AnchorExtraction.swift */,
 				6034493B0D995FBADBF07CA47BF5DCE9 /* Fragment.swift */,
 				DEE8D48075172B0775F37A467972A6F8 /* FragmentCell.swift */,
+				BBC1F286266DF7C000D93B6D /* FragmentView.swift */,
 				970C1EB42B693693D63FB3DF3FFC303F /* InsertablePlan.swift */,
 				FDA2F4610E06AC82B4E70A4C80B75AFB /* InsertablePlan+Extensions.swift */,
 				6D9369B3610CB92E174960C60468B187 /* InsertableScrollPlan+Extensions.swift */,
@@ -1014,6 +1017,7 @@
 				958CE13453041FCD9038945299899DCE /* InsertableStackPlan+Extensions.swift in Sources */,
 				A69BC4D17BF85E87A0853B9A30851719 /* LayoutPlaner.swift in Sources */,
 				8FCDCCF1F7B0D6A2F53F648A3C64625E /* NotificationCenter+Draftsman.swift in Sources */,
+				BBC1F287266DF7C000D93B6D /* FragmentView.swift in Sources */,
 				56C747BE08382D0A5360D9AD4B826F47 /* Plan.swift in Sources */,
 				D5D8C6F4E989CB491A10D84540FEC927 /* Planable+Center.swift in Sources */,
 				7DA982FF121C4BD06170ABBF50F44E1C /* Planable+Extensions.swift in Sources */,
