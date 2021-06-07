@@ -27,12 +27,11 @@ open class FragmentView: UIView, Fragment {
     
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        guard !inPlanning else { return }
+        guard superview != nil, !inPlanning else { return }
         fragmentWillPlanContent()
         removeAllPlannedConstraints()
-        planContent { plan in
-            self.planContent(plan)
-        }
+        let plan = LayoutPlaner(view: self, context: .init(currentView: self))
+        plan.planContent(self.planContent(_:))
         fragmentDidPlanContent()
     }
     
