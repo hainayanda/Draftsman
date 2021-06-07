@@ -26,6 +26,11 @@ public protocol InsertableViewPlan: InsertablePlan {
 public extension InsertableViewPlan where View: UIStackView {
     @discardableResult
     func fitStacked<V>(_ view: V) -> LayoutPlaner<V> where V : UIView {
+        let possibleFragmentView = view as? FragmentView
+        possibleFragmentView?.inPlanning = true
+        defer {
+            possibleFragmentView?.inPlanning = false
+        }
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addArrangedSubview(view)
         let plan = LayoutPlaner(view: view, context: context)
@@ -59,6 +64,11 @@ public extension InsertableViewPlan where View: UIStackView {
 public extension InsertableViewPlan {
     @discardableResult
     func fit<V: UIView>(_ view: V) -> LayoutPlaner<V> {
+        let possibleFragmentView = view as? FragmentView
+        possibleFragmentView?.inPlanning = true
+        defer {
+            possibleFragmentView?.inPlanning = false
+        }
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
         let plan = LayoutPlaner(view: view, context: context)
