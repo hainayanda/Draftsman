@@ -44,6 +44,10 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
     
     open func fragmentDidPlanContent() {}
     
+    open func fragmentWillLayoutForTheFirstTime() {}
+    
+    open func fragmentDidLayoutForTheFirstTime() {}
+    
     @discardableResult
     open func layoutContentIfNeeded() -> Bool {
         defer {
@@ -116,8 +120,15 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
     }
     
     open override func layoutSubviews() {
+        let isFirstTimeLayout = !layouted
+        if isFirstTimeLayout {
+            fragmentWillLayoutForTheFirstTime()
+        }
         super.layoutSubviews()
         layoutContentIfNeeded()
+        if isFirstTimeLayout {
+            fragmentDidLayoutForTheFirstTime()
+        }
         layoutPhase = .none
     }
 }
@@ -150,6 +161,10 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
     open func fragmentWillPlanContent() {}
     
     open func fragmentDidPlanContent() {}
+    
+    open func fragmentWillLayoutForTheFirstTime() {}
+    
+    open func fragmentDidLayoutForTheFirstTime() {}
     
     @discardableResult
     open func layoutContentIfNeeded() -> Bool {
@@ -227,8 +242,15 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
     }
     
     open override func layoutSubviews() {
+        let isFirstTimeLayout = !layouted
+        if isFirstTimeLayout {
+            fragmentWillLayoutForTheFirstTime()
+        }
         super.layoutSubviews()
         layoutContentIfNeeded()
+        if isFirstTimeLayout {
+            fragmentDidLayoutForTheFirstTime()
+        }
         layoutPhase = .none
     }
 }
