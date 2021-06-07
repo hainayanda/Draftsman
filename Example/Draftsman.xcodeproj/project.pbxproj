@@ -14,6 +14,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		7B36887CF43520F1127F0D60 /* Pods_Draftsman_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689F65CC83EDD28692981986 /* Pods_Draftsman_Tests.framework */; };
 		AB4D2D33F426881B3EEE6BAE /* Pods_Draftsman_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D67A2DD748195AA8882D2C04 /* Pods_Draftsman_Example.framework */; };
+		BBC1F289266E166F00D93B6D /* FragmentViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC1F288266E166F00D93B6D /* FragmentViewSpec.swift */; };
 		BBF5378C25DFCF9C00A6BC6B /* CommonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5374E25DFCF2400A6BC6B /* CommonSpec.swift */; };
 		BBF5379125DFCF9E00A6BC6B /* FragmentCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375325DFCF2400A6BC6B /* FragmentCellSpec.swift */; };
 		BBF5379425DFCFA200A6BC6B /* FragmentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375025DFCF2400A6BC6B /* FragmentSpec.swift */; };
@@ -51,6 +52,7 @@
 		625F2AEFA617EF9E4711AB4B /* Pods-Draftsman_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Draftsman_Example.release.xcconfig"; path = "Target Support Files/Pods-Draftsman_Example/Pods-Draftsman_Example.release.xcconfig"; sourceTree = "<group>"; };
 		689F65CC83EDD28692981986 /* Pods_Draftsman_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Draftsman_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D647AACECE19977542CBD4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		BBC1F288266E166F00D93B6D /* FragmentViewSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FragmentViewSpec.swift; sourceTree = "<group>"; };
 		BBF5374E25DFCF2400A6BC6B /* CommonSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonSpec.swift; sourceTree = "<group>"; };
 		BBF5374F25DFCF2400A6BC6B /* InsertableStackPlanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertableStackPlanSpec.swift; sourceTree = "<group>"; };
 		BBF5375025DFCF2400A6BC6B /* FragmentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentSpec.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				BBF5374E25DFCF2400A6BC6B /* CommonSpec.swift */,
 				BBF5375325DFCF2400A6BC6B /* FragmentCellSpec.swift */,
 				BBF5375025DFCF2400A6BC6B /* FragmentSpec.swift */,
+				BBC1F288266E166F00D93B6D /* FragmentViewSpec.swift */,
 				BBF5375225DFCF2400A6BC6B /* InsertablePlanSpec.swift */,
 				BBF5376025DFCF2400A6BC6B /* InsertableScrollPlanSpec.swift */,
 				BBF5374F25DFCF2400A6BC6B /* InsertableStackPlanSpec.swift */,
@@ -394,6 +397,7 @@
 				BBF537A925DFCFB000A6BC6B /* LayoutPlanerSpec.swift in Sources */,
 				BBF537A125DFCFAB00A6BC6B /* InsertableStackPlanSpec.swift in Sources */,
 				BBF537B525DFCFBB00A6BC6B /* PlanContextSpec.swift in Sources */,
+				BBC1F289266E166F00D93B6D /* FragmentViewSpec.swift in Sources */,
 				BBF5379125DFCF9E00A6BC6B /* FragmentCellSpec.swift in Sources */,
 				BBF537A425DFCFAE00A6BC6B /* InsertableViewPlanSpec.swift in Sources */,
 				BBF5378C25DFCF9C00A6BC6B /* CommonSpec.swift in Sources */,
