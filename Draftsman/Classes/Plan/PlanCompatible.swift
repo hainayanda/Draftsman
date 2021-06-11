@@ -13,18 +13,29 @@ public protocol PlanCompatible { }
 
 public extension PlanCompatible where Self: UIView {
     
-    func plan(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlaner<Self>) -> Void) {
+    @discardableResult
+    func plan(
+        withDelegate delegate: PlanDelegate? = nil,
+        _ options: PlanningOption = .append,
+        _ layouter: (LayoutPlaner<Self>) -> Void) -> [NSLayoutConstraint] {
         translatesAutoresizingMaskIntoConstraints = false
-        planing(withDelegate: delegate, options, layouter)
+        return planing(withDelegate: delegate, options, layouter)
     }
     
-    func planContent(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlan<Self>) -> Void) {
+    @discardableResult
+    func planContent(
+        withDelegate delegate: PlanDelegate? = nil,
+        _ options: PlanningOption = .append,
+        _ layouter: (LayoutPlan<Self>) -> Void) -> [NSLayoutConstraint] {
         planing(withDelegate: delegate, options) { myLayout in
             myLayout.planContent(layouter)
         }
     }
     
-    func planing(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlaner<Self>) -> Void) {
+    internal func planing(
+        withDelegate delegate: PlanDelegate? = nil,
+        _ options: PlanningOption = .append,
+        _ layouter: (LayoutPlaner<Self>) -> Void) -> [NSLayoutConstraint] {
         if options.shouldRemoveOldPlannedConstraints {
             removeAllPlannedConstraints()
         }
@@ -43,19 +54,32 @@ public extension PlanCompatible where Self: UIView {
         }
         NSLayoutConstraint.activate(constraints)
         self.notifyViewDidPlanned()
+        return constraints
     }
     
 }
 
 public extension PlanCompatible where Self: UIViewController {
-    func plan(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlaner<UIView>) -> Void) {
-        view.plan(withDelegate: delegate, options, layouter)
-        notifyViewDidPlanned()
+    @discardableResult
+    func plan(
+        withDelegate delegate: PlanDelegate? = nil,
+        _ options: PlanningOption = .append,
+        _ layouter: (LayoutPlaner<UIView>) -> Void) -> [NSLayoutConstraint] {
+        defer {
+            notifyViewDidPlanned()
+        }
+        return view.plan(withDelegate: delegate, options, layouter)
     }
     
-    func planContent(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlan<UIView>) -> Void) {
-        view.planContent(withDelegate: delegate, options, layouter)
-        notifyViewDidPlanned()
+    @discardableResult
+    func planContent(
+        withDelegate delegate: PlanDelegate? = nil,
+        _ options: PlanningOption = .append,
+        _ layouter: (LayoutPlan<UIView>) -> Void) -> [NSLayoutConstraint] {
+        defer {
+            notifyViewDidPlanned()
+        }
+        return view.planContent(withDelegate: delegate, options, layouter)
     }
 }
 
