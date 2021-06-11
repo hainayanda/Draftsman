@@ -1,5 +1,5 @@
 PODS:
-  - Draftsman (1.0.6)
+  - Draftsman (1.0.9)
   - Nimble (9.2.0)
   - Quick (4.0.0)
 
@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Draftsman: 8aa5d5f68f9054a6d7ac61fbcf3be8bd511b51b8
+  Draftsman: a27f7a5e6a4ad1ac7e078dba22f7a1c2b8fa4189
   Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
 
