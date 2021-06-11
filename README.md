@@ -27,14 +27,14 @@ Draftsman is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Draftsman', '~> 1.0.8'
+pod 'Draftsman', '~> 1.0.9'
 ```
 
 ### Swift Package Manager from XCode
 
 - Add it using xcode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/nayanda1/Draftsman.git** as Swift Package url
-- Set rules at **version**, with **Up to Next Major** option and put **1.0.8** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **1.0.9** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -43,7 +43,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.0.8"))
+    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.0.9"))
 ]
 ```
 
@@ -382,6 +382,22 @@ otherView.plan {
 
 ***
 
+## Manage Created Constraints
+
+You could always get the created constraints by get the return value of `plan` or `planContent`:
+
+```swift
+let myViewConstraints: [NSLayoutConstraint] = myView.plan {
+    $0.size(.equalTo(otherView), multiplyBy: 2)
+}
+let otherViewConstraints: [NSLayoutConstraint] = otherView.planContent { parentPlan in
+    parentPlan.fit(someView)
+        .vertical(equalTo(16), to: .parent)
+}
+```
+
+This constraints is already activated, so you could manually deactivate or activate again using `NSLayoutConstraint.activate` or `NSLayoutConstraint.deactivate` depends on your need. The return value is marked using `@discardableResult`, so its fine if you just ignore it if you don't want to use it.
+
 # Draftsman Fragment
 
 Draftsman Fragment is the base of Component Based View in Draftsman. The fragment is actually just UIView, UITableViewCell and UICollectionViewCell but with planned subviews.
@@ -487,6 +503,8 @@ class MySimpleFragment: FragmentView {
     }
 }
 ```
+
+***
 
 ## Fragment Cell
 
