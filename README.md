@@ -27,14 +27,14 @@ Draftsman is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Draftsman', '~> 1.0.9'
+pod 'Draftsman', '~> 1.1.0'
 ```
 
 ### Swift Package Manager from XCode
 
 - Add it using xcode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/nayanda1/Draftsman.git** as Swift Package url
-- Set rules at **version**, with **Up to Next Major** option and put **1.0.9** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **1.1.0** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -43,7 +43,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.0.9"))
+    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
@@ -214,7 +214,10 @@ the `AnonymousRelation` is enumeration which contains:
 * **mySafeArea** which are where the same anchor of current safe area `UIView`
 * **previous** which are where the same anchor of previous planned `UIView`
 * **previousSafeArea** which are where the same anchor of previous planned `UIView`
-* **keyboard** which are the same anchor of parent keyboard guide of UIView
+* **keyboard** which are the same anchor of parent keyboard guide of `UIView`
+* **keyboardSafeArea** which are the same anchor of parent keyboard guide of `UIView` intersect with safe area
+
+the `keyboard` and `keyboardSafeArea` are all powered by [Clavier](https://github.com/nayanda1/Clavier)
 
 You could also passing `UILayoutPriority` if you need. If you ignore it, it will be lesser than previous priority started by mandatory.
 
@@ -654,6 +657,6 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
 ***
 
-## Contribute
+# Contribute
 
 You know how, just clone and do pull request
