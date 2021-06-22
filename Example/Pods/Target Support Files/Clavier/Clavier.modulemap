@@ -1,0 +1,6 @@
+framework module Clavier {
+  umbrella header "Clavier-umbrella.h"
+
+  export *
+  module * { export * }
+}

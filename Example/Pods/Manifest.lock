@@ -1,5 +1,7 @@
 PODS:
-  - Draftsman (1.0.9)
+  - Clavier (1.0.0)
+  - Draftsman (1.0.9):
+    - Clavier (~> 1.0.0)
   - Nimble (9.2.0)
   - Quick (4.0.0)
 
@@ -10,6 +12,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Clavier
     - Nimble
     - Quick
 
@@ -18,7 +21,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Draftsman: a27f7a5e6a4ad1ac7e078dba22f7a1c2b8fa4189
+  Clavier: 237c09bdf0b2e22d7a26573be7bff90dcdb20834
+  Draftsman: 9917b4a6ee1139ac486a7532b27b6f7923685256
   Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
 

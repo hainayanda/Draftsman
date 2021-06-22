@@ -1,26 +1,24 @@
+  
 //
 //  KeyboardLayoutGuide.swift
 //  Draftsman
 //
-//  Created by Nayanda Haberty on 06/06/21.
+//  Created by Nayanda Haberty on 20/06/21.
 //
-
 import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public extension UIView {
+enum KeyboardState {
+    case up
+    case down
     
-    var keyboardLayoutGuide: KeyboardLayoutGuide {
-        for guide in layoutGuides {
-            if let keyboardGuide = guide as? KeyboardLayoutGuide {
-                return keyboardGuide
-            }
-        }
-        let keyboardGuide = KeyboardLayoutGuide()
-        addLayoutGuide(keyboardGuide)
-        keyboardGuide.updateGuideConstraints()
-        return keyboardGuide
+    var isUp: Bool {
+        self == .up
+    }
+    
+    var isDown: Bool {
+        self == .down
     }
 }
 
@@ -28,6 +26,15 @@ public class KeyboardLayoutGuide: UILayoutGuide {
     
     var window: UIWindow? {
         UIApplication.shared.keyWindow
+    }
+    
+    var safeAreaInsets: UIEdgeInsets {
+        guard let view = owningView else { return .zero }
+        if #available(iOS 11.0, *) {
+            return view.safeAreaInsets
+        } else {
+            return view.layoutMargins
+        }
     }
     
     var defaultKeyboardRect: CGRect {
@@ -51,17 +58,39 @@ public class KeyboardLayoutGuide: UILayoutGuide {
     }
     
     var defaultKeyboardRectInView: CGRect {
-        let viewRect = owningView?.bounds ?? .zero
+        guard let view = owningView else { return .zero }
+        let viewRect = usingSafeArea ? view.bounds: view.bounds.innerFrame(with: safeAreaInsets)
         return CGRect(
-            x: .zero,
-            y: viewRect.height,
+            x: viewRect.origin.x,
+            y: viewRect.origin.y + viewRect.height,
             width: viewRect.width,
             height: .zero
         )
     }
     
+    var defaultKeyboardInsetsInView: UIEdgeInsets {
+        guard let view = owningView else { return .zero }
+        let viewRect = view.bounds
+        if usingSafeArea {
+            return UIEdgeInsets(
+                top: viewRect.height - safeAreaInsets.bottom,
+                left: safeAreaInsets.left,
+                bottom: safeAreaInsets.bottom,
+                right: safeAreaInsets.right
+            )
+        } else {
+            return UIEdgeInsets(
+                top: viewRect.height,
+                left: .zero,
+                bottom: .zero,
+                right: .zero
+            )
+        }
+    }
+    
     lazy var keyboardRect: CGRect = defaultKeyboardRect {
         didSet {
+            guard keyboardRect != oldValue else { return }
             updateGuideConstraints()
         }
     }
@@ -83,24 +112,71 @@ public class KeyboardLayoutGuide: UILayoutGuide {
     }
     
     var keyboardEdgeInsetsInView: UIEdgeInsets {
-        guard let view = owningView else { return .zero }
+        guard let view = owningView else { return defaultKeyboardInsetsInView }
         return view.frame.insets(of: keyboardRectInView)
     }
     
+    var safeKeyboardEdgeInsetsInView: UIEdgeInsets {
+        guard let view = owningView else { return defaultKeyboardInsetsInView }
+        let safeRect = view.frame.innerFrame(with: safeAreaInsets)
+        let intersection = keyboardRectInView.intersection(safeRect)
+        guard !intersection.isNull else { return defaultKeyboardInsetsInView }
+        return view.frame.insets(of: intersection)
+    }
+    
+    var keyboardTopConstraint: NSLayoutConstraint?
+    
+    var edgesConstraints: [NSLayoutConstraint] = []
+    
+    var observeFrameToken: NSObject?
+    
+    var observeInsetsToken: NSObject?
+    
+    var keyboardState: KeyboardState = .down
+    
+    public override var owningView: UIView? {
+        get {
+            super.owningView
+        } set {
+            super.owningView = newValue
+            guard let view = newValue else {
+                observeFrameToken = nil
+                observeInsetsToken = nil
+                return
+            }
+            updateGuideConstraints()
+            observeFrameToken = observeKVC(for: view, keyPath: \.frame)
+            if #available(iOS 11.0, *) {
+                observeInsetsToken = observeKVC(for: view, keyPath: \.safeAreaInsets)
+            } else {
+                observeInsetsToken = observeKVC(for: view, keyPath: \.layoutMargins)
+            }
+        }
+    }
+    
+    let usingSafeArea: Bool
+    
     override init() {
+        self.usingSafeArea = false
         super.init()
         didInit()
     }
     
     required init?(coder: NSCoder) {
+        self.usingSafeArea = false
         super.init(coder: coder)
         didInit()
     }
     
+    init(usingSafeArea: Bool) {
+        self.usingSafeArea = usingSafeArea
+        super.init()
+        didInit()
+    }
+    
     func didInit() {
-        identifier = "draftsman_keyboard_layout_guide"
+        identifier = "clavier_keyboard_layout_guide"
         observeKeyboard()
-        
     }
     
     func observeKeyboard() {
@@ -113,18 +189,26 @@ public class KeyboardLayoutGuide: UILayoutGuide {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardFrameChanged(notification:)),
-            name: UIView.keyboardDidChangeFrameNotification,
+            name: UIApplication.didChangeStatusBarOrientationNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardFrameChanged(notification:)),
+            name: UIDevice.orientationDidChangeNotification,
             object: nil
         )
     }
     
-    var keyboardTopConstraint: NSLayoutConstraint?
-    
-    var edgesConstraints: [NSLayoutConstraint] = []
+    func observeKVC<Property>(for view: UIView, keyPath: KeyPath<UIView, Property>) -> NSObject {
+        return view.observe(keyPath, options: [.new, .old]) { [weak self] sender, changes in
+            self?.updateGuideConstraints()
+        }
+    }
     
     func updateGuideConstraints() {
         guard let view = owningView else { return }
-        let insets = keyboardEdgeInsetsInView
+        let insets = usingSafeArea ? safeKeyboardEdgeInsetsInView: keyboardEdgeInsetsInView
         if edgesConstraints.count != 4 {
             createEdgeConstraints(for: view, with: insets)
         } else {
@@ -149,23 +233,31 @@ public class KeyboardLayoutGuide: UILayoutGuide {
         }
     }
     
+    func useDefaultKeyboardRectIfShould() {
+        guard keyboardState.isDown else { return }
+        keyboardRect = defaultKeyboardRect
+    }
+    
     @objc func keyboardFrameChanged(notification: Notification) {
         guard let userInfo = notification.userInfo,
               let keyboardValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
                 ?? userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue else {
-            keyboardRect = defaultKeyboardRect
-            return
-        }
-        guard keyboardValue.cgRectValue.intersects(UIScreen.main.bounds) else {
-            keyboardRect = defaultKeyboardRect
+            useDefaultKeyboardRectIfShould()
             return
         }
         let rect = keyboardValue.cgRectValue.intersection(UIScreen.main.bounds)
-        guard !rect.isNull else {
+        guard !rect.isNull, rect.height > 0 else {
+            keyboardState = .down
             keyboardRect = defaultKeyboardRect
             return
         }
+        keyboardState = .up
         keyboardRect = rect
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
 }
 #endif

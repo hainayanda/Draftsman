@@ -7,6 +7,7 @@
 
 import Foundation
 #if canImport(UIKit)
+import Clavier
 import UIKit
 
 extension Planer {
@@ -18,7 +19,7 @@ extension Planer {
     
     func getView(from anonymousRelation: AnonymousRelation) -> UIView? {
         switch anonymousRelation {
-        case .parent, .safeArea, .keyboard:
+        case .parent, .safeArea, .keyboard, .keyboardSafeArea:
             return view.superview ?? context.delegate.planer(viewHaveNoSuperview: view)
         case .myself, .mySafeArea:
             return view

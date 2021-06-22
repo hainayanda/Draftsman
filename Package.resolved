@@ -2,12 +2,21 @@
   "object": {
     "pins": [
       {
+        "package": "Clavier",
+        "repositoryURL": "https://github.com/nayanda1/Clavier.git",
+        "state": {
+          "branch": null,
+          "revision": "ab66cf092810e8e87ee895c352b0261fc57ee585",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "CwlCatchException",
         "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
         "state": {
           "branch": null,
-          "revision": "f809deb30dc5c9d9b78c872e553261a61177721a",
-          "version": "2.0.0"
+          "revision": "682841464136f8c66e04afe5dbd01ab51a3a56f2",
+          "version": "2.1.0"
         }
       },
       {
