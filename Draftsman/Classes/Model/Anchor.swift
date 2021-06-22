@@ -7,6 +7,7 @@
 
 import Foundation
 #if canImport(UIKit)
+import Clavier
 import UIKit
 
 @dynamicMemberLookup
@@ -55,7 +56,7 @@ public struct AnchorWithOffset<LayoutAnchor> {
 extension RelatedAnchor {
     func extractRelatedView(from context: PlanContext) -> UIView? {
         switch related {
-        case .parent, .safeArea, .keyboard:
+        case .parent, .safeArea, .keyboard, .keyboardSafeArea:
             return context.currentView.superview ?? context.delegate.planer(viewHaveNoSuperview: context.currentView)
         case .myself, .mySafeArea:
             return context.currentView
@@ -69,16 +70,19 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutYAxisAnchor {
     func getOffsettedAnchor(from context: PlanContext) -> AnchorWithOffset<LayoutAnchor>? {
         guard let relatedView = extractRelatedView(from: context) else { return nil }
         let anchor = relatedView[keyPath: anchorKeyPath]
-        if related.isSafeArea {
+        switch related {
+        case .safeArea, .mySafeArea, .previousSafeArea:
             if #available(iOS 11.0, *) {
                 return .init(anchor: relatedView.safeAreaLayoutGuide[equal: anchorKeyPath])
-            } else {
-                return .init(anchor: anchor, offset: relatedView.layoutMargins[equal: anchorKeyPath])
             }
-        } else if related.isKeyboard {
+            return .init(anchor: anchor, offset: relatedView.layoutMargins[equal: anchorKeyPath])
+        case .keyboard:
             return .init(anchor: relatedView.keyboardLayoutGuide[equal: anchorKeyPath])
+        case .keyboardSafeArea:
+            return .init(anchor: relatedView.safeKeyboardLayoutGuide[equal: anchorKeyPath])
+        default:
+            return .init(anchor: anchor)
         }
-        return .init(anchor: anchor)
     }
 }
 
@@ -86,15 +90,19 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutXAxisAnchor {
     func getOffsettedAnchor(from context: PlanContext) -> AnchorWithOffset<LayoutAnchor>? {
         guard let relatedView = extractRelatedView(from: context) else { return nil }
         let anchor = relatedView[keyPath: anchorKeyPath]
-        if related.isSafeArea {
+        switch related {
+        case .safeArea, .mySafeArea, .previousSafeArea:
             if #available(iOS 11.0, *) {
                 return .init(anchor: relatedView.safeAreaLayoutGuide[equal: anchorKeyPath])
             }
             return .init(anchor: anchor, offset: relatedView.layoutMargins[equal: anchorKeyPath])
-        } else if related.isKeyboard {
+        case .keyboard:
             return .init(anchor: relatedView.keyboardLayoutGuide[equal: anchorKeyPath])
+        case .keyboardSafeArea:
+            return .init(anchor: relatedView.safeKeyboardLayoutGuide[equal: anchorKeyPath])
+        default:
+            return .init(anchor: anchor)
         }
-        return .init(anchor: anchor)
     }
 }
 
@@ -102,15 +110,19 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutDimension {
     func getOffsettedAnchor(from context: PlanContext) -> AnchorWithOffset<LayoutAnchor>? {
         guard let relatedView = extractRelatedView(from: context) else { return nil }
         let anchor = relatedView[keyPath: anchorKeyPath]
-        if related.isSafeArea {
+        switch related {
+        case .safeArea, .mySafeArea, .previousSafeArea:
             if #available(iOS 11.0, *) {
                 return .init(anchor: relatedView.safeAreaLayoutGuide[equal: anchorKeyPath])
             }
             return .init(anchor: anchor, offset: relatedView.layoutMargins[equal: anchorKeyPath])
-        } else if related.isKeyboard {
+        case .keyboard:
             return .init(anchor: relatedView.keyboardLayoutGuide[equal: anchorKeyPath])
+        case .keyboardSafeArea:
+            return .init(anchor: relatedView.safeKeyboardLayoutGuide[equal: anchorKeyPath])
+        default:
+            return .init(anchor: anchor)
         }
-        return .init(anchor: anchor)
     }
 }
 

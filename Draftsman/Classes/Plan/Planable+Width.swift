@@ -7,6 +7,7 @@
 
 import Foundation
 #if canImport(UIKit)
+import Clavier
 import UIKit
 
 public extension Planer {
@@ -168,9 +169,9 @@ extension Planer {
             )
         } else {
             let layoutMargins = relatedView.layoutMargins
-            let totalMargin = dimension == .height
-                ? layoutMargins.top + layoutMargins.bottom
-                : layoutMargins.left + layoutMargins.right
+            let totalMargin = dimension == .width
+                ? layoutMargins.left + layoutMargins.right
+                : layoutMargins.top + layoutMargins.bottom
             width(
                 .moreThanTo(relatedView.anchor(of: dimension)),
                 multiplyBy: multipier,
@@ -203,9 +204,9 @@ extension Planer {
             )
         } else {
             let layoutMargins = relatedView.layoutMargins
-            let totalMargin = dimension == .height
-                ? layoutMargins.top + layoutMargins.bottom
-                : layoutMargins.left + layoutMargins.right
+            let totalMargin = dimension == .width
+                ? layoutMargins.left + layoutMargins.right
+                : layoutMargins.top + layoutMargins.bottom
             width(
                 .lessThanTo(relatedView.anchor(of: dimension)),
                 multiplyBy: multipier,
@@ -238,9 +239,9 @@ extension Planer {
             )
         } else {
             let layoutMargins = relatedView.layoutMargins
-            let totalMargin = dimension == .height
-                ? layoutMargins.top + layoutMargins.bottom
-                : layoutMargins.left + layoutMargins.right
+            let totalMargin = dimension == .width
+                ? layoutMargins.left + layoutMargins.right
+                : layoutMargins.top + layoutMargins.bottom
             width(
                 .equalTo(relatedView.anchor(of: dimension)),
                 multiplyBy: multipier,

@@ -7,6 +7,7 @@
 
 import Foundation
 #if canImport(UIKit)
+import Clavier
 import UIKit
 
 public extension Planer {
@@ -80,8 +81,8 @@ public extension Planer {
         if anchor.isSafeArea {
             return leftToSafeArea(of: relatedView, relation: relation, priority: priority ?? context.mutatingPriority)
         } else if anchor.isKeyboard {
-            let guide = relatedView.keyboardLayoutGuide
-            return right(relation, to: guide.leftAnchor, priority: priority)
+            let guide = anchor == .keyboard ? relatedView.keyboardLayoutGuide: relatedView.safeKeyboardLayoutGuide
+            return left(relation, to: guide.leftAnchor, priority: priority)
         } else {
             return left(relation, to: relatedView.leftAnchor, priority: priority)
         }
@@ -156,7 +157,7 @@ public extension Planer {
         if anchor.isSafeArea {
             return rightToSafeArea(of: relatedView, relation: relation, priority: priority ?? context.mutatingPriority)
         } else if anchor.isKeyboard {
-            let guide = relatedView.keyboardLayoutGuide
+            let guide = anchor == .keyboard ? relatedView.keyboardLayoutGuide: relatedView.safeKeyboardLayoutGuide
             return right(relation, to: guide.rightAnchor, priority: priority)
         } else {
             return right(relation, to: relatedView.rightAnchor, priority: priority)
