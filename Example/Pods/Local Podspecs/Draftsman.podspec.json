@@ -19,6 +19,11 @@
     "ios": "10.0"
   },
   "source_files": "Draftsman/Classes/**/*",
+  "dependencies": {
+    "Clavier": [
+      "~> 1.0.0"
+    ]
+  },
   "swift_versions": "5.1",
   "swift_version": "5.1"
 }
