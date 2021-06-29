@@ -59,7 +59,7 @@ public class KeyboardLayoutGuide: UILayoutGuide {
     
     var defaultKeyboardRectInView: CGRect {
         guard let view = owningView else { return .zero }
-        let viewRect = usingSafeArea ? view.bounds: view.bounds.innerFrame(with: safeAreaInsets)
+        let viewRect = usingSafeArea ? view.bounds.innerFrame(with: safeAreaInsets): view.bounds
         return CGRect(
             x: viewRect.origin.x,
             y: viewRect.origin.y + viewRect.height,
@@ -113,15 +113,15 @@ public class KeyboardLayoutGuide: UILayoutGuide {
     
     var keyboardEdgeInsetsInView: UIEdgeInsets {
         guard let view = owningView else { return defaultKeyboardInsetsInView }
-        return view.frame.insets(of: keyboardRectInView)
+        return view.bounds.insets(of: keyboardRectInView)
     }
     
     var safeKeyboardEdgeInsetsInView: UIEdgeInsets {
         guard let view = owningView else { return defaultKeyboardInsetsInView }
-        let safeRect = view.frame.innerFrame(with: safeAreaInsets)
+        let safeRect = view.bounds.innerFrame(with: safeAreaInsets)
         let intersection = keyboardRectInView.intersection(safeRect)
         guard !intersection.isNull else { return defaultKeyboardInsetsInView }
-        return view.frame.insets(of: intersection)
+        return view.bounds.insets(of: intersection)
     }
     
     var keyboardTopConstraint: NSLayoutConstraint?
@@ -154,7 +154,7 @@ public class KeyboardLayoutGuide: UILayoutGuide {
         }
     }
     
-    let usingSafeArea: Bool
+    var usingSafeArea: Bool
     
     override init() {
         self.usingSafeArea = false
