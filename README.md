@@ -32,8 +32,8 @@ pod 'Draftsman', '~> 1.1.1'
 
 ### Swift Package Manager from XCode
 
-- Add it using xcode menu **File > Swift Package > Add Package Dependency**
-- Add **https://github.com/nayanda1/Draftsman.git** as Swift Package url
+- Add it using XCode menu **File > Swift Package > Add Package Dependency**
+- Add **https://github.com/nayanda1/Draftsman.git** as Swift Package URL
 - Set rules at **version**, with **Up to Next Major** option and put **1.1.1** as its version
 - Click next and wait
 
@@ -68,7 +68,7 @@ Draftsman is available under the MIT license. See the LICENSE file for more info
 
 # Basic Usage
 
-Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. The syntax is designed so it could be read just like english language.
+Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. The syntax is designed so it could be read just like the English language.
 
 ***
 
@@ -109,24 +109,24 @@ public protocol PlanDelegate: class {
 }
 ```
 
-* `planer(viewHaveNoSuperview:)` will be called if planner need superview but cannot find any. You could provide one, or just return nil to ignore those plan and produce error which can be catch at this delegate. The default is nil.
-* `planer(neededViewControllerFor:)` will be called if planner need parent `UIViewController` but cannot find any. You could provide one, or just return nil to ignore those plan and produce error which can be catch at this delegate. The default is get current view UIViewController if have any.
+* `planer(viewHaveNoSuperview:)` will be called if the planner needs superview but cannot find any. You could provide one, or just return nil to ignore those plan and produce error which can be caught at this delegate. The default is nil.
+* `planer(neededViewControllerFor:)` will be called if the planner needs parent `UIViewController` but cannot find any. You could provide one, or just return nil to ignore those plan and produce error which can be caught at this delegate. The default is to get the current view UIViewController if have any.
 * `planer(_:, errorWhenPlanning:)` will be called if any error occurs when planning.
 
 ### PlanningOption
-PlanningOption is enumeration which will determined how the plan will be implemented:
+PlanningOption is an enumeration that will determine how the plan will be implemented:
 * **append** will be ignore current active `NSLayoutConstraints` and append any `NSLayoutConstraints` planned.
-* **renew** will be update same current active `NSLayoutConstraints` which created by Draftsman if found and append the new one.
-* **startFresh** will be remove all current active `NSLayoutConstraints` which created by Draftsman and append any NSLayoutConstraints planned.
+* **renew** will update the same current active `NSLayoutConstraints` which created by Draftsman if found and append the new one.
+* **startFresh** will remove all current active `NSLayoutConstraints` created by Draftsman and append any NSLayoutConstraints planned.
 * **startClean** will be remove all current active `NSLayoutConstraints` and append any `NSLayoutConstraints` planned.
 
-if we sort all the option from the fastest to the slowest it could be like this:
+if we sort all the options from the fastest to the slowest it could be like this:
 * append
 * startClean
 * startFresh
 * renew
 
-but even if the `append` is the fastest, you better just use this if you want to plan once, otherwise you will have multiple duplicated constraints.
+but even if the `append` is the fastest, you better just use this if you want to plan once, otherwise, you will have multiple duplicated constraints.
 
 ***
 
@@ -141,12 +141,12 @@ parentView.planContent { parentPlan in
     parentPlan.fit(otherView)
 }
 ```
-At the above code, it using `planContent` method which will bypass `parentView` plan into its content plan. It actually will do the following instruction sequentially:
+The above code, it's using `planContent` method which will bypass `parentView` plan into its content plan. It actually will do the following instruction sequentially:
 1. `parentView` insert `someView`
 2. `someView` insert `someChildView`
 3. `parentView` insert `otherView`
 
-So if the hierarchy is written in pseudo hierarchy style, it should be similar like this: 
+So if the hierarchy is written in pseudo hierarchy style, it should be similar to this: 
 ```
 parentView
 |____someView
@@ -155,11 +155,11 @@ parentView
 ```
 
 where `someView` and `otherView` are both inside `parentView`, and `someChildView` is inside `someView`
-the compatible type to be passed in fit method are:
+the compatible type to be passed in the fit method are:
 * any descendant of `UIView`
 * any descendant of `UIViewController`
 
-If you pass `UIViewController`, it will be automatically added `UIViewController` view as child and put the `UIViewController` as child of its current `UIViewController`.
+If you pass `UIViewController`, it will be automatically added `UIViewController` view as a child and put the `UIViewController` as a child of its current `UIViewController`.
 You could `planContent` as much as you need, it will fit all the View just like how you write it.
 
 ***
@@ -207,7 +207,7 @@ and `other_anchor` common types are:
 * `NSLayoutXAxisAnchor`
 * `AnonymousRelation`
 
-the `AnonymousRelation` is enumeration which contains:
+the `AnonymousRelation` is an enumeration that contains:
 * **parent** which are where the same anchor of parent `UIView`
 * **safeArea** which are where the same anchor of parent safe area `UIView`
 * **myself** which are where the same anchor of current `UIView`
@@ -219,7 +219,7 @@ the `AnonymousRelation` is enumeration which contains:
 
 the `keyboard` and `keyboardSafeArea` are all powered by [Clavier](https://github.com/nayanda1/Clavier)
 
-You could also passing `UILayoutPriority` if you need. If you ignore it, it will be lesser than previous priority started by mandatory.
+You could also pass `UILayoutPriority` if you need. If you ignore it, it will be lesser than the previous priority started by mandatory.
 
 So lets say you want your view to fill the bottom of its superview, you could just use `AnonymousRelation` instead of declare explicitly:
 
@@ -232,7 +232,7 @@ myView.plan {
 ```
 
 ### Related Anchor
-If your `AnonymousRelation` anchor is different than your anchor, you could use `RelatedAnchor<NSLayoutXAxisAnchor>`. Its actually the anchor extractor from `AnonymousRelation`.
+If your `AnonymousRelation` anchor is different than your anchor, you could use `RelatedAnchor<NSLayoutXAxisAnchor>`. It's actually the anchor extractor from `AnonymousRelation`.
 
 So lets say you want to make your view always on top of keyboard, just do this:
 
@@ -365,7 +365,7 @@ and `LayoutDimension` is enumeration of dimension:
 * **height**
 * **width**
 
-multiplier is the value which will be multiplied dimension anchor. The constant will be added to the dimension.
+a multiplier is a value that will be multiplied by dimension anchor. The constant will be added to the dimension.
 
 ### Dimensioning Shortcut
 There are some shortcut for Dimensioning which are:
@@ -399,17 +399,17 @@ let otherViewConstraints: [NSLayoutConstraint] = otherView.planContent { parentP
 }
 ```
 
-This constraints is already activated, so you could manually deactivate or activate again using `NSLayoutConstraint.activate` or `NSLayoutConstraint.deactivate` depends on your need. The return value is marked using `@discardableResult`, so its fine if you just ignore it if you don't want to use it.
+This constraint is already activated, so you could manually deactivate or activate again using `NSLayoutConstraint.activate` or `NSLayoutConstraint.deactivate` depends on your need. The return value is marked using `@discardableResult`, so it's fine if you just ignore it if you don't want to use it.
 
 # Draftsman Fragment
 
-Draftsman Fragment is the base of Component Based View in Draftsman. The fragment is actually just UIView, UITableViewCell and UICollectionViewCell but with planned subviews.
+Draftsman Fragment is the base of Component-Based View in Draftsman. The fragment is actually just UIView, UITableViewCell, and UICollectionViewCell but with planned subviews.
 
 ***
 
 ## Fragment
 
-Fragment in Draftsman is actually an ordinary UIView (or TableViewCell/CollectionViewCell) which can do plan for itself and its subviews.
+Fragment in Draftsman is actually an ordinary UIView (or TableViewCell/CollectionViewCell) that can do a plan for itself and its subviews.
 
 ```swift
 public protocol Fragment {
@@ -466,7 +466,7 @@ what happening here is when you fit simpleFragment into view, it will call simpl
 > > * create fullBottom constraints
 > > * activate all constraints created inside
 
-The simpleFragment's `planContent(_:)` will be called inside `fit(_:)` so all its subviews constraints will already be created after `fit(_:)` is called.
+The simple fragments `planContent(_:)` will be called inside `fit(_:)` so all its subviews constraints will already be created after `fit(_:)` is called.
 
 There are two other extensions method you could use to call planContent indirectly:
 * `func planFragment(delegate: PlanDelegate? = nil)` which will be call `fragmentWillPlanContent()`, `planContent(_:)` and `fragmentDidPlanContent()` and activate all created constraints right away
@@ -521,7 +521,7 @@ public protocol FragmentCell: Fragment {
 }
 ```
 
-You're not supposed to implement FragmentCell by yourself but by extend `TableFragmentCell` which is `UITableViewCell` that implement `FragmentCell` or `CollectionFragmentCell` which is `UICollectionViewCell` that implement `FragmentCell`. The reason is because all of the `FragmentCell` implementation is implemented there as part of how those `FragmentCell` should behave.
+You're not supposed to implement FragmentCell by yourself but by extend `TableFragmentCell` which is `UITableViewCell` that implement `FragmentCell` or `CollectionFragmentCell` which is `UICollectionViewCell` that implement `FragmentCell`. The reason is that all of the `FragmentCell` implementation is implemented there as part of how those `FragmentCell` should behave.
 
 ### Behavior and Phase
 
@@ -530,7 +530,7 @@ As we could see before, the `FragmentCell` have two properties and one added met
 * `var planningBehavior: CellPlanningBehavior { get }`
 * `func planningOption(on phase: CellLayoutingPhase) -> PlanningOption`
 
-The `layoutPhase` is the phase of the Cell, which is enumeration:
+The `layoutPhase` is the phase of the Cell, which is an enumeration:
 * **firstLoad** which indicated that the `Cell` is just created
 * **setNeedsLayout** which indicated that the `Cell` `setNeedsLayout()` is just called
 * **reused** which indicated that the `Cell` is being reused
@@ -604,7 +604,7 @@ class MyCell: TableFragmentCell {
 }
 ```
 
-If you want to inject cellSize calculator, just pass closure to `whenNeedCellSize` method at cell
+If you want to inject cellSize calculator, just pass a closure to `whenNeedCellSize` method at the cell
 
 ```swift
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -616,7 +616,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 }
 ```
 
-Cell above will have height 128 regarding of how long is cellWidth.
+The cell above will have a height of 128 regarding how long is cellWidth.
 
 ### Collection Fragment Cell
 
@@ -641,9 +641,9 @@ class EventCollectionCell: CollectionFragmentCell {
 }
 ```
 
-Cell above will be square with side equal to 1/3 `collectionContentSize` side
+The cell above will be a square with a side equal to 1/3 `collectionContentSize` side
 
-If you want to inject cellSize calculator, just pass closure to `whenNeedCellSize` method at cell
+If you want to inject cellSize calculator, just pass a closure to `whenNeedCellSize` method at the cell
 
 ```swift
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
