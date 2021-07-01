@@ -244,7 +244,7 @@ myView.plan {
 }
 ```
 
-so instead of call the previous anchor explicitly, you call them like that.
+so instead of calling the previous anchor explicitly, you call them like that.
 
 ### Positioning Shortcut
 There are some shortcut for Positioning. For center anchor:
