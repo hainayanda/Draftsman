@@ -9,29 +9,38 @@
 import UIKit
 import Draftsman
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, Planned {
     
-    var textView: UITextView = builder(UITextView.self)
+    lazy var textView: UITextView = builder(UITextView.self)
         .backgroundColor(.lightGray)
         .build()
     
-    var buttonOnTopKeyboard: UIButton = builder(UIButton.self)
+    lazy var buttonOnTopKeyboard: UIButton = builder(UIButton.self)
         .backgroundColor(.blue)
         .build()
     
+    @LayoutPlan
+    var viewPlan: ViewPlan {
+        UIView().plan
+            .at(.fullTop, .equalTo(16), to: .safeArea)
+            .bottom(.equalTo(16), to: buttonOnTopKeyboard.topAnchor)
+            .insert {
+                textView.plan
+                    .center(.equal, to: .parent)
+                    .horizontal(.equal, to: .parent)
+                    .height(.equalTo(.parent), multiplyBy: 0.5)
+            }
+        buttonOnTopKeyboard.plan
+            .horizontal(.equal, to: .parent)
+            .bottom(.moreThan, to: .safeArea, priority: .required)
+            .bottom(.equal, to: .top(of: .keyboard))
+            .height(.equalTo(45))
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        applyPlan()
         buttonOnTopKeyboard.setTitle("Button on top keyboard", for: .normal)
-        planContent {
-            $0.fit(textView)
-                .at(.fullTop, .equalTo(16), to: .safeArea)
-                .bottom(.equalTo(16), to: buttonOnTopKeyboard.topAnchor)
-            $0.fit(buttonOnTopKeyboard)
-                .horizontal(.equal, to: .parent)
-                .bottom(.moreThan, to: .safeArea, priority: .required)
-                .bottom(.equal, to: .top(of: .keyboard))
-                .height(.equalTo(45))
-        }
         buttonOnTopKeyboard.addTarget(self, action: #selector(didTap(_:)), for: .touchUpInside)
     }
     
