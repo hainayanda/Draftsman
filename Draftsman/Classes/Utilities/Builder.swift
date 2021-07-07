@@ -36,7 +36,7 @@ public func builder<Object>(_ object: Object) -> BuildableBuilder<Object> {
 }
 
 @dynamicMemberLookup
-public class BuildableBuilder<Object> {
+public final class BuildableBuilder<Object> {
     public typealias PropertyAssigner<Property> = ((Property) -> BuildableBuilder<Object>)
     var object: Object
     
