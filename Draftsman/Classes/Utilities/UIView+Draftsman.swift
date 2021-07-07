@@ -61,4 +61,12 @@ public extension UIView {
         return currentParent
     }
 }
+
+public extension UIStackView {
+    
+    convenience init(axis: NSLayoutConstraint.Axis) {
+        self.init()
+        self.axis = axis
+    }
+}
 #endif
