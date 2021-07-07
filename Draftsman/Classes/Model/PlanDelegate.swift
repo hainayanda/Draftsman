@@ -23,7 +23,7 @@ public extension PlanDelegate {
     func planer(viewHaveNoSuperview view: UIView) -> UIView? { nil }
     func planer(_ view: UIView, errorWhenPlanning error: DraftsmanError) { }
     func planer(neededViewControllerFor viewController: UIViewController) -> UIViewController? {
-        self as? UIViewController ?? (self as? UIView)?.parentViewController
+        self as? UIViewController ?? (self as? UIView)?.nextViewController
     }
 }
 #endif
