@@ -18,6 +18,11 @@ public struct AnchorWithOffset<LayoutAnchor> {
     }
 }
 
+public struct RelatedAnchor<LayoutAnchor> {
+    var related: AnonymousRelation
+    var anchorKeyPath: KeyPath<UIView, LayoutAnchor>
+}
+
 extension RelatedAnchor {
     func extractRelatedView(from context: PlanContext) -> UIView? {
         switch related {
@@ -28,6 +33,47 @@ extension RelatedAnchor {
         case .previous, .previousSafeArea:
             return context.previousView
         }
+    }
+}
+
+public extension RelatedAnchor {
+    
+    // MARK: X Axis
+    
+    static func left(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
+        return .init(related: related, anchorKeyPath: \.leftAnchor)
+    }
+    
+    static func right(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.rightAnchor)
+    }
+    
+    static func centerX(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.centerXAnchor)
+    }
+    
+    // MARK: Y Axis
+    
+    static func top(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.topAnchor)
+    }
+    
+    static func bottom(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.bottomAnchor)
+    }
+    
+    static func centerY(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.centerYAnchor)
+    }
+    
+    // MARK: Dimension
+
+    static func width(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutDimension> {
+        .init(related: related, anchorKeyPath: \.widthAnchor)
+    }
+    
+    static func height(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutDimension> {
+        .init(related: related, anchorKeyPath: \.heightAnchor)
     }
 }
 

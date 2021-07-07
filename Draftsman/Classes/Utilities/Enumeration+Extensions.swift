@@ -9,6 +9,26 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
+extension LayoutRelation where Related == CGFloat {
+    func convertedBy(sign: NumberSign) -> Self {
+        guard sign == .negative else { return self }
+        switch self {
+        case .equal:
+            return self
+        case .moreThan:
+            return .lessThan
+        case .lessThan:
+            return .moreThan
+        case .equalTo(let space):
+            return .equalTo(-space)
+        case .moreThanTo(let space):
+            return .lessThanTo(-space)
+        case .lessThanTo(let space):
+            return .moreThanTo(-space)
+        }
+    }
+}
+
 public extension LayoutRelation where Related == InsetsConvertible {
     
     var asTopRelation: LayoutRelation<CGFloat> {
