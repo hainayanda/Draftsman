@@ -9,11 +9,6 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public enum LayoutDimension {
-    case height
-    case width
-}
-
 public enum LayoutRelation<Related> {
     case moreThanTo(Related)
     case lessThanTo(Related)

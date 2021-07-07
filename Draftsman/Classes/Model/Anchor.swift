@@ -10,41 +10,6 @@ import Foundation
 import Clavier
 import UIKit
 
-@dynamicMemberLookup
-public struct Anchor<LayoutAnchor: AnyObject> {
-    var related: AnonymousRelation
-    
-    public subscript(dynamicMember keyPath: KeyPath<UIView, LayoutAnchor>) -> RelatedAnchor<LayoutAnchor> {
-        .init(related: related, anchorKeyPath: keyPath)
-    }
-    
-    @available(*, deprecated, message: "use static function of RelatedAnchor eg: .top(of: .keyboard) instead of Anchor(of: .keyboard).topAnchor")
-    public init(of related: AnonymousRelation) {
-        self.related = related
-    }
-}
-
-public struct RelatedAnchor<LayoutAnchor> {
-    var related: AnonymousRelation
-    var anchorKeyPath: KeyPath<UIView, LayoutAnchor>
-    
-    public static func left(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
-        .init(related: related, anchorKeyPath: \.leftAnchor)
-    }
-    
-    public static func top(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
-        .init(related: related, anchorKeyPath: \.topAnchor)
-    }
-    
-    public static func right(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
-        .init(related: related, anchorKeyPath: \.rightAnchor)
-    }
-    
-    public static func bottom(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
-        .init(related: related, anchorKeyPath: \.bottomAnchor)
-    }
-}
-
 public struct AnchorWithOffset<LayoutAnchor> {
     var anchor: LayoutAnchor
     var offset: CGFloat = 0
