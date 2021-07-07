@@ -22,6 +22,7 @@ extension UITableViewCell {
 }
 
 open class TableFragmentCell: UITableViewCell, FragmentCell {
+    
     var _layoutPhase: CellLayoutingPhase = .firstLoad
     public internal(set) var layoutPhase: CellLayoutingPhase {
         get {
@@ -38,7 +39,7 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
     
     open var planningBehavior: CellPlanningBehavior { .planOnce }
     
-    open func planContent(_ plan: InsertablePlan) { }
+    open var viewPlan: ViewPlan { VoidViewPlan() }
     
     open func fragmentWillPlanContent() {}
     
@@ -57,9 +58,8 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
             return false
         }
         fragmentWillPlanContent()
-        contentView.planContent(planningOption(on: layoutPhase)) { content in
-            planContent(content)
-        }
+        let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan)
+        scheme.apply()
         fragmentDidPlanContent()
         return true
     }
@@ -72,7 +72,10 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
         customHeightCalculator = calculate
     }
     
-    open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+    open override func systemLayoutSizeFitting(
+        _ targetSize: CGSize,
+        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
+        verticalFittingPriority: UILayoutPriority) -> CGSize {
         let layouted = layoutContentIfNeeded()
         if layouted {
             setNeedsDisplay()
@@ -156,7 +159,7 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
     
     open var planningBehavior: CellPlanningBehavior { .planOnce }
     
-    open func planContent(_ layout: InsertablePlan) { }
+    open var viewPlan: ViewPlan { VoidViewPlan() }
     
     open func fragmentWillPlanContent() {}
     
@@ -175,8 +178,10 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
             return false
         }
         fragmentWillPlanContent()
-        contentView.planContent(planningOption(on: layoutPhase)) { content in
-            planContent(content)
+        let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan)
+        scheme.apply()
+        contentView.planContent(planningOption(on: layoutPhase)) {
+            viewPlan
         }
         fragmentDidPlanContent()
         return true

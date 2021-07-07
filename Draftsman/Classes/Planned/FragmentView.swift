@@ -15,7 +15,7 @@ open class FragmentView: UIView, Fragment {
     
     var inPlanning: Bool = false
     
-    open func planContent(_ plan: InsertablePlan) { }
+    open var viewPlan: ViewPlan { VoidViewPlan() }
     
     open func fragmentWillPlanContent() {}
     
@@ -30,8 +30,9 @@ open class FragmentView: UIView, Fragment {
         guard superview != nil, !inPlanning else { return }
         fragmentWillPlanContent()
         removeAllPlannedConstraints()
-        let plan = LayoutPlaner(view: self, context: .init(currentView: self))
-        plan.planContent(self.planContent(_:))
+        planContent {
+            viewPlan
+        }
         fragmentDidPlanContent()
     }
     

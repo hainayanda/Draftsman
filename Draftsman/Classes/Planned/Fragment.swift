@@ -9,9 +9,8 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public protocol Fragment {
+public protocol Fragment: Planned {
     func fragmentWillPlanContent()
-    func planContent(_ plan: InsertablePlan)
     func fragmentDidPlanContent()
 }
 
@@ -22,17 +21,17 @@ public extension Fragment {
 
 public extension Fragment where Self: UIView {
     
-    func planFragment(delegate: PlanDelegate? = nil) {
-        let layoutPlaner = LayoutPlaner<Self>(view: self, context: .init(delegate: delegate, currentView: self))
+    func planFragment(delegate: PlanDelegate? = nil, _ planOption: PlanningOption = .renew) {
         fragmentWillPlanContent()
-        layoutPlaner.planContent(self.planContent(_:))
+        let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan)
+        scheme.context = PlanContext(delegate: delegate, currentView: self)
+        scheme.apply()
         fragmentDidPlanContent()
-        NSLayoutConstraint.activate(layoutPlaner.plannedConstraints)
     }
     
-    func replanContent(delegate: PlanDelegate? = nil) {
+    func replanContent(delegate: PlanDelegate? = nil, _ planOption: PlanningOption = .renew) {
         removeAllPlannedConstraints()
-        planFragment(delegate: delegate)
+        planFragment(delegate: delegate, planOption)
     }
 }
 #endif
