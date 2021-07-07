@@ -34,7 +34,7 @@ class FragmentSpec: QuickSpec {
                     expect(didPlan).to(beFalse())
                     willPlan = true
                 }
-                fragment.didPlanContent = { _ in
+                fragment.didPlanContent = {
                     expect(willPlan).to(beTrue())
                     expect(didPlan).to(beFalse())
                     planed = true
@@ -60,10 +60,15 @@ class SpiedViewFragment: UIView, Fragment {
     func fragmentWillPlanContent() {
         willPlan?()
     }
-    var didPlanContent: ((InsertablePlan) -> Void)?
-    func planContent(_ plan: InsertablePlan) {
-        didPlanContent?(plan)
+    
+    var didPlanContent: (() -> Void)?
+    var viewPlan: ViewPlan {
+        defer {
+            didPlanContent?()
+        }
+        return VoidViewPlan()
     }
+    
     var didPlan: (() -> Void)?
     func fragmentDidPlanContent() {
         didPlan?()

@@ -19,36 +19,35 @@ class InsertablePlanSpec: QuickSpec {
             context("General View") {
                 var viewController: UIViewController!
                 var view: UIView!
-                var testableInsertableViewPlan: TestableInsertableViewPlan<UIView>!
                 beforeEach {
                     viewController = .init()
                     view = viewController.view
-                    testableInsertableViewPlan = .init(view: view)
                 }
                 it("should be fit view") {
                     let newView = UIView()
-                    let plan = testableInsertableViewPlan.fit(newView)
-                    expect(plan.view).to(equal(newView))
+                    view.planContent {
+                        newView
+                    }
                     expect(view.subviews.contains(newView)).to(beTrue())
                     expect(newView.translatesAutoresizingMaskIntoConstraints).to(beFalse())
                 }
                 it("should be fit view controller") {
                     let newVC = UIViewController()
-                    let plan = testableInsertableViewPlan.fit(newVC)
-                    expect(plan.view).to(equal(newVC.view))
+                    view.planContent {
+                        newVC
+                    }
                     expect(view.subviews.contains(newVC.view)).to(beTrue())
                     expect(newVC.view.translatesAutoresizingMaskIntoConstraints).to(beFalse())
                 }
                 it("should fit and plan molecule") {
                     var planed: Bool = false
                     let molecule = MockFragment()
-                    molecule.didPlanContent = { plan in
-                        expect((plan as? LayoutPlan<MockFragment>)?.view)
-                            .to(equal(molecule))
+                    molecule.didPlanContent = {
                         planed = true
                     }
-                    let plan = testableInsertableViewPlan.fit(molecule)
-                    expect(plan.view).to(equal(molecule))
+                    view.planContent {
+                        molecule
+                    }
                     expect(view.subviews.contains(molecule)).to(beTrue())
                     expect(molecule.translatesAutoresizingMaskIntoConstraints).to(beFalse())
                     expect(planed).to(beTrue())
@@ -56,47 +55,46 @@ class InsertablePlanSpec: QuickSpec {
             }
             context("Stack View") {
                 var view: UIStackView!
-                var testableInsertableViewPlan: TestableInsertableViewPlan<UIStackView>!
                 beforeEach {
                     view = .init()
-                    testableInsertableViewPlan = .init(view: view)
                 }
                 it("should be fit stacked view") {
                     var views: [UIView] = []
                     for _ in 0 ..< Int.random(in: 5..<10) {
-                        let view = UIView()
-                        views.append(view)
-                        testableInsertableViewPlan.fitStacked(view)
-                        expect(view.translatesAutoresizingMaskIntoConstraints).to(beFalse())
+                        let stackedView = UIView()
+                        views.append(stackedView)
+                        view.planStackedContent {
+                            stackedView
+                        }
                     }
-                    expect(testableInsertableViewPlan.view.arrangedSubviews).to(equal(views))
+                    expect(view.arrangedSubviews).to(equal(views))
                 }
                 it("should be fit stacked view controller") {
                     var vcs: [UIViewController] = []
                     for _ in 0 ..< Int.random(in: 5..<10) {
                         let vc = UIViewController()
                         vcs.append(vc)
-                        testableInsertableViewPlan.fitStacked(vc)
-                        expect(vc.view.translatesAutoresizingMaskIntoConstraints).to(beFalse())
+                        view.planStackedContent {
+                            vc
+                        }
                     }
-                    expect(testableInsertableViewPlan.view.arrangedSubviews).to(equal(vcs.compactMap { $0.view }))
+                    expect(view.arrangedSubviews).to(equal(vcs.compactMap { $0.view }))
                 }
                 it("should be fit stacked molecule") {
                     var molecules: [MockFragment] = []
                     for _ in 0 ..< Int.random(in: 5..<10) {
                         var planed: Bool = false
                         let molecule = MockFragment()
-                        molecule.didPlanContent = { plan in
-                            expect((plan as? LayoutPlan<MockFragment>)?.view)
-                                .to(equal(molecule))
+                        molecule.didPlanContent = {
                             planed = true
                         }
                         molecules.append(molecule)
-                        testableInsertableViewPlan.fitStacked(molecule)
-                        expect(molecule.translatesAutoresizingMaskIntoConstraints).to(beFalse())
+                        view.planStackedContent {
+                            molecule
+                        }
                         expect(planed).to(beTrue())
                     }
-                    expect(testableInsertableViewPlan.view.arrangedSubviews).to(equal(molecules))
+                    expect(view.arrangedSubviews).to(equal(molecules))
                 }
             }
         }
@@ -104,9 +102,12 @@ class InsertablePlanSpec: QuickSpec {
 }
 
 class MockFragment: UIView, Fragment {
-    var didPlanContent: ((InsertablePlan) -> Void)?
-    func planContent(_ plan: InsertablePlan) {
-        didPlanContent?(plan)
+    var didPlanContent: (() -> Void)?
+    var viewPlan: ViewPlan {
+        defer {
+            didPlanContent?()
+        }
+        return VoidViewPlan()
     }
 }
 #endif

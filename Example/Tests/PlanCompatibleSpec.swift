@@ -22,66 +22,14 @@ class PlanCompatibleSpec: QuickSpec {
                     view = .init()
                 }
                 it("should plan content") {
-                    var planed: Bool = false
                     let child: UIView = .init()
                     let randomSize: CGSize = .init(width: .random(in: 1..<10), height: .random(in: 1..<10))
                     let randomChildSize: CGSize = .init(width: .random(in: 1..<10), height: .random(in: 1..<10))
-                    view.plan(.append) { plan in
-                        plan.size(.equalTo(randomSize))
-                        plan.planContent { content in
-                            content.fit(child)
-                                .size(.equalTo(randomChildSize))
-                        }
-                        planed = true
-                    }
-                    expect(planed).to(beTrue())
-                    expect(child.superview).to(equal(view))
-                    expect(child.constraints.count).to(equal(2))
-                    expect(view.constraints.count).to(equal(2))
-                    planed = false
-                    view.plan(.startClean) { plan in
-                        expect(view.subviews.isEmpty).to(beTrue())
-                        expect(child.constraints.isEmpty).to(beTrue())
-                        expect(view.constraints.isEmpty).to(beTrue())
-                        plan.size(.equalTo(randomSize))
-                        plan.planContent { content in
-                            content.fit(child)
-                                .size(.equalTo(randomChildSize))
-                        }
-                        planed = true
-                    }
-                    expect(planed).to(beTrue())
-                    expect(child.superview).to(equal(view))
-                    expect(child.constraints.count).to(equal(2))
-                    expect(view.constraints.count).to(equal(2))
-                    planed = false
-                    view.plan(.renew) { plan in
-                        expect(view.subviews.count).to(equal(1))
-                        expect(child.constraints.count).to(equal(2))
-                        expect(view.constraints.count).to(equal(2))
-                        plan.size(.equalTo(randomSize))
-                        plan.planContent { content in
-                            content.fit(child)
-                                .size(.equalTo(randomChildSize))
-                        }
-                        planed = true
-                    }
-                    expect(planed).to(beTrue())
-                    expect(child.superview).to(equal(view))
-                    expect(child.constraints.count).to(equal(2))
-                    expect(view.constraints.count).to(equal(2))
-                    planed = false
-                    view.plan(.startFresh) { plan in
-                        expect(child.constraints.isEmpty).to(beTrue())
-                        expect(view.constraints.isEmpty).to(beTrue())
-                        plan.size(.equalTo(randomSize))
-                        plan.planContent { content in
-                            content.fit(child)
-                                .size(.equalTo(randomChildSize))
-                        }
-                        planed = true
-                    }
-                    expect(planed).to(beTrue())
+                    view.plan
+                        .size(.equalTo(randomSize))
+                        .insert {
+                            child.plan.size(.equalTo(randomChildSize))
+                        }.apply()
                     expect(child.superview).to(equal(view))
                     expect(child.constraints.count).to(equal(2))
                     expect(view.constraints.count).to(equal(2))
@@ -95,66 +43,15 @@ class PlanCompatibleSpec: QuickSpec {
                     view = viewController.view
                 }
                 it("should plan content") {
-                    var planed: Bool = false
                     let child: UIView = .init()
                     let randomSize: CGSize = .init(width: .random(in: 1..<10), height: .random(in: 1..<10))
                     let randomChildSize: CGSize = .init(width: .random(in: 1..<10), height: .random(in: 1..<10))
-                    viewController.plan(.append) { plan in
-                        plan.size(.equalTo(randomSize))
-                        plan.planContent { content in
-                            content.fit(child)
+                    viewController.plan
+                        .size(.equalTo(randomSize))
+                        .insert {
+                            child.plan
                                 .size(.equalTo(randomChildSize))
-                        }
-                        planed = true
-                    }
-                    expect(planed).to(beTrue())
-                    expect(child.superview).to(equal(view))
-                    expect(child.constraints.count).to(equal(2))
-                    expect(view.constraints.count).to(equal(2))
-                    planed = false
-                    viewController.plan(.startClean) { plan in
-                        expect(view.subviews.isEmpty).to(beTrue())
-                        expect(child.constraints.isEmpty).to(beTrue())
-                        expect(view.constraints.isEmpty).to(beTrue())
-                        plan.size(.equalTo(randomSize))
-                        plan.planContent { content in
-                            content.fit(child)
-                                .size(.equalTo(randomChildSize))
-                        }
-                        planed = true
-                    }
-                    expect(planed).to(beTrue())
-                    expect(child.superview).to(equal(view))
-                    expect(child.constraints.count).to(equal(2))
-                    expect(view.constraints.count).to(equal(2))
-                    planed = false
-                    viewController.plan(.renew) { plan in
-                        expect(view.subviews.count).to(equal(1))
-                        expect(child.constraints.count).to(equal(2))
-                        expect(view.constraints.count).to(equal(2))
-                        plan.size(.equalTo(randomSize))
-                        plan.planContent { content in
-                            content.fit(child)
-                                .size(.equalTo(randomChildSize))
-                        }
-                        planed = true
-                    }
-                    expect(planed).to(beTrue())
-                    expect(child.superview).to(equal(view))
-                    expect(child.constraints.count).to(equal(2))
-                    expect(view.constraints.count).to(equal(2))
-                    planed = false
-                    viewController.plan(.startFresh) { plan in
-                        expect(child.constraints.isEmpty).to(beTrue())
-                        expect(view.constraints.isEmpty).to(beTrue())
-                        plan.size(.equalTo(randomSize))
-                        plan.planContent { content in
-                            content.fit(child)
-                                .size(.equalTo(randomChildSize))
-                        }
-                        planed = true
-                    }
-                    expect(planed).to(beTrue())
+                        }.apply()
                     expect(child.superview).to(equal(view))
                     expect(child.constraints.count).to(equal(2))
                     expect(view.constraints.count).to(equal(2))

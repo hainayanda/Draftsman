@@ -18,419 +18,230 @@ class LayoutPlanerSpec: QuickSpec {
     override func spec() {
         describe("view layout behaviour") {
             var view: UIView!
-            var layoutPlanerForTest: LayoutPlaner<UIView>!
+            var otherView: UIView!
             beforeEach {
                 view = .init()
-                layoutPlanerForTest = .init(view: view, context: .init(currentView: view))
+                otherView = .init()
             }
-            it("should add position constraint to other view") {
-                let otherView: UIView = .init()
-                let otherHAnchors = [otherView.rightAnchor, otherView.leftAnchor, otherView.centerXAnchor]
-                let otherVAnchors = [otherView.topAnchor, otherView.bottomAnchor, otherView.centerYAnchor]
-                let layoutRelations: [LayoutRelation<CGFloat>] = [
-                    .equal, .equalTo(.random(in: -10..<10)), .lessThan,
-                    .lessThanTo(.random(in: -10..<10)), .moreThan, .moreThanTo(.random(in: -10..<10))
-                ]
-                let comparator: (LayoutRelation<CGFloat>, CGFloat) -> Void = { relation, multiplier in
-                    switch relation {
-                    case .equal:
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.equal))
-                    case .equalTo(let space):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.equal))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(multiplier * space))
-                    case .lessThan:
-                        let attribute = layoutPlanerForTest.plannedConstraints.last?.firstAttribute
-                        if attribute == .right || attribute == .bottom {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                        } else {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                        }
-                    case .lessThanTo(let space):
-                        let attribute = layoutPlanerForTest.plannedConstraints.last?.firstAttribute
-                        if attribute == .right || attribute == .bottom {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                        } else {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                        }
-                        expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(multiplier * space))
-                    case .moreThan:
-                        let attribute = layoutPlanerForTest.plannedConstraints.last?.firstAttribute
-                        if attribute == .right || attribute == .bottom {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                        } else {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                        }
-                    case .moreThanTo(let space):
-                        let attribute = layoutPlanerForTest.plannedConstraints.last?.firstAttribute
-                        if attribute == .right || attribute == .bottom {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                        } else {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                        }
-                        expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(multiplier * space))
-                    }
+            context("explicit") {
+                it("should create top constraint") {
+                    let constraints = view.plan
+                        .top(.equal, to: otherView.topAnchor)
+                        .top(.equalTo(12), to: otherView.topAnchor)
+                        .top(.moreThan, to: otherView.topAnchor)
+                        .top(.moreThanTo(34), to: otherView.topAnchor)
+                        .top(.lessThan, to: otherView.topAnchor)
+                        .top(.lessThanTo(56), to: otherView.topAnchor)
+                        .buildPlan()
+                    expecting(
+                        constraints,
+                        haveExpected: view.topAnchor,
+                        fromExpected: view,
+                        relatedWith: otherView.topAnchor,
+                        fromOther: otherView,
+                        sign: .positive
+                    )
                 }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    let otherAnchor = otherHAnchors[Int.random(in: 0..<3)]
-                    layoutPlanerForTest.left(relation, to: otherAnchor, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(otherView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.leftAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(otherAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, 1)
+                it("should create left constraint") {
+                    let constraints = view.plan
+                        .left(.equal, to: otherView.leftAnchor)
+                        .left(.equalTo(12), to: otherView.leftAnchor)
+                        .left(.moreThan, to: otherView.leftAnchor)
+                        .left(.moreThanTo(34), to: otherView.leftAnchor)
+                        .left(.lessThan, to: otherView.leftAnchor)
+                        .left(.lessThanTo(56), to: otherView.leftAnchor)
+                        .buildPlan()
+                    expecting(
+                        constraints,
+                        haveExpected: view.leftAnchor,
+                        fromExpected: view,
+                        relatedWith: otherView.leftAnchor,
+                        fromOther: otherView,
+                        sign: .positive
+                    )
                 }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    let otherAnchor = otherHAnchors[Int.random(in: 0..<3)]
-                    layoutPlanerForTest.right(relation, to: otherAnchor, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(otherView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.rightAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(otherAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, -1)
+                it("should create bottom constraint") {
+                    let constraints = view.plan
+                        .bottom(.equal, to: otherView.bottomAnchor)
+                        .bottom(.equalTo(12), to: otherView.bottomAnchor)
+                        .bottom(.moreThan, to: otherView.bottomAnchor)
+                        .bottom(.moreThanTo(34), to: otherView.bottomAnchor)
+                        .bottom(.lessThan, to: otherView.bottomAnchor)
+                        .bottom(.lessThanTo(56), to: otherView.bottomAnchor)
+                        .buildPlan()
+                    expecting(
+                        constraints,
+                        haveExpected: view.bottomAnchor,
+                        fromExpected: view,
+                        relatedWith: otherView.bottomAnchor,
+                        fromOther: otherView,
+                        sign: .negative
+                    )
                 }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    let otherAnchor = otherVAnchors[Int.random(in: 0..<3)]
-                    layoutPlanerForTest.top(relation, to: otherAnchor, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(otherView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.topAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(otherAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, 1)
-                }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    let otherAnchor = otherVAnchors[Int.random(in: 0..<3)]
-                    layoutPlanerForTest.bottom(relation, to: otherAnchor, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(otherView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.bottomAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(otherAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, -1)
-                }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    let otherAnchor = otherHAnchors[Int.random(in: 0..<3)]
-                    layoutPlanerForTest.centerX(relation, to: otherAnchor, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(otherView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.centerXAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(otherAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, 1)
-                }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    let otherAnchor = otherVAnchors[Int.random(in: 0..<3)]
-                    layoutPlanerForTest.centerY(relation, to: otherAnchor, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(otherView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.centerYAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(otherAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, 1)
+                it("should create right constraint") {
+                    let constraints = view.plan
+                        .right(.equal, to: otherView.rightAnchor)
+                        .right(.equalTo(12), to: otherView.rightAnchor)
+                        .right(.moreThan, to: otherView.rightAnchor)
+                        .right(.moreThanTo(34), to: otherView.rightAnchor)
+                        .right(.lessThan, to: otherView.rightAnchor)
+                        .right(.lessThanTo(56), to: otherView.rightAnchor)
+                        .buildPlan()
+                    expecting(
+                        constraints,
+                        haveExpected: view.rightAnchor,
+                        fromExpected: view,
+                        relatedWith: otherView.rightAnchor,
+                        fromOther: otherView,
+                        sign: .negative
+                    )
                 }
             }
-            it("should add position constraint to parent") {
-                let parentView: UIView = .init()
-                let layoutRelations: [LayoutRelation<CGFloat>] = [
-                    .equal, .equalTo(.random(in: 0..<10)), .lessThan,
-                    .lessThanTo(.random(in: 0..<10)), .moreThan, .moreThanTo(.random(in: 0..<10))
-                ]
-                parentView.addSubview(view)
-                let comparator: (LayoutRelation<CGFloat>, CGFloat) -> Void = { relation, multiplier in
-                    switch relation {
-                    case .equal:
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.equal))
-                    case .equalTo(let space):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.equal))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(multiplier * space))
-                    case .lessThan:
-                        let attribute = layoutPlanerForTest.plannedConstraints.last?.firstAttribute
-                        if attribute == .right || attribute == .bottom {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                        } else {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                        }
-                    case .lessThanTo(let space):
-                        let attribute = layoutPlanerForTest.plannedConstraints.last?.firstAttribute
-                        if attribute == .right || attribute == .bottom {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                        } else {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                        }
-                        expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(multiplier * space))
-                    case .moreThan:
-                        let attribute = layoutPlanerForTest.plannedConstraints.last?.firstAttribute
-                        if attribute == .right || attribute == .bottom {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                        } else {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                        }
-                    case .moreThanTo(let space):
-                        let attribute = layoutPlanerForTest.plannedConstraints.last?.firstAttribute
-                        if attribute == .right || attribute == .bottom {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                        } else {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                        }
-                        expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(multiplier * space))
-                    }
+            context("anonymous") {
+                var context: PlanContext!
+                var plan: LayoutScheme<UIView>!
+                beforeEach {
+                    context = PlanContext(currentView: otherView)
+                    context.currentView = view
+                    plan = view.plan
+                    plan.context = context
                 }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.left(relation, to: .parent, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(parentView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.leftAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(parentView.leftAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, 1)
-                    expect(layoutPlanerForTest.plannedConstraints.count).to(equal(1))
+                it("should create top constraint") {
+                    let constraints = plan
+                        .top(.equal, to: .previous)
+                        .top(.equalTo(12), to: .previous)
+                        .top(.moreThan, to: .previous)
+                        .top(.moreThanTo(34), to: .previous)
+                        .top(.lessThan, to: .previous)
+                        .top(.lessThanTo(56), to: .previous)
+                        .buildPlan()
+                    expecting(
+                        constraints,
+                        haveExpected: view.topAnchor,
+                        fromExpected: view,
+                        relatedWith: otherView.topAnchor,
+                        fromOther: otherView,
+                        sign: .positive
+                    )
                 }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.right(relation, to: .parent, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(parentView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.rightAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(parentView.rightAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, -1)
-                    expect(layoutPlanerForTest.plannedConstraints.count).to(equal(2))
+                it("should create left constraint") {
+                    let constraints = plan
+                        .left(.equal, to: .previous)
+                        .left(.equalTo(12), to: .previous)
+                        .left(.moreThan, to: .previous)
+                        .left(.moreThanTo(34), to: .previous)
+                        .left(.lessThan, to: .previous)
+                        .left(.lessThanTo(56), to: .previous)
+                        .buildPlan()
+                    expecting(
+                        constraints,
+                        haveExpected: view.leftAnchor,
+                        fromExpected: view,
+                        relatedWith: otherView.leftAnchor,
+                        fromOther: otherView,
+                        sign: .positive
+                    )
                 }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.top(relation, to: .parent, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(parentView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.topAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(parentView.topAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, 1)
-                    expect(layoutPlanerForTest.plannedConstraints.count).to(equal(3))
+                it("should create bottom constraint") {
+                    let constraints = plan
+                        .bottom(.equal, to: .previous)
+                        .bottom(.equalTo(12), to: .previous)
+                        .bottom(.moreThan, to: .previous)
+                        .bottom(.moreThanTo(34), to: .previous)
+                        .bottom(.lessThan, to: .previous)
+                        .bottom(.lessThanTo(56), to: .previous)
+                        .buildPlan()
+                    expecting(
+                        constraints,
+                        haveExpected: view.bottomAnchor,
+                        fromExpected: view,
+                        relatedWith: otherView.bottomAnchor,
+                        fromOther: otherView,
+                        sign: .negative
+                    )
                 }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.bottom(relation, to: .parent, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(parentView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.bottomAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(parentView.bottomAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, -1)
-                    expect(layoutPlanerForTest.plannedConstraints.count).to(equal(4))
-                }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.centerX(relation, to: .parent, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(parentView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.centerXAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(parentView.centerXAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, 1)
-                    expect(layoutPlanerForTest.plannedConstraints.count).to(equal(5))
-                }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.centerY(relation, to: .parent, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(parentView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.centerYAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(parentView.centerYAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation, 1)
-                    expect(layoutPlanerForTest.plannedConstraints.count).to(equal(6))
-                }
-            }
-            it("should add dimension constraints to other view") {
-                let otherView: UIView = .init()
-                let otherHAnchors = [otherView.heightAnchor, otherView.widthAnchor]
-                let layoutRelations: [InterRelation<NSLayoutDimension>] = [
-                    .equalTo(otherHAnchors[Int.random(in: 0..<2)]),
-                    .lessThanTo(otherHAnchors[Int.random(in: 0..<2)]),
-                    .moreThanTo(otherHAnchors[Int.random(in: 0..<2)])
-                ]
-                let comparator: (InterRelation<NSLayoutDimension>) -> Void = { relation in
-                    switch relation {
-                    case .equalTo(let dimension):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.equal))
-                        if #available(iOS 10.0, *) {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(dimension))
-                        }
-                    case .lessThanTo(let dimension):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                        if #available(iOS 10.0, *) {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(dimension))
-                        }
-                    case .moreThanTo(let dimension):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                        if #available(iOS 10.0, *) {
-                            expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(dimension))
-                        }
-                    }
-                }
-                for relation in layoutRelations {
-                    let multiplier: CGFloat = .random(in: 1..<5)
-                    let constant: CGFloat = .random(in: 0..<20)
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.height(relation, multiplyBy: multiplier, constant: constant, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(otherView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.heightAnchor))
-                    }
-                    let multiplierDifference = abs(multiplier - layoutPlanerForTest.plannedConstraints.last!.multiplier)
-                    expect(multiplierDifference).to(beLessThan(0.0001))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(constant))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation)
-                }
-                for relation in layoutRelations {
-                    let multiplier: CGFloat = .random(in: 1..<5)
-                    let constant: CGFloat = .random(in: 0..<20)
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.width(relation, multiplyBy: multiplier, constant: constant, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(otherView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.widthAnchor))
-                    }
-                    let multiplierDifference = abs(multiplier - layoutPlanerForTest.plannedConstraints.last!.multiplier)
-                    expect(multiplierDifference).to(beLessThan(0.0001))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(constant))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation)
-                }
-            }
-            
-            it("should add dimension constraints to parent") {
-                let parentView: UIView = .init()
-                parentView.addSubview(view)
-                let layoutRelations: [InterRelation<AnonymousRelation>] = [
-                    .equalTo(.parent),
-                    .lessThanTo(.parent),
-                    .moreThanTo(.parent)
-                ]
-                let comparator: (InterRelation<AnonymousRelation>) -> Void = { relation in
-                    switch relation {
-                    case .equalTo(_):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.equal))
-                    case .lessThanTo(_):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                    case .moreThanTo(_):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                    }
-                }
-                for relation in layoutRelations {
-                    let multiplier: CGFloat = .random(in: 1..<5)
-                    let constant: CGFloat = .random(in: 0..<20)
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.height(relation, multiplyBy: multiplier, constant: constant, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(parentView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.heightAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(parentView.heightAnchor))
-                    }
-                    let multiplierDifference = abs(multiplier - layoutPlanerForTest.plannedConstraints.last!.multiplier)
-                    expect(multiplierDifference).to(beLessThan(0.0001))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(constant))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation)
-                }
-                for relation in layoutRelations {
-                    let multiplier: CGFloat = .random(in: 1..<5)
-                    let constant: CGFloat = .random(in: 0..<20)
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.width(relation, multiplyBy: multiplier, constant: constant, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem as? UIView).to(equal(parentView))
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.widthAnchor))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.secondAnchor).to(equal(parentView.widthAnchor))
-                    }
-                    let multiplierDifference = abs(multiplier - layoutPlanerForTest.plannedConstraints.last!.multiplier)
-                    expect(multiplierDifference).to(beLessThan(0.0001))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(constant))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation)
-                }
-            }
-            it("should add dimension constraints to constant") {
-                let layoutRelations: [InterRelation<CGFloat>] = [
-                    .equalTo(.random(in: 1..<200)),
-                    .lessThanTo(.random(in: 1..<200)),
-                    .moreThanTo(.random(in: 1..<200))
-                ]
-                let comparator: (InterRelation<CGFloat>) -> Void = { relation in
-                    switch relation {
-                    case .equalTo(let dimension):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.equal))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(dimension))
-                    case .lessThanTo(let dimension):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.lessThanOrEqual))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(dimension))
-                    case .moreThanTo(let dimension):
-                        expect(layoutPlanerForTest.plannedConstraints.last?.relation).to(equal(.greaterThanOrEqual))
-                        expect(layoutPlanerForTest.plannedConstraints.last?.constant).to(equal(dimension))
-                    }
-                }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.height(relation, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem).to(beNil())
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.heightAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation)
-                }
-                for relation in layoutRelations {
-                    let priority: UILayoutPriority = .init(.random(in: 0..<1000))
-                    layoutPlanerForTest.width(relation, priority: priority)
-                    expect(layoutPlanerForTest.plannedConstraints.last?.firstItem as? UIView).to(equal(view))
-                    expect(layoutPlanerForTest.plannedConstraints.last?.secondItem).to(beNil())
-                    if #available(iOS 10.0, *) {
-                        expect(layoutPlanerForTest.plannedConstraints.last?.firstAnchor).to(equal(view.widthAnchor))
-                    }
-                    expect(layoutPlanerForTest.plannedConstraints.last?.priority).to(equal(priority))
-                    comparator(relation)
+                it("should create right constraint") {
+                    let constraints = plan
+                        .right(.equal, to: .previous)
+                        .right(.equalTo(12), to: .previous)
+                        .right(.moreThan, to: .previous)
+                        .right(.moreThanTo(34), to: .previous)
+                        .right(.lessThan, to: .previous)
+                        .right(.lessThanTo(56), to: .previous)
+                        .buildPlan()
+                    expecting(
+                        constraints,
+                        haveExpected: view.rightAnchor,
+                        fromExpected: view,
+                        relatedWith: otherView.rightAnchor,
+                        fromOther: otherView,
+                        sign: .negative
+                    )
                 }
             }
         }
     }
+}
+
+func expecting<AnchorType: AnyObject, Anchor: NSLayoutAnchor<AnchorType>>(
+    _ constraints: [NSLayoutConstraint],
+    haveExpected expectedAnchor: Anchor,
+    fromExpected expectedView: UIView,
+    relatedWith otherAnchor: Anchor,
+    fromOther otherView: UIView,
+    sign: NumberSign) {
+    expect(constraints.count).to(equal(6))
+    expect(constraints[0].firstItem as? UIView).to(equal(expectedView))
+    expect(constraints[0].firstAnchor).to(equal(expectedAnchor))
+    expect(constraints[0].relation).to(equal(.equal))
+    expect(constraints[0].secondItem as? UIView).to(equal(otherView))
+    expect(constraints[0].secondAnchor).to(equal(otherAnchor))
+    expect(constraints[0].constant).to(equal(0))
+    expect(constraints[1].firstItem as? UIView).to(equal(expectedView))
+    expect(constraints[1].firstAnchor).to(equal(expectedAnchor))
+    expect(constraints[1].relation).to(equal(.equal))
+    expect(constraints[1].secondItem as? UIView).to(equal(otherView))
+    expect(constraints[1].secondAnchor).to(equal(otherAnchor))
+    expect(constraints[1].constant).to(equal(sign.convert(12)))
+    expect(constraints[2].firstItem as? UIView).to(equal(expectedView))
+    expect(constraints[2].firstAnchor).to(equal(expectedAnchor))
+    if sign == .positive {
+        expect(constraints[2].relation).to(equal(.greaterThanOrEqual))
+    } else {
+        expect(constraints[2].relation).to(equal(.lessThanOrEqual))
+    }
+    expect(constraints[2].secondItem as? UIView).to(equal(otherView))
+    expect(constraints[2].secondAnchor).to(equal(otherAnchor))
+    expect(constraints[2].constant).to(equal(0))
+    expect(constraints[3].firstItem as? UIView).to(equal(expectedView))
+    expect(constraints[3].firstAnchor).to(equal(expectedAnchor))
+    if sign == .positive {
+        expect(constraints[3].relation).to(equal(.greaterThanOrEqual))
+    } else {
+        expect(constraints[3].relation).to(equal(.lessThanOrEqual))
+    }
+    expect(constraints[3].secondItem as? UIView).to(equal(otherView))
+    expect(constraints[3].secondAnchor).to(equal(otherAnchor))
+    expect(constraints[3].constant).to(equal(sign.convert(34)))
+    expect(constraints[4].firstItem as? UIView).to(equal(expectedView))
+    expect(constraints[4].firstAnchor).to(equal(expectedAnchor))
+    if sign == .negative {
+        expect(constraints[4].relation).to(equal(.greaterThanOrEqual))
+    } else {
+        expect(constraints[4].relation).to(equal(.lessThanOrEqual))
+    }
+    expect(constraints[4].secondItem as? UIView).to(equal(otherView))
+    expect(constraints[4].secondAnchor).to(equal(otherAnchor))
+    expect(constraints[4].constant).to(equal(0))
+    expect(constraints[5].firstItem as? UIView).to(equal(expectedView))
+    expect(constraints[5].firstAnchor).to(equal(expectedAnchor))
+    if sign == .negative {
+        expect(constraints[5].relation).to(equal(.greaterThanOrEqual))
+    } else {
+        expect(constraints[5].relation).to(equal(.lessThanOrEqual))
+    }
+    expect(constraints[5].secondItem as? UIView).to(equal(otherView))
+    expect(constraints[5].secondAnchor).to(equal(otherAnchor))
+    expect(constraints[5].constant).to(equal(sign.convert(56)))
 }
 #endif
