@@ -15,7 +15,7 @@ public protocol ViewPlan: PlanComponent {
     var context: PlanContext { get set }
     var subPlan: [ViewScheme] { get }
     @discardableResult
-    func buildPlan(for view: UIView) -> [NSLayoutConstraint]
+    func build(for view: UIView) -> [NSLayoutConstraint]
     @discardableResult
     func apply(for view: UIView) -> [NSLayoutConstraint]
 }
@@ -23,7 +23,7 @@ public protocol ViewPlan: PlanComponent {
 final class VoidViewPlan: ViewPlan {
     var context: PlanContext = PlanContext(currentView: UIView())
     var subPlan: [ViewScheme] = []
-    func buildPlan(for view: UIView) -> [NSLayoutConstraint] { [] }
+    func build(for view: UIView) -> [NSLayoutConstraint] { [] }
     func apply(for view: UIView) -> [NSLayoutConstraint] { [] }
 }
 

@@ -13,16 +13,16 @@ final class RootViewPlan: SchemeCollection {
     public weak var delegate: PlanDelegate?
     public var planOption: PlanningOption = .renew
     
-    override func buildPlan(for view: UIView) -> [NSLayoutConstraint] {
+    override func build(for view: UIView) -> [NSLayoutConstraint] {
         context = PlanContext(delegate: delegate, currentView: view)
-        return super.buildPlan(for: view)
+        return super.build(for: view)
     }
     
     override func apply(for view: UIView) -> [NSLayoutConstraint] {
         if planOption.shouldCleanAllConstraints {
             view.cleanSubViews()
         }
-        let constraints = buildPlan(for: view)
+        let constraints = build(for: view)
         if planOption.shouldRemoveOldPlannedConstraints {
             view.removeAllPlannedConstraints()
         }

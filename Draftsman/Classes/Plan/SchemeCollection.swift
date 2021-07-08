@@ -17,9 +17,8 @@ open class SchemeCollection: ViewPlan {
         self.subPlan = subPlan
     }
     
-    open func buildPlan(for view: UIView) -> [NSLayoutConstraint] {
+    open func build(for view: UIView) -> [NSLayoutConstraint] {
         context.currentView = view
-        view.translatesAutoresizingMaskIntoConstraints = false
         var constraints: [NSLayoutConstraint] = []
         subPlan.forEach { scheme in
             scheme.context = context
@@ -35,7 +34,7 @@ open class SchemeCollection: ViewPlan {
                controller != schemeController {
                 controller.addChild(schemeController)
             }
-            constraints.append(contentsOf: scheme.buildPlan())
+            constraints.append(contentsOf: scheme.build())
         }
         return constraints
     }

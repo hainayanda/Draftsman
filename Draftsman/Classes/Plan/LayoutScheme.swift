@@ -14,14 +14,14 @@ public protocol ViewScheme: ViewPlan {
     var view: UIView { get }
     var constraintBuilders: [LayoutConstraintBuilder] { get set }
     func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self
-    func buildPlan() -> [NSLayoutConstraint]
+    func build() -> [NSLayoutConstraint]
     @discardableResult
     func apply() -> [NSLayoutConstraint]
 }
 
 public extension ViewScheme {
-    func buildPlan() -> [NSLayoutConstraint] {
-        buildPlan(for: view)
+    func build() -> [NSLayoutConstraint] {
+        build(for: view)
     }
     
     @discardableResult
@@ -30,27 +30,38 @@ public extension ViewScheme {
     }
 }
 
+@dynamicMemberLookup
 public final class LayoutScheme<View: UIView>: SchemeCollection, ViewScheme {
+    public typealias LayoutSchemeBuilder<Property> = ((Property) -> LayoutScheme<View>)
+    
     public var isStackContent: Bool = false
-    public var view: UIView
+    public var view: UIView { viewInScheme }
+    var viewInScheme: View
     public var constraintBuilders: [LayoutConstraintBuilder] = []
     
     init(view: View, subPlan: [ViewScheme] = []) {
-        self.view = view
+        self.viewInScheme = view
         super.init(subPlan: subPlan)
         self.context = PlanContext(currentView: view)
     }
     
-    public override func buildPlan(for view: UIView) -> [NSLayoutConstraint] {
+    public subscript<Property>(dynamicMember keyPath: WritableKeyPath<View, Property>) -> LayoutSchemeBuilder<Property> {
+        // retained on purpose
+        return { value in
+            self.viewInScheme[keyPath: keyPath] = value
+            return self
+        }
+    }
+    
+    public override func build(for view: UIView) -> [NSLayoutConstraint] {
         context.currentView = view
-        view.translatesAutoresizingMaskIntoConstraints = false
         var constraints = constraintBuilders.compactMap { $0.build(for: context) }
-        constraints.append(contentsOf: super.buildPlan(for: view) )
+        constraints.append(contentsOf: super.build(for: view) )
         return constraints
     }
     
     public override func apply(for view: UIView) -> [NSLayoutConstraint] {
-        let constraints = buildPlan(for: view)
+        let constraints = build(for: view)
         NSLayoutConstraint.activate(constraints)
         return constraints
     }
