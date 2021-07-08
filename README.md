@@ -136,7 +136,7 @@ class MyViewController: UIViewController, Planned {
 
 ## View Hierarchy
 
-You can create view hierarchy while creating a constraints by using `planContent` method and `insert` method for subview plan (`planStackedContent` and `insertStacked` if its arranged subviews in `UIStackView`):
+You can create view hierarchy while creating a constraints by using `planContent` method and `insert` method for subview plan (`planStackedContent` and `insertStacked` if its arranged subviews in `UIStackView`). **You should not calls apply or build when using this method**, since it will always automatically populate all constraints inside to activate as bulk:
 
 ```swift
 view.planContent {
