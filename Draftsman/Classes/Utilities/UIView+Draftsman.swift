@@ -11,6 +11,33 @@ import UIKit
 
 public extension UIView {
     
+    var cornerRadius: CGFloat {
+        get {
+            layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+        }
+    }
+    
+    var borderWidth: CGFloat {
+        get {
+            layer.borderWidth
+        }
+        set {
+            layer.borderWidth = newValue
+        }
+    }
+    
+    var borderColor: CGColor? {
+        get {
+            layer.borderColor
+        }
+        set {
+            layer.borderColor = newValue
+        }
+    }
+    
     func cleanSubViews() {
         let subViews = subviews
         for subView in subViews {
