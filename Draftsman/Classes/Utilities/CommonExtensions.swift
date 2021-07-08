@@ -55,9 +55,10 @@ public extension NSObject {
     }
 }
 
-extension UIResponder {
-    public var parentViewController: UIViewController? {
-        next as? UIViewController ?? next?.parentViewController
+public extension UIResponder {
+    @available(*, renamed: "parentViewController")
+    var nextViewController: UIViewController? {
+        next as? UIViewController ?? next?.nextViewController
     }
 }
 #endif

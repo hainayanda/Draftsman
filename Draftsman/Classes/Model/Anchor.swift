@@ -10,47 +10,17 @@ import Foundation
 import Clavier
 import UIKit
 
-@dynamicMemberLookup
-public struct Anchor<LayoutAnchor: AnyObject> {
-    var related: AnonymousRelation
-    
-    public subscript(dynamicMember keyPath: KeyPath<UIView, LayoutAnchor>) -> RelatedAnchor<LayoutAnchor> {
-        .init(related: related, anchorKeyPath: keyPath)
-    }
-    
-    @available(*, deprecated, message: "use static function of RelatedAnchor eg: .top(of: .keyboard) instead of Anchor(of: .keyboard).topAnchor")
-    public init(of related: AnonymousRelation) {
-        self.related = related
-    }
-}
-
-public struct RelatedAnchor<LayoutAnchor> {
-    var related: AnonymousRelation
-    var anchorKeyPath: KeyPath<UIView, LayoutAnchor>
-    
-    public static func left(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
-        .init(related: related, anchorKeyPath: \.leftAnchor)
-    }
-    
-    public static func top(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
-        .init(related: related, anchorKeyPath: \.topAnchor)
-    }
-    
-    public static func right(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
-        .init(related: related, anchorKeyPath: \.rightAnchor)
-    }
-    
-    public static func bottom(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
-        .init(related: related, anchorKeyPath: \.bottomAnchor)
-    }
-}
-
 public struct AnchorWithOffset<LayoutAnchor> {
     var anchor: LayoutAnchor
     var offset: CGFloat = 0
     var isHaveOffset: Bool {
         return offset > 0
     }
+}
+
+public struct RelatedAnchor<LayoutAnchor> {
+    var related: AnonymousRelation
+    var anchorKeyPath: KeyPath<UIView, LayoutAnchor>
 }
 
 extension RelatedAnchor {
@@ -63,6 +33,47 @@ extension RelatedAnchor {
         case .previous, .previousSafeArea:
             return context.previousView
         }
+    }
+}
+
+public extension RelatedAnchor {
+    
+    // MARK: X Axis
+    
+    static func left(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
+        return .init(related: related, anchorKeyPath: \.leftAnchor)
+    }
+    
+    static func right(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.rightAnchor)
+    }
+    
+    static func centerX(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutXAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.centerXAnchor)
+    }
+    
+    // MARK: Y Axis
+    
+    static func top(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.topAnchor)
+    }
+    
+    static func bottom(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.bottomAnchor)
+    }
+    
+    static func centerY(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutYAxisAnchor> {
+        .init(related: related, anchorKeyPath: \.centerYAnchor)
+    }
+    
+    // MARK: Dimension
+
+    static func width(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutDimension> {
+        .init(related: related, anchorKeyPath: \.widthAnchor)
+    }
+    
+    static func height(of related: AnonymousRelation) -> RelatedAnchor<NSLayoutDimension> {
+        .init(related: related, anchorKeyPath: \.heightAnchor)
     }
 }
 

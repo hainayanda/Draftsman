@@ -25,9 +25,7 @@ class FragmentCellSpec: QuickSpec {
                     var planed: Bool = false
                     tableCell.layoutPhase = .firstLoad
                     tableCell.planningBehavior = .planOnce
-                    tableCell.didPlanContent = { plan in
-                        expect((plan as? LayoutPlan<UIView>)?.view)
-                            .to(equal(tableCell.contentView))
+                    tableCell.didPlanContent = {
                         planed = true
                     }
                     tableCell.layoutSubviews()
@@ -47,9 +45,7 @@ class FragmentCellSpec: QuickSpec {
                     var planed: Bool = false
                     tableCell.layoutPhase = .firstLoad
                     tableCell.planningBehavior = .planOn(.reused)
-                    tableCell.didPlanContent = { plan in
-                        expect((plan as? LayoutPlan<UIView>)?.view)
-                            .to(equal(tableCell.contentView))
+                    tableCell.didPlanContent = {
                         planed = true
                     }
                     tableCell.layoutSubviews()
@@ -70,9 +66,7 @@ class FragmentCellSpec: QuickSpec {
                     var planed: Bool = false
                     tableCell.layoutPhase = .firstLoad
                     tableCell.planningBehavior = .planOn(.setNeedsLayout)
-                    tableCell.didPlanContent = { plan in
-                        expect((plan as? LayoutPlan<UIView>)?.view)
-                            .to(equal(tableCell.contentView))
+                    tableCell.didPlanContent = {
                         planed = true
                     }
                     tableCell.layoutSubviews()
@@ -93,9 +87,7 @@ class FragmentCellSpec: QuickSpec {
                     var planed: Bool = false
                     tableCell.layoutPhase = .firstLoad
                     tableCell.planningBehavior = .planOnEach([.none, .reused, .setNeedsLayout])
-                    tableCell.didPlanContent = { plan in
-                        expect((plan as? LayoutPlan<UIView>)?.view)
-                            .to(equal(tableCell.contentView))
+                    tableCell.didPlanContent = {
                         planed = true
                     }
                     tableCell.layoutSubviews()
@@ -121,10 +113,7 @@ class FragmentCellSpec: QuickSpec {
                         planOptionPhase = phase
                         return .append
                     }
-                    tableCell.didPlanContent = { plan in
-                        let container = plan as? LayoutPlan<UIView>
-                        expect(container?.view)
-                            .to(equal(tableCell.contentView))
+                    tableCell.didPlanContent = {
                         planed = true
                     }
                     tableCell.layoutPhase = .firstLoad
@@ -177,9 +166,7 @@ class FragmentCellSpec: QuickSpec {
                     var planed: Bool = false
                     collectionCell.layoutPhase = .firstLoad
                     collectionCell.planningBehavior = .planOnce
-                    collectionCell.didPlanContent = { plan in
-                        expect((plan as? LayoutPlan<UIView>)?.view)
-                            .to(equal(collectionCell.contentView))
+                    collectionCell.didPlanContent = {
                         planed = true
                     }
                     collectionCell.layoutSubviews()
@@ -199,9 +186,7 @@ class FragmentCellSpec: QuickSpec {
                     var planed: Bool = false
                     collectionCell.layoutPhase = .firstLoad
                     collectionCell.planningBehavior = .planOn(.reused)
-                    collectionCell.didPlanContent = { plan in
-                        expect((plan as? LayoutPlan<UIView>)?.view)
-                            .to(equal(collectionCell.contentView))
+                    collectionCell.didPlanContent = {
                         planed = true
                     }
                     collectionCell.layoutSubviews()
@@ -222,9 +207,7 @@ class FragmentCellSpec: QuickSpec {
                     var planed: Bool = false
                     collectionCell.layoutPhase = .firstLoad
                     collectionCell.planningBehavior = .planOn(.setNeedsLayout)
-                    collectionCell.didPlanContent = { plan in
-                        expect((plan as? LayoutPlan<UIView>)?.view)
-                            .to(equal(collectionCell.contentView))
+                    collectionCell.didPlanContent = {
                         planed = true
                     }
                     collectionCell.layoutSubviews()
@@ -245,9 +228,7 @@ class FragmentCellSpec: QuickSpec {
                     var planed: Bool = false
                     collectionCell.layoutPhase = .firstLoad
                     collectionCell.planningBehavior = .planOnEach([.none, .reused, .setNeedsLayout])
-                    collectionCell.didPlanContent = { plan in
-                        expect((plan as? LayoutPlan<UIView>)?.view)
-                            .to(equal(collectionCell.contentView))
+                    collectionCell.didPlanContent = {
                         planed = true
                     }
                     collectionCell.layoutSubviews()
@@ -273,10 +254,7 @@ class FragmentCellSpec: QuickSpec {
                         planOptionPhase = phase
                         return .append
                     }
-                    collectionCell.didPlanContent = { plan in
-                        let container = plan as? LayoutPlan<UIView>
-                        expect(container?.view)
-                            .to(equal(collectionCell.contentView))
+                    collectionCell.didPlanContent = {
                         planed = true
                     }
                     collectionCell.layoutPhase = .firstLoad
@@ -324,9 +302,12 @@ class TestableTableCell: TableFragmentCell {
         didNeedPlanningOption?(phase) ?? super.planningOption(on: phase)
     }
     
-    var didPlanContent: ((InsertablePlan) -> Void)?
-    override func planContent(_ plan: InsertablePlan) {
-        didPlanContent?(plan)
+    var didPlanContent: (() -> Void)?
+    override var viewPlan: ViewPlan {
+        defer {
+            didPlanContent?()
+        }
+        return VoidViewPlan()
     }
     
     var didCalculatedCellHeight: ((CGFloat) -> CGFloat)?
@@ -367,9 +348,12 @@ class TestableCollectionCell: CollectionFragmentCell {
         didNeedPlanningOption?(phase) ?? super.planningOption(on: phase)
     }
     
-    var didPlanContent: ((InsertablePlan) -> Void)?
-    override func planContent(_ plan: InsertablePlan) {
-        didPlanContent?(plan)
+    var didPlanContent: (() -> Void)?
+    override var viewPlan: ViewPlan {
+        defer {
+            didPlanContent?()
+        }
+        return VoidViewPlan()
     }
 }
 #endif

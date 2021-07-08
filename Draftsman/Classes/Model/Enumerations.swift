@@ -9,11 +9,6 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public enum LayoutDimension {
-    case height
-    case width
-}
-
 public enum LayoutRelation<Related> {
     case moreThanTo(Related)
     case lessThanTo(Related)
@@ -97,6 +92,15 @@ public enum PlanningOption {
             return false
         }
     }
+    
+    public var shouldRenew: Bool {
+        switch self {
+        case .renew:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 public enum CellLayoutingPhase: CaseIterable {
@@ -120,7 +124,7 @@ public enum CellPlanningBehavior {
             return [phase]
         case .planOnEach(let phases):
             return phases
-        default:
+        case .planIfPossible:
             return CellLayoutingPhase.allCases
         }
     }
@@ -148,5 +152,19 @@ public enum LayoutStackedStrategy {
     case emptying
     case append
     case replaceDifferences
+}
+
+enum NumberSign {
+    case positive
+    case negative
+    
+    func convert(_ number: CGFloat) -> CGFloat {
+        switch self {
+        case .positive:
+            return number
+        default:
+            return -number
+        }
+    }
 }
 #endif

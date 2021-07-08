@@ -9,6 +9,61 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
+// MARK: Convenience Init
+
+public extension CGSize {
+    init(sides: CGFloat) {
+        self.init(width: sides, height: sides)
+    }
+}
+
+public extension UIEdgeInsets {
+    init(horizontalInset: UIHorizontalInsets, verticalInset: UIVerticalInsets) {
+        self.init(
+            top: verticalInset.top,
+            left: horizontalInset.left,
+            bottom: verticalInset.bottom,
+            right: horizontalInset.right
+        )
+    }
+    
+    init(vertical: CGFloat, horizontal: CGFloat) {
+        self.init(
+            top: vertical,
+            left: horizontal,
+            bottom: vertical,
+            right: horizontal
+        )
+    }
+    
+    init(insets: CGFloat) {
+        self.init(
+            top: insets,
+            left: insets,
+            bottom: insets,
+            right: insets
+        )
+    }
+    
+    init(vertical: CGFloat, left: CGFloat = .zero, right: CGFloat = .zero) {
+        self.init(
+            top: vertical,
+            left: left,
+            bottom: vertical,
+            right: right
+        )
+    }
+    
+    init(horizontal: CGFloat, top: CGFloat = .zero, bottom: CGFloat = .zero) {
+        self.init(
+            top: top,
+            left: horizontal,
+            bottom: bottom,
+            right: horizontal
+        )
+    }
+}
+
 //MARK: Insets
 
 public protocol InsetsConvertible {
@@ -170,51 +225,6 @@ public struct UIAxisInsets {
 public extension UIEdgeInsets {
     var horizontal: UIHorizontalInsets { .init(left: left, right: right) }
     var vertical: UIVerticalInsets { .init(top: top, bottom: bottom) }
-    
-    init(horizontalInset: UIHorizontalInsets, verticalInset: UIVerticalInsets) {
-        self.init(
-            top: verticalInset.top,
-            left: horizontalInset.left,
-            bottom: verticalInset.bottom,
-            right: horizontalInset.right
-        )
-    }
-    
-    init(vertical: CGFloat, horizontal: CGFloat) {
-        self.init(
-            top: vertical,
-            left: horizontal,
-            bottom: vertical,
-            right: horizontal
-        )
-    }
-    
-    init(insets: CGFloat) {
-        self.init(
-            top: insets,
-            left: insets,
-            bottom: insets,
-            right: insets
-        )
-    }
-    
-    init(vertical: CGFloat, left: CGFloat = 0, right: CGFloat = 0) {
-        self.init(
-            top: vertical,
-            left: left,
-            bottom: vertical,
-            right: right
-        )
-    }
-    
-    init(horizontal: CGFloat = 0, top: CGFloat = 0, bottom: CGFloat = 0) {
-        self.init(
-            top: top,
-            left: horizontal,
-            bottom: bottom,
-            right: horizontal
-        )
-    }
 }
 
 extension UIEdgeInsets: InsetsConvertible {

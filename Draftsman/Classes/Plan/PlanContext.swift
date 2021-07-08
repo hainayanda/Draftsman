@@ -9,7 +9,7 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public class PlanContext {
+public final class PlanContext {
     weak var _delegate: PlanDelegate?
     var delegate: PlanDelegate {
         _delegate ?? DefaultPlanDelegate.shared

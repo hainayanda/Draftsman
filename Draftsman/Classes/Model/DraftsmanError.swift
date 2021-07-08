@@ -6,8 +6,6 @@
 //
 
 import Foundation
-#if canImport(UIKit)
-import UIKit
 
 public struct DraftsmanError: LocalizedError {
     
@@ -38,4 +36,3 @@ extension DraftsmanError {
         )
     }
 }
-#endif
