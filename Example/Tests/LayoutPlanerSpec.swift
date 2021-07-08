@@ -32,7 +32,7 @@ class LayoutPlanerSpec: QuickSpec {
                         .top(.moreThanTo(34), to: otherView.topAnchor)
                         .top(.lessThan, to: otherView.topAnchor)
                         .top(.lessThanTo(56), to: otherView.topAnchor)
-                        .buildPlan()
+                        .build()
                     expecting(
                         constraints,
                         haveExpected: view.topAnchor,
@@ -50,7 +50,7 @@ class LayoutPlanerSpec: QuickSpec {
                         .left(.moreThanTo(34), to: otherView.leftAnchor)
                         .left(.lessThan, to: otherView.leftAnchor)
                         .left(.lessThanTo(56), to: otherView.leftAnchor)
-                        .buildPlan()
+                        .build()
                     expecting(
                         constraints,
                         haveExpected: view.leftAnchor,
@@ -68,7 +68,7 @@ class LayoutPlanerSpec: QuickSpec {
                         .bottom(.moreThanTo(34), to: otherView.bottomAnchor)
                         .bottom(.lessThan, to: otherView.bottomAnchor)
                         .bottom(.lessThanTo(56), to: otherView.bottomAnchor)
-                        .buildPlan()
+                        .build()
                     expecting(
                         constraints,
                         haveExpected: view.bottomAnchor,
@@ -86,7 +86,7 @@ class LayoutPlanerSpec: QuickSpec {
                         .right(.moreThanTo(34), to: otherView.rightAnchor)
                         .right(.lessThan, to: otherView.rightAnchor)
                         .right(.lessThanTo(56), to: otherView.rightAnchor)
-                        .buildPlan()
+                        .build()
                     expecting(
                         constraints,
                         haveExpected: view.rightAnchor,
@@ -114,7 +114,7 @@ class LayoutPlanerSpec: QuickSpec {
                         .top(.moreThanTo(34), to: .previous)
                         .top(.lessThan, to: .previous)
                         .top(.lessThanTo(56), to: .previous)
-                        .buildPlan()
+                        .build()
                     expecting(
                         constraints,
                         haveExpected: view.topAnchor,
@@ -132,7 +132,7 @@ class LayoutPlanerSpec: QuickSpec {
                         .left(.moreThanTo(34), to: .previous)
                         .left(.lessThan, to: .previous)
                         .left(.lessThanTo(56), to: .previous)
-                        .buildPlan()
+                        .build()
                     expecting(
                         constraints,
                         haveExpected: view.leftAnchor,
@@ -150,7 +150,7 @@ class LayoutPlanerSpec: QuickSpec {
                         .bottom(.moreThanTo(34), to: .previous)
                         .bottom(.lessThan, to: .previous)
                         .bottom(.lessThanTo(56), to: .previous)
-                        .buildPlan()
+                        .build()
                     expecting(
                         constraints,
                         haveExpected: view.bottomAnchor,
@@ -168,7 +168,7 @@ class LayoutPlanerSpec: QuickSpec {
                         .right(.moreThanTo(34), to: .previous)
                         .right(.lessThan, to: .previous)
                         .right(.lessThanTo(56), to: .previous)
-                        .buildPlan()
+                        .build()
                     expecting(
                         constraints,
                         haveExpected: view.rightAnchor,
