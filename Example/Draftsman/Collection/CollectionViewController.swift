@@ -12,10 +12,24 @@ import Draftsman
 
 class CollectionViewController: UIViewController, Planned {
     
+    var cellWidth: CGFloat {
+        if #available(iOS 11.0, *) {
+            return min(
+                view.safeAreaLayoutGuide.layoutFrame.width,
+                view.safeAreaLayoutGuide.layoutFrame.height
+            ) / 2
+        } else {
+            return min(
+                view.frame.width - view.layoutMargins.horizontal.both,
+                view.frame.height - view.layoutMargins.vertical.both
+            ) / 2
+        }
+    }
+    
     lazy var collectionLayout: UICollectionViewFlowLayout = builder(UICollectionViewFlowLayout())
         .minimumLineSpacing(.zero)
         .minimumInteritemSpacing(.zero)
-        .itemSize(CGSize(width: view.frame.width / 2, height: view.frame.width * 0.6))
+        .itemSize(CGSize(width: cellWidth, height: cellWidth * 1.2))
         .build()
     lazy var collectionView: UICollectionView = builder(
         UICollectionView(
@@ -30,12 +44,15 @@ class CollectionViewController: UIViewController, Planned {
     
     @LayoutPlan
     var viewPlan: ViewPlan {
-        collectionView.plan.edges(.equal, to: .parent)
+        collectionView.plan
+            .horizontal(.equal, to: .safeArea)
+            .vertical(.equal, to: .parent)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Collection View"
+        view.backgroundColor = .white
         applyPlan()
         collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: "CollectionCell")
         collectionView.reloadData()

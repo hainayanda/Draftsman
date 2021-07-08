@@ -23,8 +23,7 @@ class CollectionCell: CollectionFragmentCell {
     
     @LayoutPlan
     override var viewPlan: ViewPlan {
-        UIImageView().plan
-            .image(UIImage(named: "icon_test"))
+        UIImageView(image: UIImage(named: "icon_test")).plan
             .contentMode(.scaleAspectFit)
             .at(.fullTop, .equalTo(12), to: .parent)
             .width(.equalTo(.height(of: .myself)))

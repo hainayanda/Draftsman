@@ -26,9 +26,11 @@ class TypingField: FragmentView {
         textField.plan
             .at(.fullLeft, .equalTo(8), to: .safeArea)
             .right(.equalTo(8), to: button.leftAnchor)
+            .height(.equalTo(30))
         button.plan
             .at(.fullRight, .equalTo(8), to: .safeArea)
             .width(.equalTo(64))
+            .height(.equalTo(30))
     }
     
     override func fragmentWillLayoutForTheFirstTime() {

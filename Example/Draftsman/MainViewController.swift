@@ -30,8 +30,8 @@ class MainViewController: UIViewController, Planned {
     var viewPlan: ViewPlan {
         UIStackView(axis: .vertical, spacing: 32).plan
             .center(.equal, to: .parent)
-            .horizontal(.equalTo(16), to: .parent)
-            .vertical(.moreThanTo(16), to: .parent)
+            .horizontal(.equalTo(16), to: .safeArea)
+            .vertical(.moreThanTo(16), to: .safeArea)
             .insertStacked {
                 buttonToTable
                 buttonToCollection
@@ -51,8 +51,8 @@ class MainViewController: UIViewController, Planned {
         buttonToCollection.setTitle("Go to collection view controller", for: .normal)
         buttonToCollection.addTarget(self, action: #selector(goToCollection(_:)), for: .touchUpInside)
         
-        buttonToField.setTitle("Go to field controller", for: .normal)
-        buttonToField.addTarget(self, action: #selector(goToField(_:)), for: .touchUpInside)
+        buttonToField.setTitle("Go to keyboard controller", for: .normal)
+        buttonToField.addTarget(self, action: #selector(goToKeyboard(_:)), for: .touchUpInside)
     }
     
     @objc func goToTable(_ sender: Any) {
@@ -63,7 +63,7 @@ class MainViewController: UIViewController, Planned {
         navigationController?.pushViewController(CollectionViewController(), animated: true)
     }
     
-    @objc func goToField(_ sender: Any) {
+    @objc func goToKeyboard(_ sender: Any) {
         navigationController?.pushViewController(FieldViewController(), animated: true)
     }
 

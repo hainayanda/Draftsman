@@ -15,6 +15,8 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Table View"
+        view.backgroundColor = .white
+        tableView.backgroundColor = .white
         tableView.register(TableCell.self, forCellReuseIdentifier: "TableCell")
         tableView.allowsSelection = false
     }

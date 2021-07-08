@@ -12,8 +12,7 @@ import Draftsman
 
 class FieldViewController: UIViewController, Planned {
     
-    lazy var typingLabel: UILabel = builder(UILabel.self)
-        .text("will be replaced")
+    lazy var typingLabel: UILabel = builder(UILabel(text: "will be replaced"))
         .textAlignment(.center)
         .font(.boldSystemFont(ofSize: 28))
         .numberOfLines(0)
@@ -28,24 +27,23 @@ class FieldViewController: UIViewController, Planned {
             .horizontal(.equalTo(16), to: .safeArea)
             .bottom(.moreThanTo(8), to: typingField.topAnchor)
             .insert {
-                UIImageView().plan
-                    .image(UIImage(named: "image_test"))
+                UIImageView(image: UIImage(named: "image_test")).plan
                     .contentMode(.scaleAspectFill)
                     .clipsToBounds(true)
                     .at(.fullTop, .equalTo(12), to: .parent)
-                    .height(.equalTo(.width(of: .myself)), multiplyBy: 0.5)
+                    .height(.equalTo(.width(of: .myself)), multiplyBy: 0.75)
                 typingLabel.plan
                     .at(.fullBottom, .equalTo(12), to: .parent)
                     .top(.equalTo(8), to: .bottom(of: .previous))
             }
         typingField.plan
             .horizontal(.equal, to: .parent)
-            .bottom(.equal, to: .top(of: .keyboardSafeArea), priority: .required)
-            .height(.equalTo(45), priority: .required)
+            .bottom(.equal, to: .top(of: .keyboard), priority: .required)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Keyboard View"
         view.backgroundColor = .white
         typingField.textField.delegate = self
         typingField.button.setTitle("Show", for: .normal)
