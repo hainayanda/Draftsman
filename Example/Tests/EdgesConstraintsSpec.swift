@@ -1,5 +1,5 @@
 //
-//  LayoutPlanerSpec.swift
+//  EdgesConstraintsSpec.swift
 //  Draftsman_Tests
 //
 //  Created by Nayanda Haberty (ID) on 08/09/20.
@@ -13,7 +13,7 @@ import Quick
 import Nimble
 @testable import Draftsman
 
-class LayoutPlanerSpec: QuickSpec {
+class EdgesConstraintsSpec: QuickSpec {
     
     override func spec() {
         describe("view layout behaviour") {

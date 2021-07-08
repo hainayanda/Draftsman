@@ -1,5 +1,5 @@
 //
-//  InsertablePlanSpec.swift
+//  InsertPlanSpec.swift
 //  Draftsman_Tests
 //
 //  Created by Nayanda Haberty (ID) on 07/09/20.
@@ -13,7 +13,7 @@ import Quick
 import Nimble
 @testable import Draftsman
 
-class InsertablePlanSpec: QuickSpec {
+class InsertPlanSpec: QuickSpec {
     override func spec() {
         describe("plan fit behaviour") {
             context("General View") {
