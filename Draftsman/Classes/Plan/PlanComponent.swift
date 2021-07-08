@@ -9,7 +9,7 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public protocol PlanComponent: class { }
+public protocol PlanComponent: AnyObject { }
 
 public protocol ViewPlan: PlanComponent {
     var context: PlanContext { get set }

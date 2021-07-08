@@ -9,7 +9,7 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public protocol PlanDelegate: class {
+public protocol PlanDelegate: AnyObject {
     func planer(viewHaveNoSuperview view: UIView) -> UIView?
     func planer(neededViewControllerFor viewController: UIViewController) -> UIViewController?
     func planer(_ view: UIView, errorWhenPlanning error: DraftsmanError)

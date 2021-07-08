@@ -39,6 +39,7 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
     
     open var planningBehavior: CellPlanningBehavior { .planOnce }
     
+    @LayoutPlan
     open var viewPlan: ViewPlan { VoidViewPlan() }
     
     open func fragmentWillPlanContent() {}
@@ -154,6 +155,7 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
     
     open var planningBehavior: CellPlanningBehavior { .planOnce }
     
+    @LayoutPlan
     open var viewPlan: ViewPlan { VoidViewPlan() }
     
     open func fragmentWillPlanContent() {}

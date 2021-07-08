@@ -15,6 +15,7 @@ open class FragmentView: UIView, Fragment {
     
     var inPlanning: Bool = false
     
+    @LayoutPlan
     open var viewPlan: ViewPlan { VoidViewPlan() }
     
     open func fragmentWillPlanContent() {}

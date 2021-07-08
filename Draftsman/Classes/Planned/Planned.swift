@@ -6,6 +6,8 @@
 //
 
 import Foundation
+#if canImport(UIKit)
+import UIKit
 
 public protocol Planned {
     @LayoutPlan
@@ -25,3 +27,4 @@ public extension Planned where Self: UIViewController {
         LayoutScheme(view: view, subPlan: viewPlan.subPlan).apply()
     }
 }
+#endif
