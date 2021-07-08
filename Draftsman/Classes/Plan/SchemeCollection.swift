@@ -39,6 +39,7 @@ open class SchemeCollection: ViewPlan {
         return constraints
     }
     
+    @discardableResult
     open func apply(for view: UIView) -> [NSLayoutConstraint] {
         return subPlan.reduce([]) { subConstraints, scheme in
             scheme.context = context

@@ -18,6 +18,7 @@ final class RootViewPlan: SchemeCollection {
         return super.build(for: view)
     }
     
+    @discardableResult
     override func apply(for view: UIView) -> [NSLayoutConstraint] {
         if planOption.shouldCleanAllConstraints {
             view.cleanSubViews()

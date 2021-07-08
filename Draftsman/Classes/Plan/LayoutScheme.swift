@@ -60,6 +60,7 @@ public final class LayoutScheme<View: UIView>: SchemeCollection, ViewScheme {
         return constraints
     }
     
+    @discardableResult
     public override func apply(for view: UIView) -> [NSLayoutConstraint] {
         let constraints = build(for: view)
         NSLayoutConstraint.activate(constraints)

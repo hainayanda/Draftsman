@@ -24,6 +24,7 @@ final class VoidViewPlan: ViewPlan {
     var context: PlanContext = PlanContext(currentView: UIView())
     var subPlan: [ViewScheme] = []
     func build(for view: UIView) -> [NSLayoutConstraint] { [] }
+    @discardableResult
     func apply(for view: UIView) -> [NSLayoutConstraint] { [] }
 }
 
