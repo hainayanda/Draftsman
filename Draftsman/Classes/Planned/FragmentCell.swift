@@ -58,7 +58,9 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
             return false
         }
         fragmentWillPlanContent()
-        LayoutScheme(view: contentView, subPlan: viewPlan.subPlan).apply()
+        let plan = RootViewPlan(subPlan: viewPlan.subPlan)
+        plan.planOption = planningOption(on: layoutPhase)
+        plan.apply(for: contentView)
         fragmentDidPlanContent()
         return true
     }
@@ -104,7 +106,7 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
         case .firstLoad:
             return .append
         default:
-            return .startFresh
+            return .startClean
         }
     }
     
@@ -171,7 +173,9 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
             return false
         }
         fragmentWillPlanContent()
-        LayoutScheme(view: contentView, subPlan: viewPlan.subPlan).apply()
+        let plan = RootViewPlan(subPlan: viewPlan.subPlan)
+        plan.planOption = planningOption(on: layoutPhase)
+        plan.apply(for: contentView)
         fragmentDidPlanContent()
         return true
     }
@@ -181,7 +185,7 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
         case .firstLoad:
             return .append
         default:
-            return .startFresh
+            return .startClean
         }
     }
     

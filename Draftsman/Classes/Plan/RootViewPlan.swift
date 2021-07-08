@@ -11,7 +11,7 @@ import UIKit
 
 final class RootViewPlan: SchemeCollection {
     public weak var delegate: PlanDelegate?
-    public var planOption: PlanningOption = .renew
+    public var planOption: PlanningOption = .startClean
     
     override func build(for view: UIView) -> [NSLayoutConstraint] {
         context = PlanContext(delegate: delegate, currentView: view)

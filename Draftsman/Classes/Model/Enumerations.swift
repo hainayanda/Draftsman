@@ -124,7 +124,7 @@ public enum CellPlanningBehavior {
             return [phase]
         case .planOnEach(let phases):
             return phases
-        default:
+        case .planIfPossible:
             return CellLayoutingPhase.allCases
         }
     }

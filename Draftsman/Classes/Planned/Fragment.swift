@@ -21,15 +21,16 @@ public extension Fragment {
 
 public extension Fragment where Self: UIView {
     
-    func planFragment(delegate: PlanDelegate? = nil, _ planOption: PlanningOption = .renew) {
+    func planFragment(delegate: PlanDelegate? = nil, _ planOption: PlanningOption = .startClean) {
         fragmentWillPlanContent()
-        let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan)
-        scheme.context = PlanContext(delegate: delegate, currentView: self)
-        scheme.apply()
+        let plan = RootViewPlan(subPlan: viewPlan.subPlan)
+        plan.delegate = delegate
+        plan.planOption = planOption
+        plan.apply(for: self)
         fragmentDidPlanContent()
     }
     
-    func replanContent(delegate: PlanDelegate? = nil, _ planOption: PlanningOption = .renew) {
+    func replanContent(delegate: PlanDelegate? = nil, _ planOption: PlanningOption = .startClean) {
         removeAllPlannedConstraints()
         planFragment(delegate: delegate, planOption)
     }
