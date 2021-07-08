@@ -64,9 +64,16 @@ public extension UIView {
 
 public extension UIStackView {
     
-    convenience init(axis: NSLayoutConstraint.Axis) {
+    convenience init(
+        axis: NSLayoutConstraint.Axis,
+        distribution: UIStackView.Distribution = .fill,
+        alignment: UIStackView.Alignment = .fill,
+        spacing: CGFloat = .zero) {
         self.init()
         self.axis = axis
+        self.distribution = distribution
+        self.alignment = alignment
+        self.spacing = spacing
     }
 }
 #endif
