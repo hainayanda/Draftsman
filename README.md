@@ -83,7 +83,7 @@ Draftsman is available under the MIT license. See the LICENSE file for more info
 
 # Basic Usage
 
-Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. Draftsman using new resultBuilder from Swift that make the Declarative approach possible. For **1.1.1** version, please lookup this [readme](https://github.com/nayanda1/Draftsman/blob/master/README_1_1_1.md) instead
+Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. Draftsman using new resultBuilder from Swift that makes the Declarative approach possible. For **1.1.1** version, please lookup this [readme](https://github.com/nayanda1/Draftsman/blob/master/README_1_1_1.md) instead
 
 ***
 
@@ -105,7 +105,7 @@ there are two method to end planning constraints which can be called from both a
 * `func apply() -> [NSLayoutConstraint]`
 * `func build() -> [NSLayoutConstraint]`
 
-the difference between two is `apply` will activate the constraints but `build` will only create constraints without activate it. Apply return value is discardable so its optional for you to use the created `NSLayoutConstraint` or not.
+the difference between the two is `apply` will activate the constraints but `build` will only create constraints without activating it. Apply return value is discardable so it's optional for you to use the created `NSLayoutConstraint` or not.
 
 You could always create a `UIViewController` or `UIView` and implements `Planned` protocol, and call `applyPlan()` whenever you want the plan to be applied:
 
@@ -151,13 +151,13 @@ view.planContent {
 }
 ```
 
-The hierarchy of View is just like how the closure declared in your code.
+The hierarchy of View is just like how the closure is declared in your code.
 The above code, It actually will do the following instruction sequentially:
 1. `view` create and insert new `UIView()`
 2. new `UIView` then will create constraints
 3. new `UIView` then will insert `myView`
 4. `myView` then will create constraints
-5. all the constraints then will activated
+5. all the constraints then will be activated
 
 So if the hierarchy is written in pseudo hierarchy style, it should be similar to this: 
 ```
@@ -166,12 +166,12 @@ view
 |    |____myView
 ```
 
-the compatible type to be passed in closure are:
+the compatible type to be passed in the closure are:
 * any descendant of `UIView`
 * any descendant of `UIViewController`
 
 If you pass `UIViewController`, it will be automatically added `UIViewController` view as a child and put the `UIViewController` as a child of its current `UIViewController`.
-You could insert component as much as you need, it will fit all the View just like how you write it.
+You could insert components as much as you need, it will fit all the Views just like how you write it.
 
 ***
 
@@ -313,7 +313,7 @@ myView.plan
 so instead of calling the previous anchor explicitly, you call them like that.
 
 ### Positioning Shortcut
-There are some shortcut for Positioning. For center anchor:
+There are some shortcuts for Positioning. For center anchor:
 * `func center(_ relation: LayoutRelation<CoordinateOffsets>, to view: UIView, priority: UILayoutPriority? = nil) -> Self`
 * `func center(_ relation: LayoutRelation<CoordinateOffsets>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
 
@@ -443,7 +443,7 @@ otherView.plan
 
 # Draftsman Planned
 
-Draftsman `Planned` protocol is the protocol that make any `UIView` or `UIViewController` can have its predefined view plan and applied it using `applyPlan` method. The protocols is declared like this:
+Draftsman `Planned` protocol is the protocol that makes any `UIView` or `UIViewController` can have its predefined view plan and applied it using `applyPlan` method. The protocol is declared like this:
 
 ```swift
 public protocol Planned {
@@ -481,7 +481,7 @@ class MyViewController: UIViewController, Planned {
 }
 ```
 
-Everytime you call `applyPlan`, it will always remove all `subviews` from `UIView` root and recreate it
+Every time you call `applyPlan`, it will always remove all `subviews` from `UIView` root and recreate it
 
 ***
 
@@ -542,13 +542,13 @@ what happening here is when you fit simpleFragment into view, it will call simpl
 
 There are two other extensions method you could use to call planContent indirectly:
 * `func planFragment(delegate: PlanDelegate? = nil)` which will be call `fragmentWillPlanContent()` and activate all created constraints right away and `fragmentDidPlanContent()`
-* `func replanContent(delegate: PlanDelegate? = nil)` which will remove all its and subviews constraints which created by Draftsman and call `planFragment(delegate:)`
+* `func replanContent(delegate: PlanDelegate? = nil)` which will remove all its and subviews constraints created by Draftsman and call `planFragment(delegate:)`
 
 ***
 
 ## Fragment View
 
-There is UIView that already implemented Fragment that you can extend named `FragmentView`. It have some more open method that you can use:
+There is UIView that already implemented Fragment that you can extend named `FragmentView`. It has some more open method that you can use:
 * `func fragmentWillLayoutForTheFirstTime()` which will be called inside `layoutSubviews()` and only once at the first time before `super.layoutSubviews()`
 * `func fragmentDidLayoutForTheFirstTime()` which will be called inside `layoutSubviews()` and only once at the first time after  `super.layoutSubviews()`
 
