@@ -103,4 +103,26 @@ public extension UIStackView {
         self.spacing = spacing
     }
 }
+
+public extension UILabel {
+    
+    convenience init(text: String?) {
+        self.init()
+        self.text = text
+    }
+    
+    convenience init(text: String?, font: UIFont) {
+        self.init()
+        self.text = text
+        self.font = font
+    }
+}
+
+public extension UIButton {
+    
+    convenience init(text: String?) {
+        self.init()
+        self.setTitle(text, for: .normal)
+    }
+}
 #endif
