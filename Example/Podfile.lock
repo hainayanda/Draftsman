@@ -1,7 +1,7 @@
 PODS:
-  - Clavier (1.0.1)
-  - Draftsman (2.0.0):
-    - Clavier (~> 1.0.1)
+  - Clavier (1.0.2)
+  - Draftsman (2.0.1):
+    - Clavier (~> 1.0.2)
   - Nimble (9.2.0)
   - Quick (4.0.0)
 
@@ -21,8 +21,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Clavier: 03e31d9184a083cc30569d46ef9358aa9568052a
-  Draftsman: f2a4637189f0792b3f85bc000c3500df3438b679
+  Clavier: 5ff754d3cc20b75e9ebe4412517a72cc47877939
+  Draftsman: e34ac9e776b33780078629d2a61602858c4bb87a
   Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
 
