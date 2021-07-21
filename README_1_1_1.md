@@ -1,6 +1,6 @@
 # Draftsman
 
-This is Old README intended for Usage in Swift 5.1 and XCode 11. For newest version, refer to [main readme](https://github.com/nayanda1/Draftsman/blob/master/README.md)
+This is Old README intended for Usage in Swift 5.1 and XCode 11. For newest version, refer to [main readme](https://github.com/hainayanda/Draftsman/blob/master/README.md)
 
 ## Requirements
 
@@ -22,7 +22,7 @@ pod 'Draftsman', '~> 1.1.1'
 ### Swift Package Manager from XCode
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
-- Add **https://github.com/nayanda1/Draftsman.git** as Swift Package URL
+- Add **https://github.com/hainayanda/Draftsman.git** as Swift Package URL
 - Set rules at **version**, with **Up to Next Major** option and put **1.1.1** as its version
 - Click next and wait
 
@@ -32,7 +32,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Draftsman.git", .upToNextMajor(from: "1.1.1"))
+    .package(url: "https://github.com/hainayanda/Draftsman.git", .upToNextMajor(from: "1.1.1"))
 ]
 ```
 
@@ -47,7 +47,7 @@ Use it in your target as `Draftsman`
 
 ## Author
 
-Nayanda Haberty, nayanda1@outlook.com
+Nayanda Haberty, hainayanda@outlook.com
 
 ## License
 
@@ -57,7 +57,7 @@ Draftsman is available under the MIT license. See the LICENSE file for more info
 
 # Basic Usage
 
-Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. The syntax is designed so it could be read just like the English language. For latest version, please lookup this [readme](https://github.com/nayanda1/Draftsman/blob/master/README_1_1_1.md) instead
+Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. The syntax is designed so it could be read just like the English language. For latest version, please lookup this [readme](https://github.com/hainayanda/Draftsman/blob/master/README.md) instead
 
 ***
 
@@ -206,7 +206,7 @@ the `AnonymousRelation` is an enumeration that contains:
 * **keyboard** which are the same anchor of parent keyboard guide of `UIView`
 * **keyboardSafeArea** which are the same anchor of parent keyboard guide of `UIView` intersect with safe area
 
-the `keyboard` and `keyboardSafeArea` are all powered by [Clavier](https://github.com/nayanda1/Clavier)
+the `keyboard` and `keyboardSafeArea` are all powered by [Clavier](https://github.com/hainayanda/Clavier)
 
 You could also pass `UILayoutPriority` if you need. If you ignore it, it will be lesser than the previous priority started by mandatory.
 
@@ -531,7 +531,7 @@ the `planningBehavior` is the behavior of the cell during layouting which could 
 * **planOnEach([CellLayoutingPhase])** which will only call `planContent(_:)` during each given `CellLayoutingPhase`
 * **planIfPossible** which will always call `planContent(_:)` for any `CellLayoutingPhase`
 
-the `planningOption(on:)` will be called before `planContent(_:)` is called by any phase. It will asked what `PlanningOption` you want to use when call `planContent(_:)`. The default is append when `firstLoad` phase and `starFresh` on the other phases. You could read more about `PlanningOption` [here](https://github.com/nayanda1/Draftsman/wiki/Draftsman-Plan#planningoption). Example:
+the `planningOption(on:)` will be called before `planContent(_:)` is called by any phase. It will asked what `PlanningOption` you want to use when call `planContent(_:)`. The default is append when `firstLoad` phase and `starFresh` on the other phases. You could read more about `PlanningOption` [here](https://github.com/hainayanda/Draftsman/wiki/Draftsman-Plan#planningoption). Example:
 
 ```swift
 class EventCollectionCell: CollectionFragmentCell {
