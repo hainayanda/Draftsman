@@ -3,7 +3,7 @@
     "pins": [
       {
         "package": "Clavier",
-        "repositoryURL": "https://github.com/nayanda1/Clavier.git",
+        "repositoryURL": "https://github.com/hainayanda/Clavier.git",
         "state": {
           "branch": null,
           "revision": "f3b7bbf8c83022ffa9b2cc74b952641b0dd6a217",
