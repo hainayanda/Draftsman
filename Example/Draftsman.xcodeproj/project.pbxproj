@@ -351,11 +351,13 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Draftsman_Example/Pods-Draftsman_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Builder/Builder.framework",
 				"${BUILT_PRODUCTS_DIR}/Clavier/Clavier.framework",
 				"${BUILT_PRODUCTS_DIR}/Draftsman/Draftsman.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Builder.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Clavier.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Draftsman.framework",
 			);

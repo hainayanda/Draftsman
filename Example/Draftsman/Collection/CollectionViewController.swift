@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Draftsman
+import Builder
 
 class CollectionViewController: UIViewController, Planned {
     
