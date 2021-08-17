@@ -9,14 +9,15 @@
 import Foundation
 import UIKit
 import Draftsman
+import Builder
 
 class TableCell: TableFragmentCell {
     
-    lazy var titleLabel: UILabel = builder(UILabel.self)
+    lazy var titleLabel: UILabel = builder(UILabel())
         .textAlignment(.left)
         .font(.boldSystemFont(ofSize: 14))
         .build()
-    var subtitleLabel: UILabel = builder(UILabel.self)
+    var subtitleLabel: UILabel = builder(UILabel())
         .textAlignment(.left)
         .font(.systemFont(ofSize: 12))
         .build()

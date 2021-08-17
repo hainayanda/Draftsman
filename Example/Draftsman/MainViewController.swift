@@ -8,20 +8,21 @@
 
 import UIKit
 import Draftsman
+import Builder
 
 class MainViewController: UIViewController, Planned {
     
-    lazy var buttonToTable: UIButton = builder(UIButton.self)
+    lazy var buttonToTable: UIButton = builder(UIButton())
         .cornerRadius(8)
         .backgroundColor(.orange)
         .build()
     
-    lazy var buttonToCollection: UIButton = builder(UIButton.self)
+    lazy var buttonToCollection: UIButton = builder(UIButton())
         .cornerRadius(8)
         .backgroundColor(.orange)
         .build()
     
-    lazy var buttonToField: UIButton = builder(UIButton.self)
+    lazy var buttonToField: UIButton = builder(UIButton())
         .cornerRadius(8)
         .backgroundColor(.orange)
         .build()

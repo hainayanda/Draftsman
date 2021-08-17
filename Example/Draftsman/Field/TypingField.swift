@@ -9,14 +9,15 @@
 import Foundation
 import UIKit
 import Draftsman
+import Builder
 
 class TypingField: FragmentView {
     
-    lazy var textField: UITextField = builder(UITextField.self)
+    lazy var textField: UITextField = builder(UITextField())
         .placeholder("Type here")
         .build()
     
-    lazy var button: UIButton = builder(UIButton.self)
+    lazy var button: UIButton = builder(UIButton())
         .cornerRadius(8)
         .backgroundColor(.orange)
         .build()

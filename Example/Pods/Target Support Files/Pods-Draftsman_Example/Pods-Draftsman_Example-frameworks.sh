@@ -175,10 +175,12 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/Builder/Builder.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Clavier/Clavier.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Draftsman/Draftsman.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/Builder/Builder.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Clavier/Clavier.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Draftsman/Draftsman.framework"
 fi
