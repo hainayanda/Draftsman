@@ -28,7 +28,7 @@ Draftsman is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Draftsman', '~> 2.0.3'
+pod 'Draftsman', '~> 2.0.4'
 ```
 
 or for Swift 5.1 and XCode 11
@@ -50,7 +50,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hainayanda/Draftsman.git", .upToNextMajor(from: "2.0.3"))
+    .package(url: "https://github.com/hainayanda/Draftsman.git", .upToNextMajor(from: "2.0.4"))
 ]
 ```
 
