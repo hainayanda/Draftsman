@@ -11,16 +11,16 @@ import UIKit
 
 @resultBuilder
 public struct LayoutPlan {
-    public typealias Component = PlanComponent
+    public typealias Expression = PlanComponent
+    public typealias Component = [PlanComponent]
     public typealias Result = ViewPlan
     
-    public static func buildBlock(_ components: Component...) -> Result {
-        return RootViewPlan(subPlan: components.compactMap { convertToScheme(component: $0) })
+    public static func buildExpression(_ expression: Expression) -> Component {
+        [expression]
     }
     
     public static func buildOptional(_ component: Component?) -> Component {
-        guard let component = component else { return VoidPlanComponent() }
-        return component
+        component ?? []
     }
     
     public static func buildEither(first component: Component) -> Component {
@@ -32,16 +32,17 @@ public struct LayoutPlan {
     }
     
     public static func buildArray(_ components: [Component]) -> Component {
-        SchemeCollection(subPlan: components.compactMap { convertToScheme(component: $0) })
+        components.reduce([]) { partialResult, component in
+            partialResult.added(withContentsOf: component)
+        }
     }
     
-    static func convertToScheme(component: Component) -> ViewScheme? {
-        if let scheme = component as? ViewScheme {
-            return scheme
-        } else if let convertible = component as? PlanConvertible {
-            return convertible.scheme
-        }
-        return nil
+    public static func buildBlock(_ components: Component...) -> Component {
+        buildArray(components)
+    }
+    
+    public static func buildFinalResult(_ component: Component) -> Result {
+        RootViewPlan(subPlan: component.asSchemes)
     }
     
 }
