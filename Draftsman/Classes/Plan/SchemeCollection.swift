@@ -53,12 +53,35 @@ open class SchemeCollection: ViewPlan {
     
     @discardableResult
     open func apply(for view: UIView) -> [NSLayoutConstraint] {
-        return subPlan.reduce([]) { subConstraints, scheme in
-            scheme.context = context
-            var mutableConstraints = subConstraints
-            mutableConstraints.append(contentsOf: scheme.apply())
-            return mutableConstraints
+        let constraints = build(for: view)
+        let extracted = extractConstraintToRemoveAndToActivate(for: view, withNewConstraints: constraints)
+        if context.inViewPlan {
+            NSLayoutConstraint.deactivate(extracted.toRemoved)
         }
+        NSLayoutConstraint.activate(extracted.toActivated)
+        return extracted.toActivated
     }
+    
+    func extractConstraintToRemoveAndToActivate(
+        for view: UIView,
+        withNewConstraints newConstraints: [NSLayoutConstraint]) -> (toRemoved: [NSLayoutConstraint], toActivated: [NSLayoutConstraint]) {
+            var oldDraftsmanConstraints = view.allDraftsmanConstraints
+            var toActivate: [NSLayoutConstraint] = []
+            for constraint in newConstraints {
+                var removeIndex: Int?
+                for (index, oldConstraint) in oldDraftsmanConstraints.enumerated() where oldConstraint ~= constraint {
+                    oldConstraint.resembling(constraint)
+                    toActivate.append(oldConstraint)
+                    removeIndex = index
+                    break
+                }
+                if let removeIndex = removeIndex {
+                    oldDraftsmanConstraints.remove(at: removeIndex)
+                } else {
+                    toActivate.append(constraint)
+                }
+            }
+            return (toRemoved: oldDraftsmanConstraints, toActivated: toActivate)
+        }
 }
 #endif
