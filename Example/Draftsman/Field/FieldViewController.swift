@@ -29,9 +29,9 @@ class FieldViewController: UIViewController, Planned {
             .bottom(.moreThanTo(8), to: typingField.topAnchor)
             .insert {
                 UIImageView(image: UIImage(named: "image_test")).plan
-                    .contentMode(.scaleAspectFill)
+                    .builder.contentMode(.scaleAspectFill)
                     .clipsToBounds(true)
-                    .at(.fullTop, .equalTo(12), to: .parent)
+                    .plan.at(.fullTop, .equalTo(12), to: .parent)
                     .height(.equalTo(.width(of: .myself)), multiplyBy: 0.75)
                 typingLabel.plan
                     .at(.fullBottom, .equalTo(12), to: .parent)

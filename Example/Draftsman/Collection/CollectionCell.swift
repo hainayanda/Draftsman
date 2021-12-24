@@ -25,8 +25,8 @@ class CollectionCell: CollectionFragmentCell {
     @LayoutPlan
     override var viewPlan: ViewPlan {
         UIImageView(image: UIImage(named: "icon_test")).plan
-            .contentMode(.scaleAspectFit)
-            .at(.fullTop, .equalTo(12), to: .parent)
+            .builder.contentMode(.scaleAspectFit)
+            .plan.at(.fullTop, .equalTo(12), to: .parent)
             .width(.equalTo(.height(of: .myself)))
         UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4).plan
             .at(.fullBottom, .equalTo(12), to: .parent)

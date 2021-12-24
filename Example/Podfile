@@ -4,7 +4,7 @@ platform :ios, '10.0'
 
 target 'Draftsman_Example' do
   pod 'Draftsman', :path => '../'
-  pod 'Builder', '~> 1.0.1'
+  pod 'Builder', '~> 1.0.3'
 
   target 'Draftsman_Tests' do
     inherit! :search_paths

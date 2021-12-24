@@ -31,7 +31,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 Builder is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Builder', '~> 1.0.1'
+pod 'Builder', '~> 1.0.3'
 ```
 
 ### Swift Package Manager from XCode
@@ -47,7 +47,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/hainayanda/Builder.git", .upToNextMajor(from: "1.0.1"))
+  .package(url: "https://github.com/hainayanda/Builder.git", .upToNextMajor(from: "1.0.2"))
 ]
 ```
 
@@ -95,12 +95,16 @@ let myObject: MyObject = builder(MyObject())
     .build()
 ```
 
-Its even can assign property of property as deep as you need:
+Its even can assign property of property as deep as you need, as long the property is mutable:
 
 ```swift
-let view: UIView = builder(UIView())
-    .backgroundColor(.white)
-    .layer.cornerRadius(16)
+let view: UIView = builder(SomObject())
+    .string("some string")
+    .int(10)
+    .double(1.2)
+    .subObject.string("some string")
+    .subObject.int(10)
+    .subObject.double(1.2)
     .build()
 ```
 
@@ -117,12 +121,34 @@ public protocol Buildable {
 its just to ensure you can call builder global function by only passing its `Type`:
 
 ```swift
-```swift
-let view: UIView = builder(MyObjectImplementBuildable.self)
+let view: MyObjectImplementBuildable = builder(MyObjectImplementBuildable.self)
     .string("some string")
     .int(10)
     .double(1.2)
     .build()
+```
+
+## Error Handling
+
+Sometimes you can mistakenly  try to assigning property that immutable. By default you can always see the debugPrint output like this:
+
+```
+Failed to assign property keypath of MyType with property type MyPropertyType because its not writable
+```
+
+But it can be forgotton and became a bug in the future. So you can always force it to throw fatalError if something like this is happes by assigning `errorHandling` on `BuilderConfig`:
+
+```swift
+BuilderConfig.errorHandling = .fatalErrorOnAssigningLet
+```
+
+it will create a fatal error when immutable property is assigned, so you can always fix it before it became a problem in the future. 
+You can always handling it manually by assigning closure:
+
+```swift
+BuilderConfig.errorHandling = .manual { message in
+    debugPrint("FIX THIS: \(message)")
+}
 ```
 
 ## Contribute
