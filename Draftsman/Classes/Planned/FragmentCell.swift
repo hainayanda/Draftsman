@@ -12,6 +12,7 @@ import UIKit
 public protocol FragmentCell: Fragment {
     var layoutPhase: CellLayoutingPhase { get }
     var planningBehavior: CellPlanningBehavior { get }
+    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
     func planningOption(on phase: CellLayoutingPhase) -> PlanningOption
 }
 
@@ -59,7 +60,6 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
             return false
         }
         fragmentWillPlanContent()
-        plan.planOption = planningOption(on: layoutPhase)
         let plan = RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
         plan.apply(for: contentView)
         fragmentDidPlanContent()
@@ -102,6 +102,7 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
         return calculatedHeight.isCalculated ? calculatedHeight : defaultHeight
     }
     
+    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
     open func planningOption(on phase: CellLayoutingPhase) -> PlanningOption {
         switch phase {
         case .firstLoad:
@@ -175,13 +176,13 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
             return false
         }
         fragmentWillPlanContent()
-        plan.planOption = planningOption(on: layoutPhase)
         let plan = RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
         plan.apply(for: contentView)
         fragmentDidPlanContent()
         return true
     }
     
+    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
     open func planningOption(on phase: CellLayoutingPhase) -> PlanningOption {
         switch phase {
         case .firstLoad:

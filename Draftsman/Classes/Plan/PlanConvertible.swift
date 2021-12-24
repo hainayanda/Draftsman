@@ -33,16 +33,23 @@ public extension PlanConvertible where Self: UIView {
     }
     
     @discardableResult
+    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
     func planContent(
-        withDelegate delegate: PlanDelegate? = nil,
-        _ planOption: PlanningOption = .append,
-        @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
+    withDelegate delegate: PlanDelegate? = nil,
+    _ planOption: PlanningOption,
+    @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
+        planContent(withDelegate: delegate, layouter)
+    }
+    
+    @discardableResult
+    func planContent(
+    withDelegate delegate: PlanDelegate? = nil,
+    @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
         defer {
             notifyViewDidPlanned()
         }
         let viewPlan = layouter()
         let rootPlan = viewPlan as? RootViewPlan ?? RootViewPlan(subPlan: viewPlan.subPlan)
-        rootPlan.planOption = planOption
         rootPlan.delegate = delegate
         return rootPlan.apply(for: self)
     }
@@ -51,10 +58,18 @@ public extension PlanConvertible where Self: UIView {
 public extension PlanConvertible where Self: UIStackView {
     
     @discardableResult
+    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
     func planStackedContent(
-        withDelegate delegate: PlanDelegate? = nil,
-        _ planOption: PlanningOption = .append,
-        @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
+    withDelegate delegate: PlanDelegate? = nil,
+    _ planOption: PlanningOption,
+    @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
+        planStackedContent(withDelegate: delegate, layouter)
+    }
+    
+    @discardableResult
+    func planStackedContent(
+    withDelegate delegate: PlanDelegate? = nil,
+    @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
         defer {
             notifyViewDidPlanned()
         }
@@ -65,7 +80,6 @@ public extension PlanConvertible where Self: UIStackView {
                 return $0
             }
         )
-        rootPlan.planOption = planOption
         rootPlan.delegate = delegate
         return rootPlan.apply(for: self)
     }
@@ -79,14 +93,22 @@ public extension PlanConvertible where Self: UIViewController {
     }
     
     @discardableResult
+    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
     func planContent(
-        withDelegate delegate: PlanDelegate? = nil,
-        _ options: PlanningOption = .append,
-        @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
+    withDelegate delegate: PlanDelegate? = nil,
+    _ planOption: PlanningOption,
+    @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
+        planContent(withDelegate: delegate, layouter)
+    }
+    
+    @discardableResult
+    func planContent(
+    withDelegate delegate: PlanDelegate? = nil,
+    @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
         defer {
             notifyViewDidPlanned()
         }
-        return view.planContent(withDelegate: delegate, options, layouter)
+        return view.planContent(withDelegate: delegate, layouter)
     }
 }
 #endif
