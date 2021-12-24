@@ -10,8 +10,10 @@ import Foundation
 import UIKit
 
 enum KeyboardState {
+    case goingUp
     case up
     case down
+    case goingDown
     
     var isUp: Bool {
         self == .up
@@ -130,7 +132,11 @@ public class KeyboardLayoutGuide: UILayoutGuide {
     
     var observeFrameToken: NSObject?
     
+    var observeBoundsToken: NSObject?
+    
     var observeInsetsToken: NSObject?
+    
+    var observeSuperviewToken: NSObject?
     
     var keyboardState: KeyboardState = .down
     
@@ -145,7 +151,9 @@ public class KeyboardLayoutGuide: UILayoutGuide {
                 return
             }
             updateGuideConstraints()
+            observeSuperviewToken = observeKVC(for: view, keyPath: \.superview)
             observeFrameToken = observeKVC(for: view, keyPath: \.frame)
+            observeBoundsToken = observeKVC(for: view, keyPath: \.bounds)
             if #available(iOS 11.0, *) {
                 observeInsetsToken = observeKVC(for: view, keyPath: \.safeAreaInsets)
             } else {
@@ -198,10 +206,35 @@ public class KeyboardLayoutGuide: UILayoutGuide {
             name: UIDevice.orientationDidChangeNotification,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillGoingUp),
+            name: UIView.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardDidGoUp),
+            name: UIView.keyboardDidShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillGoingDown),
+            name: UIView.keyboardWillHideNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardDidGoDown),
+            name: UIView.keyboardDidHideNotification,
+            object: nil
+        )
     }
     
-    func observeKVC<Property>(for view: UIView, keyPath: KeyPath<UIView, Property>) -> NSObject {
+    func observeKVC<Property: Equatable>(for view: UIView, keyPath: KeyPath<UIView, Property>) -> NSObject {
         return view.observe(keyPath, options: [.new, .old]) { [weak self] sender, changes in
+            guard changes.newValue != changes.oldValue else { return }
             self?.updateGuideConstraints()
         }
     }
@@ -211,13 +244,21 @@ public class KeyboardLayoutGuide: UILayoutGuide {
         let insets = usingSafeArea ? safeKeyboardEdgeInsetsInView: keyboardEdgeInsetsInView
         if edgesConstraints.count != 4 {
             createEdgeConstraints(for: view, with: insets)
-        } else {
+            view.setNeedsLayout()
+        } else if shouldUpdateConstant(using: insets) {
             edgesConstraints[0].constant = insets.left
             edgesConstraints[1].constant = insets.top
             edgesConstraints[2].constant = -insets.right
             edgesConstraints[3].constant = -insets.bottom
+            view.layoutIfNeeded()
         }
-        view.layoutIfNeeded()
+    }
+    
+    func shouldUpdateConstant(using insets: UIEdgeInsets) -> Bool {
+        edgesConstraints[0].constant != insets.left ||
+        edgesConstraints[1].constant != insets.top ||
+        edgesConstraints[2].constant != -insets.right ||
+        edgesConstraints[3].constant != -insets.bottom
     }
     
     func createEdgeConstraints(for view: UIView, with insets: UIEdgeInsets) {
@@ -247,12 +288,26 @@ public class KeyboardLayoutGuide: UILayoutGuide {
         }
         let rect = keyboardValue.cgRectValue.intersection(UIScreen.main.bounds)
         guard !rect.isNull, rect.height > 0 else {
-            keyboardState = .down
             keyboardRect = defaultKeyboardRect
             return
         }
-        keyboardState = .up
         keyboardRect = rect
+    }
+    
+    @objc func keyboardWillGoingUp() {
+        keyboardState = .goingUp
+    }
+    
+    @objc func keyboardDidGoUp() {
+        keyboardState = .up
+    }
+    
+    @objc func keyboardWillGoingDown() {
+        keyboardState = .goingDown
+    }
+    
+    @objc func keyboardDidGoDown() {
+        keyboardState = .down
     }
     
     deinit {

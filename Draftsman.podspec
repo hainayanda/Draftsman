@@ -38,7 +38,7 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'Clavier', '~> 1.0.2'
+  s.dependency 'Clavier', '~> 1.0.3'
   s.dependency 'Builder', '~> 1.0.3'
   s.swift_version = '5.3'
 end

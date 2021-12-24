@@ -21,7 +21,7 @@
   "source_files": "Draftsman/Classes/**/*",
   "dependencies": {
     "Clavier": [
-      "~> 1.0.2"
+      "~> 1.0.3"
     ],
     "Builder": [
       "~> 1.0.3"
