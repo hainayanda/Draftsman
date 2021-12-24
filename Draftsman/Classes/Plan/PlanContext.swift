@@ -26,9 +26,11 @@ public final class PlanContext {
             previousView = oldValue
         }
     }
+    var inViewPlan: Bool
     var previousView: UIView?
     
-    init(delegate: PlanDelegate? = nil, currentView: UIView) {
+    init(delegate: PlanDelegate? = nil, currentView: UIView, inViewPlan: Bool = false) {
+        self.inViewPlan = inViewPlan
         self._delegate = delegate
         self.currentView = currentView
     }
