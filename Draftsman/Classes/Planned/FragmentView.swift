@@ -30,7 +30,6 @@ open class FragmentView: UIView, Fragment {
         super.didMoveToSuperview()
         guard superview != nil, !inPlanning else { return }
         fragmentWillPlanContent()
-        removeAllPlannedConstraints()
         planContent {
             viewPlan
         }
