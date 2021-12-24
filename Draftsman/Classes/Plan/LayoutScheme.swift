@@ -37,10 +37,9 @@ public final class LayoutScheme<View: UIView>: SchemeCollection, ViewScheme {
     var viewInScheme: View
     public var constraintBuilders: [LayoutConstraintBuilder] = []
     
-    init(view: View, subPlan: [ViewScheme] = []) {
+    init(view: View, subPlan: [ViewScheme] = [], inViewPlan: Bool = false) {
         self.viewInScheme = view
-        super.init(subPlan: subPlan)
-        self.context = PlanContext(currentView: view)
+        super.init(subPlan: subPlan, inViewPlan: inViewPlan)
     }
     
     public override func build(for view: UIView) -> [NSLayoutConstraint] {

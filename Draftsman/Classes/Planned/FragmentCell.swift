@@ -59,8 +59,8 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
             return false
         }
         fragmentWillPlanContent()
-        let plan = RootViewPlan(subPlan: viewPlan.subPlan)
         plan.planOption = planningOption(on: layoutPhase)
+        let plan = RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
         plan.apply(for: contentView)
         fragmentDidPlanContent()
         return true
@@ -175,8 +175,8 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
             return false
         }
         fragmentWillPlanContent()
-        let plan = RootViewPlan(subPlan: viewPlan.subPlan)
         plan.planOption = planningOption(on: layoutPhase)
+        let plan = RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
         plan.apply(for: contentView)
         fragmentDidPlanContent()
         return true

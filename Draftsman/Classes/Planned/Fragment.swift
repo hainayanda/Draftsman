@@ -23,7 +23,7 @@ public extension Fragment where Self: UIView {
     
     func planFragment(delegate: PlanDelegate? = nil, _ planOption: PlanningOption = .startClean) {
         fragmentWillPlanContent()
-        let plan = RootViewPlan(subPlan: viewPlan.subPlan)
+        let plan = RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
         plan.delegate = delegate
         plan.planOption = planOption
         plan.apply(for: self)

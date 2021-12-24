@@ -18,13 +18,13 @@ public protocol Planned {
 
 public extension Planned where Self: UIView {
     func applyPlan() {
-        LayoutScheme(view: self, subPlan: viewPlan.subPlan).apply()
+        LayoutScheme(view: self, subPlan: viewPlan.subPlan, inViewPlan: true).apply()
     }
 }
 
 public extension Planned where Self: UIViewController {
     func applyPlan() {
-        LayoutScheme(view: view, subPlan: viewPlan.subPlan).apply()
+        LayoutScheme(view: view, subPlan: viewPlan.subPlan, inViewPlan: true).apply()
     }
 }
 #endif
