@@ -20,33 +20,13 @@ open class SchemeCollection: ViewPlan {
     
     open func build(for view: UIView) -> [NSLayoutConstraint] {
         context.currentView = view
-        var constraints: [NSLayoutConstraint] = []
         if context.inViewPlan {
-            view.subviews.forEach { subview in
-                if !subPlan.contains(where: { $0.view == subview }) {
-                    subview.removeFromSuperview()
-                }
-            }
+            removeSubviewThatNotInPlan(for: view)
         }
-        subPlan.forEach { scheme in
-            scheme.context = context
-            let viewScheme = scheme.view
-            viewScheme.translatesAutoresizingMaskIntoConstraints = false
-            if let stack = view as? UIStackView, scheme.isStackContent {
-                if stack.arrangedSubviews.contains(viewScheme) {
-                    viewScheme.removeFromSuperview()
-                }
-                stack.addArrangedSubview(viewScheme)
-            } else {
-                view.addSubview(viewScheme)
-            }
-            view.bringSubviewToFront(viewScheme)
-            if let controller = view.nextViewController,
-               let schemeController = viewScheme.nextViewController,
-               controller != schemeController {
-                controller.addChild(schemeController)
-            }
-            constraints.append(contentsOf: scheme.build())
+        let constraints: [NSLayoutConstraint] = subPlan.reduce([]) { partialResult, scheme in
+            var nextResult = partialResult
+            nextResult.append(contentsOf: buildScheme(scheme, forView: view))
+            return nextResult
         }
         return constraints
     }
@@ -60,6 +40,35 @@ open class SchemeCollection: ViewPlan {
         }
         NSLayoutConstraint.activate(extracted.toActivated)
         return extracted.toActivated
+    }
+    
+    func buildScheme(_ scheme: ViewScheme, forView view: UIView) -> [NSLayoutConstraint] {
+        scheme.context = context
+        let viewScheme = scheme.view
+        viewScheme.translatesAutoresizingMaskIntoConstraints = false
+        if let stack = view as? UIStackView, scheme.isStackContent {
+            if stack.arrangedSubviews.contains(viewScheme) {
+                viewScheme.removeFromSuperview()
+            }
+            stack.addArrangedSubview(viewScheme)
+        } else {
+            view.addSubview(viewScheme)
+        }
+        view.bringSubviewToFront(viewScheme)
+        if let controller = view.nextViewController,
+           let schemeController = viewScheme.nextViewController,
+           controller != schemeController {
+            controller.addChild(schemeController)
+        }
+        return scheme.build()
+    }
+    
+    func removeSubviewThatNotInPlan(for view: UIView) {
+        view.subviews.forEach { subview in
+            if !subPlan.contains(where: { $0.view == subview }) {
+                subview.removeFromSuperview()
+            }
+        }
     }
     
     func extractConstraintToRemoveAndToActivate(
