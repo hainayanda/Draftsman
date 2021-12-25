@@ -13,8 +13,6 @@ open class FragmentView: UIView, Fragment {
     
     var layouted: Bool = false
     
-    var inPlanning: Bool = false
-    
     @LayoutPlan
     open var viewPlan: ViewPlan { VoidViewPlan() }
     
@@ -28,12 +26,14 @@ open class FragmentView: UIView, Fragment {
     
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        guard superview != nil, !inPlanning else { return }
+        guard superview != nil else { return }
         fragmentWillPlanContent()
-        planContent {
-            viewPlan
+        defer {
+            fragmentDidPlanContent()
+            notifyViewDidPlanned()
         }
-        fragmentDidPlanContent()
+        let rootPlan = viewPlan as? RootViewPlan ?? RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
+        rootPlan.apply(for: self)
     }
     
     open override func layoutSubviews() {

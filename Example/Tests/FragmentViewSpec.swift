@@ -77,33 +77,6 @@ class FragmentViewSpec: QuickSpec {
                 expect(didPlan).to(beTrue())
                 expect(planed).to(beTrue())
             }
-            it("shouldnt run any lifecycle when added to view in plan") {
-                var didPlan: Bool = false
-                var willPlan: Bool = false
-                var planed: Bool = false
-                fragment.didPlan = {
-                    expect(planed).to(beTrue())
-                    expect(willPlan).to(beTrue())
-                    didPlan = true
-                }
-                fragment.willPlan = {
-                    expect(planed).to(beFalse())
-                    expect(didPlan).to(beFalse())
-                    willPlan = true
-                }
-                fragment.didPlanContent = {
-                    expect(willPlan).to(beTrue())
-                    expect(didPlan).to(beFalse())
-                    planed = true
-                }
-                fragment.inPlanning = true
-                let view = UIView()
-                view.addSubview(fragment)
-                fragment.inPlanning = false
-                expect(willPlan).to(beFalse())
-                expect(didPlan).to(beFalse())
-                expect(planed).to(beFalse())
-            }
         }
     }
 }
