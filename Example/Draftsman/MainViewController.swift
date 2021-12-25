@@ -34,10 +34,15 @@ class MainViewController: UIViewController, Planned {
             .horizontal(.equalTo(16), to: .safeArea)
             .vertical(.moreThanTo(16), to: .safeArea)
             .insertStacked {
-                buttonToTable
-                buttonToCollection
-                buttonToField
+                stackPlan
             }
+    }
+    
+    @LayoutPlan
+    var stackPlan: ViewPlan {
+        buttonToTable
+        buttonToCollection
+        buttonToField
     }
     
     override func viewDidLoad() {

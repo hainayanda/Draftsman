@@ -32,8 +32,13 @@ class CollectionCell: CollectionFragmentCell {
             .at(.fullBottom, .equalTo(12), to: .parent)
             .top(.equalTo(8), to: .bottom(of: .previous))
             .insertStacked {
-                titleLabel
-                subtitleLabel
+                stackPlan
         }
+    }
+    
+    @LayoutPlan
+    var stackPlan: ViewPlan {
+        titleLabel
+        subtitleLabel
     }
 }

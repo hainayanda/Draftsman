@@ -32,9 +32,14 @@ class TableCell: TableFragmentCell {
             .at(.fullRight, .equalTo(12), to: .parent)
             .left(.equalTo(8), to: .right(of: .previous))
             .insertStacked {
-                titleLabel
-                subtitleLabel
+                stackPlan
         }
+    }
+    
+    @LayoutPlan
+    var stackPlan: ViewPlan {
+        titleLabel
+        subtitleLabel
     }
     
     override func calculatedCellHeight(for cellWidth: CGFloat) -> CGFloat {
