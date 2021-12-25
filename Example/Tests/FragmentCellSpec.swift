@@ -105,32 +105,6 @@ class FragmentCellSpec: QuickSpec {
                     tableCell.layoutSubviews()
                     expect(planed).to(beTrue())
                 }
-                it("should get subplaning option") {
-                    var planOptionPhase: CellLayoutingPhase = .none
-                    var planed: Bool = false
-                    tableCell.planningBehavior = .planIfPossible
-                    tableCell.didNeedPlanningOption = { phase in
-                        planOptionPhase = phase
-                        return .append
-                    }
-                    tableCell.didPlanContent = {
-                        planed = true
-                    }
-                    tableCell.layoutPhase = .firstLoad
-                    tableCell.layoutSubviews()
-                    expect(planed).to(beTrue())
-                    expect(planOptionPhase).to(equal(.firstLoad))
-                    planed = false
-                    tableCell.layoutPhase = .reused
-                    tableCell.layoutSubviews()
-                    expect(planed).to(beTrue())
-                    expect(planOptionPhase).to(equal(.reused))
-                    planed = false
-                    tableCell.layoutPhase = .setNeedsLayout
-                    tableCell.layoutSubviews()
-                    expect(planed).to(beTrue())
-                    expect(planOptionPhase).to(equal(.setNeedsLayout))
-                }
                 it("should use calculated size") {
                     var planFitted: Bool = false
                     var calculated: Bool = false
@@ -246,32 +220,6 @@ class FragmentCellSpec: QuickSpec {
                     collectionCell.layoutSubviews()
                     expect(planed).to(beTrue())
                 }
-                it("should get subplaning option") {
-                    var planOptionPhase: CellLayoutingPhase = .none
-                    var planed: Bool = false
-                    collectionCell.planningBehavior = .planIfPossible
-                    collectionCell.didNeedPlanningOption = { phase in
-                        planOptionPhase = phase
-                        return .append
-                    }
-                    collectionCell.didPlanContent = {
-                        planed = true
-                    }
-                    collectionCell.layoutPhase = .firstLoad
-                    collectionCell.layoutSubviews()
-                    expect(planed).to(beTrue())
-                    expect(planOptionPhase).to(equal(.firstLoad))
-                    planed = false
-                    collectionCell.layoutPhase = .reused
-                    collectionCell.layoutSubviews()
-                    expect(planed).to(beTrue())
-                    expect(planOptionPhase).to(equal(.reused))
-                    planed = false
-                    collectionCell.layoutPhase = .setNeedsLayout
-                    collectionCell.layoutSubviews()
-                    expect(planed).to(beTrue())
-                    expect(planOptionPhase).to(equal(.setNeedsLayout))
-                }
             }
         }
     }
@@ -295,11 +243,6 @@ class TestableTableCell: TableFragmentCell {
         set {
             _planBehaviour = newValue
         }
-    }
-    
-    var didNeedPlanningOption: ((CellLayoutingPhase) -> PlanningOption)?
-    override func planningOption(on phase: CellLayoutingPhase) -> PlanningOption {
-        didNeedPlanningOption?(phase) ?? super.planningOption(on: phase)
     }
     
     var didPlanContent: (() -> Void)?
@@ -341,11 +284,6 @@ class TestableCollectionCell: CollectionFragmentCell {
         set {
             _planningBehavior = newValue
         }
-    }
-    
-    var didNeedPlanningOption: ((CellLayoutingPhase) -> PlanningOption)?
-    override func planningOption(on phase: CellLayoutingPhase) -> PlanningOption {
-        didNeedPlanningOption?(phase) ?? super.planningOption(on: phase)
     }
     
     var didPlanContent: (() -> Void)?

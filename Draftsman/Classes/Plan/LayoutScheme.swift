@@ -8,6 +8,7 @@
 import Foundation
 #if canImport(UIKit)
 import UIKit
+import Builder
 
 public protocol ViewScheme: ViewPlan {
     var isStackContent: Bool { get set }
@@ -30,27 +31,15 @@ public extension ViewScheme {
     }
 }
 
-@dynamicMemberLookup
 public final class LayoutScheme<View: UIView>: SchemeCollection, ViewScheme {
-    public typealias LayoutSchemeBuilder<Property> = ((Property) -> LayoutScheme<View>)
-    
     public var isStackContent: Bool = false
     public var view: UIView { viewInScheme }
     var viewInScheme: View
     public var constraintBuilders: [LayoutConstraintBuilder] = []
     
-    init(view: View, subPlan: [ViewScheme] = []) {
+    init(view: View, subPlan: [ViewScheme] = [], inViewPlan: Bool = false) {
         self.viewInScheme = view
-        super.init(subPlan: subPlan)
-        self.context = PlanContext(currentView: view)
-    }
-    
-    public subscript<Property>(dynamicMember keyPath: WritableKeyPath<View, Property>) -> LayoutSchemeBuilder<Property> {
-        // retained on purpose
-        return { value in
-            self.viewInScheme[keyPath: keyPath] = value
-            return self
-        }
+        super.init(subPlan: subPlan, inViewPlan: inViewPlan)
     }
     
     public override func build(for view: UIView) -> [NSLayoutConstraint] {

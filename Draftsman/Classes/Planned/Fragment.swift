@@ -21,18 +21,21 @@ public extension Fragment {
 
 public extension Fragment where Self: UIView {
     
-    func planFragment(delegate: PlanDelegate? = nil, _ planOption: PlanningOption = .startClean) {
+    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
+    func planFragment(delegate: PlanDelegate? = nil, _ planOption: PlanningOption) {
+        planFragment(delegate: delegate)
+    }
+    
+    func planFragment(delegate: PlanDelegate? = nil) {
         fragmentWillPlanContent()
-        let plan = RootViewPlan(subPlan: viewPlan.subPlan)
+        let plan = RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
         plan.delegate = delegate
-        plan.planOption = planOption
         plan.apply(for: self)
         fragmentDidPlanContent()
     }
     
-    func replanContent(delegate: PlanDelegate? = nil, _ planOption: PlanningOption = .startClean) {
-        removeAllPlannedConstraints()
-        planFragment(delegate: delegate, planOption)
+    func replanContent(delegate: PlanDelegate? = nil) {
+        planFragment(delegate: delegate)
     }
 }
 #endif

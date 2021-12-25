@@ -25,8 +25,8 @@ class TableCell: TableFragmentCell {
     @LayoutPlan
     override var viewPlan: ViewPlan {
         UIImageView(image: UIImage(named: "icon_test")).plan
-            .contentMode(.scaleAspectFit)
-            .at(.fullLeft, .equalTo(12), to: .parent)
+            .builder.contentMode(.scaleAspectFit)
+            .plan.at(.fullLeft, .equalTo(12), to: .parent)
             .width(.equalTo(.height(of: .myself)))
         UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4).plan
             .at(.fullRight, .equalTo(12), to: .parent)

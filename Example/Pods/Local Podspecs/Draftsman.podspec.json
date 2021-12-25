@@ -1,6 +1,6 @@
 {
   "name": "Draftsman",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "summary": "Draftsman is a DSL framework for Swift",
   "description": "Draftsman is a DSL framework for Swift focussed on builder pattern",
   "homepage": "https://github.com/hainayanda/Draftsman",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/hainayanda/Draftsman.git",
-    "tag": "2.0.2"
+    "tag": "2.0.4"
   },
   "platforms": {
     "ios": "10.0"
@@ -21,7 +21,10 @@
   "source_files": "Draftsman/Classes/**/*",
   "dependencies": {
     "Clavier": [
-      "~> 1.0.2"
+      "~> 1.0.3"
+    ],
+    "Builder": [
+      "~> 1.0.3"
     ]
   },
   "swift_versions": "5.3",

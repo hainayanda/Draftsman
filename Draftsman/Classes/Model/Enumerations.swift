@@ -69,6 +69,7 @@ public enum AnonymousRelation {
     }
 }
 
+@available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
 public enum PlanningOption {
     case append
     case renew

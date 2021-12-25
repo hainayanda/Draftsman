@@ -203,34 +203,6 @@ view.planContent(withDelegate: myDelegate) {
 }
 ```
 
-### PlanningOption
-PlanningOption is an enumeration that will determine how the plan will be implemented:
-* **append** will be ignore current active `NSLayoutConstraints` and append any `NSLayoutConstraints` planned.
-* **renew** will update the same current active `NSLayoutConstraints` which created by Draftsman if found and append the new one.
-* **startFresh** will remove all current active `NSLayoutConstraints` created by Draftsman and append any NSLayoutConstraints planned.
-* **startClean** will be remove all current active `NSLayoutConstraints` and append any `NSLayoutConstraints` planned.
-
-if we sort all the options from the fastest to the slowest it could be like this:
-* append
-* startClean
-* startFresh
-* renew
-
-but even if the `append` is the fastest, you better just use this if you want to plan once, otherwise, you will have multiple duplicated constraints.
-
-```swift
-view.planContent(PlanningOption.renew) {
-    UIView().plan
-        .center(.equal, to: .parent)
-        .horizontal(.equal, to: .safeArea)
-        .vertical(.moreThan, to: .safeArea)
-        .insert {
-            myView.plan
-                .edges(.equal, to: .parent)
-        }
-}
-```
-
 ***
 
 ## View Position
