@@ -13,8 +13,8 @@ open class SchemeCollection: ViewPlan {
     public var context: PlanContext
     public var subPlan: [ViewScheme]
     
-    public init(subPlan: [ViewScheme], inViewPlan: Bool = false) {
-        self.context = PlanContext(currentView: UIView(), inViewPlan: inViewPlan)
+    public init(subPlan: [ViewScheme]) {
+        self.context = PlanContext(currentView: UIView())
         self.subPlan = subPlan
     }
     
@@ -24,22 +24,30 @@ open class SchemeCollection: ViewPlan {
             removeSubviewThatNotInPlan(for: view)
         }
         let constraints: [NSLayoutConstraint] = subPlan.reduce([]) { partialResult, scheme in
-            var nextResult = partialResult
-            nextResult.append(contentsOf: buildScheme(scheme, forView: view))
-            return nextResult
+            var nextConstraints = buildScheme(scheme, forView: view)
+            nextConstraints.append(contentsOf: partialResult)
+            return nextConstraints
         }
-        return constraints
+        return combinedWithCurrentConstraints(for: view, toCombined: constraints)
     }
     
     @discardableResult
     open func apply(for view: UIView) -> [NSLayoutConstraint] {
         let constraints = build(for: view)
-        let extracted = extractConstraintToRemoveAndToActivate(for: view, withNewConstraints: constraints)
-        if context.inViewPlan {
-            NSLayoutConstraint.deactivate(extracted.toRemoved)
+        NSLayoutConstraint.activate(constraints)
+        return constraints
+    }
+    
+    func combinedWithCurrentConstraints(for view: UIView, toCombined: [NSLayoutConstraint]) -> [NSLayoutConstraint] {
+        let currentConstraints = view.mostTopView.allConstraints
+        let combinedConstraints: [NSLayoutConstraint] = toCombined.compactMap { constraint in
+            guard let found = currentConstraints.first(where: { $0 ~= constraint }) else {
+                return constraint
+            }
+            found.resembling(constraint)
+            return found
         }
-        NSLayoutConstraint.activate(extracted.toActivated)
-        return extracted.toActivated
+        return combinedConstraints
     }
     
     func buildScheme(_ scheme: ViewScheme, forView view: UIView) -> [NSLayoutConstraint] {
@@ -54,7 +62,6 @@ open class SchemeCollection: ViewPlan {
         } else {
             view.addSubview(viewScheme)
         }
-        view.bringSubviewToFront(viewScheme)
         if let controller = view.nextViewController,
            let schemeController = viewScheme.nextViewController,
            controller != schemeController {
@@ -70,27 +77,5 @@ open class SchemeCollection: ViewPlan {
             }
         }
     }
-    
-    func extractConstraintToRemoveAndToActivate(
-        for view: UIView,
-        withNewConstraints newConstraints: [NSLayoutConstraint]) -> (toRemoved: [NSLayoutConstraint], toActivated: [NSLayoutConstraint]) {
-            var oldDraftsmanConstraints = view.allDraftsmanConstraints
-            var toActivate: [NSLayoutConstraint] = []
-            for constraint in newConstraints {
-                var removeIndex: Int?
-                for (index, oldConstraint) in oldDraftsmanConstraints.enumerated() where oldConstraint ~= constraint {
-                    oldConstraint.resembling(constraint)
-                    toActivate.append(oldConstraint)
-                    removeIndex = index
-                    break
-                }
-                if let removeIndex = removeIndex {
-                    oldDraftsmanConstraints.remove(at: removeIndex)
-                } else {
-                    toActivate.append(constraint)
-                }
-            }
-            return (toRemoved: oldDraftsmanConstraints, toActivated: toActivate)
-        }
 }
 #endif
