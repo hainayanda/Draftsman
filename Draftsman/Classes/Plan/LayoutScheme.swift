@@ -11,6 +11,9 @@ import UIKit
 import Builder
 
 public protocol ViewScheme: ViewPlan {
+    var originalViewPlanId: String? { get set }
+    var viewPlanId: String? { get set }
+    var managedViewPlanIds: [String] { get }
     var isStackContent: Bool { get set }
     var view: UIView { get }
     var constraintBuilders: [LayoutConstraintBuilder] { get set }
@@ -21,6 +24,22 @@ public protocol ViewScheme: ViewPlan {
 }
 
 public extension ViewScheme {
+    var managedViewPlanIds: [String] {
+        var start: [String] = []
+        if let originalPlanId = originalViewPlanId {
+            start.append(originalPlanId)
+        }
+        if let viewPlanId = viewPlanId {
+            start.append(viewPlanId)
+        }
+        let allPlanIds = subPlan.reduce(start) { partialResult, scheme in
+            var nextResult = partialResult
+            nextResult.append(contentsOf: scheme.managedViewPlanIds)
+            return nextResult
+        }
+        return allPlanIds.unique
+    }
+    
     func build() -> [NSLayoutConstraint] {
         build(for: view)
     }
@@ -31,7 +50,10 @@ public extension ViewScheme {
     }
 }
 
-public final class LayoutScheme<View: UIView>: SchemeCollection, ViewScheme {
+public final class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
+    public var viewPlanId: String?
+    public var originalViewPlanId: String?
+    public var isFromViewPlan: Bool = false
     public var isStackContent: Bool = false
     public var view: UIView { viewInScheme }
     var viewInScheme: View
