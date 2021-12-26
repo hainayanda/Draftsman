@@ -26,6 +26,7 @@ public extension Fragment where Self: UIView {
         planFragment(delegate: delegate)
     }
     
+    @available(*, deprecated, message: "Use applyPlan instead")
     func planFragment(delegate: PlanDelegate? = nil) {
         applyPlan(delegate: delegate)
     }
@@ -41,6 +42,7 @@ public extension Fragment where Self: UIView {
         fragmentDidPlanContent()
     }
     
+    @available(*, deprecated, message: "Use applyPlan instead")
     func replanContent(delegate: PlanDelegate? = nil) {
         planFragment(delegate: delegate)
     }
