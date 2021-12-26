@@ -11,8 +11,7 @@ import UIKit
 
 func ~= (_ lhs: NSLayoutConstraint, _ rhs: NSLayoutConstraint) -> Bool {
     lhs.firstAnchor == rhs.firstAnchor && lhs.secondAnchor == rhs.secondAnchor
-    && lhs.relation == rhs.relation && lhs.identifier == rhs.identifier
-    && lhs.multiplier == rhs.multiplier
+    && lhs.relation == rhs.relation && lhs.multiplier == rhs.multiplier
 }
 
 extension NSLayoutConstraint {
