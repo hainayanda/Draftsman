@@ -11,8 +11,7 @@ import UIKit
 
 func ~= (_ lhs: NSLayoutConstraint, _ rhs: NSLayoutConstraint) -> Bool {
     lhs.firstAnchor == rhs.firstAnchor && lhs.secondAnchor == rhs.secondAnchor
-    && lhs.relation == rhs.relation && lhs.identifier == rhs.identifier
-    && lhs.multiplier == rhs.multiplier
+    && lhs.relation == rhs.relation && lhs.multiplier == rhs.multiplier
 }
 
 extension NSLayoutConstraint {
@@ -24,6 +23,12 @@ extension NSLayoutConstraint {
     func resembling(_ otherConstraints: NSLayoutConstraint) {
         self.constant = otherConstraints.constant
         self.priority = otherConstraints.priority
+        self.identifier = otherConstraints.identifier
+    }
+    
+    func isPartOf(viewPlanId: String) -> Bool {
+        guard let identifier = self.identifier else { return false }
+        return identifier ~= "^draftsman_viewplanid_\(viewPlanId)"
     }
 }
 #endif

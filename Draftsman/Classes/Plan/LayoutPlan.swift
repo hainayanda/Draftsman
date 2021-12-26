@@ -11,12 +11,16 @@ import UIKit
 
 @resultBuilder
 public struct LayoutPlan {
-    public typealias Expression = PlanComponent
+    public typealias Expression = PlanComponent?
     public typealias Component = [PlanComponent]
     public typealias Result = ViewPlan
     
     public static func buildExpression(_ expression: Expression) -> Component {
-        [expression]
+        guard let expression = expression else { return [] }
+        if let rootPlan = expression as? RootViewPlan, (rootPlan as? ViewScheme) == nil {
+            return rootPlan.subPlan
+        }
+        return [expression]
     }
     
     public static func buildOptional(_ component: Component?) -> Component {
@@ -44,6 +48,5 @@ public struct LayoutPlan {
     public static func buildFinalResult(_ component: Component) -> Result {
         RootViewPlan(subPlan: component.asSchemes)
     }
-    
 }
 #endif

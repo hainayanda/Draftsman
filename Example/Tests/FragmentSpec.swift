@@ -39,17 +39,13 @@ class FragmentSpec: QuickSpec {
                     expect(didPlan).to(beFalse())
                     planed = true
                 }
-                fragment.replanContent()
+                fragment.applyPlan()
                 expect(willPlan).to(beTrue())
                 expect(didPlan).to(beTrue())
                 expect(planed).to(beTrue())
                 didPlan = false
                 willPlan = false
                 planed = false
-                fragment.planFragment()
-                expect(willPlan).to(beTrue())
-                expect(didPlan).to(beTrue())
-                expect(planed).to(beTrue())
             }
         }
     }

@@ -13,6 +13,16 @@ public protocol LayoutConstraintBuilder {
     func build(for context: PlanContext) -> NSLayoutConstraint?
 }
 
+public extension LayoutConstraintBuilder {
+    func identifierPrefix(for context: PlanContext) -> String {
+        if let viewPlanId = context.viewPlanId {
+            return "draftsman_viewplanid_\(viewPlanId)"
+        } else {
+            return "draftsman"
+        }
+    }
+}
+
 class AxisConstraintBuilder<AnchorType: AnyObject, Anchor: NSLayoutAnchor<AnchorType>, OtherAnchor>
 : LayoutConstraintBuilder {
     var anchor: Anchor
@@ -59,7 +69,7 @@ final class ExplicitAxisConstraintBuilder<AnchorType: AnyObject, Anchor: NSLayou
             constraint = anchor.constraint(equalTo: otherAnchor)
         }
         constraint.priority = priority ?? context.mutatingPriority
-        constraint.identifier = "draftsman_\(anchor.uniqueKey)_to_\(otherAnchor.uniqueKey)"
+        constraint.identifier = "\(identifierPrefix(for: context))_\(anchor.uniqueKey)_to_\(otherAnchor.uniqueKey)"
         return constraint
     }
 }
@@ -133,7 +143,7 @@ final class ExplicitDimensionConstraintBuilder: DimensionConstraintBuilder<CGFlo
             identifer = "equal_to"
         }
         constraint.priority = priority ?? context.mutatingPriority
-        constraint.identifier = "draftsman_\(anchor.uniqueKey)_\(identifer)"
+        constraint.identifier = "\(identifierPrefix(for: context))_\(anchor.uniqueKey)_\(identifer)"
         return constraint
     }
 }
@@ -169,7 +179,7 @@ final class RelationDimensionConstraintBuilder: DimensionConstraintBuilder<NSLay
             identifer = "equal_to_\(otherAnchor.uniqueKey)"
         }
         constraint.priority = priority ?? context.mutatingPriority
-        constraint.identifier = "draftsman_\(anchor.uniqueKey)_\(identifer)"
+        constraint.identifier = "\(identifierPrefix(for: context))_\(anchor.uniqueKey)_\(identifer)"
         return constraint
     }
 }

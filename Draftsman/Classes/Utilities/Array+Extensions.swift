@@ -27,3 +27,26 @@ extension Array {
         return array
     }
 }
+
+extension Array where Element == ViewScheme {
+    func markUnmarked(with viewPlanId: String) {
+        forEach {
+            if $0.viewPlanId == nil {
+                $0.viewPlanId = viewPlanId
+            }
+            $0.subPlan.markUnmarked(with: viewPlanId)
+        }
+    }
+}
+
+extension Array where Element: Hashable {
+    var unique: [Element] {
+        Array(Set(self)).sorted {
+            guard let leftIndex = self.firstIndex(of: $0),
+                    let rightIndex = self.firstIndex(of: $1) else {
+                return true
+            }
+            return leftIndex < rightIndex
+        }
+    }
+}
