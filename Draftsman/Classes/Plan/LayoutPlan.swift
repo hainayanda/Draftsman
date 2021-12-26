@@ -17,7 +17,7 @@ public struct LayoutPlan {
     
     public static func buildExpression(_ expression: Expression) -> Component {
         guard let expression = expression else { return [] }
-        if let rootPlan = expression as? RootViewPlan {
+        if let rootPlan = expression as? RootViewPlan, (rootPlan as? ViewScheme) == nil {
             return rootPlan.subPlan
         }
         return [expression]
