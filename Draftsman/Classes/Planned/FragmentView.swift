@@ -24,16 +24,17 @@ open class FragmentView: UIView, Fragment {
     
     open func fragmentDidLayoutForTheFirstTime() {}
     
+    public func applyPlan(delegate: PlanDelegate?) {
+        applyScheme(delegate: delegate)
+        DispatchQueue.main.async { [weak self] in
+            self?.layoutIfNeeded()
+        }
+    }
+    
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         guard superview != nil else { return }
-        fragmentWillPlanContent()
-        defer {
-            fragmentDidPlanContent()
-            notifyViewDidPlanned()
-        }
-        let rootPlan = viewPlan as? RootViewPlan ?? RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
-        rootPlan.apply(for: self)
+        applyPlan()
     }
     
     open override func layoutSubviews() {
@@ -41,11 +42,23 @@ open class FragmentView: UIView, Fragment {
         if isFirstTimeLayout {
             fragmentWillLayoutForTheFirstTime()
         }
+        applyScheme(delegate: nil)
         super.layoutSubviews()
         layouted = true
         if isFirstTimeLayout {
             fragmentDidLayoutForTheFirstTime()
         }
+    }
+    
+    func applyScheme(delegate: PlanDelegate?) {
+        fragmentWillPlanContent()
+        defer {
+            fragmentDidPlanContent()
+            notifyViewDidPlanned()
+        }
+        let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan, originalViewPlanId: self.uniqueKey)
+        scheme.delegate = delegate
+        scheme.apply()
     }
 }
 #endif

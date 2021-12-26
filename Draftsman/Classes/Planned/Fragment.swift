@@ -27,10 +27,17 @@ public extension Fragment where Self: UIView {
     }
     
     func planFragment(delegate: PlanDelegate? = nil) {
+        applyPlan(delegate: delegate)
+    }
+    
+    func applyPlan(delegate: PlanDelegate?) {
         fragmentWillPlanContent()
-        let plan = RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
-        plan.delegate = delegate
-        plan.apply(for: self)
+        let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan, originalViewPlanId: self.uniqueKey)
+        scheme.delegate = delegate
+        scheme.apply()
+        DispatchQueue.main.async { [weak self] in
+            self?.layoutIfNeeded()
+        }
         fragmentDidPlanContent()
     }
     

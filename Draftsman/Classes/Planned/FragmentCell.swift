@@ -16,6 +16,26 @@ public protocol FragmentCell: Fragment {
     func planningOption(on phase: CellLayoutingPhase) -> PlanningOption
 }
 
+public extension FragmentCell where Self: UITableViewCell {
+    func applyPlan(delegate: PlanDelegate?) {
+        fragmentWillPlanContent()
+        let scheme = LayoutScheme(view: self.contentView, subPlan: viewPlan.subPlan, originalViewPlanId: self.uniqueKey)
+        scheme.delegate = delegate
+        scheme.apply()
+        fragmentDidPlanContent()
+    }
+}
+
+public extension FragmentCell where Self: UICollectionViewCell {
+    func applyPlan(delegate: PlanDelegate?) {
+        fragmentWillPlanContent()
+        let scheme = LayoutScheme(view: self.contentView, subPlan: viewPlan.subPlan, originalViewPlanId: self.uniqueKey)
+        scheme.delegate = delegate
+        scheme.apply()
+        fragmentDidPlanContent()
+    }
+}
+
 extension UITableViewCell {
     
     @objc open class func defaultCellHeight(for cellWidth: CGFloat) -> CGFloat { .automatic }
@@ -59,10 +79,7 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
         guard planningBehavior.whitelistedPhases.contains(layoutPhase) else {
             return false
         }
-        fragmentWillPlanContent()
-        let plan = RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
-        plan.apply(for: contentView)
-        fragmentDidPlanContent()
+        applyPlan()
         return true
     }
     
@@ -175,10 +192,7 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
         guard planningBehavior.whitelistedPhases.contains(layoutPhase) else {
             return false
         }
-        fragmentWillPlanContent()
-        let plan = RootViewPlan(subPlan: viewPlan.subPlan, inViewPlan: true)
-        plan.apply(for: contentView)
-        fragmentDidPlanContent()
+        applyPlan()
         return true
     }
     
