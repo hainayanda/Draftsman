@@ -48,6 +48,9 @@ public extension PlanConvertible where Self: UIView {
     withDelegate delegate: PlanDelegate? = nil,
     @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
         defer {
+            DispatchQueue.main.async { [weak self] in
+                self?.layoutIfNeeded()
+            }
             notifyViewDidPlanned()
         }
         let viewPlan = layouter()
@@ -73,6 +76,9 @@ public extension PlanConvertible where Self: UIStackView {
     withDelegate delegate: PlanDelegate? = nil,
     @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
         defer {
+            DispatchQueue.main.async { [weak self] in
+                self?.layoutIfNeeded()
+            }
             notifyViewDidPlanned()
         }
         let viewPlan = layouter()
