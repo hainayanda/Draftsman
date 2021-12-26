@@ -39,10 +39,6 @@ class FragmentViewSpec: QuickSpec {
                     expect(didPlan).to(beFalse())
                     planed = true
                 }
-                fragment.replanContent()
-                expect(willPlan).to(beTrue())
-                expect(didPlan).to(beTrue())
-                expect(planed).to(beTrue())
             }
             it("should run layout for the first time once") {
                 fragment.layoutSubviews()
