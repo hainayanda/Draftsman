@@ -41,6 +41,12 @@ extension Array where Element == ViewScheme {
 
 extension Array where Element: Hashable {
     var unique: [Element] {
-        Array(Set(self))
+        Array(Set(self)).sorted {
+            guard let leftIndex = self.firstIndex(of: $0),
+                    let rightIndex = self.firstIndex(of: $1) else {
+                return true
+            }
+            return leftIndex < rightIndex
+        }
     }
 }
