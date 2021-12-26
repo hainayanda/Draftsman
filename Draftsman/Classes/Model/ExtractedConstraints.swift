@@ -15,8 +15,10 @@ struct ExtractedConstraints {
     let toRemoved: [NSLayoutConstraint]
     
     init(toActivated: [NSLayoutConstraint], toRemoved: [NSLayoutConstraint]) {
-        self.toActivated = Array(Set(toActivated))
-        self.toRemoved = Array(Set(toRemoved))
+        let toActivatedUnique = toActivated.unique
+        let toRemovedUnique = toRemoved.unique
+        self.toActivated = toActivatedUnique
+        self.toRemoved = toRemovedUnique.filter { !toActivatedUnique.contains($0) }
     }
 }
 #endif

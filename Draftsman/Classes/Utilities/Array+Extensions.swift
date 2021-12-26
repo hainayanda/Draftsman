@@ -27,3 +27,9 @@ extension Array {
         return array
     }
 }
+
+extension Array where Element: Hashable {
+    var unique: [Element] {
+        Array(Set(self))
+    }
+}
