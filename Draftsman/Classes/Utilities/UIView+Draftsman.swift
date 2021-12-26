@@ -38,9 +38,24 @@ public extension UIView {
         }
     }
     
+    var mostTopView: UIView {
+        superview?.mostTopView ?? self
+    }
+    
+    var allConstraints: [NSLayoutConstraint] {
+        subviews.reduce(constraints) { partialResult, subview in
+            var nextResult = partialResult
+            nextResult.append(contentsOf: subview.allConstraints)
+            return nextResult
+        }
+    }
+    
+    var draftsmanConstraints: [NSLayoutConstraint] {
+        constraints.filter { $0.isDraftsmanConstraint }
+    }
+    
     var allDraftsmanConstraints: [NSLayoutConstraint] {
-        let draftsmanConstraints = constraints.filter { $0.isDraftsmanConstraint }
-        return subviews.reduce(draftsmanConstraints) { partialResult, subview in
+        subviews.reduce(draftsmanConstraints) { partialResult, subview in
             var nextResult = partialResult
             nextResult.append(contentsOf: subview.allDraftsmanConstraints)
             return nextResult
