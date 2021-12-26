@@ -23,6 +23,12 @@ extension NSLayoutConstraint {
     func resembling(_ otherConstraints: NSLayoutConstraint) {
         self.constant = otherConstraints.constant
         self.priority = otherConstraints.priority
+        self.identifier = otherConstraints.identifier
+    }
+    
+    func isPartOf(viewPlanId: String) -> Bool {
+        guard let identifier = self.identifier else { return false }
+        return identifier ~= "^draftsman_viewplanid_\(viewPlanId)"
     }
 }
 #endif
