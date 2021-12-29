@@ -33,4 +33,8 @@ public final class LayoutSchemeBuilder<Object: UIView>: Maker {
             propertyAssigner(for: keyPath)
         }
 }
+
+extension LayoutSchemeBuilder: PlanConvertible {
+    public var scheme: ViewScheme { plan }
+}
 #endif
