@@ -69,6 +69,7 @@ public final class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
     }
     
     public override func apply(for view: UIView) -> [NSLayoutConstraint] {
+        context.rootContextController = view.nextViewController
         if let viewPlanId = originalViewPlanId ?? viewPlanId {
             context.viewPlanId = viewPlanId
             subPlan.markUnmarked(with: viewPlanId)

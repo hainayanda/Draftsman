@@ -72,6 +72,11 @@ public extension UIView {
             return nextResult
         }
     }
+    
+    func ifRootOfController(do action: (UIViewController) -> Void) {
+        guard let viewController = next as? UIViewController else { return }
+        action(viewController)
+    }
 }
 
 public extension UIStackView {

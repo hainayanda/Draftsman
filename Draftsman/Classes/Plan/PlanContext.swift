@@ -30,6 +30,7 @@ public final class PlanContext {
         guard let planId: String = viewPlanId else { return false }
         return !planId.isEmpty
     }
+    var rootContextController: UIViewController?
     var viewPlanId: String?
     var previousView: UIView?
     

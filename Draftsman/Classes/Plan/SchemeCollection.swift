@@ -30,6 +30,7 @@ open class SchemeCollection: ViewPlan {
     
     @discardableResult
     open func apply(for view: UIView) -> [NSLayoutConstraint] {
+        context.rootContextController = view.nextViewController
         let constraints = build(for: view)
         NSLayoutConstraint.activate(constraints)
         return constraints
@@ -85,10 +86,12 @@ open class SchemeCollection: ViewPlan {
     func buildSingleScheme(_ scheme: ViewScheme, forView view: UIView) -> [NSLayoutConstraint] {
         let viewScheme = scheme.view
         viewScheme.translatesAutoresizingMaskIntoConstraints = false
-        if let controller = view.nextViewController,
-           let schemeController = viewScheme.nextViewController,
-           controller != schemeController,
-            !controller.children.contains(schemeController) {
+        viewScheme.ifRootOfController { schemeController in
+            guard let controller = context.rootContextController,
+                    controller != schemeController,
+                  !controller.children.contains(schemeController) else {
+                      return
+                  }
             controller.addChild(schemeController)
         }
         return scheme.build()

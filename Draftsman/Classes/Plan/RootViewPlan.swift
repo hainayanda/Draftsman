@@ -18,6 +18,7 @@ open class RootViewPlan: SchemeCollection {
     
     @discardableResult
     open override func apply(for view: UIView) -> [NSLayoutConstraint] {
+        context.rootContextController = view.nextViewController
         let constraints = buildAndExtractConstraint(for: view)
         NSLayoutConstraint.deactivate(constraints.toRemoved)
         NSLayoutConstraint.activate(constraints.toActivated)
