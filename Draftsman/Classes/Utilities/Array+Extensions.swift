@@ -6,6 +6,8 @@
 //
 
 import Foundation
+#if canImport(UIKit)
+import UIKit
 
 extension Array where Element == PlanComponent {
     var asSchemes: [ViewScheme] {
@@ -62,3 +64,4 @@ extension Array where Element == NSLayoutConstraint {
         }
     }
 }
+#endif

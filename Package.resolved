@@ -2,12 +2,21 @@
   "object": {
     "pins": [
       {
+        "package": "Builder",
+        "repositoryURL": "https://github.com/hainayanda/Builder.git",
+        "state": {
+          "branch": null,
+          "revision": "c901a96996b9ee2cf1e8d6619d4ee70e739774fa",
+          "version": "1.0.3"
+        }
+      },
+      {
         "package": "Clavier",
         "repositoryURL": "https://github.com/hainayanda/Clavier.git",
         "state": {
           "branch": null,
-          "revision": "f3b7bbf8c83022ffa9b2cc74b952641b0dd6a217",
-          "version": "1.0.2"
+          "revision": "140d566d08abc0fc62b894f3a9dc3dfb061334f5",
+          "version": "1.0.3"
         }
       },
       {
