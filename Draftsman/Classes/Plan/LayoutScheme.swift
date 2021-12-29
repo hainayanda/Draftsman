@@ -90,6 +90,7 @@ public final class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
     }
     
     public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
+        subPlanAccessed = true
         self.subPlan.append(contentsOf: layouter().subPlan)
         return self
     }
@@ -114,17 +115,15 @@ public final class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
     }
     
     func buildCurrent(with startedConstaints: [NSLayoutConstraint]) -> ExtractedConstraints {
-        let constraints: [NSLayoutConstraint] = subPlan.reduce(startedConstaints) { partialResult, scheme in
-            var nextConstraints = buildScheme(scheme, forView: view)
-            nextConstraints.append(contentsOf: partialResult)
-            return nextConstraints
-        }
+        var constraints = startedConstaints
+        constraints.append(contentsOf: buildWholeScheme(for: view))
         return extractConstraints(for: view, from: constraints)
     }
 }
 
 public extension LayoutScheme where View: UIStackView {
     func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
+        subPlanAccessed = true
         self.subPlan.append(
             contentsOf:
                 layouter().subPlan.compactMap {

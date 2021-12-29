@@ -26,11 +26,7 @@ open class RootViewPlan: SchemeCollection {
     
     func buildAndExtractConstraint(for view: UIView) -> ExtractedConstraints {
         buildWithContext(for: view) {
-            let constraints: [NSLayoutConstraint] = subPlan.reduce([]) { partialResult, scheme in
-                var nextConstraints = buildScheme(scheme, forView: view)
-                nextConstraints.append(contentsOf: partialResult)
-                return nextConstraints
-            }
+            let constraints = buildWholeScheme(for: view)
             return extractConstraints(for: view, from: constraints)
         }
     }
