@@ -36,7 +36,7 @@ open class SchemeCollection: ViewPlan {
     }
     
     func combinedWithCurrentConstraints(for view: UIView, toCombined: [NSLayoutConstraint]) -> [NSLayoutConstraint] {
-        let currentConstraints = view.mostTopView.allConstraints
+        let currentConstraints = view.rootViewConstraints.allConstraints
         let combinedConstraints: [NSLayoutConstraint] = toCombined.compactMap { constraint in
             guard let found = currentConstraints.first(where: { $0 ~= constraint }) else {
                 return constraint

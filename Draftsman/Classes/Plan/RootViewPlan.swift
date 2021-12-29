@@ -48,7 +48,7 @@ open class RootViewPlan: SchemeCollection {
     }
     
     func extractConstraints(for view: UIView, from constraints: [NSLayoutConstraint]) -> ExtractedConstraints {
-        let currentConstraints = view.mostTopView.allConstraints
+        let currentConstraints = view.rootViewConstraints.allConstraints
         let combinedConstraints: [NSLayoutConstraint] = constraints.compactMap { constraint in
             guard let found = currentConstraints.first(where: { $0 ~= constraint }) else {
                 return constraint
