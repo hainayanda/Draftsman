@@ -38,8 +38,19 @@ public extension UIView {
         }
     }
     
-    var mostTopView: UIView {
-        superview?.mostTopView ?? self
+    internal var rootViewConstraints: UIView {
+        guard let next = next else { return self }
+        if next is UIViewController {
+            return self
+        } else if let tableCell = next as? UITableViewCell {
+            return tableCell
+        } else if let collectionCell = next as? UICollectionViewCell {
+            return collectionCell
+        } else if let view = next as? UIView {
+            return view.rootViewConstraints
+        } else {
+            return self
+        }
     }
     
     var allConstraints: [NSLayoutConstraint] {
@@ -60,6 +71,11 @@ public extension UIView {
             nextResult.append(contentsOf: subview.allDraftsmanConstraints)
             return nextResult
         }
+    }
+    
+    func ifRootOfController(do action: (UIViewController) -> Void) {
+        guard let viewController = next as? UIViewController else { return }
+        action(viewController)
     }
 }
 

@@ -27,6 +27,11 @@ class MainViewController: UIViewController, Planned {
         .backgroundColor(.orange)
         .build()
     
+    lazy var buttonToFragment: UIButton = builder(UIButton())
+        .cornerRadius(8)
+        .backgroundColor(.orange)
+        .build()
+    
     @LayoutPlan
     var viewPlan: ViewPlan {
         UIStackView(axis: .vertical, spacing: 32).plan
@@ -43,6 +48,7 @@ class MainViewController: UIViewController, Planned {
         buttonToTable
         buttonToCollection
         buttonToField
+        buttonToFragment
     }
     
     override func viewDidLoad() {
@@ -59,6 +65,9 @@ class MainViewController: UIViewController, Planned {
         
         buttonToField.setTitle("Go to keyboard controller", for: .normal)
         buttonToField.addTarget(self, action: #selector(goToKeyboard(_:)), for: .touchUpInside)
+        
+        buttonToFragment.setTitle("Go to fragment controller", for: .normal)
+        buttonToFragment.addTarget(self, action: #selector(goToFragment(_:)), for: .touchUpInside)
     }
     
     @objc func goToTable(_ sender: Any) {
@@ -71,6 +80,10 @@ class MainViewController: UIViewController, Planned {
     
     @objc func goToKeyboard(_ sender: Any) {
         navigationController?.pushViewController(FieldViewController(), animated: true)
+    }
+    
+    @objc func goToFragment(_ sender: Any) {
+        navigationController?.pushViewController(FragmentViewController(), animated: true)
     }
 
 }

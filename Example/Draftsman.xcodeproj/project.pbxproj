@@ -20,6 +20,8 @@
 		BB3A243E2696D8CD00B8EBA0 /* FieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A243D2696D8CD00B8EBA0 /* FieldViewController.swift */; };
 		BB3A24402696D92700B8EBA0 /* TypingField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A243F2696D92700B8EBA0 /* TypingField.swift */; };
 		BBC1F289266E166F00D93B6D /* FragmentViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC1F288266E166F00D93B6D /* FragmentViewSpec.swift */; };
+		BBC9C43D277B0BE500D8A6F5 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9C43C277B0BE500D8A6F5 /* View.swift */; };
+		BBC9C43F277B0D1000D8A6F5 /* FragmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9C43E277B0D1000D8A6F5 /* FragmentViewController.swift */; };
 		BBF5378C25DFCF9C00A6BC6B /* CommonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5374E25DFCF2400A6BC6B /* CommonSpec.swift */; };
 		BBF5379125DFCF9E00A6BC6B /* FragmentCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375325DFCF2400A6BC6B /* FragmentCellSpec.swift */; };
 		BBF5379425DFCFA200A6BC6B /* FragmentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375025DFCF2400A6BC6B /* FragmentSpec.swift */; };
@@ -60,6 +62,8 @@
 		BB3A243D2696D8CD00B8EBA0 /* FieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldViewController.swift; sourceTree = "<group>"; };
 		BB3A243F2696D92700B8EBA0 /* TypingField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingField.swift; sourceTree = "<group>"; };
 		BBC1F288266E166F00D93B6D /* FragmentViewSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FragmentViewSpec.swift; sourceTree = "<group>"; };
+		BBC9C43C277B0BE500D8A6F5 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		BBC9C43E277B0D1000D8A6F5 /* FragmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FragmentViewController.swift; sourceTree = "<group>"; };
 		BBF5374E25DFCF2400A6BC6B /* CommonSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonSpec.swift; sourceTree = "<group>"; };
 		BBF5375025DFCF2400A6BC6B /* FragmentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentSpec.swift; sourceTree = "<group>"; };
 		BBF5375225DFCF2400A6BC6B /* InsertPlanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertPlanSpec.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 		607FACD21AFB9204008FA782 /* Example for Draftsman */ = {
 			isa = PBXGroup;
 			children = (
+				BBC9C43B277B0BBD00D8A6F5 /* Fragment */,
 				BB3A243C2696D8BC00B8EBA0 /* Field */,
 				BB3A24372696CC6900B8EBA0 /* Collection */,
 				BB3A24322696C15900B8EBA0 /* Table */,
@@ -197,6 +202,15 @@
 				BB3A243F2696D92700B8EBA0 /* TypingField.swift */,
 			);
 			path = Field;
+			sourceTree = "<group>";
+		};
+		BBC9C43B277B0BBD00D8A6F5 /* Fragment */ = {
+			isa = PBXGroup;
+			children = (
+				BBC9C43C277B0BE500D8A6F5 /* View.swift */,
+				BBC9C43E277B0D1000D8A6F5 /* FragmentViewController.swift */,
+			);
+			path = Fragment;
 			sourceTree = "<group>";
 		};
 		CA6E9579A694BD1A448DF797 /* Pods */ = {
@@ -415,11 +429,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBC9C43F277B0D1000D8A6F5 /* FragmentViewController.swift in Sources */,
 				BB3A243E2696D8CD00B8EBA0 /* FieldViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* MainViewController.swift in Sources */,
 				BB3A24342696C17800B8EBA0 /* TableViewController.swift in Sources */,
 				BB3A24402696D92700B8EBA0 /* TypingField.swift in Sources */,
 				BB3A24362696C18100B8EBA0 /* TableCell.swift in Sources */,
+				BBC9C43D277B0BE500D8A6F5 /* View.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				BB3A24392696CC7B00B8EBA0 /* CollectionViewController.swift in Sources */,
 				BB3A243B2696CC8C00B8EBA0 /* CollectionCell.swift in Sources */,

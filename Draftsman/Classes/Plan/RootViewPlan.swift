@@ -18,6 +18,7 @@ open class RootViewPlan: SchemeCollection {
     
     @discardableResult
     open override func apply(for view: UIView) -> [NSLayoutConstraint] {
+        context.rootContextController = view.nextViewController
         let constraints = buildAndExtractConstraint(for: view)
         NSLayoutConstraint.deactivate(constraints.toRemoved)
         NSLayoutConstraint.activate(constraints.toActivated)
@@ -26,11 +27,7 @@ open class RootViewPlan: SchemeCollection {
     
     func buildAndExtractConstraint(for view: UIView) -> ExtractedConstraints {
         buildWithContext(for: view) {
-            let constraints: [NSLayoutConstraint] = subPlan.reduce([]) { partialResult, scheme in
-                var nextConstraints = buildScheme(scheme, forView: view)
-                nextConstraints.append(contentsOf: partialResult)
-                return nextConstraints
-            }
+            let constraints = buildWholeScheme(for: view)
             return extractConstraints(for: view, from: constraints)
         }
     }
@@ -52,14 +49,8 @@ open class RootViewPlan: SchemeCollection {
     }
     
     func extractConstraints(for view: UIView, from constraints: [NSLayoutConstraint]) -> ExtractedConstraints {
-        let currentConstraints = view.mostTopView.allConstraints
-        let combinedConstraints: [NSLayoutConstraint] = constraints.compactMap { constraint in
-            guard let found = currentConstraints.first(where: { $0 ~= constraint }) else {
-                return constraint
-            }
-            found.resembling(constraint)
-            return found
-        }
+        let currentConstraints = view.rootViewConstraints.allConstraints
+        let combinedConstraints = constraints.replaceAndResembleWithSimilar(from: currentConstraints)
         if context.inViewPlan {
             let viewPlanIds = extractAllViewPlanIds()
             let removedConstraints = currentConstraints.filter { constraint in
