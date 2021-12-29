@@ -50,3 +50,15 @@ extension Array where Element: Hashable {
         }
     }
 }
+
+extension Array where Element == NSLayoutConstraint {
+    func replaceAndResembleWithSimilar(from otherConstraints: [NSLayoutConstraint]) -> [NSLayoutConstraint] {
+        compactMap { constraint in
+            guard let found = otherConstraints.first(where: { $0 ~= constraint }) else {
+                return constraint
+            }
+            found.resembling(constraint)
+            return found
+        }
+    }
+}

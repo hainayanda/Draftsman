@@ -9,24 +9,15 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public protocol FragmentCell: Fragment {
+public protocol FragmentCell: Fragment where Self: UIView {
     var layoutPhase: CellLayoutingPhase { get }
+    var contentView: UIView { get }
     var planningBehavior: CellPlanningBehavior { get }
     @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
     func planningOption(on phase: CellLayoutingPhase) -> PlanningOption
 }
 
-public extension FragmentCell where Self: UITableViewCell {
-    func applyPlan(delegate: PlanDelegate?) {
-        fragmentWillPlanContent()
-        let scheme = LayoutScheme(view: self.contentView, subPlan: viewPlan.subPlan, originalViewPlanId: self.uniqueKey)
-        scheme.delegate = delegate
-        scheme.apply()
-        fragmentDidPlanContent()
-    }
-}
-
-public extension FragmentCell where Self: UICollectionViewCell {
+public extension FragmentCell {
     func applyPlan(delegate: PlanDelegate?) {
         fragmentWillPlanContent()
         let scheme = LayoutScheme(view: self.contentView, subPlan: viewPlan.subPlan, originalViewPlanId: self.uniqueKey)

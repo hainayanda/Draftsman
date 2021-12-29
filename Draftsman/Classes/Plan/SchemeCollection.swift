@@ -25,7 +25,9 @@ open class SchemeCollection: ViewPlan {
             removeSubviewThatNotInPlan(for: view)
         }
         let constraints = buildWholeScheme(for: view)
-        return combinedWithCurrentConstraints(for: view, toCombined: constraints)
+        return constraints.replaceAndResembleWithSimilar(
+            from: view.rootViewConstraints.allConstraints
+        )
     }
     
     @discardableResult
@@ -34,18 +36,6 @@ open class SchemeCollection: ViewPlan {
         let constraints = build(for: view)
         NSLayoutConstraint.activate(constraints)
         return constraints
-    }
-    
-    func combinedWithCurrentConstraints(for view: UIView, toCombined: [NSLayoutConstraint]) -> [NSLayoutConstraint] {
-        let currentConstraints = view.rootViewConstraints.allConstraints
-        let combinedConstraints: [NSLayoutConstraint] = toCombined.compactMap { constraint in
-            guard let found = currentConstraints.first(where: { $0 ~= constraint }) else {
-                return constraint
-            }
-            found.resembling(constraint)
-            return found
-        }
-        return combinedConstraints
     }
     
     func buildWholeScheme(for view: UIView) -> [NSLayoutConstraint] {
