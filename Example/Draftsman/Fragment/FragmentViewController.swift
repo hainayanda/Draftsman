@@ -63,10 +63,29 @@ class FragmentViewController: UIViewController, Planned {
             .width(.equalTo(.parent))
             .edges(.equal, to: .parent)
             .insertStacked {
+                if fragments.isEmpty {
+                    emptyContent
+                }
                 for fragment in fragments {
                     fragment
                 }
             }
+    }
+    
+    @LayoutPlan
+    var emptyContent: ViewPlan {
+        spacing
+        UILabel().plan.builder
+            .text("NO FRAGMENTS")
+            .textAlignment(.center)
+        spacing
+    }
+    
+    @LayoutPlan
+    var spacing: ViewPlan {
+        UIView().plan
+            .height(.equalTo(60))
+            .builder.backgroundColor(.clear)
     }
     
     override func viewDidLoad() {
