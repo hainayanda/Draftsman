@@ -21,16 +21,6 @@ public extension Fragment {
 
 public extension Fragment where Self: UIView {
     
-    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
-    func planFragment(delegate: PlanDelegate? = nil, _ planOption: PlanningOption) {
-        planFragment(delegate: delegate)
-    }
-    
-    @available(*, deprecated, message: "Use applyPlan instead")
-    func planFragment(delegate: PlanDelegate? = nil) {
-        applyPlan(delegate: delegate)
-    }
-    
     func applyPlan(delegate: PlanDelegate?) {
         fragmentWillPlanContent()
         let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan, originalViewPlanId: self.uniqueKey)
@@ -40,11 +30,6 @@ public extension Fragment where Self: UIView {
             self?.layoutIfNeeded()
         }
         fragmentDidPlanContent()
-    }
-    
-    @available(*, deprecated, message: "Use applyPlan instead")
-    func replanContent(delegate: PlanDelegate? = nil) {
-        planFragment(delegate: delegate)
     }
 }
 #endif

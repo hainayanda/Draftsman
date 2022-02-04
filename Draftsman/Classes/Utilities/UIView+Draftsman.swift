@@ -38,7 +38,7 @@ public extension UIView {
         }
     }
     
-    internal var rootViewConstraints: UIView {
+    internal var mostTopParentForConstraining: UIView {
         guard let next = next else { return self }
         if next is UIViewController {
             return self
@@ -47,7 +47,7 @@ public extension UIView {
         } else if let collectionCell = next as? UICollectionViewCell {
             return collectionCell
         } else if let view = next as? UIView {
-            return view.rootViewConstraints
+            return view.mostTopParentForConstraining
         } else {
             return self
         }

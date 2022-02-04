@@ -10,17 +10,11 @@ import Foundation
 import Clavier
 import UIKit
 
-public struct AnchorWithOffset<LayoutAnchor> {
-    var anchor: LayoutAnchor
-    var offset: CGFloat = 0
-    var isHaveOffset: Bool {
-        return offset > 0
-    }
-}
+// MARK: RelatedAnchor
 
 public struct RelatedAnchor<LayoutAnchor> {
-    var related: AnonymousRelation
-    var anchorKeyPath: KeyPath<UIView, LayoutAnchor>
+    let related: AnonymousRelation
+    let anchorKeyPath: KeyPath<UIView, LayoutAnchor>
 }
 
 extension RelatedAnchor {
@@ -77,7 +71,7 @@ public extension RelatedAnchor {
     }
 }
 
-public extension RelatedAnchor where LayoutAnchor == NSLayoutYAxisAnchor {
+extension RelatedAnchor where LayoutAnchor == NSLayoutYAxisAnchor {
     func getOffsettedAnchor(from context: PlanContext) -> AnchorWithOffset<LayoutAnchor>? {
         guard let relatedView = extractRelatedView(from: context) else { return nil }
         let anchor = relatedView[keyPath: anchorKeyPath]
@@ -97,7 +91,7 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutYAxisAnchor {
     }
 }
 
-public extension RelatedAnchor where LayoutAnchor == NSLayoutXAxisAnchor {
+extension RelatedAnchor where LayoutAnchor == NSLayoutXAxisAnchor {
     func getOffsettedAnchor(from context: PlanContext) -> AnchorWithOffset<LayoutAnchor>? {
         guard let relatedView = extractRelatedView(from: context) else { return nil }
         let anchor = relatedView[keyPath: anchorKeyPath]
@@ -117,7 +111,7 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutXAxisAnchor {
     }
 }
 
-public extension RelatedAnchor where LayoutAnchor == NSLayoutDimension {
+extension RelatedAnchor where LayoutAnchor == NSLayoutDimension {
     func getOffsettedAnchor(from context: PlanContext) -> AnchorWithOffset<LayoutAnchor>? {
         guard let relatedView = extractRelatedView(from: context) else { return nil }
         let anchor = relatedView[keyPath: anchorKeyPath]
@@ -136,6 +130,23 @@ public extension RelatedAnchor where LayoutAnchor == NSLayoutDimension {
         }
     }
 }
+
+// MARK: AnchorWithOffset
+
+struct AnchorWithOffset<LayoutAnchor> {
+    let anchor: LayoutAnchor
+    let offset: CGFloat
+    var isHaveOffset: Bool {
+        return offset > 0
+    }
+    
+    init(anchor: LayoutAnchor, offset: CGFloat = 0) {
+        self.anchor = anchor
+        self.offset = offset
+    }
+}
+
+// MARK: UIEdgeInsets
 
 public extension UIEdgeInsets {
     subscript(equal anchor: KeyPath<UIView, NSLayoutYAxisAnchor>) -> CGFloat {
@@ -168,6 +179,8 @@ public extension UIEdgeInsets {
         }
     }
 }
+
+// MARK: UILayoutGuide
 
 public extension UILayoutGuide {
     subscript(equal anchor: KeyPath<UIView, NSLayoutYAxisAnchor>) -> NSLayoutYAxisAnchor {

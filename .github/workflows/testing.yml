@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v1
-      - name: Force XCode 12.5
-        run: sudo xcode-select -switch /Applications/Xcode_12.5.app
+      - name: Force XCode 12.5.1
+        run: sudo xcode-select -switch /Applications/Xcode_12.5.1.app
       - name: Testing Pod Library
         run: bash ./.github/scripts/test_lib.sh

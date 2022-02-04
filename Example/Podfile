@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :ios, '10.0'
+platform :ios, '12.0'
 
 target 'Draftsman_Example' do
   pod 'Draftsman', :path => '../'
@@ -10,6 +10,6 @@ target 'Draftsman_Example' do
     inherit! :search_paths
 
     pod 'Quick', '~> 4.0.0'
-    pod 'Nimble', '~> 9.2.0'
+    pod 'Nimble', '~> 9.2.1'
   end
 end

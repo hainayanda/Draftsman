@@ -69,41 +69,6 @@ public enum AnonymousRelation {
     }
 }
 
-@available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
-public enum PlanningOption {
-    case append
-    case renew
-    case startFresh
-    case startClean
-    
-    public var shouldRemoveOldPlannedConstraints: Bool {
-        switch self {
-        case .startFresh, .startClean:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    public var shouldCleanAllConstraints: Bool {
-        switch self {
-        case .startClean:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    public var shouldRenew: Bool {
-        switch self {
-        case .renew:
-            return true
-        default:
-            return false
-        }
-    }
-}
-
 public enum CellLayoutingPhase: CaseIterable {
     case firstLoad
     case setNeedsLayout

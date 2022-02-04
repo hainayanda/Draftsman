@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import Builder
 
+// MARK: ViewScheme
+
 public protocol ViewScheme: ViewPlan {
     var originalViewPlanId: String? { get set }
     var viewPlanId: String? { get set }
@@ -49,6 +51,8 @@ public extension ViewScheme {
         apply(for: view)
     }
 }
+
+// MARK: LayoutScheme
 
 public final class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
     public var viewPlanId: String?
