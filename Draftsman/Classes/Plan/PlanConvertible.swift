@@ -35,15 +35,6 @@ public extension PlanConvertible where Self: UIView {
     }
     
     @discardableResult
-    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
-    func planContent(
-    withDelegate delegate: PlanDelegate? = nil,
-    _ planOption: PlanningOption,
-    @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
-        planContent(withDelegate: delegate, layouter)
-    }
-    
-    @discardableResult
     func planContent(
     withDelegate delegate: PlanDelegate? = nil,
     @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
@@ -61,15 +52,6 @@ public extension PlanConvertible where Self: UIView {
 }
 
 public extension PlanConvertible where Self: UIStackView {
-    
-    @discardableResult
-    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
-    func planStackedContent(
-    withDelegate delegate: PlanDelegate? = nil,
-    _ planOption: PlanningOption,
-    @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
-        planStackedContent(withDelegate: delegate, layouter)
-    }
     
     @discardableResult
     func planStackedContent(
@@ -100,15 +82,6 @@ public extension PlanConvertible where Self: UIViewController {
             return LayoutScheme(view: view)
         }
         return LayoutScheme(view: self.view, subPlan: planned.viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)
-    }
-    
-    @discardableResult
-    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
-    func planContent(
-    withDelegate delegate: PlanDelegate? = nil,
-    _ planOption: PlanningOption,
-    @LayoutPlan _ layouter: () -> ViewPlan) -> [NSLayoutConstraint] {
-        planContent(withDelegate: delegate, layouter)
     }
     
     @discardableResult

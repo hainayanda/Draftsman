@@ -13,8 +13,6 @@ public protocol FragmentCell: Fragment where Self: UIView {
     var layoutPhase: CellLayoutingPhase { get }
     var contentView: UIView { get }
     var planningBehavior: CellPlanningBehavior { get }
-    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
-    func planningOption(on phase: CellLayoutingPhase) -> PlanningOption
 }
 
 public extension FragmentCell {
@@ -110,16 +108,6 @@ open class TableFragmentCell: UITableViewCell, FragmentCell {
         return calculatedHeight.isCalculated ? calculatedHeight : defaultHeight
     }
     
-    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
-    open func planningOption(on phase: CellLayoutingPhase) -> PlanningOption {
-        switch phase {
-        case .firstLoad:
-            return .append
-        default:
-            return .startClean
-        }
-    }
-    
     open override func prepareForReuse() {
         layoutPhase = .reused
         layoutContentIfNeeded()
@@ -185,16 +173,6 @@ open class CollectionFragmentCell: UICollectionViewCell, FragmentCell {
         }
         applyPlan()
         return true
-    }
-    
-    @available(*, deprecated, message: "Option will be ignored start from version 2.0.5. will be removed in next release")
-    open func planningOption(on phase: CellLayoutingPhase) -> PlanningOption {
-        switch phase {
-        case .firstLoad:
-            return .append
-        default:
-            return .startClean
-        }
     }
     
     open override func prepareForReuse() {
