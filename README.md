@@ -2,7 +2,7 @@
 
 Draftsman is a DSL framework for Swift focussed on builder pattern
 
-[![codebeat badge](https://codebeat.co/badges/e0358dc0-7445-47a9-8f81-5c57a11fa9e8)](https://codebeat.co/projects/github-com-hainayanda-draftsman-master)
+[![codebeat badge](https://codebeat.co/badges/4dab4a09-06c6-40f1-98d4-51e908de36c8)](https://codebeat.co/projects/github-com-hainayanda-draftsman-master)
 ![build](https://github.com/hainayanda/Draftsman/workflows/build/badge.svg)
 ![test](https://github.com/hainayanda/Draftsman/workflows/test/badge.svg)
 [![SwiftPM Compatible](https://img.shields.io/badge/SwiftPM-Compatible-brightgreen)](https://swift.org/package-manager/)
@@ -16,9 +16,9 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
-- Swift 5.3 or higher (Swift 5.1 for version 1.1.1 or lower)
-- iOS 10.0 or higher
-- XCode 12.5 or higher (XCode 11 for version 1.1.1 or lower)
+- Swift 5.5 or higher (Swift 5.1 for version 1.1.1 or lower)
+- iOS 12.0 or higher
+- XCode 13 or higher (XCode 11 for version 1.1.1 or lower)
 
 ## Installation
 
@@ -28,7 +28,7 @@ Draftsman is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Draftsman', '~> 2.0.6'
+pod 'Draftsman', '~> 2.1.0'
 ```
 
 or for Swift 5.1 and XCode 11
@@ -41,7 +41,7 @@ pod 'Draftsman', '~> 1.1.1'
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **<https://github.com/hainayanda/Draftsman.git>** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **2.0.6** or **1.1.1** for Swift 5.1 and XCode 11 as its version
+- Set rules at **version**, with **Up to Next Major** option and put **2.1.0** or **1.1.1** for Swift 5.1 and XCode 11 as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -50,7 +50,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hainayanda/Draftsman.git", .upToNextMajor(from: "2.0.6"))
+    .package(url: "https://github.com/hainayanda/Draftsman.git", .upToNextMajor(from: "2.1.0"))
 ]
 ```
 
