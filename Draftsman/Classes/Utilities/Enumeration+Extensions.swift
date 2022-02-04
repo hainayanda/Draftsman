@@ -29,7 +29,7 @@ extension LayoutRelation where Related == CGFloat {
     }
 }
 
-public extension LayoutRelation where Related == InsetsConvertible {
+extension LayoutRelation where Related == InsetsConvertible {
     
     var asTopRelation: LayoutRelation<CGFloat> {
         switch self {
@@ -100,7 +100,7 @@ public extension LayoutRelation where Related == InsetsConvertible {
     }
 }
 
-public extension LayoutRelation where Related == CoordinateOffsets {
+extension LayoutRelation where Related == CoordinateOffsets {
     var asXRelation: LayoutRelation<CGFloat> {
         switch self {
         case .equal:
@@ -136,7 +136,7 @@ public extension LayoutRelation where Related == CoordinateOffsets {
     }
 }
 
-public extension LayoutRelation where Related == CGFloat {
+extension LayoutRelation where Related == CGFloat {
     var distance: CGFloat {
         switch self {
         case .moreThanTo(let distance), .lessThanTo(let distance), .equalTo(let distance):
@@ -164,7 +164,7 @@ public extension LayoutRelation where Related == CGFloat {
     }
 }
 
-public extension InterRelation {
+extension InterRelation {
     func mapped<NewRelated>(_ mapper: (Related) -> NewRelated) -> InterRelation<NewRelated> {
         switch self {
         case .equalTo(let related):
@@ -177,7 +177,7 @@ public extension InterRelation {
     }
 }
 
-public extension InterRelation where Related == CGSize {
+extension InterRelation where Related == CGSize {
     var asHeightRelation: InterRelation<CGFloat> {
         mapped { $0.height }
     }
@@ -186,7 +186,7 @@ public extension InterRelation where Related == CGSize {
     }
 }
 
-public extension InterRelation where Related == UIView {
+extension InterRelation where Related == UIView {
     var asHeightRelation: InterRelation<NSLayoutDimension> {
         mapped { $0.heightAnchor }
     }
@@ -195,7 +195,7 @@ public extension InterRelation where Related == UIView {
     }
 }
 
-public extension RelatedPosition {
+extension RelatedPosition {
     var position: LayoutEdge {
         switch self {
         case .topOf(_), .topOfAndParallelWith(_):

@@ -26,7 +26,7 @@ open class SchemeCollection: ViewPlan {
         }
         let constraints = buildWholeScheme(for: view)
         return constraints.replaceAndResembleWithSimilar(
-            from: view.rootViewConstraints.allConstraints
+            from: view.mostTopParentForConstraining.allConstraints
         )
     }
     

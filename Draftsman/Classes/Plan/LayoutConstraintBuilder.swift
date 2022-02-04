@@ -9,6 +9,8 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
+// MARK: LayoutConstraintBuilder
+
 public protocol LayoutConstraintBuilder {
     func build(for context: PlanContext) -> NSLayoutConstraint?
 }
@@ -23,13 +25,16 @@ public extension LayoutConstraintBuilder {
     }
 }
 
+// MARK: AxisConstraintBuilder
+
 class AxisConstraintBuilder<AnchorType: AnyObject, Anchor: NSLayoutAnchor<AnchorType>, OtherAnchor>
 : LayoutConstraintBuilder {
-    var anchor: Anchor
-    var relation: LayoutRelation<CGFloat>
-    var otherAnchor: OtherAnchor
-    var priority: UILayoutPriority?
-    var sign: NumberSign
+    
+    let anchor: Anchor
+    let relation: LayoutRelation<CGFloat>
+    let otherAnchor: OtherAnchor
+    let priority: UILayoutPriority?
+    let sign: NumberSign
     
     init(
         anchor: Anchor,
@@ -48,6 +53,8 @@ class AxisConstraintBuilder<AnchorType: AnyObject, Anchor: NSLayoutAnchor<Anchor
         nil
     }
 }
+
+// MARK: ExplicitAxisConstraintBuilder
 
 final class ExplicitAxisConstraintBuilder<AnchorType: AnyObject, Anchor: NSLayoutAnchor<AnchorType>>
 : AxisConstraintBuilder<AnchorType, Anchor, Anchor> {
@@ -74,6 +81,8 @@ final class ExplicitAxisConstraintBuilder<AnchorType: AnyObject, Anchor: NSLayou
     }
 }
 
+// MARK: AnonymousXAxisConstraintBuilder
+
 final class AnonymousXAxisConstraintBuilder
 : AxisConstraintBuilder<NSLayoutXAxisAnchor, NSLayoutXAxisAnchor, RelatedAnchor<NSLayoutXAxisAnchor>> {
     override func build(for context: PlanContext) -> NSLayoutConstraint? {
@@ -91,6 +100,8 @@ final class AnonymousXAxisConstraintBuilder
         ).build(for: context)
     }
 }
+
+// MARK: AnonymousYAxisConstraintBuilder
 
 final class AnonymousYAxisConstraintBuilder
 : AxisConstraintBuilder<NSLayoutYAxisAnchor, NSLayoutYAxisAnchor, RelatedAnchor<NSLayoutYAxisAnchor>> {
@@ -110,11 +121,14 @@ final class AnonymousYAxisConstraintBuilder
     }
 }
 
+// MARK: DimensionConstraintBuilder
+
 class DimensionConstraintBuilder<OtherAnchor>: LayoutConstraintBuilder {
     typealias Anchor = NSLayoutDimension
-    var anchor: Anchor
-    var relation: InterRelation<OtherAnchor>
-    var priority: UILayoutPriority?
+    
+    let anchor: Anchor
+    let relation: InterRelation<OtherAnchor>
+    let priority: UILayoutPriority?
     
     init(anchor: Anchor, _ relation: InterRelation<OtherAnchor>, priority: UILayoutPriority?) {
         self.anchor = anchor
@@ -126,6 +140,8 @@ class DimensionConstraintBuilder<OtherAnchor>: LayoutConstraintBuilder {
         nil
     }
 }
+
+// MARK: ExplicitDimensionConstraintBuilder
 
 final class ExplicitDimensionConstraintBuilder: DimensionConstraintBuilder<CGFloat> {
     override func build(for context: PlanContext) -> NSLayoutConstraint? {
@@ -148,10 +164,12 @@ final class ExplicitDimensionConstraintBuilder: DimensionConstraintBuilder<CGFlo
     }
 }
 
+// MARK: RelationDimensionConstraintBuilder
+
 final class RelationDimensionConstraintBuilder: DimensionConstraintBuilder<NSLayoutDimension> {
     
-    var constant: CGFloat
-    var multiplier: CGFloat
+    let constant: CGFloat
+    let multiplier: CGFloat
     
     init(
         anchor: Anchor,
@@ -184,11 +202,13 @@ final class RelationDimensionConstraintBuilder: DimensionConstraintBuilder<NSLay
     }
 }
 
+// MARK: AnonymousRelationDimensionConstraintBuilder
+
 final class AnonymousRelationDimensionConstraintBuilder
 : DimensionConstraintBuilder<RelatedAnchor<NSLayoutDimension>> {
     
-    var constant: CGFloat
-    var multiplier: CGFloat
+    let constant: CGFloat
+    let multiplier: CGFloat
     
     init(
         anchor: Anchor,

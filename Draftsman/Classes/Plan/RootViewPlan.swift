@@ -49,7 +49,7 @@ open class RootViewPlan: SchemeCollection {
     }
     
     func extractConstraints(for view: UIView, from constraints: [NSLayoutConstraint]) -> ExtractedConstraints {
-        let currentConstraints = view.rootViewConstraints.allConstraints
+        let currentConstraints = view.mostTopParentForConstraining.allConstraints
         let combinedConstraints = constraints.replaceAndResembleWithSimilar(from: currentConstraints)
         if context.inViewPlan {
             let viewPlanIds = extractAllViewPlanIds()
