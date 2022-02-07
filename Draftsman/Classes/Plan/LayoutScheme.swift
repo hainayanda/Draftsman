@@ -12,30 +12,22 @@ import Builder
 
 // MARK: LayoutScheme
 
-public class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
-    public override var context: PlanContext {
-        get {
-            guard let myContext = _context else {
-                let newContext: PlanContext = PlanContext(delegate: nil, rootContextView: view, usingViewPlan: false)
-                _context = newContext
-                return newContext
-            }
-            return myContext
-        } set {
-            _context = newValue
-        }
-    }
-    public var isStackContent: Bool = false
+open class LayoutScheme<View: UIView>: RootViewPlan, ViewScheming {
     public var view: UIView { viewInScheme }
+    public internal(set) var isStackContent: Bool = false
     var viewInScheme: View
-    public var constraintBuilders: [LayoutConstraintBuilder] = []
+    var constraintBuilders: [LayoutConstraintBuilder] = []
     
-    init(view: View, subPlan: [ViewScheme] = []) {
+    public init(view: View, subPlan: [ViewScheme] = []) {
         self.viewInScheme = view
         super.init(subPlan: subPlan)
     }
     
-    public override func apply(for view: UIView) -> [NSLayoutConstraint] {
+    override func createContextIfNeeded() -> PlanContext {
+        PlanContext(delegate: nil, rootContextView: view, usingViewPlan: false)
+    }
+    
+    open override func apply(for view: UIView) -> [NSLayoutConstraint] {
         context.applying = true
         context.currentView = view
         let layoutConstraints = constraintBuilders.compactMap { $0.build(for: context) }
@@ -53,7 +45,7 @@ public class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
         }
     }
     
-    public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
+    open func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
         subPlanAccessed = true
         self.subPlan.append(contentsOf: layouter().subPlan)
         return self
@@ -74,8 +66,8 @@ public class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
     }
 }
 
-public extension LayoutScheme where View: UIStackView {
-    func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
+extension LayoutScheme: StackScheme where View: UIStackView {
+    public func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
         if viewInScheme is Planned, context.usingViewPlan, context.rootContextView == viewInScheme {
             fatalError("Draftsman Error: Planned view or view controller should be managed its own content")
         }
@@ -83,7 +75,7 @@ public extension LayoutScheme where View: UIStackView {
         self.subPlan.append(
             contentsOf:
                 layouter().subPlan.compactMap {
-                    $0.isStackContent = true
+                    ($0 as? ViewScheming)?.isStackContent = true
                     return $0
                 }
         )

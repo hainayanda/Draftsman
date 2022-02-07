@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public protocol Planned {
-    var selfPlanned: Bool { get }
+    var needPlanning: Bool { get }
     
     @LayoutPlan
     var viewPlan: ViewPlan { get }
@@ -27,20 +27,20 @@ public extension Planned {
 typealias UIViewPlanned = UIView & Planned
 
 extension UIView.AssociatedKey {
-    static var selfPlanned: String = "draftsman_Self_Planned"
+    static var needPlanning: String = "draftsman_Self_Planned"
 }
 
 public extension Planned where Self: UIView {
     
-    internal(set) var selfPlanned: Bool {
+    internal(set) var needPlanning: Bool {
         get {
             (objc_getAssociatedObject(
-                self, &AssociatedKey.selfPlanned) as? NSNumber
-            )?.boolValue ?? false
+                self, &AssociatedKey.needPlanning) as? NSNumber
+            )?.boolValue ?? true
         }
         set {
             objc_setAssociatedObject(
-                self, &AssociatedKey.selfPlanned,
+                self, &AssociatedKey.needPlanning,
                 NSNumber(value: newValue),
                 .OBJC_ASSOCIATION_RETAIN
             )
@@ -48,7 +48,6 @@ public extension Planned where Self: UIView {
     }
     
     func applyPlan(delegate: PlanDelegate?) {
-        selfPlanned = true
         let scheme = PlannedLayoutScheme(view: self, subPlan: viewPlan.subPlan)
         scheme.context = PlanContext(delegate: delegate, rootContextView: self, usingViewPlan: true)
         scheme.apply()
@@ -60,17 +59,17 @@ public extension Planned where Self: UIView {
 
 public extension Planned where Self: UIViewController {
     
-    internal(set) var selfPlanned: Bool {
+    internal(set) var needPlanning: Bool {
         get {
             (objc_getAssociatedObject(
                 self,
-                &UIView.AssociatedKey.selfPlanned) as? NSNumber
+                &UIView.AssociatedKey.needPlanning) as? NSNumber
             )?.boolValue ?? true
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &UIView.AssociatedKey.selfPlanned,
+                &UIView.AssociatedKey.needPlanning,
                 NSNumber(value: newValue),
                 .OBJC_ASSOCIATION_RETAIN
             )

@@ -29,10 +29,10 @@ public extension PlanConvertible where Self: UIView {
     
     var plan: LayoutScheme<Self> {
         if let planned = self as? Planned {
-            if planned.selfPlanned {
-                return PlannedLayoutScheme(view: self)
-            } else {
+            if planned.needPlanning {
                 return PlannedLayoutScheme(view: self, subPlan: planned.viewPlan.subPlan)
+            } else {
+                return PlannedLayoutScheme(view: self)
             }
         }
         return LayoutScheme(view: self)
@@ -70,7 +70,7 @@ public extension PlanConvertible where Self: UIStackView {
         let viewPlan = layouter()
         let rootPlan = RootViewPlan(
             subPlan: viewPlan.subPlan.compactMap {
-                $0.isStackContent = true
+                ($0 as? ViewScheming)?.isStackContent = true
                 return $0
             }
         )
@@ -83,10 +83,10 @@ public extension PlanConvertible where Self: UIViewController {
     
     var plan: LayoutScheme<UIView> {
         if let planned = self as? Planned {
-            if planned.selfPlanned {
-                return PlannedLayoutScheme(view: self.view)
-            } else {
+            if planned.needPlanning {
                 return PlannedLayoutScheme(view: self.view, subPlan: planned.viewPlan.subPlan)
+            } else {
+                return PlannedLayoutScheme(view: self.view)
             }
         }
         return LayoutScheme(view: self.view)

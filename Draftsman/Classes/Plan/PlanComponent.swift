@@ -11,8 +11,11 @@ import UIKit
 
 public protocol PlanComponent: AnyObject { }
 
-public protocol ViewPlan: PlanComponent {
+protocol ViewPlaning: ViewPlan {
     var context: PlanContext { get set }
+}
+
+public protocol ViewPlan: PlanComponent {
     var subPlan: [ViewScheme] { get }
     @discardableResult
     func build(for view: UIView) -> [NSLayoutConstraint]
@@ -29,7 +32,7 @@ final class VoidView: UIView {
     }
 }
 
-final class VoidViewPlan: ViewPlan {
+final class VoidViewPlan: ViewPlaning {
     lazy var context: PlanContext = .default
     
     var subPlan: [ViewScheme] = []

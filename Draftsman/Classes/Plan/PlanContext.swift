@@ -9,7 +9,7 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public final class PlanContext {
+final class PlanContext {
     weak var _delegate: PlanDelegate?
     var delegate: PlanDelegate {
         _delegate ?? DefaultPlanDelegate.shared
@@ -42,7 +42,7 @@ public final class PlanContext {
     }
 }
 
-public extension PlanContext {
+extension PlanContext {
     static var `default`: PlanContext { PlanContext(delegate: nil, rootContextView: VoidView(), usingViewPlan: false) }
 }
 #endif

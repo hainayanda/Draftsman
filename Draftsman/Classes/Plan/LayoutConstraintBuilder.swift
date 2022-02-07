@@ -11,11 +11,11 @@ import UIKit
 
 // MARK: LayoutConstraintBuilder
 
-public protocol LayoutConstraintBuilder {
+protocol LayoutConstraintBuilder {
     func build(for context: PlanContext) -> NSLayoutConstraint?
 }
 
-public extension LayoutConstraintBuilder {
+extension LayoutConstraintBuilder {
     func identifierPrefix(for context: PlanContext) -> String {
         if context.usingViewPlan {
             return "draftsman_viewplanid_\(context.rootContextView.uniqueKey)"

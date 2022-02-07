@@ -9,12 +9,12 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-open class SchemeCollection: ViewPlan {
-    var _context: PlanContext?
-    public var context: PlanContext {
+open class SchemeCollection: ViewPlaning {
+    private var _context: PlanContext?
+    var context: PlanContext {
         get {
             guard let myContext = _context else {
-                let newContext: PlanContext = .default
+                let newContext: PlanContext = createContextIfNeeded()
                 _context = newContext
                 return newContext
             }
@@ -23,12 +23,15 @@ open class SchemeCollection: ViewPlan {
             _context = newValue
         }
     }
+    
     public var subPlan: [ViewScheme]
     var subPlanAccessed: Bool = false
     
-    public init(subPlan: [ViewScheme]) {
+    init(subPlan: [ViewScheme]) {
         self.subPlan = subPlan
     }
+    
+    func createContextIfNeeded() -> PlanContext { .default }
     
     open func build(for view: UIView) -> [NSLayoutConstraint] {
         context.currentView = view
@@ -50,28 +53,38 @@ open class SchemeCollection: ViewPlan {
         return constraints
     }
     
+    func removeSubviewThatNotInPlan(for view: UIView) {
+        guard subPlanAccessed else { return }
+        view.subviews.forEach { subview in
+            if !subPlan.contains(where: { $0.view == subview }) {
+                subview.removeFromSuperview()
+            }
+        }
+    }
+    
     func buildWholeScheme(for view: UIView) -> [NSLayoutConstraint] {
         var constraints: [NSLayoutConstraint] = []
         var stackIndex: Int = -1
         for plan in subPlan {
+            guard let scheming = plan as? ViewScheming else { continue }
             if plan.isStackContent {
                 stackIndex += 1
-                constraints.append(contentsOf: buildStackScheme(plan, forView: view, at: stackIndex))
+                constraints.append(contentsOf: buildStackScheme(scheming, forView: view, at: stackIndex))
             } else {
-                constraints.append(contentsOf: buildRegularScheme(plan, forView: view))
+                constraints.append(contentsOf: buildRegularScheme(scheming, forView: view))
             }
         }
         return constraints
     }
     
-    func buildRegularScheme(_ scheme: ViewScheme, forView view: UIView) -> [NSLayoutConstraint] {
+    private func buildRegularScheme(_ scheme: ViewScheming, forView view: UIView) -> [NSLayoutConstraint] {
         scheme.context = context
         let viewScheme = scheme.view
         view.addSubview(viewScheme)
         return buildSingleScheme(scheme, forView: view)
     }
     
-    func buildStackScheme(_ scheme: ViewScheme, forView view: UIView, at index: Int) -> [NSLayoutConstraint] {
+    private func buildStackScheme(_ scheme: ViewScheming, forView view: UIView, at index: Int) -> [NSLayoutConstraint] {
         guard let stack = view as? UIStackView else {
             return buildRegularScheme(scheme, forView: view)
         }
@@ -85,7 +98,7 @@ open class SchemeCollection: ViewPlan {
         return buildSingleScheme(scheme, forView: view)
     }
     
-    func buildSingleScheme(_ scheme: ViewScheme, forView view: UIView) -> [NSLayoutConstraint] {
+    private func buildSingleScheme(_ scheme: ViewScheming, forView view: UIView) -> [NSLayoutConstraint] {
         let viewScheme = scheme.view
         viewScheme.translatesAutoresizingMaskIntoConstraints = false
         viewScheme.ifRootOfController { schemeController in
@@ -97,15 +110,6 @@ open class SchemeCollection: ViewPlan {
             controller.addChild(schemeController)
         }
         return scheme.build()
-    }
-    
-    func removeSubviewThatNotInPlan(for view: UIView) {
-        guard subPlanAccessed else { return }
-        view.subviews.forEach { subview in
-            if !subPlan.contains(where: { $0.view == subview }) {
-                subview.removeFromSuperview()
-            }
-        }
     }
 }
 #endif

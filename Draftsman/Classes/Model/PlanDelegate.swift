@@ -15,7 +15,7 @@ public protocol PlanDelegate: AnyObject {
     func planer(_ view: UIView, errorWhenPlanning error: DraftsmanError)
 }
 
-public final class DefaultPlanDelegate: PlanDelegate {
+final class DefaultPlanDelegate: PlanDelegate {
     static var shared: PlanDelegate = DefaultPlanDelegate()
 }
 

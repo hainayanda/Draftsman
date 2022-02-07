@@ -9,16 +9,16 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public final class PlannedLayoutScheme<View: UIView>: LayoutScheme<View> {
+open class PlannedLayoutScheme<View: UIView>: LayoutScheme<View> {
     
     override func buildCurrent(with startedConstaints: [NSLayoutConstraint]) -> ExtractedConstraints {
         if context.applying {
-            (viewInScheme as? UIViewPlanned)?.selfPlanned = true
+            (viewInScheme as? UIViewPlanned)?.needPlanning = false
         }
         return super.buildCurrent(with: startedConstaints)
     }
     
-    public override func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
+    open override func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
         if context.usingViewPlan, context.rootContextView == viewInScheme {
             fatalError("Draftsman Error: Planned view or view controller should be managed its own content")
         }

@@ -11,6 +11,10 @@ import UIKit
 
 open class RootViewPlan: SchemeCollection {
     
+    public override init(subPlan: [ViewScheme]) {
+        super.init(subPlan: subPlan)
+    }
+    
     open override func build(for view: UIView) -> [NSLayoutConstraint] {
         buildAndExtractConstraint(for: view).toActivated
     }
