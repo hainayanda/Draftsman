@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 public protocol Planned {
+    var selfPlanned: Bool { get }
+    
     @LayoutPlan
     var viewPlan: ViewPlan { get }
     
@@ -22,8 +24,29 @@ public extension Planned {
     }
 }
 
+extension UIView.AssociatedKey {
+    static var selfPlanned: String = "draftsman_Self_Planned"
+}
+
 public extension Planned where Self: UIView {
+    
+    internal(set) var selfPlanned: Bool {
+        get {
+            (objc_getAssociatedObject(
+                self, AssociatedKey.selfPlanned) as? NSNumber
+            )?.boolValue ?? false
+        }
+        set {
+            objc_setAssociatedObject(
+                self, AssociatedKey.selfPlanned,
+                NSNumber(value: newValue),
+                .OBJC_ASSOCIATION_RETAIN
+            )
+        }
+    }
+    
     func applyPlan(delegate: PlanDelegate?) {
+        selfPlanned = true
         let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)
         scheme.delegate = delegate
         scheme.apply()
@@ -34,7 +57,24 @@ public extension Planned where Self: UIView {
 }
 
 public extension Planned where Self: UIViewController {
+    
+    internal(set) var selfPlanned: Bool {
+        get {
+            (objc_getAssociatedObject(
+                self, UIView.AssociatedKey.selfPlanned) as? NSNumber
+            )?.boolValue ?? true
+        }
+        set {
+            objc_setAssociatedObject(
+                self, UIView.AssociatedKey.selfPlanned,
+                NSNumber(value: newValue),
+                .OBJC_ASSOCIATION_RETAIN
+            )
+        }
+    }
+    
     func applyPlan(delegate: PlanDelegate?) {
+        selfPlanned = true
         let scheme = LayoutScheme(view: self.view, subPlan: viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)
         scheme.delegate = delegate
         scheme.apply()

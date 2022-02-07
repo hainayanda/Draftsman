@@ -28,7 +28,7 @@ extension UIViewController: PlanConvertible {
 public extension PlanConvertible where Self: UIView {
     
     var plan: LayoutScheme<Self> {
-        guard let planned = self as? Planned else {
+        guard let planned = self as? Planned, !planned.selfPlanned else {
             return LayoutScheme(view: self)
         }
         return LayoutScheme(view: self, subPlan: planned.viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)
@@ -78,7 +78,7 @@ public extension PlanConvertible where Self: UIStackView {
 public extension PlanConvertible where Self: UIViewController {
     
     var plan: LayoutScheme<UIView> {
-        guard let planned = self as? Planned else {
+        guard let planned = self as? Planned, !planned.selfPlanned else {
             return LayoutScheme(view: view)
         }
         return LayoutScheme(view: self.view, subPlan: planned.viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)

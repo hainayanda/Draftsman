@@ -22,6 +22,7 @@ public extension Fragment {
 public extension Fragment where Self: UIView {
     
     func applyPlan(delegate: PlanDelegate?) {
+        selfPlanned = true
         fragmentWillPlanContent()
         let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan, originalViewPlanId: self.uniqueKey)
         scheme.delegate = delegate

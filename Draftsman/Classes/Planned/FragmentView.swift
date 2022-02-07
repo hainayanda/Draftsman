@@ -25,6 +25,7 @@ open class FragmentView: UIView, Fragment {
     open func fragmentDidLayoutForTheFirstTime() {}
     
     public func applyPlan(delegate: PlanDelegate?) {
+        selfPlanned = true
         applyScheme(delegate: delegate)
         DispatchQueue.main.async { [weak self] in
             self?.layoutIfNeeded()

@@ -17,6 +17,7 @@ public protocol FragmentCell: Fragment where Self: UIView {
 
 public extension FragmentCell {
     func applyPlan(delegate: PlanDelegate?) {
+        selfPlanned = true
         fragmentWillPlanContent()
         let scheme = LayoutScheme(view: self.contentView, subPlan: viewPlan.subPlan, originalViewPlanId: self.uniqueKey)
         scheme.delegate = delegate
