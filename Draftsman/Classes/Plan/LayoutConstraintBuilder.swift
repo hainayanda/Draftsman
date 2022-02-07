@@ -17,8 +17,8 @@ public protocol LayoutConstraintBuilder {
 
 public extension LayoutConstraintBuilder {
     func identifierPrefix(for context: PlanContext) -> String {
-        if let viewPlanId = context.viewPlanId {
-            return "draftsman_viewplanid_\(viewPlanId)"
+        if context.usingViewPlan {
+            return "draftsman_viewplanid_\(context.rootContextView.uniqueKey)"
         } else {
             return "draftsman"
         }

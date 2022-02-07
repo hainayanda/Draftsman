@@ -13,9 +13,6 @@ import Builder
 // MARK: ViewScheme
 
 public protocol ViewScheme: ViewPlan {
-    var originalViewPlanId: String? { get set }
-    var viewPlanId: String? { get set }
-    var managedViewPlanIds: [String] { get }
     var isStackContent: Bool { get set }
     var view: UIView { get }
     var constraintBuilders: [LayoutConstraintBuilder] { get set }
@@ -26,21 +23,6 @@ public protocol ViewScheme: ViewPlan {
 }
 
 public extension ViewScheme {
-    var managedViewPlanIds: [String] {
-        var start: [String] = []
-        if let originalPlanId = originalViewPlanId {
-            start.append(originalPlanId)
-        }
-        if let viewPlanId = viewPlanId {
-            start.append(viewPlanId)
-        }
-        let allPlanIds = subPlan.reduce(start) { partialResult, scheme in
-            var nextResult = partialResult
-            nextResult.append(contentsOf: scheme.managedViewPlanIds)
-            return nextResult
-        }
-        return allPlanIds.unique
-    }
     
     func build() -> [NSLayoutConstraint] {
         build(for: view)
@@ -54,30 +36,31 @@ public extension ViewScheme {
 
 // MARK: LayoutScheme
 
-public final class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
-    public var viewPlanId: String?
-    public var originalViewPlanId: String?
-    public var isFromViewPlan: Bool = false
+public class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
+    public override var context: PlanContext {
+        get {
+            guard let myContext = _context else {
+                let newContext: PlanContext = PlanContext(delegate: nil, rootContextView: view, usingViewPlan: false)
+                _context = newContext
+                return newContext
+            }
+            return myContext
+        } set {
+            _context = newValue
+        }
+    }
     public var isStackContent: Bool = false
     public var view: UIView { viewInScheme }
     var viewInScheme: View
     public var constraintBuilders: [LayoutConstraintBuilder] = []
     
-    init(view: View, subPlan: [ViewScheme] = [], originalViewPlanId: String? = nil) {
-        self.originalViewPlanId = originalViewPlanId
-        if let originalViewPlanId = originalViewPlanId {
-            subPlan.markUnmarked(with: originalViewPlanId)
-        }
+    init(view: View, subPlan: [ViewScheme] = []) {
         self.viewInScheme = view
         super.init(subPlan: subPlan)
     }
     
     public override func apply(for view: UIView) -> [NSLayoutConstraint] {
-        context.rootContextController = view.nextViewController
-        if let viewPlanId = originalViewPlanId ?? viewPlanId {
-            context.viewPlanId = viewPlanId
-            subPlan.markUnmarked(with: viewPlanId)
-        }
+        context.applying = true
         context.currentView = view
         let layoutConstraints = constraintBuilders.compactMap { $0.build(for: context) }
         let extractedConstraints = buildCurrent(with: layoutConstraints)
@@ -100,20 +83,9 @@ public final class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
         return self
     }
     
-    override func extractAllViewPlanIds() -> [String] {
-        managedViewPlanIds
-    }
-    
     override func buildWithContext(for view: UIView, _ builder: () -> ExtractedConstraints) -> ExtractedConstraints {
-        let oldViewPlan = context.viewPlanId
-        defer {
-            context.viewPlanId = oldViewPlan
-        }
-        if let viewPlanId = viewPlanId ?? originalViewPlanId {
-            context.viewPlanId = viewPlanId
-        }
         context.currentView = view
-        if context.inViewPlan {
+        if context.usingViewPlan {
             removeSubviewThatNotInPlan(for: view)
         }
         return builder()

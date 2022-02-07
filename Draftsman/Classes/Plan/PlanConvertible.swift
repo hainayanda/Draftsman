@@ -46,7 +46,7 @@ public extension PlanConvertible where Self: UIView {
         }
         let viewPlan = layouter()
         let rootPlan = viewPlan as? RootViewPlan ?? RootViewPlan(subPlan: viewPlan.subPlan)
-        rootPlan.delegate = delegate
+        rootPlan.context = PlanContext(delegate: delegate, rootContextView: self, usingViewPlan: false)
         return rootPlan.apply(for: self)
     }
 }
@@ -70,7 +70,7 @@ public extension PlanConvertible where Self: UIStackView {
                 return $0
             }
         )
-        rootPlan.delegate = delegate
+        rootPlan.context = PlanContext(delegate: delegate, rootContextView: self, usingViewPlan: false)
         return rootPlan.apply(for: self)
     }
 }

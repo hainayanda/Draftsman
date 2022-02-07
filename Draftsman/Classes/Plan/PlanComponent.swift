@@ -20,10 +20,22 @@ public protocol ViewPlan: PlanComponent {
     func apply(for view: UIView) -> [NSLayoutConstraint]
 }
 
+final class VoidView: UIView {
+    
+    override func addSubview(_ view: UIView) { }
+    
+    override func didMoveToSuperview() {
+        removeFromSuperview()
+    }
+}
+
 final class VoidViewPlan: ViewPlan {
-    var context: PlanContext = PlanContext(currentView: UIView())
+    lazy var context: PlanContext = .default
+    
     var subPlan: [ViewScheme] = []
+    
     func build(for view: UIView) -> [NSLayoutConstraint] { [] }
+    
     @discardableResult
     func apply(for view: UIView) -> [NSLayoutConstraint] { [] }
 }

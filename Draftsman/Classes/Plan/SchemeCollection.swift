@@ -10,18 +10,29 @@ import Foundation
 import UIKit
 
 open class SchemeCollection: ViewPlan {
-    public var context: PlanContext
+    var _context: PlanContext?
+    public var context: PlanContext {
+        get {
+            guard let myContext = _context else {
+                let newContext: PlanContext = .default
+                _context = newContext
+                return newContext
+            }
+            return myContext
+        } set {
+            _context = newValue
+        }
+    }
     public var subPlan: [ViewScheme]
     var subPlanAccessed: Bool = false
     
     public init(subPlan: [ViewScheme]) {
-        self.context = PlanContext(currentView: UIView())
         self.subPlan = subPlan
     }
     
     open func build(for view: UIView) -> [NSLayoutConstraint] {
         context.currentView = view
-        if context.inViewPlan {
+        if context.usingViewPlan {
             removeSubviewThatNotInPlan(for: view)
         }
         let constraints = buildWholeScheme(for: view)
@@ -32,6 +43,7 @@ open class SchemeCollection: ViewPlan {
     
     @discardableResult
     open func apply(for view: UIView) -> [NSLayoutConstraint] {
+        context.applying = true
         context.rootContextController = view.nextViewController
         let constraints = build(for: view)
         NSLayoutConstraint.activate(constraints)
@@ -65,7 +77,7 @@ open class SchemeCollection: ViewPlan {
         }
         scheme.context = context
         let viewScheme = scheme.view
-        if context.inViewPlan, stack.arrangedSubviews.count > index {
+        if context.usingViewPlan, stack.arrangedSubviews.count > index {
             stack.insertArrangedSubview(viewScheme, at: index)
         } else {
             stack.addArrangedSubview(viewScheme)

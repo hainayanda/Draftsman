@@ -23,21 +23,26 @@ public final class PlanContext {
     var currentView: UIView {
         didSet {
             guard currentView != oldValue else { return }
-            previousView = oldValue
+            let usedToBeVoid = oldValue is VoidView
+            previousView = usedToBeVoid ? nil : oldValue
+            rootContextView = usedToBeVoid ? rootContextView : currentView
         }
     }
-    var inViewPlan: Bool {
-        guard let planId: String = viewPlanId else { return false }
-        return !planId.isEmpty
-    }
+    let usingViewPlan: Bool
     var rootContextController: UIViewController?
-    var viewPlanId: String?
+    var rootContextView: UIView
     var previousView: UIView?
+    var applying: Bool = false
     
-    init(delegate: PlanDelegate? = nil, currentView: UIView, viewPlanId: String? = nil) {
-        self.viewPlanId = viewPlanId
+    init(delegate: PlanDelegate? = nil, rootContextView: UIView, usingViewPlan: Bool) {
         self._delegate = delegate
-        self.currentView = currentView
+        self.rootContextView = rootContextView
+        self.currentView = rootContextView
+        self.usingViewPlan = usingViewPlan
     }
+}
+
+public extension PlanContext {
+    static var `default`: PlanContext { PlanContext(delegate: nil, rootContextView: VoidView(), usingViewPlan: false) }
 }
 #endif
