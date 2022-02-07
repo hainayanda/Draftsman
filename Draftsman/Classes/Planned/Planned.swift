@@ -24,6 +24,8 @@ public extension Planned {
     }
 }
 
+typealias UIViewPlanned = UIView & Planned
+
 extension UIView.AssociatedKey {
     static var selfPlanned: String = "draftsman_Self_Planned"
 }
@@ -47,8 +49,8 @@ public extension Planned where Self: UIView {
     
     func applyPlan(delegate: PlanDelegate?) {
         selfPlanned = true
-        let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)
-        scheme.delegate = delegate
+        let scheme = PlannedLayoutScheme(view: self, subPlan: viewPlan.subPlan)
+        scheme.context = PlanContext(delegate: delegate, rootContextView: self, usingViewPlan: true)
         scheme.apply()
         DispatchQueue.main.async { [weak self] in
             self?.layoutIfNeeded()
@@ -74,9 +76,8 @@ public extension Planned where Self: UIViewController {
     }
     
     func applyPlan(delegate: PlanDelegate?) {
-        selfPlanned = true
-        let scheme = LayoutScheme(view: self.view, subPlan: viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)
-        scheme.delegate = delegate
+        let scheme = PlannedLayoutScheme(view: self.view, subPlan: viewPlan.subPlan)
+        scheme.context = PlanContext(delegate: delegate, rootContextView: self.view, usingViewPlan: true)
         scheme.apply()
         DispatchQueue.main.async { [weak self] in
             self?.view.layoutIfNeeded()

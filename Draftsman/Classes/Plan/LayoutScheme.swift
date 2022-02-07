@@ -100,6 +100,9 @@ public class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
 
 public extension LayoutScheme where View: UIStackView {
     func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
+        if viewInScheme is Planned, context.usingViewPlan, context.rootContextView == viewInScheme {
+            fatalError("Draftsman Error: Planned view or view controller should be managed its own content")
+        }
         subPlanAccessed = true
         self.subPlan.append(
             contentsOf:

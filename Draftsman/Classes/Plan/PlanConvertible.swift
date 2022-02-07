@@ -28,10 +28,14 @@ extension UIViewController: PlanConvertible {
 public extension PlanConvertible where Self: UIView {
     
     var plan: LayoutScheme<Self> {
-        guard let planned = self as? Planned, !planned.selfPlanned else {
-            return LayoutScheme(view: self)
+        if let planned = self as? Planned {
+            if planned.selfPlanned {
+                return PlannedLayoutScheme(view: self)
+            } else {
+                return PlannedLayoutScheme(view: self, subPlan: planned.viewPlan.subPlan)
+            }
         }
-        return LayoutScheme(view: self, subPlan: planned.viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)
+        return LayoutScheme(view: self)
     }
     
     @discardableResult
@@ -78,10 +82,14 @@ public extension PlanConvertible where Self: UIStackView {
 public extension PlanConvertible where Self: UIViewController {
     
     var plan: LayoutScheme<UIView> {
-        guard let planned = self as? Planned, !planned.selfPlanned else {
-            return LayoutScheme(view: view)
+        if let planned = self as? Planned {
+            if planned.selfPlanned {
+                return PlannedLayoutScheme(view: self.view)
+            } else {
+                return PlannedLayoutScheme(view: self.view, subPlan: planned.viewPlan.subPlan)
+            }
         }
-        return LayoutScheme(view: self.view, subPlan: planned.viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)
+        return LayoutScheme(view: self.view)
     }
     
     @discardableResult

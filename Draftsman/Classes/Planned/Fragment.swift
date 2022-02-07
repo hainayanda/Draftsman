@@ -22,10 +22,9 @@ public extension Fragment {
 public extension Fragment where Self: UIView {
     
     func applyPlan(delegate: PlanDelegate?) {
-        selfPlanned = true
         fragmentWillPlanContent()
-        let scheme = LayoutScheme(view: self, subPlan: viewPlan.subPlan, originalViewPlanId: self.uniqueKey)
-        scheme.delegate = delegate
+        let scheme = PlannedLayoutScheme(view: self, subPlan: viewPlan.subPlan)
+        scheme.context = PlanContext(delegate: delegate, rootContextView: self, usingViewPlan: true)
         scheme.apply()
         DispatchQueue.main.async { [weak self] in
             self?.layoutIfNeeded()
