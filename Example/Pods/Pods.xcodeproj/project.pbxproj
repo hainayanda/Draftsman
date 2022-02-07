@@ -119,6 +119,7 @@
 		BB2F590DC59E2BE160EA2EDB7EBD01B6 /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F66181D56D23B1FE4BC96387BDA9DD7 /* NSLayoutConstraint+Extensions.swift */; };
 		BB8370B2AD5EDA60D508B0A9FA16E4D9 /* EndWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93240AE0AA208B922E7BC34313114DD3 /* EndWith.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BB8DF63A27B1294500CC78BC /* PlannedLayoutScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8DF63927B1294500CC78BC /* PlannedLayoutScheme.swift */; };
+		BB8DF63C27B1593E00CC78BC /* ViewScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8DF63B27B1593E00CC78BC /* ViewScheme.swift */; };
 		BCE752B0FAA9E4070407EDDD03C06922 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8B94E9D3B433157168D1EECCEC11CD /* Foundation.framework */; };
 		C03116C765F1A8893559730965ECBAD8 /* Nimble-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FDB14BCB3B236EF999878622BAC1A42 /* Nimble-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C0DEEBAA700A340E1427641E9169582B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8B94E9D3B433157168D1EECCEC11CD /* Foundation.framework */; };
@@ -385,6 +386,7 @@
 		B98BEE20D4ADA7BAE7226CB4669088B5 /* Builder-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Builder-dummy.m"; sourceTree = "<group>"; };
 		BAE263041362D074978BB3B577DF0A05 /* Nimble */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Nimble; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB8DF63927B1294500CC78BC /* PlannedLayoutScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedLayoutScheme.swift; sourceTree = "<group>"; };
+		BB8DF63B27B1593E00CC78BC /* ViewScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewScheme.swift; sourceTree = "<group>"; };
 		BD06FE6BA5E4955C3F40CEE9D13ADE2C /* FragmentCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FragmentCell.swift; sourceTree = "<group>"; };
 		BE45FDE30054808E0F6ABE006F76E50D /* NMBExceptionCapture.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NMBExceptionCapture.m; path = Sources/NimbleObjectiveC/NMBExceptionCapture.m; sourceTree = "<group>"; };
 		BF229AEEB0F1D4292FF6F14A44B60EC9 /* QuickSpecBase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QuickSpecBase.m; path = Sources/QuickObjCRuntime/QuickSpecBase.m; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 				7234D172C56D017190329F457D41B3F0 /* ViewScheme+Dimension.swift */,
 				72EC3DA616BAFB9D2874A5845E57ED6B /* ViewScheme+Shortcuts.swift */,
 				BB8DF63927B1294500CC78BC /* PlannedLayoutScheme.swift */,
+				BB8DF63B27B1593E00CC78BC /* ViewScheme.swift */,
 			);
 			name = Plan;
 			path = Draftsman/Classes/Plan;
@@ -1234,6 +1237,7 @@
 				977B971036EF83A127E6134ED6296817 /* PriorityConvertible.swift in Sources */,
 				AF0B3A29CFB2B1E5209829147087231F /* RootViewPlan.swift in Sources */,
 				2C7A04990D3ADC0CD9546F515B720640 /* SchemeCollection.swift in Sources */,
+				BB8DF63C27B1593E00CC78BC /* ViewScheme.swift in Sources */,
 				8D09E6948F69B22A1A249F18BEEFEE6D /* UIView+Draftsman.swift in Sources */,
 				C25CBF877B744E2E8CFA1D935F823BB9 /* ViewScheme+Axis.swift in Sources */,
 				7EC15925AA1D577AA23290FECC05F1C5 /* ViewScheme+Dimension.swift in Sources */,

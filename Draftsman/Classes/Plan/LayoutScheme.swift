@@ -10,30 +10,6 @@ import Foundation
 import UIKit
 import Builder
 
-// MARK: ViewScheme
-
-public protocol ViewScheme: ViewPlan {
-    var isStackContent: Bool { get set }
-    var view: UIView { get }
-    var constraintBuilders: [LayoutConstraintBuilder] { get set }
-    func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self
-    func build() -> [NSLayoutConstraint]
-    @discardableResult
-    func apply() -> [NSLayoutConstraint]
-}
-
-public extension ViewScheme {
-    
-    func build() -> [NSLayoutConstraint] {
-        build(for: view)
-    }
-    
-    @discardableResult
-    func apply() -> [NSLayoutConstraint] {
-        apply(for: view)
-    }
-}
-
 // MARK: LayoutScheme
 
 public class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
