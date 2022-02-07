@@ -35,12 +35,12 @@ public extension Planned where Self: UIView {
     internal(set) var selfPlanned: Bool {
         get {
             (objc_getAssociatedObject(
-                self, AssociatedKey.selfPlanned) as? NSNumber
+                self, &AssociatedKey.selfPlanned) as? NSNumber
             )?.boolValue ?? false
         }
         set {
             objc_setAssociatedObject(
-                self, AssociatedKey.selfPlanned,
+                self, &AssociatedKey.selfPlanned,
                 NSNumber(value: newValue),
                 .OBJC_ASSOCIATION_RETAIN
             )
@@ -63,12 +63,14 @@ public extension Planned where Self: UIViewController {
     internal(set) var selfPlanned: Bool {
         get {
             (objc_getAssociatedObject(
-                self, UIView.AssociatedKey.selfPlanned) as? NSNumber
+                self,
+                &UIView.AssociatedKey.selfPlanned) as? NSNumber
             )?.boolValue ?? true
         }
         set {
             objc_setAssociatedObject(
-                self, UIView.AssociatedKey.selfPlanned,
+                self,
+                &UIView.AssociatedKey.selfPlanned,
                 NSNumber(value: newValue),
                 .OBJC_ASSOCIATION_RETAIN
             )
