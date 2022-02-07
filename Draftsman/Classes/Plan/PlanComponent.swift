@@ -11,8 +11,11 @@ import UIKit
 
 public protocol PlanComponent: AnyObject { }
 
-public protocol ViewPlan: PlanComponent {
+protocol ViewPlaning: ViewPlan {
     var context: PlanContext { get set }
+}
+
+public protocol ViewPlan: PlanComponent {
     var subPlan: [ViewScheme] { get }
     @discardableResult
     func build(for view: UIView) -> [NSLayoutConstraint]
@@ -20,10 +23,22 @@ public protocol ViewPlan: PlanComponent {
     func apply(for view: UIView) -> [NSLayoutConstraint]
 }
 
-final class VoidViewPlan: ViewPlan {
-    var context: PlanContext = PlanContext(currentView: UIView())
+final class VoidView: UIView {
+    
+    override func addSubview(_ view: UIView) { }
+    
+    override func didMoveToSuperview() {
+        removeFromSuperview()
+    }
+}
+
+final class VoidViewPlan: ViewPlaning {
+    lazy var context: PlanContext = .default
+    
     var subPlan: [ViewScheme] = []
+    
     func build(for view: UIView) -> [NSLayoutConstraint] { [] }
+    
     @discardableResult
     func apply(for view: UIView) -> [NSLayoutConstraint] { [] }
 }

@@ -10,7 +10,10 @@ import Foundation
 import UIKit
 
 open class RootViewPlan: SchemeCollection {
-    weak var delegate: PlanDelegate?
+    
+    public override init(subPlan: [ViewScheme]) {
+        super.init(subPlan: subPlan)
+    }
     
     open override func build(for view: UIView) -> [NSLayoutConstraint] {
         buildAndExtractConstraint(for: view).toActivated
@@ -18,6 +21,7 @@ open class RootViewPlan: SchemeCollection {
     
     @discardableResult
     open override func apply(for view: UIView) -> [NSLayoutConstraint] {
+        context.applying = true
         context.rootContextController = view.nextViewController
         let constraints = buildAndExtractConstraint(for: view)
         NSLayoutConstraint.deactivate(constraints.toRemoved)
@@ -34,31 +38,18 @@ open class RootViewPlan: SchemeCollection {
     
     func buildWithContext(for view: UIView, _ builder: () -> ExtractedConstraints) -> ExtractedConstraints {
         context.currentView = view
-        if context.inViewPlan {
+        if context.usingViewPlan {
             removeSubviewThatNotInPlan(for: view)
         }
         return builder()
     }
     
-    func extractAllViewPlanIds() -> [String] {
-        subPlan.reduce([]) { partialResult, scheme in
-            var nextResult = partialResult
-            nextResult.append(contentsOf: scheme.managedViewPlanIds)
-            return nextResult
-        }.unique
-    }
-    
     func extractConstraints(for view: UIView, from constraints: [NSLayoutConstraint]) -> ExtractedConstraints {
         let currentConstraints = view.mostTopParentForConstraining.allConstraints
         let combinedConstraints = constraints.replaceAndResembleWithSimilar(from: currentConstraints)
-        if context.inViewPlan {
-            let viewPlanIds = extractAllViewPlanIds()
-            let removedConstraints = currentConstraints.filter { constraint in
-                for viewPlanId in viewPlanIds where constraint.isPartOf(viewPlanId: viewPlanId) {
-                    return true
-                }
-                return false
-            }
+        if context.usingViewPlan {
+            let viewPlanId = context.rootContextView.uniqueKey
+            let removedConstraints = currentConstraints.filter { $0.isPartOf(viewPlanId: viewPlanId) }
             return .init(toActivated: combinedConstraints, toRemoved: removedConstraints)
         }
         return .init(toActivated: combinedConstraints, toRemoved: [])

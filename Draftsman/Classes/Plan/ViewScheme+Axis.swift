@@ -18,42 +18,44 @@ public extension ViewScheme {
         _ relation: LayoutRelation<CGFloat>,
         to anchor: NSLayoutYAxisAnchor,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            ExplicitAxisConstraintBuilder(
-                anchor: view.topAnchor,
-                sign: .positive,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                ExplicitAxisConstraintBuilder(
+                    anchor: view.topAnchor,
+                    sign: .positive,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func top(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: RelatedAnchor<NSLayoutYAxisAnchor>,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            AnonymousYAxisConstraintBuilder(
-                anchor: view.topAnchor,
-                sign: .positive,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                AnonymousYAxisConstraintBuilder(
+                    anchor: view.topAnchor,
+                    sign: .positive,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func top(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: AnonymousRelation,
         priority: UILayoutPriority? = nil) -> Self {
-        top(relation, to: .top(of: anchor), priority: priority)
-    }
+            top(relation, to: .top(of: anchor), priority: priority)
+        }
     
     // MARK: Right Anchor
     
@@ -62,42 +64,44 @@ public extension ViewScheme {
         _ relation: LayoutRelation<CGFloat>,
         to anchor: NSLayoutXAxisAnchor,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            ExplicitAxisConstraintBuilder(
-                anchor: view.leftAnchor,
-                sign: .positive,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                ExplicitAxisConstraintBuilder(
+                    anchor: view.leftAnchor,
+                    sign: .positive,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func left(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: RelatedAnchor<NSLayoutXAxisAnchor>,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            AnonymousXAxisConstraintBuilder(
-                anchor: view.leftAnchor,
-                sign: .positive,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                AnonymousXAxisConstraintBuilder(
+                    anchor: view.leftAnchor,
+                    sign: .positive,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func left(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: AnonymousRelation,
         priority: UILayoutPriority? = nil) -> Self {
-        left(relation, to: .left(of: anchor), priority: priority)
-    }
+            left(relation, to: .left(of: anchor), priority: priority)
+        }
     
     // MARK: Bottom Anchor
     
@@ -106,42 +110,44 @@ public extension ViewScheme {
         _ relation: LayoutRelation<CGFloat>,
         to anchor: NSLayoutYAxisAnchor,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            ExplicitAxisConstraintBuilder(
-                anchor: view.bottomAnchor,
-                sign: .negative,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                ExplicitAxisConstraintBuilder(
+                    anchor: view.bottomAnchor,
+                    sign: .negative,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func bottom(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: RelatedAnchor<NSLayoutYAxisAnchor>,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            AnonymousYAxisConstraintBuilder(
-                anchor: view.bottomAnchor,
-                sign: .negative,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                AnonymousYAxisConstraintBuilder(
+                    anchor: view.bottomAnchor,
+                    sign: .negative,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func bottom(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: AnonymousRelation,
         priority: UILayoutPriority? = nil) -> Self {
-        bottom(relation, to: .bottom(of: anchor), priority: priority)
-    }
+            bottom(relation, to: .bottom(of: anchor), priority: priority)
+        }
     
     // MARK: Right Anchor
     
@@ -150,42 +156,44 @@ public extension ViewScheme {
         _ relation: LayoutRelation<CGFloat>,
         to anchor: NSLayoutXAxisAnchor,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            ExplicitAxisConstraintBuilder(
-                anchor: view.rightAnchor,
-                sign: .negative,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                ExplicitAxisConstraintBuilder(
+                    anchor: view.rightAnchor,
+                    sign: .negative,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func right(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: RelatedAnchor<NSLayoutXAxisAnchor>,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            AnonymousXAxisConstraintBuilder(
-                anchor: view.rightAnchor,
-                sign: .negative,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                AnonymousXAxisConstraintBuilder(
+                    anchor: view.rightAnchor,
+                    sign: .negative,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func right(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: AnonymousRelation,
         priority: UILayoutPriority? = nil) -> Self {
-        right(relation, to: .right(of: anchor), priority: priority)
-    }
+            right(relation, to: .right(of: anchor), priority: priority)
+        }
     
     // MARK: Center Y Anchor
     
@@ -194,42 +202,44 @@ public extension ViewScheme {
         _ relation: LayoutRelation<CGFloat>,
         to anchor: NSLayoutYAxisAnchor,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            ExplicitAxisConstraintBuilder(
-                anchor: view.centerYAnchor,
-                sign: .positive,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                ExplicitAxisConstraintBuilder(
+                    anchor: view.centerYAnchor,
+                    sign: .positive,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func centerY(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: RelatedAnchor<NSLayoutYAxisAnchor>,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            AnonymousYAxisConstraintBuilder(
-                anchor: view.centerYAnchor,
-                sign: .positive,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                AnonymousYAxisConstraintBuilder(
+                    anchor: view.centerYAnchor,
+                    sign: .positive,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func centerY(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: AnonymousRelation,
         priority: UILayoutPriority? = nil) -> Self {
-        centerY(relation, to: .centerY(of: anchor), priority: priority)
-    }
+            centerY(relation, to: .centerY(of: anchor), priority: priority)
+        }
     
     // MARK: Center X Anchor
     
@@ -238,41 +248,43 @@ public extension ViewScheme {
         _ relation: LayoutRelation<CGFloat>,
         to anchor: NSLayoutXAxisAnchor,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            ExplicitAxisConstraintBuilder(
-                anchor: view.centerXAnchor,
-                sign: .positive,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                ExplicitAxisConstraintBuilder(
+                    anchor: view.centerXAnchor,
+                    sign: .positive,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func centerX(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: RelatedAnchor<NSLayoutXAxisAnchor>,
         priority: UILayoutPriority? = nil) -> Self {
-        constraintBuilders.append(
-            AnonymousXAxisConstraintBuilder(
-                anchor: view.centerXAnchor,
-                sign: .positive,
-                relation,
-                to: anchor,
-                priority: priority
+            guard let scheming = self as? ViewScheming else { return self }
+            scheming.constraintBuilders.append(
+                AnonymousXAxisConstraintBuilder(
+                    anchor: view.centerXAnchor,
+                    sign: .positive,
+                    relation,
+                    to: anchor,
+                    priority: priority
+                )
             )
-        )
-        return self
-    }
+            return self
+        }
     
     @discardableResult
     func centerX(
         _ relation: LayoutRelation<CGFloat>,
         to anchor: AnonymousRelation,
         priority: UILayoutPriority? = nil) -> Self {
-        centerX(relation, to: .centerX(of: anchor), priority: priority)
-    }
+            centerX(relation, to: .centerX(of: anchor), priority: priority)
+        }
 }
 #endif

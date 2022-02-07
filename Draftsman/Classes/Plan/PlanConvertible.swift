@@ -28,10 +28,14 @@ extension UIViewController: PlanConvertible {
 public extension PlanConvertible where Self: UIView {
     
     var plan: LayoutScheme<Self> {
-        guard let planned = self as? Planned else {
-            return LayoutScheme(view: self)
+        if let planned = self as? Planned {
+            if planned.needPlanning {
+                return PlannedLayoutScheme(view: self, subPlan: planned.viewPlan.subPlan)
+            } else {
+                return PlannedLayoutScheme(view: self)
+            }
         }
-        return LayoutScheme(view: self, subPlan: planned.viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)
+        return LayoutScheme(view: self)
     }
     
     @discardableResult
@@ -46,7 +50,7 @@ public extension PlanConvertible where Self: UIView {
         }
         let viewPlan = layouter()
         let rootPlan = viewPlan as? RootViewPlan ?? RootViewPlan(subPlan: viewPlan.subPlan)
-        rootPlan.delegate = delegate
+        rootPlan.context = PlanContext(delegate: delegate, rootContextView: self, usingViewPlan: false)
         return rootPlan.apply(for: self)
     }
 }
@@ -66,11 +70,11 @@ public extension PlanConvertible where Self: UIStackView {
         let viewPlan = layouter()
         let rootPlan = RootViewPlan(
             subPlan: viewPlan.subPlan.compactMap {
-                $0.isStackContent = true
+                ($0 as? ViewScheming)?.isStackContent = true
                 return $0
             }
         )
-        rootPlan.delegate = delegate
+        rootPlan.context = PlanContext(delegate: delegate, rootContextView: self, usingViewPlan: false)
         return rootPlan.apply(for: self)
     }
 }
@@ -78,10 +82,14 @@ public extension PlanConvertible where Self: UIStackView {
 public extension PlanConvertible where Self: UIViewController {
     
     var plan: LayoutScheme<UIView> {
-        guard let planned = self as? Planned else {
-            return LayoutScheme(view: view)
+        if let planned = self as? Planned {
+            if planned.needPlanning {
+                return PlannedLayoutScheme(view: self.view, subPlan: planned.viewPlan.subPlan)
+            } else {
+                return PlannedLayoutScheme(view: self.view)
+            }
         }
-        return LayoutScheme(view: self.view, subPlan: planned.viewPlan.subPlan, originalViewPlanId:  self.uniqueKey)
+        return LayoutScheme(view: self.view)
     }
     
     @discardableResult

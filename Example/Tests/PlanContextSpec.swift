@@ -18,7 +18,7 @@ class PlanContextSpec: QuickSpec {
         describe("plan context") {
             var context: PlanContext!
             beforeEach {
-                context = .init(currentView: UIView())
+                context = PlanContext(delegate: nil, rootContextView: UIView(), usingViewPlan: false)
             }
             it("should mutating priority") {
                 let currentPriority = context.currentPriority.rawValue

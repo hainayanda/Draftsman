@@ -101,7 +101,7 @@ class EdgesConstraintsSpec: QuickSpec {
                 var context: PlanContext!
                 var plan: LayoutScheme<UIView>!
                 beforeEach {
-                    context = PlanContext(currentView: otherView)
+                    context = PlanContext(delegate: nil, rootContextView: otherView, usingViewPlan: false)
                     context.currentView = view
                     plan = view.plan
                     plan.context = context

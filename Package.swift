@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Draftsman",
     platforms: [
-        .iOS(.v11)
+        .iOS(.v12)
     ],
     products: [
         .library(
@@ -18,7 +18,7 @@ let package = Package(
         .package(url: "https://github.com/hainayanda/Clavier.git", from: "1.0.3"),
         .package(url: "https://github.com/hainayanda/Builder.git", from: "1.0.3"),
         .package(url: "https://github.com/Quick/Quick.git", from: "4.0.0"),
-        .package(url: "https://github.com/Quick/Nimble.git", from: "9.2.0")
+        .package(url: "https://github.com/Quick/Nimble.git", from: "9.2.1")
     ],
     targets: [
         .target(

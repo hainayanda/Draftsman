@@ -10,74 +10,25 @@ import Foundation
 import UIKit
 import Builder
 
-// MARK: ViewScheme
-
-public protocol ViewScheme: ViewPlan {
-    var originalViewPlanId: String? { get set }
-    var viewPlanId: String? { get set }
-    var managedViewPlanIds: [String] { get }
-    var isStackContent: Bool { get set }
-    var view: UIView { get }
-    var constraintBuilders: [LayoutConstraintBuilder] { get set }
-    func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self
-    func build() -> [NSLayoutConstraint]
-    @discardableResult
-    func apply() -> [NSLayoutConstraint]
-}
-
-public extension ViewScheme {
-    var managedViewPlanIds: [String] {
-        var start: [String] = []
-        if let originalPlanId = originalViewPlanId {
-            start.append(originalPlanId)
-        }
-        if let viewPlanId = viewPlanId {
-            start.append(viewPlanId)
-        }
-        let allPlanIds = subPlan.reduce(start) { partialResult, scheme in
-            var nextResult = partialResult
-            nextResult.append(contentsOf: scheme.managedViewPlanIds)
-            return nextResult
-        }
-        return allPlanIds.unique
-    }
-    
-    func build() -> [NSLayoutConstraint] {
-        build(for: view)
-    }
-    
-    @discardableResult
-    func apply() -> [NSLayoutConstraint] {
-        apply(for: view)
-    }
-}
-
 // MARK: LayoutScheme
 
-public final class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
-    public var viewPlanId: String?
-    public var originalViewPlanId: String?
-    public var isFromViewPlan: Bool = false
-    public var isStackContent: Bool = false
+open class LayoutScheme<View: UIView>: RootViewPlan, ViewScheming {
     public var view: UIView { viewInScheme }
+    public internal(set) var isStackContent: Bool = false
     var viewInScheme: View
-    public var constraintBuilders: [LayoutConstraintBuilder] = []
+    var constraintBuilders: [LayoutConstraintBuilder] = []
     
-    init(view: View, subPlan: [ViewScheme] = [], originalViewPlanId: String? = nil) {
-        self.originalViewPlanId = originalViewPlanId
-        if let originalViewPlanId = originalViewPlanId {
-            subPlan.markUnmarked(with: originalViewPlanId)
-        }
+    public init(view: View, subPlan: [ViewScheme] = []) {
         self.viewInScheme = view
         super.init(subPlan: subPlan)
     }
     
-    public override func apply(for view: UIView) -> [NSLayoutConstraint] {
-        context.rootContextController = view.nextViewController
-        if let viewPlanId = originalViewPlanId ?? viewPlanId {
-            context.viewPlanId = viewPlanId
-            subPlan.markUnmarked(with: viewPlanId)
-        }
+    override func createContextIfNeeded() -> PlanContext {
+        PlanContext(delegate: nil, rootContextView: view, usingViewPlan: false)
+    }
+    
+    open override func apply(for view: UIView) -> [NSLayoutConstraint] {
+        context.applying = true
         context.currentView = view
         let layoutConstraints = constraintBuilders.compactMap { $0.build(for: context) }
         let extractedConstraints = buildCurrent(with: layoutConstraints)
@@ -94,26 +45,15 @@ public final class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
         }
     }
     
-    public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
+    open func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
         subPlanAccessed = true
         self.subPlan.append(contentsOf: layouter().subPlan)
         return self
     }
     
-    override func extractAllViewPlanIds() -> [String] {
-        managedViewPlanIds
-    }
-    
     override func buildWithContext(for view: UIView, _ builder: () -> ExtractedConstraints) -> ExtractedConstraints {
-        let oldViewPlan = context.viewPlanId
-        defer {
-            context.viewPlanId = oldViewPlan
-        }
-        if let viewPlanId = viewPlanId ?? originalViewPlanId {
-            context.viewPlanId = viewPlanId
-        }
         context.currentView = view
-        if context.inViewPlan {
+        if context.usingViewPlan {
             removeSubviewThatNotInPlan(for: view)
         }
         return builder()
@@ -126,13 +66,16 @@ public final class LayoutScheme<View: UIView>: RootViewPlan, ViewScheme {
     }
 }
 
-public extension LayoutScheme where View: UIStackView {
-    func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
+extension LayoutScheme: StackScheme where View: UIStackView {
+    public func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
+        if viewInScheme is Planned, context.usingViewPlan, context.rootContextView == viewInScheme {
+            fatalError("Draftsman Error: Planned view or view controller should be managed its own content")
+        }
         subPlanAccessed = true
         self.subPlan.append(
             contentsOf:
                 layouter().subPlan.compactMap {
-                    $0.isStackContent = true
+                    ($0 as? ViewScheming)?.isStackContent = true
                     return $0
                 }
         )
