@@ -32,9 +32,11 @@ class MainViewController: UIViewController, Planned {
         .backgroundColor(.orange)
         .build()
     
+    @LinkedView var stackView: UIStackView
+    
     @LayoutPlan
     var viewPlan: ViewPlan {
-        UIStackView(axis: .vertical, spacing: 32).plan
+        UIStackView(axis: .vertical, spacing: 32).plan(into: $stackView)
             .center(.equal, to: .parent)
             .horizontal(.equalTo(16), to: .safeArea)
             .vertical(.moreThanTo(16), to: .safeArea)

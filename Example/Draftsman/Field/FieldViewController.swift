@@ -21,14 +21,17 @@ class FieldViewController: UIViewController, Planned {
     
     lazy var typingField: TypingField = .init()
     
+    @LinkedView var baseView: UIView
+    @LinkedView var imageView: UIImageView
+    
     @LayoutPlan
     var viewPlan: ViewPlan {
-        UIView().plan
+        UIView().plan(into: $baseView)
             .center(.equal, to: .parent, priority: .defaultLow)
             .horizontal(.equalTo(16), to: .safeArea)
             .bottom(.moreThanTo(8), to: typingField.topAnchor)
             .insert {
-                UIImageView(image: UIImage(named: "image_test")).plan
+                UIImageView(image: UIImage(named: "image_test")).plan(into: $imageView)
                     .builder.contentMode(.scaleAspectFill)
                     .clipsToBounds(true)
                     .plan.at(.fullTop, .equalTo(12), to: .parent)
