@@ -6,6 +6,8 @@
 //
 
 import Foundation
+#if canImport(UIKit)
+import UIKit
 
 @propertyWrapper
 public class LinkedView<View: UIView> {
@@ -28,3 +30,4 @@ public class LinkedView<View: UIView> {
     
     public init() { }
 }
+#endif
