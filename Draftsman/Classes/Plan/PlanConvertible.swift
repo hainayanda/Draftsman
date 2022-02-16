@@ -27,6 +27,16 @@ extension UIViewController: PlanConvertible {
 
 public extension PlanConvertible where Self: UIView {
     
+    func plan(into link: LinkedView<Self>) -> LayoutScheme<Self> {
+        let justCreated = CFGetRetainCount(self) <= 2
+        guard justCreated,
+                let linkedView = link._wrappedValue else {
+            link._wrappedValue = self
+            return self.plan
+        }
+        return linkedView.plan
+    }
+    
     var plan: LayoutScheme<Self> {
         if let planned = self as? Planned {
             if planned.needPlanning {
