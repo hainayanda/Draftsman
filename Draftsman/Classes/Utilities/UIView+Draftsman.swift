@@ -9,7 +9,26 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
+extension UIView.AssociatedKey {
+    static var createdInPlan: String = "draftsman_Created_In_Plan"
+}
+
 public extension UIView {
+    
+    internal(set) var createdInPlan: Bool {
+        get {
+            (objc_getAssociatedObject(
+                self, &AssociatedKey.createdInPlan) as? NSNumber
+            )?.boolValue ?? false
+        }
+        set {
+            objc_setAssociatedObject(
+                self, &AssociatedKey.createdInPlan,
+                NSNumber(value: newValue),
+                .OBJC_ASSOCIATION_RETAIN
+            )
+        }
+    }
     
     var cornerRadius: CGFloat {
         get {
@@ -113,6 +132,12 @@ public extension UIButton {
     convenience init(text: String?) {
         self.init()
         self.setTitle(text, for: .normal)
+    }
+}
+
+public extension UIViewController {
+    var createdInPlan: Bool {
+        view.createdInPlan
     }
 }
 #endif

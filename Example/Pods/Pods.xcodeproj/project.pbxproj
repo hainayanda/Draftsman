@@ -117,6 +117,7 @@
 		B6DA1793F04FA80F00487F92A9340EC7 /* Pods-Draftsman_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B407211DC74AFDCCFE0D7DA7F06562C1 /* Pods-Draftsman_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B8A111BEADE508D1C85DF8B7891628AE /* ElementsEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06F0E8ECAD7A240553A0F4EA5CCC958 /* ElementsEqual.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BB2F590DC59E2BE160EA2EDB7EBD01B6 /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F66181D56D23B1FE4BC96387BDA9DD7 /* NSLayoutConstraint+Extensions.swift */; };
+		BB74A2BC27BCB6E100B26F0F /* LinkedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB74A2BB27BCB6E100B26F0F /* LinkedView.swift */; };
 		BB8370B2AD5EDA60D508B0A9FA16E4D9 /* EndWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93240AE0AA208B922E7BC34313114DD3 /* EndWith.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BB8DF63A27B1294500CC78BC /* PlannedLayoutScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8DF63927B1294500CC78BC /* PlannedLayoutScheme.swift */; };
 		BB8DF63C27B1593E00CC78BC /* ViewScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8DF63B27B1593E00CC78BC /* ViewScheme.swift */; };
@@ -385,6 +386,7 @@
 		B910CA58DDB83E4E502F65F2EE94A383 /* Quick-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Quick-Info.plist"; sourceTree = "<group>"; };
 		B98BEE20D4ADA7BAE7226CB4669088B5 /* Builder-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Builder-dummy.m"; sourceTree = "<group>"; };
 		BAE263041362D074978BB3B577DF0A05 /* Nimble */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Nimble; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB74A2BB27BCB6E100B26F0F /* LinkedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedView.swift; sourceTree = "<group>"; };
 		BB8DF63927B1294500CC78BC /* PlannedLayoutScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedLayoutScheme.swift; sourceTree = "<group>"; };
 		BB8DF63B27B1593E00CC78BC /* ViewScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewScheme.swift; sourceTree = "<group>"; };
 		BD06FE6BA5E4955C3F40CEE9D13ADE2C /* FragmentCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FragmentCell.swift; sourceTree = "<group>"; };
@@ -786,6 +788,7 @@
 				4F66181D56D23B1FE4BC96387BDA9DD7 /* NSLayoutConstraint+Extensions.swift */,
 				261DF7903C53048257CA3F31534AD645 /* PriorityConvertible.swift */,
 				F9447CD970B30B6D6718BCC2AB802AAE /* UIView+Draftsman.swift */,
+				BB74A2BB27BCB6E100B26F0F /* LinkedView.swift */,
 			);
 			name = Utilities;
 			path = Draftsman/Classes/Utilities;
@@ -1232,6 +1235,7 @@
 				7CB3344AAB81F5444F50B8BA7ABBC996 /* PlanContext.swift in Sources */,
 				08A9A37584E70BB2D9C9FB6EF2CC3D40 /* PlanConvertible.swift in Sources */,
 				3B8D6664E5BC861B1F4F51EFA80430E7 /* PlanDelegate.swift in Sources */,
+				BB74A2BC27BCB6E100B26F0F /* LinkedView.swift in Sources */,
 				788482FD4DE57DF0507ACDB1370B30CA /* Planned.swift in Sources */,
 				BB8DF63A27B1294500CC78BC /* PlannedLayoutScheme.swift in Sources */,
 				977B971036EF83A127E6134ED6296817 /* PriorityConvertible.swift in Sources */,

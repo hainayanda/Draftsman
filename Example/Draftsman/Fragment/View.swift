@@ -21,13 +21,16 @@ class View: FragmentView {
         .font(.systemFont(ofSize: 12))
         .build()
     
+    @LinkedView var imageView: UIImageView
+    @LinkedView var stackView: UIStackView
+    
     @LayoutPlan
     override var viewPlan: ViewPlan {
-        UIImageView(image: UIImage(named: "icon_test")).plan
+        UIImageView(image: UIImage(named: "icon_test")).plan(into: $imageView)
             .builder.contentMode(.scaleAspectFit)
             .plan.at(.fullLeft, .equalTo(12), to: .parent)
             .size(.equalTo(CGSize(sides: 56)))
-        UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4).plan
+        UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4).plan(into: $stackView)
             .at(.fullRight, .equalTo(12), to: .parent)
             .left(.equalTo(8), to: .right(of: .previous))
             .insertStacked {
