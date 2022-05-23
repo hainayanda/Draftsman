@@ -1,6 +1,6 @@
 # Draftsman
 
-Draftsman is a DSL framework for Swift focussed on builder pattern
+Draftsman is a DSL framework for Swift focused on builder pattern
 If you are still using version 2.3.x, Separated README is available [here](https://github.com/hainayanda/Draftsman/blob/master/README_2_3.md).
 If you are still using Swift 5.1, please use 1.1.x version. Separated README is available [here](https://github.com/hainayanda/Draftsman/blob/master/README_1_1_1.md).
 
@@ -73,13 +73,13 @@ Draftsman is available under the MIT license. See the LICENSE file for more info
 
 ## Basic Usage
 
-Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. Draftsman using new resultBuilder from Swift that makes the Declarative approach possible.
+Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. Draftsman uses a new resultBuilder from Swift that makes the Declarative approach possible.
 
 ***
 
 ### Basic
 
-Creating constraints is very easy. All you need to do is call `drf` to get `LayoutScheme` object:
+Creating constraints is very easy. All you need to do is call `drf` to get the `LayoutScheme` object:
 
 ```swift
 myView.drf
@@ -90,14 +90,14 @@ myView.drf
     .apply()
 ```
 
-there are two method to end drafting constraints which can be called from both any `UIView` or `UIViewController`:
+there are two methods to end drafting constraints which can be called from both any `UIView` or `UIViewController`:
 
 - `func apply() -> [NSLayoutConstraint]`
 - `func build() -> [NSLayoutConstraint]`
 
-the difference between the two is `apply` will activate the constraints but `build` will only create constraints without activating it. Apply return value is discardable so it's optional for you to use the created `NSLayoutConstraint` or not.
+the difference between the two is `apply` will activate the constraints but `build` will only create constraints without activating them. Apply return value is discardable so it's optional for you to use the created `NSLayoutConstraint` or not.
 
-You could always create a `UIViewController` or `UIView` and implements `Drafted` protocol, and call `applyDraft()` whenever you want the viewDraft to be applied:
+You could always create a `UIViewController` or `UIView` and implement the `Drafted` protocol, and call `applyDraft()` whenever you want the viewDraft to be applied:
 
 ```swift
 import Draftsman
@@ -184,7 +184,7 @@ class MyViewController: UIViewController, Drafted {
 
 ### View Hierarchy
 
-You can create view hierarchy while creating a constraints by using `draftContent` or `drf.insert` method and `insert` method for subview draft (`draftStackedContent` or `drf.insertStacked` and `insertStacked` if its arranged subviews in `UIStackView`). Don't forget to call `apply()` or `build()`, Both will rearrange view hierarchy but only `apply()` will activate the constraints created.
+You can create view hierarchy while creating a constraints by using `draftContent` or `drf.insert` method and `insert` method for subview draft (`draftStackedContent` or `drf.insertStacked` and `insertStacked` if its arranged subviews in `UIStackView`). Don't forget to call `apply()` or `build()`, Both will rearrange the view hierarchy but only `apply()` will activate the constraints created.
 
 ```swift
 view.draftContent {
@@ -200,9 +200,9 @@ view.draftContent {
 ```
 
 The hierarchy of View is just like how the closure is declared in your code.
-The above code, It actually will do the following instruction sequentially:
+The above code actually will do the following instruction sequentially:
 
-1. `view` create and insert new `UIView()`
+1. `view` create and insert a new `UIView()`
 2. new `UIView` then will create constraints
 3. new `UIView` then will insert `myView`
 4. `myView` then will create constraints
@@ -221,14 +221,14 @@ the compatible type to be passed in the closure are:
 - any descendant of `UIView`
 - any descendant of `UIViewController`
 
-If you pass `UIViewController`, it will be automatically added `UIViewController` view as a child and put the `UIViewController` as a child of its current `UIViewController`.
-You could insert components as much as you need, it will fit all the Views just like how you write it.
+If you pass `UIViewController`, it will be automatically added the `UIViewController` view as a child and put the `UIViewController` as a child of its current `UIViewController`.
+You could insert components as much as you need, it will fit all the Views just like how you write them.
 
 ***
 
 ### Basic Positioning
 
-Positioning a View is easy. You just need to declare which anchor that should have relation to others:
+Positioning a View is easy. You just need to declare which anchor should have relation to others:
 
 ```swift
 myView.drf
@@ -252,26 +252,26 @@ basic position anchors available from Draftsman are:
 - **trailing**
 
 All are available for both `UIView` and `UILayoutGuide`
-Which can be used to create a constraint using one of this three methods:
+This can be used to create a constraint using one of these three methods:
 
 - **equal(to:)**
 - **moreThan(to:)**
 - **lessThan(to:)**
 
-Those methods can accept basic `NSLayoutAnchor` from `UIKit` or using `Anchor` from `Draftsman` as long its in the same Axis.
-To add a constant, use one of `offset(by:)` or `inset(by:)` method. offset` are spacing going to outer part of anchor and `inset` are spacing going to inner part of anchors:
+Those methods can accept basic `NSLayoutAnchor` from `UIKit` or using `Anchor` from `Draftsman` as long it's in the same Axis.
+To add a constant, use one of `offset(by:)` or `inset(by:)` methods. offset` is spacing going to the outer part of the anchor and `inset` are spacing going to the inner part of the anchor:
 
 ![alt text](https://github.com/hainayanda/Draftsman/blob/main/offset_and_inset.png)
 
-For center anchor, offset and inset can be described by this picuture:
+For center anchor, offset and inset can be described by this picture:
 
 ![alt text](https://github.com/hainayanda/Draftsman/blob/main/offset_and_inset_center.png)
 
-You can then add priority or/and identifier for the constraints created.
+You can then add priority or/and an identifier for the constraints created.
 
 ### Basic Dimensioning
 
-Dimensioning a View is easy. You just need to declare which anchor that should have relation to others or constant:
+Dimensioning a View is easy. You just need to declare which anchor should have relation to others or constant:
 
 ```swift
 myView.drf
@@ -287,7 +287,7 @@ basic dimension anchors available from Draftsman are:
 - **width**
 
 All are available for both `UIView` and `UILayoutGuide`
-Which can be used to create a constraint using one of this three methods:
+This can be used to create a constraint using one of these three methods:
 
 - **equal(to:)**
 - **moreThan(to:)**
@@ -295,7 +295,7 @@ Which can be used to create a constraint using one of this three methods:
 
 Those methods can accept basic `NSLayoutDimension` from `UIKit` or using dimension `Anchor` from `Draftsman`.
 To add a constant, use one of `added(by:)`, `substracted(by:)` or `multiplied(by: )`  method.
-You can then add priority or/and identifier for the constraints created.
+You can then add priority or/and an identifier for the constraints created.
 
 Dimensioning can be achieved using constant too:
 
@@ -310,7 +310,7 @@ Very similar except it accept `CGFloat`
 
 ### Combining Two or More Anchors
 
-Creating constraints using multiple anchors is very easy, you can always combined two or more anchors and use them to create multiple constraints at once:
+Creating constraints using multiple anchors is very easy, you can always combine two or more anchors and use them to create multiple constraints at once:
 
 ```swift
 myView.drf
@@ -318,7 +318,7 @@ myView.drf
     .bottom.left.right.moreThan(to: anyOther.drf.top.left.right)
 ```
 
-It will be the similar like single anchors, but you can only passed `Draftsman Anchor` with the same Axis combination:
+It will be the similar to single anchors, but you can only be passed `Draftsman Anchor` with the same Axis combination:
 
 - all same anchors combination can be related to each other
 - **top.left**, **top.right**, **bottom.left**, **bottom.right** and **centerX.centerY** are all can be related to each other
@@ -355,7 +355,7 @@ myView.drf
 
 ### Anonymous Anchor
 
-Sometimes you don't want or even can't use anchor explicitly. At those case, you can always use `AnonymousLayout`:
+Sometimes you don't want or even can't use anchor explicitly. In those cases, you can always use `AnonymousLayout`:
 
 ```swift
 myView.drf
@@ -374,8 +374,8 @@ available `AnonymousLayout` are:
 - **previous** which will automatically get the previous view
 - **previousSafeArea** which will automatically get the previous safeAreaLayoutGuide
 
-It's basically the same as regular anchor, but it will automatically get the same anchor for anonymous view.
-If you want to explicitly get different anchor of anonymous, then you can do something like this:
+It's the same as a regular anchor, but it will automatically get the same anchor for an anonymous view.
+If you want to explicitly get a different anchor of anonymous, then you can do something like this:
 
 ```swift
 myView.drf
@@ -384,7 +384,7 @@ myView.drf
     .width.lessThan(with: .height(of: .previous))
 ```
 
-available explicit anchor are:
+available explicit anchors are:
 
 - **left(of: )**
 - **leading(of: )**
@@ -412,7 +412,7 @@ available explicit anchor are:
 
 ## Draftsman Drafted
 
-Draftsman `Drafted` protocol is the protocol that makes any `UIView` or `UIViewController` can have its predefined view draft and applied it using `applyDraft` method. The protocol is declared like this:
+Draftsman `Drafted` protocol is the protocol that makes any `UIView` or `UIViewController` can have its predefined view draft and applied it using the `applyDraft` method. The protocol is declared like this:
 
 ```swift
 public protocol Drafted: AnyObject {
@@ -453,7 +453,7 @@ class MyViewController: UIViewController, Drafted {
 }
 ```
 
-Every time you call `applyDraft`, it will always try to recreate the view to be same like what declared in `viewDraft`.
+Every time you call `applyDraft`, it will always try to recreate the view to be the same as what was declared in `viewDraft`.
 
 There are some typealias with Drafted that you can use:
 
@@ -462,7 +462,7 @@ There are some typealias with Drafted that you can use:
 
 ### Drafted Cell
 
-Drafted Cell is Drafted built specifically for cell which declared like this:
+Drafted Cell is Drafted built specifically for a cell which declared like this:
 
 ```swift
 public protocol DraftedCell: Drafted {
@@ -503,7 +503,7 @@ class TableCell: UITableView, DraftedCell {
 }
 ```
 
-Every time you call `applyDraft`, it will always try to recreate the view to be same like what declared in `viewDraft`.
+Every time you call `applyDraft`, it will always try to recreate the view to be the same as what was declared in `viewDraft`.
 
 There are some typealias with Drafted that you can use:
 
@@ -512,7 +512,7 @@ There are some typealias with Drafted that you can use:
 
 ### Drafted Stack
 
-`DraftedStack` is `Drafted` built specifically for cell which declared like this:
+`DraftedStack` is `Drafted` built specifically for a cell which declared like this:
 
 ```swift
 public protocol DraftedStack: Drafted {
@@ -521,7 +521,7 @@ public protocol DraftedStack: Drafted {
 }
 ```
 
-The only thing you need to implement is the `stackViewDraft` getter since everything will be implemented in extensions. It will automatically treat draft as `arrangeSubviews` of the stack:
+The only thing you need to implement is the `stackViewDraft` getter since everything will be implemented in extensions. It will automatically treat the draft as `arrangeSubviews` of the stack:
 
 ```swift
 class MyStack: UIStackView, DraftedStack {
@@ -547,7 +547,7 @@ class MyStack: UIStackView, DraftedStack {
 }
 ```
 
-Every time you call `applyDraft`, it will always try to recreate the view to be same like what declared in `viewDraft`.
+Every time you call `applyDraft`, it will always try to recreate the view to be the same as what was declared in `viewDraft`.
 
 You can use `UIDraftedStack` since its a typealias of `UIStackView & DraftedStack`
 
