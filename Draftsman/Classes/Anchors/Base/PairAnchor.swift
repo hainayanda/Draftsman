@@ -39,7 +39,7 @@ extension PairAnchor {
 
 // MARK: Constraint Relation
 
-extension PairAnchor where Root.Layout: UIView, Root: ViewPlanBuilder {
+extension PairAnchor where Root.Layout: UIView, Root: ViewDraftBuilder {
     
     // MARK: Constraint Relation with Other Anchor
     

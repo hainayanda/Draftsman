@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class AnchorExtractable<Anchor> {
-    func anchor(from context: PlanContext) -> Anchor {
+    func anchor(from context: DraftContext) -> Anchor {
         fatalError("anchor(from:) should be overridden")
     }
 }
@@ -22,7 +22,7 @@ class PlainAnchorExtractable<Anchor>: AnchorExtractable<Anchor> {
         self.anchor = anchor
     }
     
-    override func anchor(from context: PlanContext) -> Anchor {
+    override func anchor(from context: DraftContext) -> Anchor {
         anchor
     }
 }
@@ -36,7 +36,7 @@ class LayoutAnchorExtractable<Anchor>: AnchorExtractable<Anchor> {
         self.layout = layout
     }
     
-    override func anchor(from context: PlanContext) -> Anchor {
+    override func anchor(from context: DraftContext) -> Anchor {
         layout[keyPath: keyPath]
     }
 }
@@ -50,7 +50,7 @@ class AnonymousAnchorExtractable<Anchor>: AnchorExtractable<Anchor> {
         self.layout = layout
     }
     
-    override func anchor(from context: PlanContext) -> Anchor {
+    override func anchor(from context: DraftContext) -> Anchor {
         context.layout(of: layout)[keyPath: keyPath]
     }
 }

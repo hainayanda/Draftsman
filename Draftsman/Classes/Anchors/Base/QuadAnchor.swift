@@ -48,7 +48,7 @@ extension QuadAnchor {
 
 // MARK: Constraint Relation
 
-extension QuadAnchor where Root.Layout: UIView, Root: ViewPlanBuilder {
+extension QuadAnchor where Root.Layout: UIView, Root: ViewDraftBuilder {
     
     // MARK: Constraint Relation with Other Anchor
     

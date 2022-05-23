@@ -45,7 +45,7 @@ extension AxisAnchor {
 
 // MARK: Constraint Relation
 
-extension AxisAnchor where Root.Layout: UIView, Root: ViewPlanBuilder {
+extension AxisAnchor where Root.Layout: UIView, Root: ViewDraftBuilder {
     
     // MARK: Constraint Relation with Other Anchor
     

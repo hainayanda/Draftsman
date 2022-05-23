@@ -1,12 +1,12 @@
 # Draftsman
 
-This is Old README intended for Usage in Swift 5.1 and XCode 11. For newest version, refer to [main readme](https://github.com/hainayanda/Draftsman/blob/master/README.md)
+This is Old README intended for Usage in version 2.x.x. For newest version, refer to [main readme](https://github.com/hainayanda/Draftsman/blob/master/README.md)
 
 ## Requirements
 
-- Swift 5.1 or higher
-- iOS 10.0 or higher
-- XCode 11 or higher
+- Swift 5.5 or higher
+- iOS 12.0 or higher
+- XCode 13 or higher
 
 ## Installation
 
@@ -16,14 +16,14 @@ Draftsman is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Draftsman', '~> 1.1.1'
+pod 'Draftsman', '~> 2.3.0'
 ```
 
 ### Swift Package Manager from XCode
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **<https://github.com/hainayanda/Draftsman.git>** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **1.1.1** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **2.3.0** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -32,7 +32,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hainayanda/Draftsman.git", .upToNextMajor(from: "1.1.1"))
+    .package(url: "https://github.com/hainayanda/Draftsman.git", .upToNextMajor(from: "2.3.0"))
 ]
 ```
 
@@ -55,39 +55,160 @@ Draftsman is available under the MIT license. See the LICENSE file for more info
 
 ***
 
-# Basic Usage
+## Basic Usage
 
-Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. The syntax is designed so it could be read just like the English language. For latest version, please lookup this [readme](https://github.com/hainayanda/Draftsman/blob/master/README.md) instead
+Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. Draftsman using new resultBuilder from Swift that makes the Declarative approach possible.
 
 ***
 
-## Basic
+### Basic
 
-there are two method to start planning which can be called from both any `UIView` or `UIViewController`:
-
-- `func plan(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlaner<Self>) -> Void)`
-- `func planContent(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlan<Self>) -> Void)`
-
-as you can see in the name, `plan` is used to create plan for the `UIView` or view in `UIViewController` dimension and position that called those method:
+Creating constraints is very easy. All you need to do is call plan to get `LayoutScheme`:
 
 ```swift
-someView.plan { somePlan in
-    somePlan.edges(.equal, to: .parent)
-        .planContent { someViewContent in
-            someViewContent.fit(otherView)
-                .at(.topLeft, of: .parent)
+myView.plan
+    .left(.equal, to: otherView.rightAnchor)
+    .right(.equalTo(16), to: .parent)
+    .top(.lessThanTo(8), to: .safeArea)
+    .bottom(.moreThan, to: .top(of: .keyboard))
+    .apply()
+```
+
+there are two method to end planning constraints which can be called from both any `UIView` or `UIViewController`:
+
+- `func apply() -> [NSLayoutConstraint]`
+- `func build() -> [NSLayoutConstraint]`
+
+the difference between the two is `apply` will activate the constraints but `build` will only create constraints without activating it. Apply return value is discardable so it's optional for you to use the created `NSLayoutConstraint` or not.
+
+You could always create a `UIViewController` or `UIView` and implements `Planned` protocol, and call `applyPlan()` whenever you want the plan to be applied:
+
+```swift
+import Draftsman
+
+class MyViewController: UIViewController, Planned {
+    
+    var models: [MyModel] = []
+    
+    @LayoutPlan
+    var viewPlan: ViewPlan {
+        UIStackView(axis: .vertical, spacing: 32).plan
+            .center(.equal, to: .parent)
+            .horizontal(.equalTo(16), to: .safeArea)
+            .vertical(.moreThanTo(16), to: .safeArea)
+            .insertStacked {
+                if models.isEmpty {
+                    MyView()
+                    MyOtherView()
+                    SomeOtherView()
+                } else {
+                    for model in models {
+                        MyModeledView(model)
+                    }
+                }
+            }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        applyPlan()
+    }
+}
+```
+
+`ViewPlan` can always be composed to make the code cleaner:
+
+```swift
+import Draftsman
+
+class MyViewController: UIViewController, Planned {
+    
+    var models: [MyModel] = []
+    
+    @LayoutPlan
+    var viewPlan: ViewPlan {
+        UIStackView(axis: .vertical, spacing: 32).plan
+            .center(.equal, to: .parent)
+            .horizontal(.equalTo(16), to: .safeArea)
+            .vertical(.moreThanTo(16), to: .safeArea)
+            .insertStacked {
+                stackPlan
+            }
+    }
+
+    @LayoutPlan
+    var stackPlan: ViewPlan {
+        if models.isEmpty {
+            emptyStackPlan
+        } else {
+            modeledStackPlan(for: models)
+        }
+    }
+
+    @LayoutPlan
+    var emptyStackPlan: ViewPlan {
+        MyView()
+        MyOtherView()
+        SomeOtherView()
+    }
+
+    @LayoutPlan
+    func modeledStackPlan(for models: [MyModel]) -> ViewPlan {
+        for model in models {
+            MyModeledView(model)
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        applyPlan()
+    }
+}
+```
+
+### View Hierarchy
+
+You can create view hierarchy while creating a constraints by using `planContent` method and `insert` method for subview plan (`planStackedContent` and `insertStacked` if its arranged subviews in `UIStackView`). **You should not calls apply or build when using this method**, since it will always automatically populate all constraints inside to activate as bulk:
+
+```swift
+view.planContent {
+    UIView().plan
+        .center(.equal, to: .parent)
+        .horizontal(.equal, to: .safeArea)
+        .vertical(.moreThan, to: .safeArea)
+        .insert {
+            myView.plan
+                .edges(.equal, to: .parent)
         }
 }
 ```
 
-on the other hand, `planContent` could be used if you want to bypass those plan and just want to create plan for those content instead:
+The hierarchy of View is just like how the closure is declared in your code.
+The above code, It actually will do the following instruction sequentially:
 
-```swift
-someView.planContent { someContentPlan in
-    someContentPlan.fit(otherView)
-        .at(.topLeft, of: .parent)
-}
+1. `view` create and insert new `UIView()`
+2. new `UIView` then will create constraints
+3. new `UIView` then will insert `myView`
+4. `myView` then will create constraints
+5. all the constraints then will be activated
+
+So if the hierarchy is written in pseudo hierarchy style, it should be similar to this:
+
 ```
+view
+|____new UIView
+|    |____myView
+```
+
+the compatible type to be passed in the closure are:
+
+- any descendant of `UIView`
+- any descendant of `UIViewController`
+
+If you pass `UIViewController`, it will be automatically added `UIViewController` view as a child and put the `UIViewController` as a child of its current `UIViewController`.
+You could insert components as much as you need, it will fit all the Views just like how you write it.
+
+***
 
 ### PlanDelegate
 
@@ -105,86 +226,38 @@ public protocol PlanDelegate: class {
 - `planer(neededViewControllerFor:)` will be called if the planner needs parent `UIViewController` but cannot find any. You could provide one, or just return nil to ignore those plan and produce error which can be caught at this delegate. The default is to get the current view UIViewController if have any.
 - `planer(_:, errorWhenPlanning:)` will be called if any error occurs when planning.
 
-### PlanningOption
-
-PlanningOption is an enumeration that will determine how the plan will be implemented:
-
-- **append** will be ignore current active `NSLayoutConstraints` and append any `NSLayoutConstraints` planned.
-- **renew** will update the same current active `NSLayoutConstraints` which created by Draftsman if found and append the new one.
-- **startFresh** will remove all current active `NSLayoutConstraints` created by Draftsman and append any NSLayoutConstraints planned.
-- **startClean** will be remove all current active `NSLayoutConstraints` and append any `NSLayoutConstraints` planned.
-
-if we sort all the options from the fastest to the slowest it could be like this:
-
-- append
-- startClean
-- startFresh
-- renew
-
-but even if the `append` is the fastest, you better just use this if you want to plan once, otherwise, you will have multiple duplicated constraints.
-
-***
-
-## View Hierarchy
-
-The hierarchy of View is just like how the closure declared in your code:
-
 ```swift
-parentView.planContent { parentPlan in
-    parentPlan.fit(someView)
-        .planContent { somePlan in
-            somePlan.fit(someChildView)
+view.planContent(withDelegate: myDelegate) {
+    UIView().plan
+        .center(.equal, to: .parent)
+        .horizontal(.equal, to: .safeArea)
+        .vertical(.moreThan, to: .safeArea)
+        .insert {
+            myView.plan
+                .edges(.equal, to: .parent)
         }
-    parentPlan.fit(otherView)
 }
 ```
 
-The above code, it's using `planContent` method which will bypass `parentView` plan into its content plan. It actually will do the following instruction sequentially:
-
-1. `parentView` insert `someView`
-2. `someView` insert `someChildView`
-3. `parentView` insert `otherView`
-
-So if the hierarchy is written in pseudo hierarchy style, it should be similar to this:
-
-```
-parentView
-|____someView
-|    |____someChildView
-|____otherView
-```
-
-where `someView` and `otherView` are both inside `parentView`, and `someChildView` is inside `someView`
-the compatible type to be passed in the fit method are:
-
-- any descendant of `UIView`
-- any descendant of `UIViewController`
-
-If you pass `UIViewController`, it will be automatically added `UIViewController` view as a child and put the `UIViewController` as a child of its current `UIViewController`.
-You could `planContent` as much as you need, it will fit all the View just like how you write it.
-
 ***
-
-## View Position
 
 ### Basic Positioning
 
 Positioning a View is easy. You just need to declare which anchor should have relation to others:
 
 ```swift
-myView.plan {
-    $0.top(.equal, to: other.topAnchor)
-        .right(.equalTo(8), to: other.rightAnchor)
-        .bottom(.moreThan, to: other.bottomAnchor)
-        .left(.moreThanTo(8), to: other.leftAnchor)
-        .centerX(.lessThan, to: other.centerXAnchor)
-        .centerY(.lessThanTo(8), to: other.centerYAnchor)
-}
+myView.plan
+    .top(.equal, to: other.topAnchor)
+    .right(.equalTo(8), to: other.rightAnchor)
+    .bottom(.moreThan, to: other.bottomAnchor)
+    .left(.moreThanTo(8), to: other.leftAnchor)
+    .centerX(.lessThan, to: other.centerXAnchor)
+    .centerY(.lessThanTo(8), to: other.centerYAnchor)
 ```
 
 the anatomy of position plan is:
 
-> _func **anchor_name**(__ _relation: **LayoutRelation<CGFloat>**, to anchor: **other_anchor**, priority: UILayoutPriority? = nil) -> Planner_
+> _func **anchor_name**(__ _relation:**LayoutRelation<CGFloat>**, to anchor:**other_anchor**, priority: UILayoutPriority? = nil) -> Self_
 
 which `anchor_name` could be:
 
@@ -216,9 +289,7 @@ the `AnonymousRelation` is an enumeration that contains:
 
 - **parent** which are where the same anchor of parent `UIView`
 - **safeArea** which are where the same anchor of parent safe area `UIView`
-
 - **myself** which are where the same anchor of current `UIView`
-
 - **mySafeArea** which are where the same anchor of current safe area `UIView`
 - **previous** which are where the same anchor of previous planned `UIView`
 - **previousSafeArea** which are where the same anchor of previous planned `UIView`
@@ -232,11 +303,10 @@ You could also pass `UILayoutPriority` if you need. If you ignore it, it will be
 So lets say you want your view to fill the bottom of its superview, you could just use `AnonymousRelation` instead of declare explicitly:
 
 ```swift
-myView.plan {
-    $0.right(.equal, to: .parent)
-        .bottom(.equal, to: .parent)
-        .left(.equal, to: .parent)
-}
+myView.plan
+    .right(.equal, to: .parent)
+    .bottom(.equal, to: .parent)
+    .left(.equal, to: .parent)
 ```
 
 ### Related Anchor
@@ -246,18 +316,17 @@ If your `AnonymousRelation` anchor is different than your anchor, you could use 
 So lets say you want to make your view always on top of keyboard, just do this:
 
 ```swift
-myView.plan {
-    $0.bottom(.equal, to: .top(of: .keyboard))
-        .right(.equalTo(8), to: .safeArea)
-        .left(.equalTo(8), to: .safeArea)
-}
+myView.plan
+    .bottom(.equal, to: .top(of: .keyboard))
+    .right(.equalTo(8), to: .safeArea)
+    .left(.equalTo(8), to: .safeArea)
 ```
 
 so instead of calling the previous anchor explicitly, you call them like that.
 
 ### Positioning Shortcut
 
-There are some shortcut for Positioning. For center anchor:
+There are some shortcuts for Positioning. For center anchor:
 
 - `func center(_ relation: LayoutRelation<CoordinateOffsets>, to view: UIView, priority: UILayoutPriority? = nil) -> Self`
 - `func center(_ relation: LayoutRelation<CoordinateOffsets>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
@@ -265,9 +334,8 @@ There are some shortcut for Positioning. For center anchor:
 the `CoordinateOffsets` is struct which contains `xOffset` and `yOffset`. The center is shortcut to `centerX` and `centerY`, it will automatically assign `NSLayoutConstraints` relation to same center anchor to the `UIView` or `AnonymousRelation`. Example:
 
 ```swift
-myView.plan {
-    $0.center(.equalTo(.init(xOffset: 8, yOffset: 8)), to: .parent)
-}
+myView.plan
+    .center(.equalTo(.init(xOffset: 8, yOffset: 8)), to: .parent)
 ```
 
 For vertical and horizontal position:
@@ -280,9 +348,8 @@ For vertical and horizontal position:
 the `InsetsConvertible` can be `UIEdgeInsets`, `UIVerticalInsets`, `UIHorizontalInsets`, `CGFloat`, `Int` or `Double`. Single types like `CGFloat`, `Int` or `Double` will be treated as `UIEdgeInsets` with same insets for top, left, right and bottom. The vertical will be assign top and bottom anchor to `UIView` or `AnonymousRelation` same anchors. Example:
 
 ```swift
-myView.plan {
-    $0.vertical(equalTo(16), to: .parent)
-}
+myView.plan 
+    .vertical(equalTo(16), to: .parent)
 ```
 
 For all edges:
@@ -292,9 +359,8 @@ For all edges:
 It will automatically assign `top`, `left`, `bottom` and `right` anchor to `UIView` or `AnonymousRelation` same anchors. Example:
 
 ```swift
-myView.plan {
-    $0.edges(.equalTo(16), to: .parent)
-}
+myView.plan 
+    .edges(.equalTo(16), to: .parent)
 ```
 
 For any specific position:
@@ -334,43 +400,38 @@ Array of `LayoutEdge` have static var extensions which are:
 Example:
 
 ```swift
-myView.plan {
-    $0.at(.topLeft, .equal, to: .parent)
-        .at(.rightOf(otherView), .equalTo(8))
-}
-otherView.plan {
-    $0.inBetween(of: myView, and: anyView, .horizontally(.equalTo(8)))
-}
+myView.plan 
+    .at(.topLeft, .equal, to: .parent)
+    .at(.rightOf(otherView), .equalTo(8))
+otherView.plan
+    .inBetween(of: myView, and: anyView, .horizontally(.equalTo(8)))
 ```
 
 ***
-
-## View Dimension
 
 ### Basic Dimensioning
 
 Create dimension constraints for a View is easy. You just need to declare which anchor should have relation to others:
 
 ```swift
-myView.plan {
-    $0.height(.equalTo(otherView.heightAnchor), multiplyBy: 2)
-        .width(.equalTo(.parent), .width)
-        .height(.lessThanTo(100))
-        .width(.moreThanTo(100))
-}
+myView.plan
+    .height(.equalTo(otherView.heightAnchor), multiplyBy: 2)
+    .width(.equalTo(.parent), .width)
+    .height(.lessThanTo(100))
+    .width(.moreThanTo(100))
 ```
 
 The anatomy of dimension plan is:
 
-> _func **dimension_name**(__ _relation: **InterRelation of AnonymousRelation**,__ _dimension: **LayoutDimension**, multiplyBy multiplier: CGFloat, constant: CGFloat, priority: UILayoutPriority? = nil) -> Planner_
+> _func **dimension_name**(__ _relation:**InterRelation of AnonymousRelation**, __ _dimension:**LayoutDimension**, multiplyBy multiplier: CGFloat, constant: CGFloat, priority: UILayoutPriority? = nil) -> Planner_
 
 this one could be used to plan any dimension constraints with any `AnonymousRelation` dimension anchor. The other dimension plan is:
 
-> _func **dimension_name**(__ _relation: **InterRelation of NSLayoutDimension**, multiplyBy multiplier: CGFloat, constant: CGFloat, priority: UILayoutPriority? = nil) -> Planner_
+> _func **dimension_name**(__ _relation:**InterRelation of NSLayoutDimension**, multiplyBy multiplier: CGFloat, constant: CGFloat, priority: UILayoutPriority? = nil) -> Planner_
 
 this one could be used to plan any dimension constraints with any `NSLayoutDimension` anchor. The last dimension plan is:
 
-> _func **dimension_name**(__ _relation: **InterRelation of CGFloat**, priority: UILayoutPriority? = nil) -> Planner_
+> _func **dimension_name**(__ _relation:**InterRelation of CGFloat**, priority: UILayoutPriority? = nil) -> Planner_
 
 this one could be used to plan any dimension constraints against any constant.
 
@@ -397,65 +458,81 @@ There are some shortcut for Dimensioning which are:
 both will automatically assign both width and height constraints towards CGSize constant or UIView size. Example:
 
 ```swift
-myView.plan {
-    $0.size(.equalTo(otherView), multiplyBy: 2)
-}
-otherView.plan {
-    $0.size(.equalTo(.init(width: 24, height: 24)))
+myView.plan
+    .size(.equalTo(otherView), multiplyBy: 2)
+otherView.plan 
+    .size(.equalTo(.init(width: 24, height: 24)))
+```
+
+## Draftsman Planned
+
+Draftsman `Planned` protocol is the protocol that makes any `UIView` or `UIViewController` can have its predefined view plan and applied it using `applyPlan` method. The protocol is declared like this:
+
+```swift
+public protocol Planned {
+    @LayoutPlan
+    var viewPlan: ViewPlan { get }
+    
+    func applyPlan()
 }
 ```
 
-***
-
-## Manage Created Constraints
-
-You could always get the created constraints by get the return value of `plan` or `planContent`:
+The only thing you need to implement is the `viewPlan` getter:
 
 ```swift
-let myViewConstraints: [NSLayoutConstraint] = myView.plan {
-    $0.size(.equalTo(otherView), multiplyBy: 2)
-}
-let otherViewConstraints: [NSLayoutConstraint] = otherView.planContent { parentPlan in
-    parentPlan.fit(someView)
-        .vertical(equalTo(16), to: .parent)
+import Draftsman
+
+class MyViewController: UIViewController, Planned {
+    
+    @LayoutPlan
+    var viewPlan: ViewPlan {
+        UIStackView(axis: .vertical, spacing: 32).plan
+            .center(.equal, to: .parent)
+            .horizontal(.equalTo(16), to: .safeArea)
+            .vertical(.moreThanTo(16), to: .safeArea)
+            .insertStacked {
+                MyView()
+                MyOtherView()
+                SomeOtherView()
+            }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        applyPlan()
+    }
 }
 ```
 
-This constraint is already activated, so you could manually deactivate or activate again using `NSLayoutConstraint.activate` or `NSLayoutConstraint.deactivate` depends on your need. The return value is marked using `@discardableResult`, so it's fine if you just ignore it if you don't want to use it.
-
-# Draftsman Fragment
-
-Draftsman Fragment is the base of Component-Based View in Draftsman. The fragment is actually just UIView, UITableViewCell, and UICollectionViewCell but with planned subviews.
+Every time you call `applyPlan`, it will always try to recreate the view to be same like what declared in `ViewPlan`
 
 ***
 
-## Fragment
+### Fragment
 
-Fragment in Draftsman is actually an ordinary UIView (or TableViewCell/CollectionViewCell) that can do a plan for itself and its subviews.
+`Fragment` in Draftsman is actually an ordinary UIView (or `TableViewCell`/`CollectionViewCell`) that can do a plan for itself and its `subviews` by using `Planned` capabilities
 
 ```swift
-public protocol Fragment {
+public protocol Fragment: Planned {
     func fragmentWillPlanContent()
-    func planContent(_ plan: InsertablePlan)
     func fragmentDidPlanContent()
 }
 ```
 
 - `fragmentWillPlanContent()` will be called before `planContent(_:)` is called. its optional
-- `planContent(_:)` is the mandatory method which will be called to plan the content of Fragment.
 - `fragmentDidPlanContent()` will be called after `planContent(_:)` is called. its optional
 
 The mechanism is very straightforward. lets say you have this simple fragment:
 
 ```swift
 class MySimpleFragment: UIView, Fragment {
-    var marginedButton: UIButton = .init()
-
     var margin = UIEdgeInsets(insets: 8)
-
-    func planContent(_ plan: InsertablePlan) {
-        plan.fit(marginedButton).edges(equalTo(margin), to: .parent)
+    
+    @LayoutPlan
+    var viewPlan: ViewPlan {
+        UIButton().plan.edges(equalTo(margin), to: .parent)
     }
+
 }
 ```
 
@@ -463,50 +540,27 @@ to put it in ViewController bottom edges:
 
 ```swift
 class MySimpleViewController: UIViewController {
-    var simpleFragment: MySimpleFragment = .init()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        planContent { plan in
-            plan.fit(simpleFragment)
+        planContent {
+            MySimpleFragment().plan
                 .at(.fullBottom, .equal, to: .parent)
         }
 }
 ```
 
-what happening here is when you fit simpleFragment into view, it will call simpleFragment's `planContent(_:)` where the `InsertablePlan` is the simpleFragment's `LayoutPlaner`. If it's described as hierarchal pseudocode and where the part is executed. It will be looked like this:
-
-- viewDidLoad
->
-> - planContent
-> >
-> > - fit simpleFragment inside view
-> > >
-> > > - add simpleFragment as subviews of view controller view
-> > > - create LayoutPlaner with simpleFragment as its view
-> > > - call simpleFragment's `fragmentWillPlanContent()` method which not implemented so its doing nothing
-> > > - call simpleFragment's `planContent(_:)` method
-> > > >
-> > > > - fit marginedButton inside simpleFragment
-> > > > - create edges contraints
-> > > >
-> > > - call simpleFragment's `fragmentDidPlanContent()` method which not implemented so its doing nothing
-> > >
-> > - create fullBottom constraints
-> > - activate all constraints created inside
-
-The simple fragments `planContent(_:)` will be called inside `fit(_:)` so all its subviews constraints will already be created after `fit(_:)` is called.
+`viewPlan` in `MySimpleFragment` will be executed as part of `MySimpleViewController` planContent.
 
 There are two other extensions method you could use to call planContent indirectly:
 
-- `func planFragment(delegate: PlanDelegate? = nil)` which will be call `fragmentWillPlanContent()`, `planContent(_:)` and `fragmentDidPlanContent()` and activate all created constraints right away
-- `func replanContent(delegate: PlanDelegate? = nil)` which will remove all its and subviews constraints which created by Draftsman and call `planFragment(delegate:)`
+- `func planFragment(delegate: PlanDelegate? = nil)` which will be call `fragmentWillPlanContent()` and activate all created constraints right away and `fragmentDidPlanContent()`
+- `func replanContent(delegate: PlanDelegate? = nil)` which will remove all its and subviews constraints created by Draftsman and call `planFragment(delegate:)`
 
 ***
 
-## Fragment View
+### Fragment View
 
-There is UIView that already implemented Fragment that you can extend named `FragmentView`. It have some more open method that you can use:
+There is UIView that already implemented Fragment that you can extend named `FragmentView`. It has some more open method that you can use:
 
 - `func fragmentWillLayoutForTheFirstTime()` which will be called inside `layoutSubviews()` and only once at the first time before `super.layoutSubviews()`
 - `func fragmentDidLayoutForTheFirstTime()` which will be called inside `layoutSubviews()` and only once at the first time after  `super.layoutSubviews()`
@@ -524,12 +578,11 @@ example:
 
 ```swift
 class MySimpleFragment: FragmentView {
-    var marginedButton: UIButton = .init()
-
     var margin = UIEdgeInsets(insets: 8)
-
-    func planContent(_ plan: InsertablePlan) {
-        plan.fit(marginedButton).edges(equalTo(margin), to: .parent)
+    
+    @LayoutPlan
+    var viewPlan: ViewPlan {
+        UIButton().plan.edges(equalTo(margin), to: .parent)
     }
     
     func fragmentDidLayoutForTheFirstTime() {
@@ -540,7 +593,7 @@ class MySimpleFragment: FragmentView {
 
 ***
 
-## Fragment Cell
+### Fragment Cell
 
 There is Fragment created specifically for cell which named `FragmentCell`:
 
@@ -576,7 +629,7 @@ the `planningBehavior` is the behavior of the cell during layouting which could 
 - **planOnEach([CellLayoutingPhase])** which will only call `planContent(_:)` during each given `CellLayoutingPhase`
 - **planIfPossible** which will always call `planContent(_:)` for any `CellLayoutingPhase`
 
-the `planningOption(on:)` will be called before `planContent(_:)` is called by any phase. It will asked what `PlanningOption` you want to use when call `planContent(_:)`. The default is append when `firstLoad` phase and `starFresh` on the other phases. You could read more about `PlanningOption` [here](https://github.com/hainayanda/Draftsman/wiki/Draftsman-Plan#planningoption). Example:
+. Example:
 
 ```swift
 class EventCollectionCell: CollectionFragmentCell {
@@ -584,25 +637,16 @@ class EventCollectionCell: CollectionFragmentCell {
 
     lazy var imageView: UIImageView = .init()
     
-    override func planContent(_ plan: InsertablePlan) {
-        plan.fit(imageView)
-            .edges(.equal, to: .parent)
-    }
-
-    override func planningOption(on phase: CellLayoutingPhase) -> PlanningOption {
-        switch phase {
-        case .firstLoad:
-            return .append
-        default:
-            return .renew
-        }
+    @LayoutPlan
+    var viewPlan: ViewPlan {
+        imageView.plan.edges(equalTo(margin), to: .parent)
     }
 }
 ```
 
-Cell at the example above will always call `planContent(_:)` at any phases, but will only do `append` on `firstLoad` and the rest will be `renew` the current constraints.
+Cell at the example above will always create `viewPlan` at any phases.
 
-If you want to manually call `planContent(_:)` during any phases, you could just call `layoutContentIfNeeded()` it will layout content if the current phase is whitelisted in `planningBehavior` and return `Bool` indicated that the `planContent(_:)` is called or not.
+If you want to manually create `viewPlan` during any phases, you could just call `layoutContentIfNeeded()` it will layout content if the current phase is whitelisted in `planningBehavior` and return `Bool` indicated that the `planContent(_:)` is called or not.
 
 ### Table Fragment Cell
 
@@ -617,6 +661,11 @@ class MyCell: TableFragmentCell {
     lazy var collectionLayout: UICollectionViewFlowLayout = .init()
     lazy var collectionView: UICollectionView = .init(frame: .zero, collectionViewLayout: collectionLayout)
     
+    @LayoutPlan
+    var viewPlan: ViewPlan {
+        collectionView.plan.edges(equalTo(margin), to: .parent)
+    }
+    
     override func fragmentWillPlanContent() {
         collectionView.allowsSelection = true
         collectionView.backgroundColor = .clear
@@ -625,11 +674,6 @@ class MyCell: TableFragmentCell {
         collectionLayout.itemSize = .init(width: .x64, height: .x48)
         collectionLayout.minimumInteritemSpacing = .zero
         collectionLayout.minimumLineSpacing = .zero
-    }
-    
-    override func planContent(_ plan: InsertablePlan) {
-        plan.fit(collectionView)
-            .edges(.equal, to: .parent)
     }
     
     override func calculatedCellHeight(for cellWidth: CGFloat) -> CGFloat {
@@ -654,43 +698,21 @@ The cell above will have a height of 128 regarding how long is cellWidth.
 
 ### Collection Fragment Cell
 
-`CollectionFragmentCell` is the `UICollectionViewCell` that implement `FragmentCell`. Other than what `UICollectionViewCell`, `Fragment` and `FragmentCell` feature, it have one method that  could help you determine cell dimension:
-
-**func calculatedCellSize(for collectionContentSize: CGSize) -> CGSize**
-
-`collectionContentSize` is the size of the calculated collectionView content minus insets. The default return value is automatic, but it could be came in handy if the cell `NSLayoutConstraints` alone cannot give the exact dimension of the cell. Example:
+`CollectionFragmentCell` is the `UICollectionViewCell` that implement `FragmentCell`. Other than what `UICollectionViewCell`, `Fragment` and `FragmentCell` feature.
 
 ```swift
 class EventCollectionCell: CollectionFragmentCell {
     lazy var imageView: UIImageView = .init()
     
-    override func planContent(_ plan: InsertablePlan) {
-        plan.fit(imageView)
-            .edges(.equal, to: .parent)
+    @LayoutPlan
+    var viewPlan: ViewPlan {
+        imageView.plan.edges(equalTo(margin), to: .parent)
     }
-    
-    override func calculatedCellSize(for collectionContentSize: CGSize) -> CGSize {
-        return .init(width: collectionContentSize.width / 3, height: collectionContentSize.width / 3)
-    }
-}
-```
-
-The cell above will be a square with a side equal to 1/3 `collectionContentSize` side
-
-If you want to inject cellSize calculator, just pass a closure to `whenNeedCellSize` method at the cell
-
-```swift
-func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableFragmentCell
-    cell.whenNeedCellSize { collectionContentSize in
-        return .init(width: collectionContentSize.width / 3, height: collectionContentSize.width / 3)
-    }
-    return cell
 }
 ```
 
 ***
 
-# Contribute
+## Contribute
 
 You know how, just clone and do pull request

@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: AxisAnchorRelation
 
-public class AxisAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
+public class AxisAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
     let xPair: AnchorPair<NSLayoutXAxisAnchor>
     let yPair: AnchorPair<NSLayoutYAxisAnchor>
     let relation: NSLayoutConstraint.Relation
@@ -33,7 +33,7 @@ public class AxisAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor>: Constrain
             super.init(root: root)
         }
     
-    override func build(using context: PlanContext) -> [NSLayoutConstraint] {
+    override func build(using context: DraftContext) -> [NSLayoutConstraint] {
         [
             xPair.build(with: context, for: xRelation),
             yPair.build(with: context, for: yRelation)
@@ -62,7 +62,7 @@ extension AxisAnchorRelation {
 
 // MARK: AxisAnchorWithConstantRelation
 
-public class AxisAnchorWithConstantRelation<Root: ViewPlanBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
+public class AxisAnchorWithConstantRelation<Root: ViewDraftBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
     let parent: AxisAnchorRelation<Root>
     let constant: PairConstant
     
@@ -72,7 +72,7 @@ public class AxisAnchorWithConstantRelation<Root: ViewPlanBuilder & LayoutAnchor
         super.init(root: parent.root)
     }
     
-    override func build(using context: PlanContext) -> [NSLayoutConstraint] {
+    override func build(using context: DraftContext) -> [NSLayoutConstraint] {
         [
             parent.xPair.build(with: context, for: parent.xRelation, offset: constant.firstConstant),
             parent.yPair.build(with: context, for: parent.yRelation, offset: constant.secondConstant)

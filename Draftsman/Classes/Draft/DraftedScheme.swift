@@ -1,5 +1,5 @@
 //
-//  PlannedScheme.swift
+//  DraftedScheme.swift
 //  Draftsman
 //
 //  Created by Nayanda Haberty on 06/04/22.
@@ -9,20 +9,20 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-open class PlannedScheme<Root: Planned, View: UIView>: LayoutScheme<View> {
+open class DraftedScheme<Root: Drafted, View: UIView>: LayoutScheme<View> {
     typealias PopulatedConstraints = (removed: [NSLayoutConstraint], keeped: [NSLayoutConstraint], added: [NSLayoutConstraint])
     var root: Root
     
-    public init(root: Root, view: View, plans: [ViewScheme]) {
+    public init(root: Root, view: View, drafts: [ViewScheme]) {
         self.root = root
-        super.init(view: view, plans: plans)
+        super.init(view: view, drafts: drafts)
     }
     
     func buildAndPopulate(for view: UIView) -> PopulatedConstraints {
         guard view === self.view else {
-            fatalError("PlannedScheme can only be applied with its own view")
+            fatalError("DraftedScheme can only be applied with its own view")
         }
-        context = context ?? PlanContext(root: root, view: view)
+        context = context ?? DraftContext(root: root, view: view)
         let oldConstraints = root.appliedConstraints
         let constraints = super.build(for: view).validUniques
         var addedConstraints: [NSLayoutConstraint] = []
@@ -44,7 +44,7 @@ open class PlannedScheme<Root: Planned, View: UIView>: LayoutScheme<View> {
     
     open override func build(for view: UIView) -> [NSLayoutConstraint] {
         guard view === self.view else {
-            fatalError("PlannedScheme can only be applied with its own view")
+            fatalError("DraftedScheme can only be applied with its own view")
         }
         let populated = buildAndPopulate(for: view)
         let activeConstraints = populated.keeped.added(withContentsOf: populated.added)
@@ -54,7 +54,7 @@ open class PlannedScheme<Root: Planned, View: UIView>: LayoutScheme<View> {
     @discardableResult
     open override func apply(to view: UIView) -> [NSLayoutConstraint] {
         guard view === self.view else {
-            fatalError("PlannedScheme can only be applied with its own view")
+            fatalError("DraftedScheme can only be applied with its own view")
         }
         let populated = buildAndPopulate(for: view)
         let activeConstraints = populated.keeped.added(withContentsOf: populated.added)

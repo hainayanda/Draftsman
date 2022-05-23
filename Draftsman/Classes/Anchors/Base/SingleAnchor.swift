@@ -32,7 +32,7 @@ public class SingleAnchor<Root: LayoutAnchor, Anchor: LayoutAxisAnchor> {
 
 // MARK: Constraint Relation
 
-extension SingleAnchor where Root.Layout: UIView, Root: ViewPlanBuilder {
+extension SingleAnchor where Root.Layout: UIView, Root: ViewDraftBuilder {
     
     // MARK: Constraint Relation with Other Anchor
     
@@ -131,7 +131,7 @@ extension SingleAnchor where Root.Layout: UIView, Root: ViewPlanBuilder {
 
 // MARK: Constraint Relation with XAnonymousAnchor
 
-extension SingleAnchor where Root.Layout: UIView, Root: ViewPlanBuilder, Anchor == NSLayoutXAxisAnchor {
+extension SingleAnchor where Root.Layout: UIView, Root: ViewDraftBuilder, Anchor == NSLayoutXAxisAnchor {
     
     public func equal(with anonymousAnchor: XAnonymousAnchor) -> SingleAnchorRelation<Root, Anchor> {
         create(.equal, to: anonymousAnchor)
@@ -160,7 +160,7 @@ extension SingleAnchor where Root.Layout: UIView, Root: ViewPlanBuilder, Anchor 
 
 // MARK: Constraint Relation with YAnonymousAnchor
 
-extension SingleAnchor where Root.Layout: UIView, Root: ViewPlanBuilder, Anchor == NSLayoutYAxisAnchor {
+extension SingleAnchor where Root.Layout: UIView, Root: ViewDraftBuilder, Anchor == NSLayoutYAxisAnchor {
     
     public func equal(with anonymousAnchor: YAnonymousAnchor) -> SingleAnchorRelation<Root, Anchor> {
         create(.equal, to: anonymousAnchor)

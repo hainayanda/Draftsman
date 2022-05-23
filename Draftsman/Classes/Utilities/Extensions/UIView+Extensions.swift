@@ -8,25 +8,25 @@
 import Foundation
 #if canImport(UIKit)
 import UIKit
-fileprivate var plannedIdentifierKey: String = "plannedIdentifierKey"
+fileprivate var draftedIdentifierKey: String = "draftedIdentifierKey"
 
 extension UIView {
     
-    var plannedIdentifier: ObjectIdentifier? {
+    var draftedIdentifier: ObjectIdentifier? {
         get {
-            objc_getAssociatedObject(self, &plannedIdentifierKey) as? ObjectIdentifier
+            objc_getAssociatedObject(self, &draftedIdentifierKey) as? ObjectIdentifier
         }
         set {
-            objc_setAssociatedObject(self, &plannedIdentifierKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &draftedIdentifierKey, newValue, .OBJC_ASSOCIATION_RETAIN)
         }
     }
     
-    func isPartOf(planned: Planned) -> Bool {
-        plannedIdentifier == planned.plannedIdentifier
+    func isPartOf(drafted: Drafted) -> Bool {
+        draftedIdentifier == drafted.draftedIdentifier
     }
     
-    func makeAssociated(with planned: Planned) {
-        self.plannedIdentifier = planned.plannedIdentifier
+    func makeAssociated(with drafted: Drafted) {
+        self.draftedIdentifier = drafted.draftedIdentifier
     }
 }
 

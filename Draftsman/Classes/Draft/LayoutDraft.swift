@@ -1,5 +1,5 @@
 //
-//  LayoutPlan.swift
+//  LayoutDraft.swift
 //  Draftsman
 //
 //  Created by Nayanda Haberty on 06/04/22.
@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 @resultBuilder
-public struct LayoutPlan {
-    public typealias Expression = PlanComponent?
+public struct LayoutDraft {
+    public typealias Expression = DraftComponent?
     public typealias Component = [ViewScheme]
-    public typealias Result = ViewPlan
+    public typealias Result = ViewDraft
     
     public static func buildExpression(_ expression: Expression) -> Component {
-        expression?.insertablePlans ?? []
+        expression?.insertableDrafts ?? []
     }
     
     public static func buildOptional(_ component: Component?) -> Component {
@@ -42,7 +42,7 @@ public struct LayoutPlan {
     }
     
     public static func buildFinalResult(_ component: Component) -> Result {
-        ViewPlanBuilder(plans: component)
+        ViewDraftBuilder(drafts: component)
     }
 }
 #endif

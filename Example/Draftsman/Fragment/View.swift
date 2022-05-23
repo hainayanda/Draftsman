@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class View: UIView, Planned {
+class View: UIDraftedView {
     lazy var titleLabel: UILabel = builder(UILabel())
         .textAlignment(.left)
         .font(.boldSystemFont(ofSize: 14))
@@ -24,8 +24,8 @@ class View: UIView, Planned {
     lazy var imageView: UIImageView = UIImageView(image: UIImage(named: "icon_test"))
     lazy var stackView: UIStackView = UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4)
     
-    @LayoutPlan
-    var viewPlan: ViewPlan {
+    @LayoutDraft
+    var viewDraft: ViewDraft {
         imageView.drf.builder
             .contentMode(.scaleAspectFit).drf
             .left.vertical.equal(with: .parent).offset(by: 12)
@@ -38,19 +38,19 @@ class View: UIView, Planned {
             }
     }
     
-    @LayoutPlan
-    var stackPlan: ViewPlan {
+    @LayoutDraft
+    var stackPlan: ViewDraft {
         titleLabel
         subtitleLabel
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        applyPlan()
+        applyDraft()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        applyPlan()
+        applyDraft()
     }
 }

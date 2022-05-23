@@ -10,20 +10,20 @@ import Foundation
 import UIKit
 
 @dynamicMemberLookup
-public class ConstraintBuilderRootRecoverable<Root: ViewPlanBuilder & LayoutAnchor>: ConstraintBuilder, PlanComponent {
+public class ConstraintBuilderRootRecoverable<Root: ViewDraftBuilder & LayoutAnchor>: ConstraintBuilder, DraftComponent {
     
     public typealias Layout = Root.Layout
     /// To avoid retain cycle
     var root: Root!
-    public var insertablePlans: [ViewScheme] {
-        backToRoot { $0.insertablePlans }
+    public var insertableDrafts: [ViewScheme] {
+        backToRoot { $0.insertableDrafts }
     }
     
     init(root: Root) {
         self.root = root
     }
     
-    func build(using context: PlanContext) -> [NSLayoutConstraint] {
+    func build(using context: DraftContext) -> [NSLayoutConstraint] {
         fatalError("build(using:) should be overridden")
     }
     
@@ -41,13 +41,13 @@ public class ConstraintBuilderRootRecoverable<Root: ViewPlanBuilder & LayoutAnch
 }
 
 extension ConstraintBuilderRootRecoverable where Root: ViewScheme {
-    public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
+    public func insert(@LayoutDraft _ layouter: () -> ViewDraft) -> Root {
         backToRoot { $0.insert(layouter) }
     }
 }
 
 extension ConstraintBuilderRootRecoverable where Root: StackScheme {
-    public func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
+    public func insertStacked(@LayoutDraft _ layouter: () -> ViewDraft) -> Root {
         backToRoot { $0.insertStacked(layouter) }
     }
 }

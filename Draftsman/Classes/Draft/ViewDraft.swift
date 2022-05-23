@@ -1,5 +1,5 @@
 //
-//  ViewPlan.swift
+//  ViewDraft.swift
 //  Draftsman
 //
 //  Created by Nayanda Haberty on 06/04/22.
@@ -9,19 +9,19 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public protocol ViewPlan: PlanComponent {
+public protocol ViewDraft: DraftComponent {
     func build(for view: UIView) -> [NSLayoutConstraint]
     @discardableResult
     func apply(to view: UIView) -> [NSLayoutConstraint]
 }
 
-public protocol ViewScheme: ViewPlan, AnyObject {
-    var context: PlanContext? { get set }
+public protocol ViewScheme: ViewDraft, AnyObject {
+    var context: DraftContext? { get set }
     var view: UIView { get }
     func build() -> [NSLayoutConstraint]
     @discardableResult
     func apply() -> [NSLayoutConstraint]
-    func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self
+    func insert(@LayoutDraft _ layouter: () -> ViewDraft) -> Self
     func resistVerticalExpansion(_ priority: UILayoutPriority) -> Self
     func resistHorizontalExpansion(_ priority: UILayoutPriority) -> Self
     func resistVerticalCompression(_ priority: UILayoutPriority) -> Self
@@ -29,7 +29,7 @@ public protocol ViewScheme: ViewPlan, AnyObject {
 }
 
 public protocol StackScheme: ViewScheme {
-    func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Self
+    func insertStacked(@LayoutDraft _ layouter: () -> ViewDraft) -> Self
 }
 
 extension ViewScheme {

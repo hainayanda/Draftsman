@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: IdentifiedAnchorRelation
 
-public class IdentifiedAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
+public class IdentifiedAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
     let identifier: String
     let parent: ConstraintBuilder
     
@@ -21,7 +21,7 @@ public class IdentifiedAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor>: Con
         super.init(root: root)
     }
     
-    override func build(using context: PlanContext) -> [NSLayoutConstraint] {
+    override func build(using context: DraftContext) -> [NSLayoutConstraint] {
         parent.build(using: context).compactMap {
             $0.identifier = identifier
             return $0

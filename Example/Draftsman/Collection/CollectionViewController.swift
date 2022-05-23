@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class CollectionViewController: UIViewController, Planned {
+class CollectionViewController: UIViewController, Drafted {
     
     var cellWidth: CGFloat {
         if #available(iOS 11.0, *) {
@@ -43,8 +43,8 @@ class CollectionViewController: UIViewController, Planned {
         .dataSource(self)
         .build()
     
-    @LayoutPlan
-    var viewPlan: ViewPlan {
+    @LayoutDraft
+    var viewDraft: ViewDraft {
         collectionView.drf
             .horizontal.equal(with: .safeArea)
             .vertical.equal(with: .parent)
@@ -54,7 +54,7 @@ class CollectionViewController: UIViewController, Planned {
         super.viewDidLoad()
         title = "Collection View"
         view.backgroundColor = .white
-        applyPlan()
+        applyDraft()
         collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: "CollectionCell")
         collectionView.reloadData()
     }

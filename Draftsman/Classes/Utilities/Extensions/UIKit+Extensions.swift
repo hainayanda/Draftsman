@@ -101,4 +101,15 @@ extension CGSize {
     public var isNotVisible: Bool { width.isNotVisible || height.isNotVisible }
     public var isVisible: Bool { width.isVisible && height.isVisible }
 }
+
+// MARK: Next Responder
+
+extension UIResponder {
+    var responderViewController: UIViewController? {
+        if let selfController = self as? UIViewController {
+            return selfController
+        }
+        return next?.responderViewController
+    }
+}
 #endif

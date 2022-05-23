@@ -10,7 +10,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class MainViewController: UIViewController, Planned {
+class MainViewController: UIDraftedController {
     
     lazy var buttonToTable: UIButton = builder(UIButton())
         .layer.cornerRadius(8)
@@ -34,20 +34,20 @@ class MainViewController: UIViewController, Planned {
     
     lazy var stackView: UIStackView = UIStackView(axis: .vertical, spacing: 32)
     
-    @LayoutPlan
-    var viewPlan: ViewPlan {
+    @LayoutDraft
+    var viewDraft: ViewDraft {
         stackView.drf
             .center.equal(with: .parent)
             .horizontal.equal(with: .safeArea).offset(by: 16)
             .vertical.moreThan(with: .safeArea).offset(by: 16)
             .resistVerticalExpansion(.required)
             .insertStacked {
-                stackPlan
+                stackDraft
             }
     }
     
-    @LayoutPlan
-    var stackPlan: ViewPlan {
+    @LayoutDraft
+    var stackDraft: ViewDraft {
         buttonToTable.drf
         buttonToCollection.drf
         buttonToField.drf
@@ -58,7 +58,7 @@ class MainViewController: UIViewController, Planned {
         super.viewDidLoad()
         view.backgroundColor = .white
         title = "Main View"
-        applyPlan()
+        applyDraft()
         
         buttonToTable.setTitle("Go to table view controller", for: .normal)
         buttonToTable.addTarget(self, action: #selector(goToTable(_:)), for: .touchUpInside)

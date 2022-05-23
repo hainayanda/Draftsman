@@ -35,9 +35,9 @@ public final class LayoutSchemeBuilder<View: UIView>: Maker {
         }
 }
 
-extension LayoutSchemeBuilder: PlanComponent {
-    public var insertablePlans: [ViewScheme] {
-        scheme.insertablePlans
+extension LayoutSchemeBuilder: DraftComponent {
+    public var insertableDrafts: [ViewScheme] {
+        scheme.insertableDrafts
     }
     
 }

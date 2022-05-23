@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class FragmentViewController: UIViewController, Planned {
+class FragmentViewController: UIDraftedController {
     
     lazy var scrollView: UIScrollView = UIScrollView()
     lazy var stackView: UIStackView = UIStackView(
@@ -35,13 +35,13 @@ class FragmentViewController: UIViewController, Planned {
     )
     var fragments: [View] = [] {
         didSet {
-            applyPlan()
+            applyDraft()
         }
     }
     var counter: Int = 0
     
-    @LayoutPlan
-    var viewPlan: ViewPlan {
+    @LayoutDraft
+    var viewDraft: ViewDraft {
         scrollView.drf
             .top.horizontal.equal(with: .safeArea)
             .bottom.equal(to: buttonStack.topAnchor).offset(by: 16)
@@ -56,8 +56,8 @@ class FragmentViewController: UIViewController, Planned {
             }
     }
     
-    @LayoutPlan
-    var scrollContent: ViewPlan {
+    @LayoutDraft
+    var scrollContent: ViewDraft {
         stackView.drf
             .width.equal(with: .parent)
             .edges.equal(with: .parent)
@@ -71,8 +71,8 @@ class FragmentViewController: UIViewController, Planned {
             }
     }
     
-    @LayoutPlan
-    var emptyContent: ViewPlan {
+    @LayoutDraft
+    var emptyContent: ViewDraft {
         spacing
         UILabel().drf.builder
             .text("NO FRAGMENTS")
@@ -80,8 +80,8 @@ class FragmentViewController: UIViewController, Planned {
         spacing
     }
     
-    @LayoutPlan
-    var spacing: ViewPlan {
+    @LayoutDraft
+    var spacing: ViewDraft {
         UIView().drf
             .height.equal(to: 60)
             .builder.backgroundColor(.clear)
@@ -91,7 +91,7 @@ class FragmentViewController: UIViewController, Planned {
         super.viewDidLoad()
         title = "Fragment View"
         view.backgroundColor = .white
-        applyPlan()
+        applyDraft()
         
         buttonAdd.setTitle("Add fragment", for: .normal)
         buttonAdd.addTarget(self, action: #selector(addFragment(_:)), for: .touchUpInside)

@@ -84,7 +84,7 @@ public class LayoutGuide: LayoutAnchor {
     public typealias Layout = UILayoutGuide
     
     public var layoutExtractable: UILayoutGuide
-    public lazy var context: PlanContext = .init(view: layoutExtractable.owningView ?? UIView())
+    public lazy var context: DraftContext = .init(view: layoutExtractable.owningView ?? UIView())
     
     init(guide: UILayoutGuide) {
         self.layoutExtractable = guide
