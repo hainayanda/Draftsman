@@ -379,6 +379,18 @@ for offsets and insets, `CGFloat` is compatible with all. But if you need to ass
 - **EdgeOffsets** for 3 and 4 position anchors offsets which is just a typealias of `UIEdgeInsets`
 - **EdgeInsets** for 3 and 4 position anchors insets which is just a typealias of `UIEdgeInsets`
 
+### Implicit Relation
+
+You can pass just `UIView` or `UILayoutGuide` instead of `Anchor` explicitly and it will use the same anchor to make constraints:
+
+```swift
+myView.drf
+    .vertical.equal(to: otherView)
+    .bottom.horizontal.moreThan(to: view.safeAreaLayoutGuide)
+```
+
+On the example above, it will create equal constraints between `myView` vertical anchors and `otherView` vertical anchors, then it will create another with `myView` bottom and `view.safeAreaLayoutGuide` bottom.
+
 ### Anonymous Anchor
 
 Sometimes you don't want or even can't use anchor explicitly. In those cases, you can always use `AnonymousLayout`:
