@@ -224,6 +224,17 @@ the compatible type to be passed in the closure are:
 If you pass `UIViewController`, it will be automatically added the `UIViewController` view as a child and put the `UIViewController` as a child of its current `UIViewController`.
 You could insert components as much as you need, it will fit all the Views just like how you write them.
 
+### Using Builder
+
+You can build your view using [Builder](https://github.com/hainayanda/Builder) library built-in in the Draftsman by calling `builder` property and get back to Draftsman by calling `drf` again:
+
+```swift
+myView.drf
+    .center.equal(to: .parent)
+    .builder.backgroundColor(.black)
+    .drf.bottom.moreThan(to: .safeArea)
+```
+
 ***
 
 ### Basic Positioning
@@ -369,8 +380,8 @@ available `AnonymousLayout` are:
 - **mySelf** which will automatically get the current view
 - **parent** which will automatically get the current superview
 - **safeArea** which will automatically get the current superview safeAreaLayoutGuide
-- **keyboard** which will automatically get the keyboardLayoutGuide (powered by Clavier)
-- **keyboardSafeArea** which will automatically get the keyboardLayoutGuide with safeArea (powered by Clavier)
+- **keyboard** which will automatically get the keyboardLayoutGuide (powered by [Clavier](https://github.com/hainayanda/Clavier))
+- **keyboardSafeArea** which will automatically get the keyboardLayoutGuide with safeArea (powered by [Clavier](https://github.com/hainayanda/Clavier))
 - **previous** which will automatically get the previous view
 - **previousSafeArea** which will automatically get the previous safeAreaLayoutGuide
 
