@@ -61,7 +61,7 @@ extension TriAnchorRelation {
         insetted(using: TriConstant(uniConstant: space, firstBiConstant: space, secondBiConstant: space))
     }
     
-    public func offsetted(using space: UIEdgeInsets) -> TriAnchorWithConstantRelation<Root, UniAnchor, BiAnchor> {
+    public func offsetted(using space: EdgeOffsets) -> TriAnchorWithConstantRelation<Root, UniAnchor, BiAnchor> {
         switch type {
         case .allButTop:
             return offsetted(
@@ -98,7 +98,7 @@ extension TriAnchorRelation {
         }
     }
     
-    public func insetted(using space: UIEdgeInsets) -> TriAnchorWithConstantRelation<Root, UniAnchor, BiAnchor> {
+    public func insetted(using space: EdgeInsets) -> TriAnchorWithConstantRelation<Root, UniAnchor, BiAnchor> {
         switch type {
         case .allButTop:
             return insetted(

@@ -90,6 +90,9 @@ extension UIEdgeInsets {
     }
 }
 
+public typealias EdgeInsets = UIEdgeInsets
+public typealias EdgeOffsets = UIEdgeInsets
+
 // MARK: Auto
 
 extension CGFloat {

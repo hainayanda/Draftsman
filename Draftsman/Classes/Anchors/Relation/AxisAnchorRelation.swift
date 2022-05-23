@@ -44,18 +44,18 @@ public class AxisAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor>: Constrai
 extension AxisAnchorRelation {
     
     public func offset(by space: CGFloat) -> AxisAnchorWithConstantRelation<Root> {
-        .init(parent: self, constant: AxisConstant(xOffset: space, yOffset: space))
+        .init(parent: self, constant: CGPoint(x: space, y: space))
     }
     
     public func inset(by space: CGFloat) -> AxisAnchorWithConstantRelation<Root> {
-        .init(parent: self, constant: AxisConstant(xOffset: -space, yOffset: -space))
+        .init(parent: self, constant: CGPoint(x: -space, y: -space))
     }
     
-    public func offsetted(using space: AxisConstant) -> AxisAnchorWithConstantRelation<Root> {
+    public func offsetted(using space: AxisOffsets) -> AxisAnchorWithConstantRelation<Root> {
         .init(parent: self, constant: space)
     }
     
-    public func insetted(using space: AxisConstant) -> AxisAnchorWithConstantRelation<Root> {
+    public func insetted(using space: AxisInsets) -> AxisAnchorWithConstantRelation<Root> {
         .init(parent: self, constant: space.negative)
     }
 }

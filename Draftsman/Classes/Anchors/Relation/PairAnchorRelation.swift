@@ -62,22 +62,22 @@ extension PairAnchorRelation {
 
 extension PairAnchorRelation where Anchor == NSLayoutXAxisAnchor {
     
-    public func offsetted(using space: HorizontalConstant) -> PairAnchorWithConstantRelation<Root, Anchor> {
+    public func offsetted(using space: HorizontalOffsets) -> PairAnchorWithConstantRelation<Root, Anchor> {
         .init(parent: self, constant: space)
     }
     
-    public func insetted(using space: HorizontalConstant) -> PairAnchorWithConstantRelation<Root, Anchor> {
+    public func insetted(using space: HorizontalInsets) -> PairAnchorWithConstantRelation<Root, Anchor> {
         .init(parent: self, constant: space.negative)
     }
 }
 
 extension PairAnchorRelation where Anchor == NSLayoutYAxisAnchor {
     
-    public func offsetted(using space: VerticalConstant) -> PairAnchorWithConstantRelation<Root, Anchor> {
+    public func offsetted(using space: VerticalOffsets) -> PairAnchorWithConstantRelation<Root, Anchor> {
         .init(parent: self, constant: space)
     }
     
-    public func insetted(using space: VerticalConstant) -> PairAnchorWithConstantRelation<Root, Anchor> {
+    public func insetted(using space: VerticalInsets) -> PairAnchorWithConstantRelation<Root, Anchor> {
         .init(parent: self, constant: space.negative)
     }
 }

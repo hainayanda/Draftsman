@@ -65,11 +65,11 @@ extension QuadAnchorRelation {
         insetted(using: .init(top: space, left: space, bottom: space, right: space))
     }
     
-    public func offsetted(using space: UIEdgeInsets) -> QuadAnchorWithConstantRelation<Root> {
+    public func offsetted(using space: EdgeOffsets) -> QuadAnchorWithConstantRelation<Root> {
         .init(parent: self, constant: space)
     }
     
-    public func insetted(using space: UIEdgeInsets) -> QuadAnchorWithConstantRelation<Root> {
+    public func insetted(using space: EdgeInsets) -> QuadAnchorWithConstantRelation<Root> {
         .init(parent: self, constant: space.negative)
     }
 }

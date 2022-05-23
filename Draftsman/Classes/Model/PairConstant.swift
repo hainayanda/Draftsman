@@ -31,9 +31,14 @@ struct AgnosticPairConstant: PairConstant {
 
 // MARK: HorizontalConstant
 
+public typealias HorizontalInsets = HorizontalConstant
+public typealias HorizontalOffsets = HorizontalConstant
+
 public struct HorizontalConstant {
     public let leading: CGFloat
     public let trailing: CGFloat
+    public var left: CGFloat { leading }
+    public var right: CGFloat { trailing }
     public var total: CGFloat { leading + trailing }
     
     public init(leading: CGFloat, trailing: CGFloat) {
@@ -54,6 +59,9 @@ extension HorizontalConstant: PairConstant {
 
 // MARK: VerticalConstant
 
+public typealias VerticalInsets = HorizontalConstant
+public typealias VerticalOffsets = HorizontalConstant
+
 public struct VerticalConstant {
     public let top: CGFloat
     public let bottom: CGFloat
@@ -72,24 +80,11 @@ extension VerticalConstant: PairConstant {
 
 // MARK: AxisConstant
 
-public struct AxisConstant {
-    public let xOffset: CGFloat
-    public let yOffset: CGFloat
-    
-    public init(xOffset: CGFloat, yOffset: CGFloat) {
-        self.xOffset = xOffset
-        self.yOffset = yOffset
-    }
-}
+public typealias AxisInsets = CGPoint
+public typealias AxisOffsets = CGPoint
 
-extension AxisConstant: PairConstant {
-    var firstConstant: CGFloat { xOffset }
-    var secondConstant: CGFloat { yOffset }
-}
-
-extension CGPoint {
-    public var axisConstant: AxisConstant {
-        .init(xOffset: x, yOffset: y)
-    }
+extension CGPoint: PairConstant {
+    var firstConstant: CGFloat { x }
+    var secondConstant: CGFloat { y }
 }
 #endif
