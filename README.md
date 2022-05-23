@@ -366,14 +366,14 @@ myView.drf
 
 for offsets and insets, `CGFloat` is compatible with all. But if you need to assign it explicitly for each edge, you can always be passing something else:
 
-- ***VerticalOffsets** for vertical anchors offsets
-- ***VerticalInsets** for vertical anchors insets
-- ***HorizontalOffsets** for horizontal anchors offsets
-- ***HorizontalInsets** for horizontal anchors insets
-- ***AxisOffsets** for cross position anchors offsets which is just a typealias of `CGPoint`
-- ***AxisInsets** for cross position anchors insets which is just a typealias of `CGPoint`
-- ***EdgeOffsets** for 3 and 4 position anchors offsets which is just a typealias of `UIEdgeInsets`
-- ***EdgeInsets** for 3 and 4 position anchors insets which is just a typealias of `UIEdgeInsets`
+- **VerticalOffsets** for vertical anchors offsets
+- **VerticalInsets** for vertical anchors insets
+- **HorizontalOffsets** for horizontal anchors offsets
+- **HorizontalInsets** for horizontal anchors insets
+- **AxisOffsets** for cross position anchors offsets which is just a typealias of `CGPoint`
+- **AxisInsets** for cross position anchors insets which is just a typealias of `CGPoint`
+- **EdgeOffsets** for 3 and 4 position anchors offsets which is just a typealias of `UIEdgeInsets`
+- **EdgeInsets** for 3 and 4 position anchors insets which is just a typealias of `UIEdgeInsets`
 
 ### Anonymous Anchor
 
