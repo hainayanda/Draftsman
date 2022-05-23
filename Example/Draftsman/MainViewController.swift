@@ -42,12 +42,12 @@ class MainViewController: UIPlannedController {
             .vertical.moreThan(with: .safeArea).offset(by: 16)
             .resistVerticalExpansion(.required)
             .insertStacked {
-                stackDraft
+                stackPlan
             }
     }
     
     @LayoutPlan
-    var stackDraft: ViewPlan {
+    var stackPlan: ViewPlan {
         buttonToTable.drf
         buttonToCollection.drf
         buttonToField.drf

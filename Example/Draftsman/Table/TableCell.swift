@@ -32,12 +32,12 @@ class TableCell: UITablePlannedCell {
             .right.vertical.equal(with: .parent).offset(by: 12)
             .left.equal(with: .right(of: .previous)).offset(by: 8)
             .insertStacked {
-                stackDraft
+                stackPlan
             }
     }
     
     @LayoutPlan
-    var stackDraft: ViewPlan {
+    var stackPlan: ViewPlan {
         titleLabel
         subtitleLabel
     }
