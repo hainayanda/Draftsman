@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class CollectionCell: CollectionFragmentCell {
+class CollectionCell: UICollectionViewCell, PlannedCell {
     
     lazy var titleLabel: UILabel = builder(UILabel())
         .textAlignment(.center)
@@ -23,22 +23,32 @@ class CollectionCell: CollectionFragmentCell {
         .build()
     
     @LayoutPlan
-    override var viewPlan: ViewPlan {
-        UIImageView(image: UIImage(named: "icon_test")).plan
-            .builder.contentMode(.scaleAspectFit)
-            .plan.at(.fullTop, .equalTo(12), to: .parent)
-            .width(.equalTo(.height(of: .myself)))
-        UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4).plan
-            .at(.fullBottom, .equalTo(12), to: .parent)
-            .top(.equalTo(8), to: .bottom(of: .previous))
+    var contentViewPlan: ViewPlan {
+        UIImageView(image: UIImage(named: "icon_test")).drf.builder
+            .contentMode(.scaleAspectFit).drf
+            .top.horizontal.equal(with: .parent).offset(by: 12)
+            .width.equal(with: .height(of: .mySelf))
+        UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4).drf
+            .bottom.horizontal.equal(with: .parent).offset(by: 12)
+            .top.equal(with: .bottom(of: .previous)).offset(by: 8)
             .insertStacked {
                 stackPlan
-        }
+            }
     }
     
     @LayoutPlan
     var stackPlan: ViewPlan {
         titleLabel
         subtitleLabel
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        applyPlan()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        applyPlan()
     }
 }

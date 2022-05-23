@@ -19,16 +19,9 @@
 		BB3A243B2696CC8C00B8EBA0 /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A243A2696CC8C00B8EBA0 /* CollectionCell.swift */; };
 		BB3A243E2696D8CD00B8EBA0 /* FieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A243D2696D8CD00B8EBA0 /* FieldViewController.swift */; };
 		BB3A24402696D92700B8EBA0 /* TypingField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A243F2696D92700B8EBA0 /* TypingField.swift */; };
-		BBC1F289266E166F00D93B6D /* FragmentViewSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC1F288266E166F00D93B6D /* FragmentViewSpec.swift */; };
+		BB69DCDF283A6D910043A93D /* DummyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB69DCDE283A6D910043A93D /* DummyTest.swift */; };
 		BBC9C43D277B0BE500D8A6F5 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9C43C277B0BE500D8A6F5 /* View.swift */; };
 		BBC9C43F277B0D1000D8A6F5 /* FragmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9C43E277B0D1000D8A6F5 /* FragmentViewController.swift */; };
-		BBF5378C25DFCF9C00A6BC6B /* CommonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5374E25DFCF2400A6BC6B /* CommonSpec.swift */; };
-		BBF5379125DFCF9E00A6BC6B /* FragmentCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375325DFCF2400A6BC6B /* FragmentCellSpec.swift */; };
-		BBF5379425DFCFA200A6BC6B /* FragmentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375025DFCF2400A6BC6B /* FragmentSpec.swift */; };
-		BBF5379925DFCFA600A6BC6B /* InsertPlanSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375225DFCF2400A6BC6B /* InsertPlanSpec.swift */; };
-		BBF537A925DFCFB000A6BC6B /* EdgesConstraintsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375525DFCF2400A6BC6B /* EdgesConstraintsSpec.swift */; };
-		BBF537B425DFCFB700A6BC6B /* PlanConvertibleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375B25DFCF2400A6BC6B /* PlanConvertibleSpec.swift */; };
-		BBF537B525DFCFBB00A6BC6B /* PlanContextSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5375E25DFCF2400A6BC6B /* PlanContextSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,16 +54,10 @@
 		BB3A243A2696CC8C00B8EBA0 /* CollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
 		BB3A243D2696D8CD00B8EBA0 /* FieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldViewController.swift; sourceTree = "<group>"; };
 		BB3A243F2696D92700B8EBA0 /* TypingField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingField.swift; sourceTree = "<group>"; };
-		BBC1F288266E166F00D93B6D /* FragmentViewSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FragmentViewSpec.swift; sourceTree = "<group>"; };
+		BB69DCDB283A6D6B0043A93D /* Draftsman_Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Draftsman_Tests-Bridging-Header.h"; sourceTree = "<group>"; };
+		BB69DCDE283A6D910043A93D /* DummyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyTest.swift; sourceTree = "<group>"; };
 		BBC9C43C277B0BE500D8A6F5 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		BBC9C43E277B0D1000D8A6F5 /* FragmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FragmentViewController.swift; sourceTree = "<group>"; };
-		BBF5374E25DFCF2400A6BC6B /* CommonSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonSpec.swift; sourceTree = "<group>"; };
-		BBF5375025DFCF2400A6BC6B /* FragmentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentSpec.swift; sourceTree = "<group>"; };
-		BBF5375225DFCF2400A6BC6B /* InsertPlanSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertPlanSpec.swift; sourceTree = "<group>"; };
-		BBF5375325DFCF2400A6BC6B /* FragmentCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentCellSpec.swift; sourceTree = "<group>"; };
-		BBF5375525DFCF2400A6BC6B /* EdgesConstraintsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgesConstraintsSpec.swift; sourceTree = "<group>"; };
-		BBF5375B25DFCF2400A6BC6B /* PlanConvertibleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanConvertibleSpec.swift; sourceTree = "<group>"; };
-		BBF5375E25DFCF2400A6BC6B /* PlanContextSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanContextSpec.swift; sourceTree = "<group>"; };
 		BD0E959F2DB3449C143219E9 /* Draftsman.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Draftsman.podspec; path = ../Draftsman.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BEBE17ACCF370BCD99DDE61E /* Pods-Draftsman_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Draftsman_Example.debug.xcconfig"; path = "Target Support Files/Pods-Draftsman_Example/Pods-Draftsman_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		D67A2DD748195AA8882D2C04 /* Pods_Draftsman_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Draftsman_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,15 +133,9 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				BBF5374E25DFCF2400A6BC6B /* CommonSpec.swift */,
-				BBF5375325DFCF2400A6BC6B /* FragmentCellSpec.swift */,
-				BBF5375025DFCF2400A6BC6B /* FragmentSpec.swift */,
-				BBC1F288266E166F00D93B6D /* FragmentViewSpec.swift */,
-				BBF5375225DFCF2400A6BC6B /* InsertPlanSpec.swift */,
-				BBF5375525DFCF2400A6BC6B /* EdgesConstraintsSpec.swift */,
-				BBF5375B25DFCF2400A6BC6B /* PlanConvertibleSpec.swift */,
-				BBF5375E25DFCF2400A6BC6B /* PlanContextSpec.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				BB69DCDB283A6D6B0043A93D /* Draftsman_Tests-Bridging-Header.h */,
+				BB69DCDE283A6D910043A93D /* DummyTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -291,7 +272,7 @@
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1340;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
@@ -446,14 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBF5379925DFCFA600A6BC6B /* InsertPlanSpec.swift in Sources */,
-				BBF537B425DFCFB700A6BC6B /* PlanConvertibleSpec.swift in Sources */,
-				BBF5379425DFCFA200A6BC6B /* FragmentSpec.swift in Sources */,
-				BBF537A925DFCFB000A6BC6B /* EdgesConstraintsSpec.swift in Sources */,
-				BBF537B525DFCFBB00A6BC6B /* PlanContextSpec.swift in Sources */,
-				BBC1F289266E166F00D93B6D /* FragmentViewSpec.swift in Sources */,
-				BBF5379125DFCF9E00A6BC6B /* FragmentCellSpec.swift in Sources */,
-				BBF5378C25DFCF9C00A6BC6B /* CommonSpec.swift in Sources */,
+				BB69DCDF283A6D910043A93D /* DummyTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,6 +598,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0DCF606F0CEF54F076A1BFC9 /* Pods-Draftsman_Tests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -636,6 +611,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Draftsman_Tests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Draftsman_Example.app/Draftsman_Example";
@@ -646,6 +623,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 325D86E7F9CF6572BD001BA8 /* Pods-Draftsman_Tests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -654,6 +632,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Draftsman_Tests-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Draftsman_Example.app/Draftsman_Example";

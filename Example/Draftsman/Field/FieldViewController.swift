@@ -21,28 +21,28 @@ class FieldViewController: UIViewController, Planned {
     
     lazy var typingField: TypingField = .init()
     
-    @LinkedView var baseView: UIView
-    @LinkedView var imageView: UIImageView
+    lazy var baseView: UIView = UIView()
+    lazy var imageView: UIImageView = UIImageView(image: UIImage(named: "image_test"))
     
     @LayoutPlan
     var viewPlan: ViewPlan {
-        UIView().plan(into: $baseView)
-            .center(.equal, to: .parent, priority: .defaultLow)
-            .horizontal(.equalTo(16), to: .safeArea)
-            .bottom(.moreThanTo(8), to: typingField.topAnchor)
+        baseView.drf
+            .centerY.lessThan(with: .parent)
+            .horizontal.equal(with: .safeArea).offset(by: 16)
+            .bottom.moreThan(to: typingField.drf.top).offset(by: 8)
             .insert {
-                UIImageView(image: UIImage(named: "image_test")).plan(into: $imageView)
-                    .builder.contentMode(.scaleAspectFill)
-                    .clipsToBounds(true)
-                    .plan.at(.fullTop, .equalTo(12), to: .parent)
-                    .height(.equalTo(.width(of: .myself)), multiplyBy: 0.75)
-                typingLabel.plan
-                    .at(.fullBottom, .equalTo(12), to: .parent)
-                    .top(.equalTo(8), to: .bottom(of: .previous))
+                imageView.drf.builder
+                    .contentMode(.scaleAspectFill)
+                    .clipsToBounds(true).drf
+                    .top.horizontal.equal(with: .parent).offset(by: 12)
+                    .height.equal(with: .width(of: .mySelf)).multiplied(by: 0.75)
+                typingLabel.drf
+                    .bottom.horizontal.equal(with: .parent).offset(by: 12)
+                    .top.equal(with: .bottom(of: .previous)).offset(by: 8)
             }
-        typingField.plan
-            .horizontal(.equal, to: .parent)
-            .bottom(.equal, to: .top(of: .keyboard), priority: .required)
+        typingField.drf
+            .horizontal.equal(with: .parent)
+            .bottom.equal(with: .top(of: .keyboard)).priority(.required)
     }
     
     override func viewDidLoad() {

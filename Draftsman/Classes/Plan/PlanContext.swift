@@ -2,47 +2,48 @@
 //  PlanContext.swift
 //  Draftsman
 //
-//  Created by Nayanda Haberty (ID) on 27/08/20.
+//  Created by Nayanda Haberty on 06/04/22.
 //
 
 import Foundation
 #if canImport(UIKit)
 import UIKit
+import Clavier
 
-final class PlanContext {
-    weak var _delegate: PlanDelegate?
-    var delegate: PlanDelegate {
-        _delegate ?? DefaultPlanDelegate.shared
-    }
-    var currentPriority: UILayoutPriority = 999
-    var mutatingPriority: UILayoutPriority {
-        let newPriority: UILayoutPriority = .init(rawValue: currentPriority.rawValue - 1)
-        currentPriority = newPriority
-        return newPriority
-    }
+public final class PlanContext {
+    var root: Planned?
     var currentView: UIView {
         didSet {
             guard currentView != oldValue else { return }
-            let usedToBeVoid = oldValue is VoidView
-            previousView = usedToBeVoid ? nil : oldValue
-            rootContextView = usedToBeVoid ? rootContextView : currentView
+            previousView = oldValue
         }
     }
-    let usingViewPlan: Bool
-    var rootContextController: UIViewController?
-    var rootContextView: UIView
     var previousView: UIView?
-    var applying: Bool = false
+    private var currentPriority: Float = 1000
     
-    init(delegate: PlanDelegate? = nil, rootContextView: UIView, usingViewPlan: Bool) {
-        self._delegate = delegate
-        self.rootContextView = rootContextView
-        self.currentView = rootContextView
-        self.usingViewPlan = usingViewPlan
+    init(root: Planned? = nil, view: UIView) {
+        self.root = root
+        currentView = view
+    }
+    
+    func layout(of anonymous: AnonymousLayout) -> LayoutWithAnchors {
+        switch anonymous {
+        case .mySelf:
+            return currentView
+        case .parent:
+            return currentView.superview!
+        case .safeArea:
+            return currentView.superview!.safeAreaLayoutGuide
+        case .keyboard:
+            return currentView.superview!.clavierLayoutGuide
+        case .keyboardSafeArea:
+            return currentView.superview!.safeClavierLayoutGuide
+        case .previous:
+            return previousView!
+        case .previousSafeArea:
+            return previousView!.safeAreaLayoutGuide
+        }
     }
 }
 
-extension PlanContext {
-    static var `default`: PlanContext { PlanContext(delegate: nil, rootContextView: VoidView(), usingViewPlan: false) }
-}
 #endif

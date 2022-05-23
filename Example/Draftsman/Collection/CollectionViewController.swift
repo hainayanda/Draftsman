@@ -21,8 +21,8 @@ class CollectionViewController: UIViewController, Planned {
             ) / 2
         } else {
             return min(
-                view.frame.width - view.layoutMargins.horizontal.both,
-                view.frame.height - view.layoutMargins.vertical.both
+                view.frame.width - view.layoutMargins.horizontal.total,
+                view.frame.height - view.layoutMargins.vertical.total
             ) / 2
         }
     }
@@ -38,16 +38,16 @@ class CollectionViewController: UIViewController, Planned {
             collectionViewLayout: collectionLayout
         )
     )
-    .backgroundColor(.white)
-    .allowsSelection(false)
-    .dataSource(self)
-    .build()
+        .backgroundColor(.white)
+        .allowsSelection(false)
+        .dataSource(self)
+        .build()
     
     @LayoutPlan
     var viewPlan: ViewPlan {
-        collectionView.plan
-            .horizontal(.equal, to: .safeArea)
-            .vertical(.equal, to: .parent)
+        collectionView.drf
+            .horizontal.equal(with: .safeArea)
+            .vertical.equal(with: .parent)
     }
     
     override func viewDidLoad() {

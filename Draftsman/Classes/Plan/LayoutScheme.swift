@@ -2,84 +2,134 @@
 //  LayoutScheme.swift
 //  Draftsman
 //
-//  Created by Nayanda Haberty on 07/07/21.
+//  Created by Nayanda Haberty on 06/04/22.
 //
 
 import Foundation
 #if canImport(UIKit)
 import UIKit
-import Builder
 
-// MARK: LayoutScheme
-
-open class LayoutScheme<View: UIView>: RootViewPlan, ViewScheming {
-    public var view: UIView { viewInScheme }
-    public internal(set) var isStackContent: Bool = false
-    var viewInScheme: View
-    var constraintBuilders: [LayoutConstraintBuilder] = []
+open class LayoutScheme<View: UIView>: ViewPlanBuilder, ViewScheme {
+    public var underlyingView: View
+    public var view: UIView { underlyingView }
+    open override var insertablePlans: [ViewScheme] { [self] }
+    var stackPlans: [ViewScheme] = []
     
-    public init(view: View, subPlan: [ViewScheme] = []) {
-        self.viewInScheme = view
-        super.init(subPlan: subPlan)
+    public init(view: View, plans: [ViewScheme] = []) {
+        self.underlyingView = view
+        super.init(plans: plans)
     }
     
-    override func createContextIfNeeded() -> PlanContext {
-        PlanContext(delegate: nil, rootContextView: view, usingViewPlan: false)
-    }
-    
-    open override func apply(for view: UIView) -> [NSLayoutConstraint] {
-        context.applying = true
-        context.currentView = view
-        let layoutConstraints = constraintBuilders.compactMap { $0.build(for: context) }
-        let extractedConstraints = buildCurrent(with: layoutConstraints)
-        NSLayoutConstraint.activate(extractedConstraints.toActivated)
-        NSLayoutConstraint.deactivate(extractedConstraints.toRemoved)
-        return extractedConstraints.toActivated
-    }
-    
-    override func buildAndExtractConstraint(for view: UIView) -> ExtractedConstraints {
-        context.currentView = view
-        let layoutConstraints = constraintBuilders.compactMap { $0.build(for: context) }
-        return buildWithContext(for: view) {
-            buildCurrent(with: layoutConstraints)
+    open override func build(for view: UIView) -> [NSLayoutConstraint] {
+        guard view === self.view else {
+            fatalError("LayoutScheme can only be applied with its own view")
         }
+        let context = getContext(for: view)
+        let currentConstraints = constraintBuilders.build(using: context)
+        prepareBuild(for: view)
+        let subviewConstraints = buildSubview(for: context)
+        let stackConstraints = buildStackSubview(for: context)
+        return currentConstraints
+            .added(withContentsOf: subviewConstraints)
+            .added(withContentsOf: stackConstraints)
+            .validUniques
     }
     
-    open func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
-        subPlanAccessed = true
-        self.subPlan.append(contentsOf: layouter().subPlan)
+    @discardableResult
+    open override func apply(to view: UIView) -> [NSLayoutConstraint] {
+        guard view === self.view else {
+            fatalError("LayoutScheme can only be applied with its own view")
+        }
+        let constraints = build(for: view)
+        NSLayoutConstraint.activate(constraints)
+        return constraints
+    }
+    
+    public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
+        let viewPlan = layouter()
+        plans.append(contentsOf: viewPlan.insertablePlans)
         return self
     }
     
-    override func buildWithContext(for view: UIView, _ builder: () -> ExtractedConstraints) -> ExtractedConstraints {
+    func getContext(for view: UIView) -> PlanContext {
+        let context = context ?? PlanContext(view: view)
         context.currentView = view
-        if context.usingViewPlan {
-            removeSubviewThatNotInPlan(for: view)
-        }
-        return builder()
+        return context
     }
     
-    func buildCurrent(with startedConstaints: [NSLayoutConstraint]) -> ExtractedConstraints {
-        var constraints = startedConstaints
-        constraints.append(contentsOf: buildWholeScheme(for: view))
-        return extractConstraints(for: view, from: constraints)
+    func removeAssociatedSubview(in view: UIView) {
+        guard let root = context?.root else { return }
+        view.subviews.forEach { subview in
+            guard subview.isPartOf(planned: root),
+                  !plans.contains(where: { $0.view == subview }),
+                  !stackPlans.contains(where: { $0.view == subview }) else { return }
+            subview.removeFromSuperview()
+        }
+    }
+    
+    func prepareBuild(for view: UIView) {
+        removeAssociatedSubview(in: view)
+        if shouldNotTranslatesAutoresizingMaskIntoConstraints(for: view) {
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    
+    func buildSubview(for context: PlanContext) -> [NSLayoutConstraint] {
+        let view = context.currentView
+        return plans.reduce([]) { partialResults, plan in
+            if let root = context.root {
+                plan.view.makeAssociated(with: root)
+            }
+            view.addSubview(plan.view)
+            plan.context = context
+            return partialResults.added(withContentsOf: plan.build())
+        }
+    }
+    
+    func buildStackSubview(for context: PlanContext) -> [NSLayoutConstraint] {
+        let view = context.currentView
+        guard let stack = view as? UIStackView else { return [] }
+        return stackPlans.reduce([]) { partialResults, plan in
+            if let root = context.root {
+                plan.view.makeAssociated(with: root)
+            }
+            stack.addArrangedSubview(plan.view)
+            plan.context = context
+            return partialResults.added(withContentsOf: plan.build())
+        }
+    }
+    
+    func shouldNotTranslatesAutoresizingMaskIntoConstraints(for view: UIView) -> Bool {
+        if view is UITableViewCell || view is UICollectionViewCell {
+            return false
+        }
+        guard let responder = view.next else {
+            return false
+        }
+        if responder is UIViewController {
+            return false
+        } else if let cell = responder as? UITableViewCell, cell.contentView == view {
+            return false
+        } else if let cell = responder as? UICollectionViewCell, cell.contentView == view {
+            return false
+        } else {
+            return true
+        }
     }
 }
 
 extension LayoutScheme: StackScheme where View: UIStackView {
+    
+    convenience init(view: View, plans: [ViewScheme] = [], stackPlans: [ViewScheme]) {
+        self.init(view: view, plans: plans)
+        self.stackPlans = stackPlans
+    }
+    
     public func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
-        if viewInScheme is Planned, context.usingViewPlan, context.rootContextView == viewInScheme {
-            fatalError("Draftsman Error: Planned view or view controller should be managed its own content")
-        }
-        subPlanAccessed = true
-        self.subPlan.append(
-            contentsOf:
-                layouter().subPlan.compactMap {
-                    ($0 as? ViewScheming)?.isStackContent = true
-                    return $0
-                }
-        )
+        let viewPlan = layouter()
+        stackPlans.append(contentsOf: viewPlan.insertablePlans)
         return self
     }
 }
+
 #endif

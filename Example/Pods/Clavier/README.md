@@ -32,14 +32,14 @@ Clavier is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Clavier', '~> 1.0'
+pod 'Clavier', '~> 2.0'
 ```
 
 ### Swift Package Manager from XCode
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/hainayanda/Clavier.git** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **1.0.2** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **2.0.0** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -48,7 +48,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hainayanda/Clavier.git", .upToNextMajor(from: "1.0.2"))
+    .package(url: "https://github.com/hainayanda/Clavier.git", .upToNextMajor(from: "2.0.0"))
 ]
 ```
 
@@ -85,16 +85,16 @@ If the keyboard is hidden, it will always use the most bottom of the UIView with
 
 ## Usage
 
-To use Clavier, just use `keyboardLayoutGuide` from any `UIView`, or `safeKeyboardLayoutGuide` if you prefer the one intersect with the safe area. it is an instance of `KeyboardLayoutGuide` class which extend `UILayoutGuide` so it has all its anchors, like `topAnchor`, `leadingAnchor`, etc:
+To use Clavier, just use `clavierLayoutGuide` from any `UIView`, or `safeClavierLayoutGuide` if you prefer the one intersect with the safe area. it is an instance of `ClavierLayoutGuide` class which extend `UILayoutGuide` so it has all its anchors, like `topAnchor`, `leadingAnchor`, etc:
 
 ```swift
-myView.bottomAnchor.constraints(equalTo: mySuperview.keyboardLayoutGuide.topAnchor)
+myView.bottomAnchor.constraints(equalTo: mySuperview.clavierLayoutGuide.topAnchor)
 ```
 
 or with safe area:
 
 ```swift
-myView.bottomAnchor.constraints(equalTo: mySuperview.safeKeyboardLayoutGuide.topAnchor)
+myView.bottomAnchor.constraints(equalTo: mySuperview.safeClavierLayoutGuide.topAnchor)
 ```
 
 myView will automatically move according to keyboard layout guide frame changes.
@@ -102,16 +102,20 @@ myView will automatically move according to keyboard layout guide frame changes.
 Since its subclass of UILayoutGuide, it has layoutFrame which is the intersection frame with keyboard frame, if you need it:
 
 ```swift
-let frameIntersectWithKeyboard: CGRect = view.keyboardLayoutGuide.layoutFrame
+let frameIntersectWithKeyboard: CGRect = view.clavierLayoutGuide.layoutFrame
 ```
 
 or with safe area:
 
 ```swift
-let frameIntersectWithKeyboard: CGRect = view.safeKeyboardLayoutGuide.layoutFrame
+let frameIntersectWithKeyboard: CGRect = view.safeClavierLayoutGuide.layoutFrame
 ```
 
 ***
+
+## iOS 15
+
+On iOS 15, Clavier will defaultly use `keyboardLayoutGuide` from UIKit. on `safeClavierLayoutGuide`, it will use custom class that utilize `keyboardLayoutGuide` and `safeAreaLayoutGuide`
 
 # Contribute
 

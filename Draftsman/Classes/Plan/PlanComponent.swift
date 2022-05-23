@@ -2,48 +2,36 @@
 //  PlanComponent.swift
 //  Draftsman
 //
-//  Created by Nayanda Haberty on 07/07/21.
+//  Created by Nayanda Haberty on 06/04/22.
 //
 
 import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public protocol PlanComponent: AnyObject { }
-
-protocol ViewPlaning: ViewPlan {
-    var context: PlanContext { get set }
+public protocol PlanComponent {
+    var insertablePlans: [ViewScheme] { get }
 }
 
-public protocol ViewPlan: PlanComponent {
-    var subPlan: [ViewScheme] { get }
-    @discardableResult
-    func build(for view: UIView) -> [NSLayoutConstraint]
-    @discardableResult
-    func apply(for view: UIView) -> [NSLayoutConstraint]
-}
+extension UIView: PlanComponent { }
 
-final class VoidView: UIView {
+extension UIViewController: PlanComponent { }
+
+extension PlanComponent where Self: UIView {
     
-    override func addSubview(_ view: UIView) { }
+    public var insertablePlans: [ViewScheme] { drf.insertablePlans }
     
-    override func didMoveToSuperview() {
-        removeFromSuperview()
+    public var drf: LayoutScheme<Self> {
+        LayoutScheme(view: self)
     }
 }
 
-final class VoidViewPlan: ViewPlaning {
-    lazy var context: PlanContext = .default
+extension PlanComponent where Self: UIViewController {
     
-    var subPlan: [ViewScheme] = []
+    public var insertablePlans: [ViewScheme] { drf.insertablePlans }
     
-    func build(for view: UIView) -> [NSLayoutConstraint] { [] }
-    
-    @discardableResult
-    func apply(for view: UIView) -> [NSLayoutConstraint] { [] }
-}
-
-final class VoidPlanComponent: PlanComponent {
-    var plan: ViewPlan { VoidViewPlan() }
+    public var drf: LayoutScheme<UIView> {
+        LayoutScheme(view: self.view)
+    }
 }
 #endif

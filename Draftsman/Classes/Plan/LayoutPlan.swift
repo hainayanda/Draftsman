@@ -1,8 +1,8 @@
 //
-//  PlannedLayout.swift
+//  LayoutPlan.swift
 //  Draftsman
 //
-//  Created by Nayanda Haberty on 06/07/21.
+//  Created by Nayanda Haberty on 06/04/22.
 //
 
 import Foundation
@@ -12,15 +12,11 @@ import UIKit
 @resultBuilder
 public struct LayoutPlan {
     public typealias Expression = PlanComponent?
-    public typealias Component = [PlanComponent]
+    public typealias Component = [ViewScheme]
     public typealias Result = ViewPlan
     
     public static func buildExpression(_ expression: Expression) -> Component {
-        guard let expression = expression else { return [] }
-        if let rootPlan = expression as? RootViewPlan, (rootPlan as? ViewScheme) == nil {
-            return rootPlan.subPlan
-        }
-        return [expression]
+        expression?.insertablePlans ?? []
     }
     
     public static func buildOptional(_ component: Component?) -> Component {
@@ -46,7 +42,7 @@ public struct LayoutPlan {
     }
     
     public static func buildFinalResult(_ component: Component) -> Result {
-        RootViewPlan(subPlan: component.asSchemes)
+        ViewPlanBuilder(plans: component)
     }
 }
 #endif
