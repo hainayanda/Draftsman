@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class CollectionCell: UICollectionDraftedCell {
+class CollectionCell: UICollectionPlannedCell {
     
     lazy var titleLabel: UILabel = builder(UILabel())
         .textAlignment(.center)
@@ -22,8 +22,8 @@ class CollectionCell: UICollectionDraftedCell {
         .font(.systemFont(ofSize: 12))
         .build()
     
-    @LayoutDraft
-    var contentViewDraft: ViewDraft {
+    @LayoutPlan
+    var contentViewPlan: ViewPlan {
         UIImageView(image: UIImage(named: "icon_test")).drf.builder
             .contentMode(.scaleAspectFit).drf
             .top.horizontal.equal(with: .parent).offset(by: 12)
@@ -36,19 +36,19 @@ class CollectionCell: UICollectionDraftedCell {
             }
     }
     
-    @LayoutDraft
-    var stackDraft: ViewDraft {
+    @LayoutPlan
+    var stackDraft: ViewPlan {
         titleLabel
         subtitleLabel
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        applyDraft()
+        applyPlan()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        applyDraft()
+        applyPlan()
     }
 }

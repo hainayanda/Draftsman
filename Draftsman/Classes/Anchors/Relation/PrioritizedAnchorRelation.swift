@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: PrioritizedAnchorRelation
 
-public class PrioritizedAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
+public class PrioritizedAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
     let priority: UILayoutPriority
     let parent: ConstraintBuilder
     
@@ -21,7 +21,7 @@ public class PrioritizedAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor>: C
         super.init(root: root)
     }
     
-    override func build(using context: DraftContext) -> [NSLayoutConstraint] {
+    override func build(using context: PlanContext) -> [NSLayoutConstraint] {
         parent.build(using: context).compactMap {
             $0.priority = priority
             return $0

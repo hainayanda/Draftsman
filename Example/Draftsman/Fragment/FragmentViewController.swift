@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class FragmentViewController: UIDraftedController {
+class FragmentViewController: UIPlannedController {
     
     lazy var scrollView: UIScrollView = UIScrollView()
     lazy var stackView: UIStackView = UIStackView(
@@ -35,13 +35,13 @@ class FragmentViewController: UIDraftedController {
     )
     var fragments: [View] = [] {
         didSet {
-            applyDraft()
+            applyPlan()
         }
     }
     var counter: Int = 0
     
-    @LayoutDraft
-    var viewDraft: ViewDraft {
+    @LayoutPlan
+    var viewPlan: ViewPlan {
         scrollView.drf
             .top.horizontal.equal(with: .safeArea)
             .bottom.equal(to: buttonStack.topAnchor).offset(by: 16)
@@ -56,8 +56,8 @@ class FragmentViewController: UIDraftedController {
             }
     }
     
-    @LayoutDraft
-    var scrollContent: ViewDraft {
+    @LayoutPlan
+    var scrollContent: ViewPlan {
         stackView.drf
             .width.equal(with: .parent)
             .edges.equal(with: .parent)
@@ -71,8 +71,8 @@ class FragmentViewController: UIDraftedController {
             }
     }
     
-    @LayoutDraft
-    var emptyContent: ViewDraft {
+    @LayoutPlan
+    var emptyContent: ViewPlan {
         spacing
         UILabel().drf.builder
             .text("NO FRAGMENTS")
@@ -80,8 +80,8 @@ class FragmentViewController: UIDraftedController {
         spacing
     }
     
-    @LayoutDraft
-    var spacing: ViewDraft {
+    @LayoutPlan
+    var spacing: ViewPlan {
         UIView().drf
             .height.equal(to: 60)
             .builder.backgroundColor(.clear)
@@ -91,7 +91,7 @@ class FragmentViewController: UIDraftedController {
         super.viewDidLoad()
         title = "Fragment View"
         view.backgroundColor = .white
-        applyDraft()
+        applyPlan()
         
         buttonAdd.setTitle("Add fragment", for: .normal)
         buttonAdd.addTarget(self, action: #selector(addFragment(_:)), for: .touchUpInside)

@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="512" height="256" src="draftsman.png"/>
+</p>
+
 # Draftsman
 
 Draftsman is a DSL framework for Swift focused on builder pattern
@@ -79,7 +83,7 @@ Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. Draftsman use
 
 ### Basic
 
-Creating constraints is very easy. All you need to do is call `drf` to get the `LayoutScheme` object:
+Creating constraints is very easy. All you need to do is call `drf` to get the `LayoutDraft` object:
 
 ```swift
 myView.drf
@@ -90,24 +94,24 @@ myView.drf
     .apply()
 ```
 
-there are two methods to end drafting constraints which can be called from both any `UIView` or `UIViewController`:
+there are two methods to end planning constraints which can be called from both any `UIView` or `UIViewController`:
 
 - `func apply() -> [NSLayoutConstraint]`
 - `func build() -> [NSLayoutConstraint]`
 
 the difference between the two is `apply` will activate the constraints but `build` will only create constraints without activating them. Apply return value is discardable so it's optional for you to use the created `NSLayoutConstraint` or not.
 
-You could always create a `UIViewController` or `UIView` and implement the `Drafted` protocol, and call `applyDraft()` whenever you want the viewDraft to be applied:
+You could always create a `UIViewController` or `UIView` and implement the `Planned` protocol, and call `applyPlan()` whenever you want the viewPlan to be applied:
 
 ```swift
 import Draftsman
 
-class MyViewController: UIViewController, Drafted {
+class MyViewController: UIViewController, Planned {
     
     var models: [MyModel] = []
     
-    @LayoutDraft
-    var viewDraft: ViewDraft {
+    @LayoutPlan
+    var viewPlan: ViewPlan {
         UIStackView(axis: .vertical, spacing: 32).drf
             .center.equal(with: .parent)
             .horizontal.equal(with: .safeArea).offset(by: 16)
@@ -127,49 +131,49 @@ class MyViewController: UIViewController, Drafted {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyDraft()
+        applyPlan()
     }
 }
 ```
 
-`ViewDraft` can always be composed to make the code cleaner:
+`ViewPlan` can always be composed to make the code cleaner:
 
 ```swift
 import Draftsman
 
-class MyViewController: UIViewController, Drafted {
+class MyViewController: UIViewController, Planned {
     
     var models: [MyModel] = []
     
-    @LayoutDraft
-    var viewDraft: ViewDraft {
+    @LayoutPlan
+    var viewPlan: ViewPlan {
         UIStackView(axis: .vertical, spacing: 32).drf
             .center.equal(with: .parent)
             .horizontal.equal(with: .safeArea).offset(by: 16)
             .vertical.moreThan(with: .safeArea).offset(by: 16)
             .insertStacked {
-                stackDraft
+                stackPlan
             }
     }
 
-    @LayoutDraft
-    var stackDraft: ViewDraft {
+    @LayoutPlan
+    var stackPlan: ViewPlan {
         if models.isEmpty {
-            emptyStackDraft
+            emptyStackPlan
         } else {
-            modeledStackDraft(for: models)
+            modeledStackPlan(for: models)
         }
     }
 
-    @LayoutDraft
-    var emptyStackDraft: ViewDraft {
+    @LayoutPlan
+    var emptyStackPlan: ViewPlan {
         MyView()
         MyOtherView()
         SomeOtherView()
     }
 
-    @LayoutDraft
-    func modeledStackDraft(for models: [MyModel]) -> ViewDraft {
+    @LayoutPlan
+    func modeledStackPlan(for models: [MyModel]) -> ViewPlan {
         for model in models {
             MyModeledView(model)
         }
@@ -177,7 +181,7 @@ class MyViewController: UIViewController, Drafted {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyDraft()
+        applyPlan()
     }
 }
 ```
@@ -432,31 +436,31 @@ available explicit anchors are:
 - **centerTop(of: )**
 - **centerBottom(of: )**
 
-## Draftsman Drafted
+## Draftsman Planned
 
-Draftsman `Drafted` protocol is the protocol that makes any `UIView` or `UIViewController` can have its predefined view draft and applied it using the `applyDraft` method. The protocol is declared like this:
+Draftsman `Planned` protocol is the protocol that makes any `UIView` or `UIViewController` can have its predefined view plan and applied it using the `applyPlan` method. The protocol is declared like this:
 
 ```swift
-public protocol Drafted: AnyObject {
-    var draftedIdentifier: ObjectIdentifier { get }
+public protocol Planned: AnyObject {
+    var planIdentifier: ObjectIdentifier { get }
     var appliedConstraints: [NSLayoutConstraint] { get }
-    var viewDraftApplied: Bool { get }
-    @LayoutDraft
-    var viewDraft: ViewDraft { get }
+    var viewPlanApplied: Bool { get }
+    @LayoutPlan
+    var viewPlan: ViewPlan { get }
     @discardableResult
-    func applyDraft() -> [NSLayoutConstraint]
+    func applyPlan() -> [NSLayoutConstraint]
 }
 ```
 
-The only thing you need to implement is the `viewDraft` getter since everything will be implemented in extensions:
+The only thing you need to implement is the `viewPlan` getter since everything will be implemented in extensions:
 
 ```swift
 import Draftsman
 
-class MyViewController: UIViewController, Drafted {
+class MyViewController: UIViewController, Planned {
     
-    @LayoutDraft
-    var viewDraft: ViewDraft {
+    @LayoutPlan
+    var viewPlan: ViewPlan {
         UIStackView(axis: .vertical, spacing: 32).drf
             .center.equal(with: .parent)
             .horizontal.equal(with: .safeArea).offset(by: 16)
@@ -470,36 +474,36 @@ class MyViewController: UIViewController, Drafted {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyDraft()
+        applyPlan()
     }
 }
 ```
 
-Every time you call `applyDraft`, it will always try to recreate the view to be the same as what was declared in `viewDraft`.
+Every time you call `applyPlan`, it will always try to recreate the view to be the same as what was declared in `viewPlan`.
 
-There are some typealias with Drafted that you can use:
+There are some typealias with Planned that you can use:
 
-- **UIDraftedController** which is `UIViewController & Drafted`
-- **UIDraftedView** which is `UIView & Drafted`
+- **UIPlannedController** which is `UIViewController & Planned`
+- **UIPlannedView** which is `UIView & Planned`
 
-### Drafted Cell
+### Planned Cell
 
-Drafted Cell is Drafted built specifically for a cell which declared like this:
+Planned Cell is Planned built specifically for a cell which declared like this:
 
 ```swift
-public protocol DraftedCell: Drafted {
-    @LayoutDraft
-    var contentViewDraft: ViewDraft { get }
+public protocol PlannedCell: Planned {
+    @LayoutPlan
+    var contentViewPlan: ViewPlan { get }
 }
 ```
 
-The only thing you need to implement is the `contentViewDraft` getter since everything will be implemented in extensions. It will skip `contentView` and straight into its content:
+The only thing you need to implement is the `contentViewPlan` getter since everything will be implemented in extensions. It will skip `contentView` and straight into its content:
 
 ```swift
-class TableCell: UITableView, DraftedCell {
+class TableCell: UITableView, PlannedCell {
     
-    @LayoutDraft
-    var contentViewDraft: ViewDraft {
+    @LayoutPlan
+    var contentViewPlan: ViewPlan {
         UIImageView(image: UIImage(named: "icon_test")).drf.builder
             .contentMode(.scaleAspectFit).drf
             .left.vertical.equal(with: .parent).offset(by: 12)
@@ -515,41 +519,41 @@ class TableCell: UITableView, DraftedCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        applyDraft()
+        applyPlan()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        applyDraft()
+        applyPlan()
     }
 }
 ```
 
-Every time you call `applyDraft`, it will always try to recreate the view to be the same as what was declared in `viewDraft`.
+Every time you call `applyPlan`, it will always try to recreate the view to be the same as what was declared in `viewPlan`.
 
-There are some typealias with Drafted that you can use:
+There are some typealias with Planned that you can use:
 
-- **UITableDraftedCell** which is `UITableViewCell & DraftedCell`
-- **UICollectionDraftedCell** which is `UICollectionViewCell & DraftedCell`
+- **UITablePlannedCell** which is `UITableViewCell & PlannedCell`
+- **UICollectionPlannedCell** which is `UICollectionViewCell & PlannedCell`
 
-### Drafted Stack
+### Planned Stack
 
-`DraftedStack` is `Drafted` built specifically for a cell which declared like this:
+`PlannedStack` is `Planned` built specifically for a cell which declared like this:
 
 ```swift
-public protocol DraftedStack: Drafted {
-    @LayoutDraft
-    var stackViewDraft: ViewDraft { get }
+public protocol PlannedStack: Planned {
+    @LayoutPlan
+    var stackViewPlan: ViewPlan { get }
 }
 ```
 
-The only thing you need to implement is the `stackViewDraft` getter since everything will be implemented in extensions. It will automatically treat the draft as `arrangeSubviews` of the stack:
+The only thing you need to implement is the `stackViewPlan` getter since everything will be implemented in extensions. It will automatically treat the plan as `arrangeSubviews` of the stack:
 
 ```swift
-class MyStack: UIStackView, DraftedStack {
+class MyStack: UIStackView, PlannedStack {
     
-    @LayoutDraft
-    var stackViewDraft: ViewDraft {
+    @LayoutPlan
+    var stackViewPlan: ViewPlan {
         UIImageView(image: UIImage(named: "icon_test")).drf.builder
             .contentMode(.scaleAspectFit).drf
             .size.equal(with: CGSize(sides: 56))
@@ -559,19 +563,19 @@ class MyStack: UIStackView, DraftedStack {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        applyDraft()
+        applyPlan()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        applyDraft()
+        applyPlan()
     }
 }
 ```
 
-Every time you call `applyDraft`, it will always try to recreate the view to be the same as what was declared in `viewDraft`.
+Every time you call `applyPlan`, it will always try to recreate the view to be the same as what was declared in `viewPlan`.
 
-You can use `UIDraftedStack` since its a typealias of `UIStackView & DraftedStack`
+You can use `UIPlannedStack` since its a typealias of `UIStackView & PlannedStack`
 
 ***
 

@@ -10,20 +10,20 @@ import Foundation
 import UIKit
 
 @dynamicMemberLookup
-public class ConstraintBuilderRootRecoverable<Root: ViewDraftBuilder & LayoutAnchor>: ConstraintBuilder, DraftComponent {
+public class ConstraintBuilderRootRecoverable<Root: ViewPlanBuilder & LayoutAnchor>: ConstraintBuilder, PlanComponent {
     
     public typealias Layout = Root.Layout
     /// To avoid retain cycle
     var root: Root!
-    public var insertableDrafts: [ViewScheme] {
-        backToRoot { $0.insertableDrafts }
+    public var insertablePlans: [ViewDraft] {
+        backToRoot { $0.insertablePlans }
     }
     
     init(root: Root) {
         self.root = root
     }
     
-    func build(using context: DraftContext) -> [NSLayoutConstraint] {
+    func build(using context: PlanContext) -> [NSLayoutConstraint] {
         fatalError("build(using:) should be overridden")
     }
     
@@ -40,14 +40,14 @@ public class ConstraintBuilderRootRecoverable<Root: ViewDraftBuilder & LayoutAnc
         }
 }
 
-extension ConstraintBuilderRootRecoverable where Root: ViewScheme {
-    public func insert(@LayoutDraft _ layouter: () -> ViewDraft) -> Root {
+extension ConstraintBuilderRootRecoverable where Root: ViewDraft {
+    public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
         backToRoot { $0.insert(layouter) }
     }
 }
 
-extension ConstraintBuilderRootRecoverable where Root: StackScheme {
-    public func insertStacked(@LayoutDraft _ layouter: () -> ViewDraft) -> Root {
+extension ConstraintBuilderRootRecoverable where Root: StackDraft {
+    public func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
         backToRoot { $0.insertStacked(layouter) }
     }
 }
@@ -72,7 +72,7 @@ extension ConstraintBuilderRootRecoverable {
     }
 }
 
-extension ConstraintBuilderRootRecoverable where Root: ViewScheme {
+extension ConstraintBuilderRootRecoverable where Root: ViewDraft {
     
     public func resistVerticalExpansion(_ priority: UILayoutPriority) -> Root {
         backToRoot { $0.resistVerticalExpansion(priority) }

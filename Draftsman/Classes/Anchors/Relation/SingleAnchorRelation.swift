@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: SingleAnchorRelation
 
-public class SingleAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor, Anchor: LayoutAxisAnchor>: ConstraintBuilderRootRecoverable<Root> {
+public class SingleAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor, Anchor: LayoutAxisAnchor>: ConstraintBuilderRootRecoverable<Root> {
     let firstAnchor: AnchorExtractable<Anchor>
     let secondAnchor: AnchorExtractable<Anchor>
     let relation: NSLayoutConstraint.Relation
@@ -25,7 +25,7 @@ public class SingleAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor, Anchor:
         super.init(root: root)
     }
     
-    override func build(using context: DraftContext) -> [NSLayoutConstraint] {
+    override func build(using context: PlanContext) -> [NSLayoutConstraint] {
         let first = firstAnchor.anchor(from: context)
         let second = secondAnchor.anchor(from: context)
         return [ first.constraint(relation, to: second)]
@@ -49,7 +49,7 @@ extension SingleAnchorRelation {
 
 // MARK: SingleAnchorWithConstantRelation
 
-public class SingleAnchorWithConstantRelation<Root: ViewDraftBuilder & LayoutAnchor, Anchor: LayoutAxisAnchor>: ConstraintBuilderRootRecoverable<Root> {
+public class SingleAnchorWithConstantRelation<Root: ViewPlanBuilder & LayoutAnchor, Anchor: LayoutAxisAnchor>: ConstraintBuilderRootRecoverable<Root> {
     let parent: SingleAnchorRelation<Root, Anchor>
     let constant: CGFloat
     
@@ -59,7 +59,7 @@ public class SingleAnchorWithConstantRelation<Root: ViewDraftBuilder & LayoutAnc
         super.init(root: parent.root)
     }
     
-    override func build(using context: DraftContext) -> [NSLayoutConstraint] {
+    override func build(using context: PlanContext) -> [NSLayoutConstraint] {
         let first = parent.firstAnchor.anchor(from: context)
         let second = parent.secondAnchor.anchor(from: context)
         let relation = parent.relation

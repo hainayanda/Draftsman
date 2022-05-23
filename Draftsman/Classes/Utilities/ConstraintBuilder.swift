@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 protocol ConstraintBuilder {
-    func build(using context: DraftContext) -> [NSLayoutConstraint]
+    func build(using context: PlanContext) -> [NSLayoutConstraint]
 }
 
 extension Array where Element == ConstraintBuilder {
-    func build(using context: DraftContext) -> [NSLayoutConstraint] {
+    func build(using context: PlanContext) -> [NSLayoutConstraint] {
         reduce([]) { partialResult, builder in
             var result = partialResult
             result.append(contentsOf: builder.build(using: context))

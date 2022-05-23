@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class FieldViewController: UIDraftedController {
+class FieldViewController: UIPlannedController {
     
     lazy var typingLabel: UILabel = builder(UILabel(text: "will be replaced"))
         .textAlignment(.center)
@@ -24,8 +24,8 @@ class FieldViewController: UIDraftedController {
     lazy var baseView: UIView = UIView()
     lazy var imageView: UIImageView = UIImageView(image: UIImage(named: "image_test"))
     
-    @LayoutDraft
-    var viewDraft: ViewDraft {
+    @LayoutPlan
+    var viewPlan: ViewPlan {
         baseView.drf
             .centerY.lessThan(with: .parent)
             .horizontal.equal(with: .safeArea).offset(by: 16)
@@ -52,7 +52,7 @@ class FieldViewController: UIDraftedController {
         typingField.textField.delegate = self
         typingField.button.setTitle("Show", for: .normal)
         typingField.button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
-        applyDraft()
+        applyPlan()
     }
     
     @objc func didTapButton(_ sender: Any) {

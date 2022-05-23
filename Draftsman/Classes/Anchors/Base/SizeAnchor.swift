@@ -35,7 +35,7 @@ public class SizeAnchor<Root: LayoutAnchor> {
 
 // MARK: Constraint Relation
 
-extension SizeAnchor where Root.Layout: UIView, Root: ViewDraftBuilder {
+extension SizeAnchor where Root.Layout: UIView, Root: ViewPlanBuilder {
     
     // MARK: Constraint Relation with Other Anchor
     

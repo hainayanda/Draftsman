@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: QuadAnchorRelation
 
-public class QuadAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
+public class QuadAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
     let firstBiXPair: AnchorPair<NSLayoutXAxisAnchor>
     let secondBiXPair: AnchorPair<NSLayoutXAxisAnchor>
     let firstBiYPair: AnchorPair<NSLayoutYAxisAnchor>
@@ -45,7 +45,7 @@ public class QuadAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor>: Constrai
             super.init(root: root)
         }
     
-    override func build(using context: DraftContext) -> [NSLayoutConstraint] {
+    override func build(using context: PlanContext) -> [NSLayoutConstraint] {
         [
             firstBiXPair.build(with: context, for: firstBiXRelation),
             secondBiXPair.build(with: context, for: secondBiXRelation),
@@ -76,7 +76,7 @@ extension QuadAnchorRelation {
 
 // MARK: QuadAnchorWithConstantRelation
 
-public class QuadAnchorWithConstantRelation<Root: ViewDraftBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
+public class QuadAnchorWithConstantRelation<Root: ViewPlanBuilder & LayoutAnchor>: ConstraintBuilderRootRecoverable<Root> {
     let parent: QuadAnchorRelation<Root>
     let constant: UIEdgeInsets
     
@@ -86,7 +86,7 @@ public class QuadAnchorWithConstantRelation<Root: ViewDraftBuilder & LayoutAncho
         super.init(root: parent.root)
     }
     
-    override func build(using context: DraftContext) -> [NSLayoutConstraint] {
+    override func build(using context: PlanContext) -> [NSLayoutConstraint] {
         [
             parent.firstBiXPair.build(
                 with: context,

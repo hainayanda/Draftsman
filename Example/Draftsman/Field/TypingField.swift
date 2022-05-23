@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class TypingField: UIDraftedView {
+class TypingField: UIPlannedView {
     
     lazy var textField: UITextField = builder(UITextField())
         .placeholder("Type here")
@@ -22,8 +22,8 @@ class TypingField: UIDraftedView {
         .backgroundColor(.orange)
         .build()
     
-    @LayoutDraft
-    var viewDraft: ViewDraft {
+    @LayoutPlan
+    var viewPlan: ViewPlan {
         textField.drf
             .left.vertical.equal(with: .safeArea).offset(by: 8)
             .right.equal(to: button.leftAnchor).offset(by: 8)
@@ -36,12 +36,12 @@ class TypingField: UIDraftedView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        applyDraft()
+        applyPlan()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        applyDraft()
+        applyPlan()
     }
     
     override func layoutSubviews() {

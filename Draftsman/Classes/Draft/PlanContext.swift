@@ -1,5 +1,5 @@
 //
-//  DraftContext.swift
+//  PlanContext.swift
 //  Draftsman
 //
 //  Created by Nayanda Haberty on 06/04/22.
@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import Clavier
 
-public final class DraftContext {
-    var root: Drafted?
+public final class PlanContext {
+    var root: Planned?
     var currentView: UIView {
         didSet {
             guard currentView != oldValue else { return }
@@ -29,7 +29,7 @@ public final class DraftContext {
     var previousViewController: UIViewController?
     private var currentPriority: Float = 1000
     
-    init(root: Drafted? = nil, view: UIView) {
+    init(root: Planned? = nil, view: UIView) {
         self.root = root
         currentView = view
         currentViewController = view.responderViewController

@@ -29,7 +29,7 @@ public class DimensionAnchor<Root: LayoutAnchor> {
 
 // MARK: Constraint Relation
 
-extension DimensionAnchor where Root.Layout: UIView, Root: ViewDraftBuilder {
+extension DimensionAnchor where Root.Layout: UIView, Root: ViewPlanBuilder {
     
     // MARK: Constraint Relation with Other Anchor
     

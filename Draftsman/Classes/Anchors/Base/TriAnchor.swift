@@ -63,7 +63,7 @@ extension TriAnchor {
 
 // MARK: Constraint Relation
 
-extension TriAnchor where Root.Layout: UIView, Root: ViewDraftBuilder {
+extension TriAnchor where Root.Layout: UIView, Root: ViewPlanBuilder {
     
     // MARK: Constraint Relation with Other Anchor
     

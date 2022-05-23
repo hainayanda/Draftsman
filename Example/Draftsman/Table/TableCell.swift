@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class TableCell: UITableDraftedCell {
+class TableCell: UITablePlannedCell {
     
     lazy var titleLabel: UILabel = builder(UILabel())
         .textAlignment(.left)
@@ -22,8 +22,8 @@ class TableCell: UITableDraftedCell {
         .font(.systemFont(ofSize: 12))
         .build()
     
-    @LayoutDraft
-    var contentViewDraft: ViewDraft {
+    @LayoutPlan
+    var contentViewPlan: ViewPlan {
         UIImageView(image: UIImage(named: "icon_test")).drf.builder
             .contentMode(.scaleAspectFit).drf
             .left.vertical.equal(with: .parent).offset(by: 12)
@@ -36,19 +36,19 @@ class TableCell: UITableDraftedCell {
             }
     }
     
-    @LayoutDraft
-    var stackDraft: ViewDraft {
+    @LayoutPlan
+    var stackDraft: ViewPlan {
         titleLabel
         subtitleLabel
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        applyDraft()
+        applyPlan()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        applyDraft()
+        applyPlan()
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: TriAnchorRelation
 
-public class TriAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor, UniAnchor: LayoutAxisAnchor, BiAnchor: LayoutAxisAnchor>:  ConstraintBuilderRootRecoverable<Root> {
+public class TriAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor, UniAnchor: LayoutAxisAnchor, BiAnchor: LayoutAxisAnchor>:  ConstraintBuilderRootRecoverable<Root> {
     let type: TriAnchorType
     let uniPair: AnchorPair<UniAnchor>
     let firstBiPair: AnchorPair<BiAnchor>
@@ -42,7 +42,7 @@ public class TriAnchorRelation<Root: ViewDraftBuilder & LayoutAnchor, UniAnchor:
             super.init(root: root)
         }
     
-    override func build(using context: DraftContext) -> [NSLayoutConstraint] {
+    override func build(using context: PlanContext) -> [NSLayoutConstraint] {
         [
             uniPair.build(with: context, for: uniRelation),
             firstBiPair.build(with: context, for: firstBiRelation),
@@ -146,7 +146,7 @@ extension TriAnchorRelation {
 
 // MARK: TriAnchorWithConstantRelation
 
-public class TriAnchorWithConstantRelation<Root: ViewDraftBuilder & LayoutAnchor, UniAnchor: LayoutAxisAnchor, BiAnchor: LayoutAxisAnchor>:  ConstraintBuilderRootRecoverable<Root> {
+public class TriAnchorWithConstantRelation<Root: ViewPlanBuilder & LayoutAnchor, UniAnchor: LayoutAxisAnchor, BiAnchor: LayoutAxisAnchor>:  ConstraintBuilderRootRecoverable<Root> {
     let parent: TriAnchorRelation<Root, UniAnchor, BiAnchor>
     let constant: TriConstant
     
@@ -156,7 +156,7 @@ public class TriAnchorWithConstantRelation<Root: ViewDraftBuilder & LayoutAnchor
         super.init(root: parent.root)
     }
     
-    override func build(using context: DraftContext) -> [NSLayoutConstraint] {
+    override func build(using context: PlanContext) -> [NSLayoutConstraint] {
         [
             parent.uniPair.build(
                 with: context,
