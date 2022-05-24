@@ -19,7 +19,6 @@
 		BB3A243B2696CC8C00B8EBA0 /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A243A2696CC8C00B8EBA0 /* CollectionCell.swift */; };
 		BB3A243E2696D8CD00B8EBA0 /* FieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A243D2696D8CD00B8EBA0 /* FieldViewController.swift */; };
 		BB3A24402696D92700B8EBA0 /* TypingField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A243F2696D92700B8EBA0 /* TypingField.swift */; };
-		BB69DCDF283A6D910043A93D /* DummyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB69DCDE283A6D910043A93D /* DummyTest.swift */; };
 		BBBCC669283C4B08006B6809 /* SingleConstraintsCreationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBCC668283C4B08006B6809 /* SingleConstraintsCreationSpec.swift */; };
 		BBC9C43D277B0BE500D8A6F5 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9C43C277B0BE500D8A6F5 /* View.swift */; };
 		BBC9C43F277B0D1000D8A6F5 /* FragmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9C43E277B0D1000D8A6F5 /* FragmentViewController.swift */; };
@@ -56,7 +55,6 @@
 		BB3A243D2696D8CD00B8EBA0 /* FieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldViewController.swift; sourceTree = "<group>"; };
 		BB3A243F2696D92700B8EBA0 /* TypingField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingField.swift; sourceTree = "<group>"; };
 		BB69DCDB283A6D6B0043A93D /* Draftsman_Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Draftsman_Tests-Bridging-Header.h"; sourceTree = "<group>"; };
-		BB69DCDE283A6D910043A93D /* DummyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyTest.swift; sourceTree = "<group>"; };
 		BBBCC668283C4B08006B6809 /* SingleConstraintsCreationSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleConstraintsCreationSpec.swift; sourceTree = "<group>"; };
 		BBC9C43C277B0BE500D8A6F5 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		BBC9C43E277B0D1000D8A6F5 /* FragmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FragmentViewController.swift; sourceTree = "<group>"; };
@@ -137,7 +135,6 @@
 			children = (
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				BB69DCDB283A6D6B0043A93D /* Draftsman_Tests-Bridging-Header.h */,
-				BB69DCDE283A6D910043A93D /* DummyTest.swift */,
 				BBBCC668283C4B08006B6809 /* SingleConstraintsCreationSpec.swift */,
 			);
 			path = Tests;
@@ -431,7 +428,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBBCC669283C4B08006B6809 /* SingleConstraintsCreationSpec.swift in Sources */,
-				BB69DCDF283A6D910043A93D /* DummyTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
