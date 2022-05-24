@@ -28,7 +28,7 @@ public class SingleAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor, Anchor: 
     override func build(using context: PlanContext) -> [NSLayoutConstraint] {
         let first = firstAnchor.anchor(from: context)
         let second = secondAnchor.anchor(from: context)
-        return [ first.constraint(relation, to: second)]
+        return [first.constraint(relation, to: second)]
     }
 }
 

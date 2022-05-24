@@ -44,6 +44,15 @@ extension ConstraintBuilderRootRecoverable where Root: ViewDraft {
     public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
         backToRoot { $0.insert(layouter) }
     }
+    
+    public func build() -> [NSLayoutConstraint] {
+        backToRoot { $0.build() }
+    }
+    
+    @discardableResult
+    public func apply() -> [NSLayoutConstraint] {
+        backToRoot { $0.apply() }
+    }
 }
 
 extension ConstraintBuilderRootRecoverable where Root: StackDraft {
