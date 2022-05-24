@@ -7,6 +7,8 @@
 
 import Foundation
 #if canImport(UIKit)
+import UIKit
+
 extension Array where Element == NSLayoutConstraint {
     
     var validUniques: [NSLayoutConstraint] {

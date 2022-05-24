@@ -7,6 +7,8 @@
 //
 
 import Foundation
+#if canImport(UIKit)
+import UIKit
 import Draftsman
 import Quick
 import Nimble
@@ -707,3 +709,4 @@ fileprivate func assertLessThan(_ constraint: NSLayoutConstraint, _ viewAnchorPa
         expect(constraint.relation).to(equal(.greaterThanOrEqual))
     }
 }
+#endif
