@@ -276,11 +276,11 @@ This can be used to create a constraint using one of these three methods:
 Those methods can accept basic `NSLayoutAnchor` from `UIKit` or using `Anchor` from `Draftsman` as long it's in the same Axis.
 To add a constant, use one of `offset(by:)` or `inset(by:)` methods. offset` is spacing going to the outer part of the anchor and `inset` are spacing going to the inner part of the anchor:
 
-![alt text](https://github.com/hainayanda/Draftsman/blob/main/offset_and_inset.png)
+![alt text](https://github.com/hainayanda/Draftsman/blob/master/offset_and_inset.png)
 
 For center anchor, offset and inset can be described by this picture:
 
-![alt text](https://github.com/hainayanda/Draftsman/blob/main/offset_and_inset_center.png)
+![alt text](https://github.com/hainayanda/Draftsman/blob/master/offset_and_inset_center.png)
 
 You can then add priority or/and an identifier for the constraints created.
 
