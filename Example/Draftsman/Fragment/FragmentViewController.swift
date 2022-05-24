@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class FragmentViewController: UIViewController, Planned {
+class FragmentViewController: UIPlannedController {
     
     lazy var scrollView: UIScrollView = UIScrollView()
     lazy var stackView: UIStackView = UIStackView(
@@ -20,11 +20,11 @@ class FragmentViewController: UIViewController, Planned {
         alignment: .fill
     )
     lazy var buttonAdd: UIButton = builder(UIButton())
-        .cornerRadius(8)
+        .layer.cornerRadius(8)
         .backgroundColor(.orange)
         .build()
     lazy var buttonRemove: UIButton = builder(UIButton())
-        .cornerRadius(8)
+        .layer.cornerRadius(8)
         .backgroundColor(.orange)
         .build()
     lazy var buttonStack: UIStackView = UIStackView(
@@ -42,15 +42,14 @@ class FragmentViewController: UIViewController, Planned {
     
     @LayoutPlan
     var viewPlan: ViewPlan {
-        scrollView.plan
-            .at(.fullTop, .equal, to: .safeArea)
-            .bottom(.equalTo(16), to: buttonStack.topAnchor)
+        scrollView.drf
+            .top.horizontal.equal(with: .safeArea)
+            .bottom.equal(to: buttonStack.topAnchor).offset(by: 16)
             .insert {
                 scrollContent
             }
-        buttonStack.plan
-            .horizontal(.equalTo(16), to: .safeArea)
-            .bottom(.equal, to: .safeArea)
+        buttonStack.drf
+            .bottom.horizontal.equal(with: .safeArea).offset(by: 16)
             .insertStacked {
                 buttonAdd
                 buttonRemove
@@ -59,9 +58,9 @@ class FragmentViewController: UIViewController, Planned {
     
     @LayoutPlan
     var scrollContent: ViewPlan {
-        stackView.plan
-            .width(.equalTo(.parent))
-            .edges(.equal, to: .parent)
+        stackView.drf
+            .width.equal(with: .parent)
+            .edges.equal(with: .parent)
             .insertStacked {
                 if fragments.isEmpty {
                     emptyContent
@@ -75,7 +74,7 @@ class FragmentViewController: UIViewController, Planned {
     @LayoutPlan
     var emptyContent: ViewPlan {
         spacing
-        UILabel().plan.builder
+        UILabel().drf.builder
             .text("NO FRAGMENTS")
             .textAlignment(.center)
         spacing
@@ -83,8 +82,8 @@ class FragmentViewController: UIViewController, Planned {
     
     @LayoutPlan
     var spacing: ViewPlan {
-        UIView().plan
-            .height(.equalTo(60))
+        UIView().drf
+            .height.equal(to: 60)
             .builder.backgroundColor(.clear)
     }
     

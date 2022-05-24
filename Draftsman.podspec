@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Draftsman'
-  s.version          = '2.3.0'
+  s.version          = '3.0.0'
   s.summary          = 'Draftsman is a DSL framework for Swift'
 
 # This description is used to generate tags and improve search results.
@@ -38,7 +38,7 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'Clavier', '~> 1.0.3'
+  s.dependency 'Clavier', '~> 2.0.0'
   s.dependency 'Builder', '~> 1.0.3'
   s.swift_version = '5.5'
 end

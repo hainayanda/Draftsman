@@ -10,36 +10,37 @@ import UIKit
 import Draftsman
 import Builder
 
-class MainViewController: UIViewController, Planned {
+class MainViewController: UIPlannedController {
     
     lazy var buttonToTable: UIButton = builder(UIButton())
-        .cornerRadius(8)
+        .layer.cornerRadius(8)
         .backgroundColor(.orange)
         .build()
     
     lazy var buttonToCollection: UIButton = builder(UIButton())
-        .cornerRadius(8)
+        .layer.cornerRadius(8)
         .backgroundColor(.orange)
         .build()
     
     lazy var buttonToField: UIButton = builder(UIButton())
-        .cornerRadius(8)
+        .layer.cornerRadius(8)
         .backgroundColor(.orange)
         .build()
     
     lazy var buttonToFragment: UIButton = builder(UIButton())
-        .cornerRadius(8)
+        .layer.cornerRadius(8)
         .backgroundColor(.orange)
         .build()
     
-    @LinkedView var stackView: UIStackView
+    lazy var stackView: UIStackView = UIStackView(axis: .vertical, spacing: 32)
     
     @LayoutPlan
     var viewPlan: ViewPlan {
-        UIStackView(axis: .vertical, spacing: 32).plan(into: $stackView)
-            .center(.equal, to: .parent)
-            .horizontal(.equalTo(16), to: .safeArea)
-            .vertical(.moreThanTo(16), to: .safeArea)
+        stackView.drf
+            .center.equal(with: .parent)
+            .horizontal.equal(with: .safeArea).offset(by: 16)
+            .vertical.moreThan(with: .safeArea).offset(by: 16)
+            .resistVerticalExpansion(.required)
             .insertStacked {
                 stackPlan
             }
@@ -47,10 +48,10 @@ class MainViewController: UIViewController, Planned {
     
     @LayoutPlan
     var stackPlan: ViewPlan {
-        buttonToTable
-        buttonToCollection
-        buttonToField
-        buttonToFragment
+        buttonToTable.drf
+        buttonToCollection.drf
+        buttonToField.drf
+        buttonToFragment.drf
     }
     
     override func viewDidLoad() {
@@ -87,6 +88,6 @@ class MainViewController: UIViewController, Planned {
     @objc func goToFragment(_ sender: Any) {
         navigationController?.pushViewController(FragmentViewController(), animated: true)
     }
-
+    
 }
 

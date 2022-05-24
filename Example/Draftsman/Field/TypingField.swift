@@ -11,30 +11,41 @@ import UIKit
 import Draftsman
 import Builder
 
-class TypingField: FragmentView {
+class TypingField: UIPlannedView {
     
     lazy var textField: UITextField = builder(UITextField())
         .placeholder("Type here")
         .build()
     
     lazy var button: UIButton = builder(UIButton())
-        .cornerRadius(8)
+        .layer.cornerRadius(8)
         .backgroundColor(.orange)
         .build()
     
     @LayoutPlan
-    override var viewPlan: ViewPlan {
-        textField.plan
-            .at(.fullLeft, .equalTo(8), to: .safeArea)
-            .right(.equalTo(8), to: button.leftAnchor)
-            .height(.equalTo(30))
-        button.plan
-            .at(.fullRight, .equalTo(8), to: .safeArea)
-            .width(.equalTo(64))
-            .height(.equalTo(30))
+    var viewPlan: ViewPlan {
+        textField.drf
+            .left.vertical.equal(with: .safeArea).offset(by: 8)
+            .right.equal(to: button.leftAnchor).offset(by: 8)
+            .height.equal(to: 30)
+        button.drf
+            .right.vertical.equal(with: .safeArea).offset(by: 8)
+            .width.equal(to: 64)
+            .height.equal(to: 30)
     }
     
-    override func fragmentWillLayoutForTheFirstTime() {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        applyPlan()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        applyPlan()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         button.contentEdgeInsets = UIEdgeInsets(horizontal: 8)
         backgroundColor = .white
         layer.shadowColor = UIColor.black.cgColor

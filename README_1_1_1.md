@@ -22,7 +22,7 @@ pod 'Draftsman', '~> 1.1.1'
 ### Swift Package Manager from XCode
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
-- Add **https://github.com/hainayanda/Draftsman.git** as Swift Package URL
+- Add **<https://github.com/hainayanda/Draftsman.git>** as Swift Package URL
 - Set rules at **version**, with **Up to Next Major** option and put **1.1.1** as its version
 - Click next and wait
 
@@ -62,9 +62,11 @@ Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. The syntax is
 ***
 
 ## Basic
+
 there are two method to start planning which can be called from both any `UIView` or `UIViewController`:
-* `func plan(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlaner<Self>) -> Void)`
-* `func planContent(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlan<Self>) -> Void)`
+
+- `func plan(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlaner<Self>) -> Void)`
+- `func planContent(withDelegate delegate: PlanDelegate? = nil, _ options: PlanningOption = .append, _ layouter: (LayoutPlan<Self>) -> Void)`
 
 as you can see in the name, `plan` is used to create plan for the `UIView` or view in `UIViewController` dimension and position that called those method:
 
@@ -88,6 +90,7 @@ someView.planContent { someContentPlan in
 ```
 
 ### PlanDelegate
+
 You could pass `PlanDelegate` to delegate some problem which could be occurs when you are planning. The delegate is declared like this:
 
 ```swift
@@ -98,29 +101,34 @@ public protocol PlanDelegate: class {
 }
 ```
 
-* `planer(viewHaveNoSuperview:)` will be called if the planner needs superview but cannot find any. You could provide one, or just return nil to ignore those plan and produce error which can be caught at this delegate. The default is nil.
-* `planer(neededViewControllerFor:)` will be called if the planner needs parent `UIViewController` but cannot find any. You could provide one, or just return nil to ignore those plan and produce error which can be caught at this delegate. The default is to get the current view UIViewController if have any.
-* `planer(_:, errorWhenPlanning:)` will be called if any error occurs when planning.
+- `planer(viewHaveNoSuperview:)` will be called if the planner needs superview but cannot find any. You could provide one, or just return nil to ignore those plan and produce error which can be caught at this delegate. The default is nil.
+- `planer(neededViewControllerFor:)` will be called if the planner needs parent `UIViewController` but cannot find any. You could provide one, or just return nil to ignore those plan and produce error which can be caught at this delegate. The default is to get the current view UIViewController if have any.
+- `planer(_:, errorWhenPlanning:)` will be called if any error occurs when planning.
 
 ### PlanningOption
+
 PlanningOption is an enumeration that will determine how the plan will be implemented:
-* **append** will be ignore current active `NSLayoutConstraints` and append any `NSLayoutConstraints` planned.
-* **renew** will update the same current active `NSLayoutConstraints` which created by Draftsman if found and append the new one.
-* **startFresh** will remove all current active `NSLayoutConstraints` created by Draftsman and append any NSLayoutConstraints planned.
-* **startClean** will be remove all current active `NSLayoutConstraints` and append any `NSLayoutConstraints` planned.
+
+- **append** will be ignore current active `NSLayoutConstraints` and append any `NSLayoutConstraints` planned.
+- **renew** will update the same current active `NSLayoutConstraints` which created by Draftsman if found and append the new one.
+- **startFresh** will remove all current active `NSLayoutConstraints` created by Draftsman and append any NSLayoutConstraints planned.
+- **startClean** will be remove all current active `NSLayoutConstraints` and append any `NSLayoutConstraints` planned.
 
 if we sort all the options from the fastest to the slowest it could be like this:
-* append
-* startClean
-* startFresh
-* renew
+
+- append
+- startClean
+- startFresh
+- renew
 
 but even if the `append` is the fastest, you better just use this if you want to plan once, otherwise, you will have multiple duplicated constraints.
 
 ***
 
 ## View Hierarchy
+
 The hierarchy of View is just like how the closure declared in your code:
+
 ```swift
 parentView.planContent { parentPlan in
     parentPlan.fit(someView)
@@ -130,12 +138,15 @@ parentView.planContent { parentPlan in
     parentPlan.fit(otherView)
 }
 ```
+
 The above code, it's using `planContent` method which will bypass `parentView` plan into its content plan. It actually will do the following instruction sequentially:
+
 1. `parentView` insert `someView`
 2. `someView` insert `someChildView`
 3. `parentView` insert `otherView`
 
 So if the hierarchy is written in pseudo hierarchy style, it should be similar to this:
+
 ```
 parentView
 |____someView
@@ -145,8 +156,9 @@ parentView
 
 where `someView` and `otherView` are both inside `parentView`, and `someChildView` is inside `someView`
 the compatible type to be passed in the fit method are:
-* any descendant of `UIView`
-* any descendant of `UIViewController`
+
+- any descendant of `UIView`
+- any descendant of `UIViewController`
 
 If you pass `UIViewController`, it will be automatically added `UIViewController` view as a child and put the `UIViewController` as a child of its current `UIViewController`.
 You could `planContent` as much as you need, it will fit all the View just like how you write it.
@@ -156,6 +168,7 @@ You could `planContent` as much as you need, it will fit all the View just like 
 ## View Position
 
 ### Basic Positioning
+
 Positioning a View is easy. You just need to declare which anchor should have relation to others:
 
 ```swift
@@ -174,37 +187,43 @@ the anatomy of position plan is:
 > _func **anchor_name**(__ _relation: **LayoutRelation<CGFloat>**, to anchor: **other_anchor**, priority: UILayoutPriority? = nil) -> Planner_
 
 which `anchor_name` could be:
-* **top**
-* **bottom**
-* **left**
-* **right**
-* **centerX**
-* **centerY**
+
+- **top**
+- **bottom**
+- **left**
+- **right**
+- **centerX**
+- **centerY**
 
 and `LayoutRelation` is enumeration with generic param which in this case is `CGFloat`:
-* **moreThanTo(CGFloat)**
-* **lessThanTo(CGFloat)**
-* **equalTo(CGFloat)**
-* **moreThan**
-* **lessThan**
-* **equal**
+
+- **moreThanTo(CGFloat)**
+- **lessThanTo(CGFloat)**
+- **equalTo(CGFloat)**
+- **moreThan**
+- **lessThan**
+- **equal**
 
 all the parameter is `CGFloat` that will be translated as space towards the anchor, as when the anchor is `left`, then the param will be translated as space to the left, and if the anchor is `right`, then the param will be translated as space to the right.
 
 and `other_anchor` common types are:
-* `NSLayoutYAxisAnchor`
-* `NSLayoutXAxisAnchor`
-* `AnonymousRelation`
+
+- `NSLayoutYAxisAnchor`
+- `NSLayoutXAxisAnchor`
+- `AnonymousRelation`
 
 the `AnonymousRelation` is an enumeration that contains:
-* **parent** which are where the same anchor of parent `UIView`
-* **safeArea** which are where the same anchor of parent safe area `UIView`
-* **myself** which are where the same anchor of current `UIView`
-* **mySafeArea** which are where the same anchor of current safe area `UIView`
-* **previous** which are where the same anchor of previous planned `UIView`
-* **previousSafeArea** which are where the same anchor of previous planned `UIView`
-* **keyboard** which are the same anchor of parent keyboard guide of `UIView`
-* **keyboardSafeArea** which are the same anchor of parent keyboard guide of `UIView` intersect with safe area
+
+- **parent** which are where the same anchor of parent `UIView`
+- **safeArea** which are where the same anchor of parent safe area `UIView`
+
+- **myself** which are where the same anchor of current `UIView`
+
+- **mySafeArea** which are where the same anchor of current safe area `UIView`
+- **previous** which are where the same anchor of previous planned `UIView`
+- **previousSafeArea** which are where the same anchor of previous planned `UIView`
+- **keyboard** which are the same anchor of parent keyboard guide of `UIView`
+- **keyboardSafeArea** which are the same anchor of parent keyboard guide of `UIView` intersect with safe area
 
 the `keyboard` and `keyboardSafeArea` are all powered by [Clavier](https://github.com/hainayanda/Clavier)
 
@@ -221,6 +240,7 @@ myView.plan {
 ```
 
 ### Related Anchor
+
 If your `AnonymousRelation` anchor is different than your anchor, you could use `RelatedAnchor<NSLayoutXAxisAnchor>`. It's actually the anchor extractor from `AnonymousRelation`.
 
 So lets say you want to make your view always on top of keyboard, just do this:
@@ -236,9 +256,11 @@ myView.plan {
 so instead of calling the previous anchor explicitly, you call them like that.
 
 ### Positioning Shortcut
+
 There are some shortcut for Positioning. For center anchor:
-* `func center(_ relation: LayoutRelation<CoordinateOffsets>, to view: UIView, priority: UILayoutPriority? = nil) -> Self`
-* `func center(_ relation: LayoutRelation<CoordinateOffsets>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
+
+- `func center(_ relation: LayoutRelation<CoordinateOffsets>, to view: UIView, priority: UILayoutPriority? = nil) -> Self`
+- `func center(_ relation: LayoutRelation<CoordinateOffsets>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
 
 the `CoordinateOffsets` is struct which contains `xOffset` and `yOffset`. The center is shortcut to `centerX` and `centerY`, it will automatically assign `NSLayoutConstraints` relation to same center anchor to the `UIView` or `AnonymousRelation`. Example:
 
@@ -249,10 +271,11 @@ myView.plan {
 ```
 
 For vertical and horizontal position:
-* `func vertical(_ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
-* `func vertical(_ relation: LayoutRelation<InsetsConvertible>, to view: UIView, priority: UILayoutPriority? = nil) -> Self`
-* `func horizontal(_ relation: LayoutRelation<InsetsConvertible>, to view: UIView, priority: UILayoutPriority? = nil) -> Self`
-* `func horizontal(_ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
+
+- `func vertical(_ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
+- `func vertical(_ relation: LayoutRelation<InsetsConvertible>, to view: UIView, priority: UILayoutPriority? = nil) -> Self`
+- `func horizontal(_ relation: LayoutRelation<InsetsConvertible>, to view: UIView, priority: UILayoutPriority? = nil) -> Self`
+- `func horizontal(_ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
 
 the `InsetsConvertible` can be `UIEdgeInsets`, `UIVerticalInsets`, `UIHorizontalInsets`, `CGFloat`, `Int` or `Double`. Single types like `CGFloat`, `Int` or `Double` will be treated as `UIEdgeInsets` with same insets for top, left, right and bottom. The vertical will be assign top and bottom anchor to `UIView` or `AnonymousRelation` same anchors. Example:
 
@@ -263,7 +286,8 @@ myView.plan {
 ```
 
 For all edges:
-* `func edges(_ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
+
+- `func edges(_ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
 
 It will automatically assign `top`, `left`, `bottom` and `right` anchor to `UIView` or `AnonymousRelation` same anchors. Example:
 
@@ -274,34 +298,38 @@ myView.plan {
 ```
 
 For any specific position:
-* `func at(_ positions: [LayoutEdge], _ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
-* `func at(_ viewRelation: RelatedPosition, _ relation: LayoutRelation<InsetsConvertible>, priority: UILayoutPriority? = nil) -> Self`
-* `func inBetween(of view: UIView, and otherView: UIView, _ position: MiddlePosition, priority: UILayoutPriority? = nil) -> Self`
+
+- `func at(_ positions: [LayoutEdge], _ relation: LayoutRelation<InsetsConvertible>, to anchor: AnonymousRelation, priority: UILayoutPriority? = nil) -> Self`
+- `func at(_ viewRelation: RelatedPosition, _ relation: LayoutRelation<InsetsConvertible>, priority: UILayoutPriority? = nil) -> Self`
+- `func inBetween(of view: UIView, and otherView: UIView, _ position: MiddlePosition, priority: UILayoutPriority? = nil) -> Self`
 
 Array of `LayoutEdge` have static var extensions which are:
-* **topLeft** which is `[.top, .left]`
-* **topRight** which is `[.top, .right]`
-* **bottomLeft** which is `[.bottom, .left]`
-* **bottomRight** which is `[.bottom, .right]`
-* **fullLeft** which is `[.left, .top, .bottom]`
-* **fullRight** which is `[.right, .top, .bottom]`
-* **fullBottom** which is `[.bottom, .left, .right]`
-* **fullTop** which is `[.top, .left, .right]`
-* **edge** which is `[.top, .bottom, .left, .right]`
+
+- **topLeft** which is `[.top, .left]`
+- **topRight** which is `[.top, .right]`
+- **bottomLeft** which is `[.bottom, .left]`
+- **bottomRight** which is `[.bottom, .right]`
+- **fullLeft** which is `[.left, .top, .bottom]`
+- **fullRight** which is `[.right, .top, .bottom]`
+- **fullBottom** which is `[.bottom, .left, .right]`
+- **fullTop** which is `[.top, .left, .right]`
+- **edge** which is `[.top, .bottom, .left, .right]`
 
 `RelatedPosition` is enumeration which are:
-* **topOf(UIView)** which will mark bottom to be at top of other `UIView`
-* **bottomOf(UIView)** which will mark top to be at bottom of other `UIView`
-* **leftOf(UIView)** which will mark right to be at left of other `UIView`
-* **rightOf(UIView)** which will mark left to be at right of other `UIView`
-* **topOfAndParallelWith(UIView)** which same as `topOf`, but with same left and right as other `UIView`
-* **bottomOfAndParallelWith(UIView)** which same as `bottomOf`, but with same left and right as other `UIView`
-* **leftOfAndParallelWith(UIView)** which same as `leftOf`, but with same top and bottom as other `UIView`
-* **rightOfAndParallelWith(UIView)** which same as `rightOf`, but with same top and bottom as other `UIView`
+
+- **topOf(UIView)** which will mark bottom to be at top of other `UIView`
+- **bottomOf(UIView)** which will mark top to be at bottom of other `UIView`
+- **leftOf(UIView)** which will mark right to be at left of other `UIView`
+- **rightOf(UIView)** which will mark left to be at right of other `UIView`
+- **topOfAndParallelWith(UIView)** which same as `topOf`, but with same left and right as other `UIView`
+- **bottomOfAndParallelWith(UIView)** which same as `bottomOf`, but with same left and right as other `UIView`
+- **leftOfAndParallelWith(UIView)** which same as `leftOf`, but with same top and bottom as other `UIView`
+- **rightOfAndParallelWith(UIView)** which same as `rightOf`, but with same top and bottom as other `UIView`
 
 `MiddlePosition` is enumeration with `LayoutRelation<InsetsConvertible>` parameter:
-* **horizontally(LayoutRelation<InsetsConvertible>)**
-* **vertically(LayoutRelation<InsetsConvertible>)**
+
+- **horizontally(LayoutRelation<InsetsConvertible>)**
+- **vertically(LayoutRelation<InsetsConvertible>)**
 
 Example:
 
@@ -320,6 +348,7 @@ otherView.plan {
 ## View Dimension
 
 ### Basic Dimensioning
+
 Create dimension constraints for a View is easy. You just need to declare which anchor should have relation to others:
 
 ```swift
@@ -333,7 +362,7 @@ myView.plan {
 
 The anatomy of dimension plan is:
 
-> _func **dimension_name**(__ _relation: **InterRelation of AnonymousRelation**, __ _dimension: **LayoutDimension**, multiplyBy multiplier: CGFloat, constant: CGFloat, priority: UILayoutPriority? = nil) -> Planner_
+> _func **dimension_name**(__ _relation: **InterRelation of AnonymousRelation**,__ _dimension: **LayoutDimension**, multiplyBy multiplier: CGFloat, constant: CGFloat, priority: UILayoutPriority? = nil) -> Planner_
 
 this one could be used to plan any dimension constraints with any `AnonymousRelation` dimension anchor. The other dimension plan is:
 
@@ -346,20 +375,24 @@ this one could be used to plan any dimension constraints with any `NSLayoutDimen
 this one could be used to plan any dimension constraints against any constant.
 
 The `InterRelation` is the enumeration with generic parameter:
-* **moreThanTo(Related)**
-* **lessThanTo(Related)**
-* **equalTo(Related)**
+
+- **moreThanTo(Related)**
+- **lessThanTo(Related)**
+- **equalTo(Related)**
 
 and `LayoutDimension` is enumeration of dimension:
-* **height**
-* **width**
+
+- **height**
+- **width**
 
 a multiplier is a value that will be multiplied by dimension anchor. The constant will be added to the dimension.
 
 ### Dimensioning Shortcut
+
 There are some shortcut for Dimensioning which are:
-* `func size(_ relation: InterRelation<CGSize>, priority: UILayoutPriority? = nil) -> Self`
-* `func size(_ relation: InterRelation<UIView>, multiplyBy multiplier: CGFloat = 1, constant: CGFloat = 0, priority: UILayoutPriority? = nil) -> Self`
+
+- `func size(_ relation: InterRelation<CGSize>, priority: UILayoutPriority? = nil) -> Self`
+- `func size(_ relation: InterRelation<UIView>, multiplyBy multiplier: CGFloat = 1, constant: CGFloat = 0, priority: UILayoutPriority? = nil) -> Self`
 
 both will automatically assign both width and height constraints towards CGSize constant or UIView size. Example:
 
@@ -407,6 +440,7 @@ public protocol Fragment {
     func fragmentDidPlanContent()
 }
 ```
+
 - `fragmentWillPlanContent()` will be called before `planContent(_:)` is called. its optional
 - `planContent(_:)` is the mandatory method which will be called to plan the content of Fragment.
 - `fragmentDidPlanContent()` will be called after `planContent(_:)` is called. its optional
@@ -442,32 +476,40 @@ class MySimpleViewController: UIViewController {
 
 what happening here is when you fit simpleFragment into view, it will call simpleFragment's `planContent(_:)` where the `InsertablePlan` is the simpleFragment's `LayoutPlaner`. If it's described as hierarchal pseudocode and where the part is executed. It will be looked like this:
 
-* viewDidLoad
-> * planContent
-> > * fit simpleFragment inside view
-> > > * add simpleFragment as subviews of view controller view
-> > > * create LayoutPlaner with simpleFragment as its view
-> > > * call simpleFragment's `fragmentWillPlanContent()` method which not implemented so its doing nothing
-> > > * call simpleFragment's `planContent(_:)` method
-> > > > * fit marginedButton inside simpleFragment
-> > > > * create edges contraints
-> > > * call simpleFragment's `fragmentDidPlanContent()` method which not implemented so its doing nothing
-> > * create fullBottom constraints
-> > * activate all constraints created inside
+- viewDidLoad
+>
+> - planContent
+> >
+> > - fit simpleFragment inside view
+> > >
+> > > - add simpleFragment as subviews of view controller view
+> > > - create LayoutPlaner with simpleFragment as its view
+> > > - call simpleFragment's `fragmentWillPlanContent()` method which not implemented so its doing nothing
+> > > - call simpleFragment's `planContent(_:)` method
+> > > >
+> > > > - fit marginedButton inside simpleFragment
+> > > > - create edges contraints
+> > > >
+> > > - call simpleFragment's `fragmentDidPlanContent()` method which not implemented so its doing nothing
+> > >
+> > - create fullBottom constraints
+> > - activate all constraints created inside
 
 The simple fragments `planContent(_:)` will be called inside `fit(_:)` so all its subviews constraints will already be created after `fit(_:)` is called.
 
 There are two other extensions method you could use to call planContent indirectly:
-* `func planFragment(delegate: PlanDelegate? = nil)` which will be call `fragmentWillPlanContent()`, `planContent(_:)` and `fragmentDidPlanContent()` and activate all created constraints right away
-* `func replanContent(delegate: PlanDelegate? = nil)` which will remove all its and subviews constraints which created by Draftsman and call `planFragment(delegate:)`
+
+- `func planFragment(delegate: PlanDelegate? = nil)` which will be call `fragmentWillPlanContent()`, `planContent(_:)` and `fragmentDidPlanContent()` and activate all created constraints right away
+- `func replanContent(delegate: PlanDelegate? = nil)` which will remove all its and subviews constraints which created by Draftsman and call `planFragment(delegate:)`
 
 ***
 
 ## Fragment View
 
 There is UIView that already implemented Fragment that you can extend named `FragmentView`. It have some more open method that you can use:
-* `func fragmentWillLayoutForTheFirstTime()` which will be called inside `layoutSubviews()` and only once at the first time before `super.layoutSubviews()`
-* `func fragmentDidLayoutForTheFirstTime()` which will be called inside `layoutSubviews()` and only once at the first time after  `super.layoutSubviews()`
+
+- `func fragmentWillLayoutForTheFirstTime()` which will be called inside `layoutSubviews()` and only once at the first time before `super.layoutSubviews()`
+- `func fragmentDidLayoutForTheFirstTime()` which will be called inside `layoutSubviews()` and only once at the first time after  `super.layoutSubviews()`
 
 The advantages of the FragmentView are:
 
@@ -515,21 +557,24 @@ You're not supposed to implement FragmentCell by yourself but by extend `TableFr
 ### Behavior and Phase
 
 As we could see before, the `FragmentCell` have two properties and one added method:
-* `var layoutPhase: CellLayoutingPhase { get }`
-* `var planningBehavior: CellPlanningBehavior { get }`
-* `func planningOption(on phase: CellLayoutingPhase) -> PlanningOption`
+
+- `var layoutPhase: CellLayoutingPhase { get }`
+- `var planningBehavior: CellPlanningBehavior { get }`
+- `func planningOption(on phase: CellLayoutingPhase) -> PlanningOption`
 
 The `layoutPhase` is the phase of the Cell, which is an enumeration:
-* **firstLoad** which indicated that the `Cell` is just created
-* **setNeedsLayout** which indicated that the `Cell` `setNeedsLayout()` is just called
-* **reused** which indicated that the `Cell` is being reused
-* **none
+
+- **firstLoad** which indicated that the `Cell` is just created
+- **setNeedsLayout** which indicated that the `Cell` `setNeedsLayout()` is just called
+- **reused** which indicated that the `Cell` is being reused
+- **none
 
 the `planningBehavior` is the behavior of the cell during layouting which could be overridden if needed. It is enumeration which contains:
-* **planOnce** which will only call `planContent(_:)` during `firstLoad` phase
-* **planOn(CellLayoutingPhase)** which will only call `planContent(_:)` during the given `CellLayoutingPhase`
-* **planOnEach([CellLayoutingPhase])** which will only call `planContent(_:)` during each given `CellLayoutingPhase`
-* **planIfPossible** which will always call `planContent(_:)` for any `CellLayoutingPhase`
+
+- **planOnce** which will only call `planContent(_:)` during `firstLoad` phase
+- **planOn(CellLayoutingPhase)** which will only call `planContent(_:)` during the given `CellLayoutingPhase`
+- **planOnEach([CellLayoutingPhase])** which will only call `planContent(_:)` during each given `CellLayoutingPhase`
+- **planIfPossible** which will always call `planContent(_:)` for any `CellLayoutingPhase`
 
 the `planningOption(on:)` will be called before `planContent(_:)` is called by any phase. It will asked what `PlanningOption` you want to use when call `planContent(_:)`. The default is append when `firstLoad` phase and `starFresh` on the other phases. You could read more about `PlanningOption` [here](https://github.com/hainayanda/Draftsman/wiki/Draftsman-Plan#planningoption). Example:
 

@@ -11,7 +11,7 @@ import UIKit
 import Draftsman
 import Builder
 
-class TableCell: TableFragmentCell {
+class TableCell: UITablePlannedCell {
     
     lazy var titleLabel: UILabel = builder(UILabel())
         .textAlignment(.left)
@@ -23,17 +23,17 @@ class TableCell: TableFragmentCell {
         .build()
     
     @LayoutPlan
-    override var viewPlan: ViewPlan {
-        UIImageView(image: UIImage(named: "icon_test")).plan
-            .builder.contentMode(.scaleAspectFit)
-            .plan.at(.fullLeft, .equalTo(12), to: .parent)
-            .width(.equalTo(.height(of: .myself)))
-        UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4).plan
-            .at(.fullRight, .equalTo(12), to: .parent)
-            .left(.equalTo(8), to: .right(of: .previous))
+    var contentViewPlan: ViewPlan {
+        UIImageView(image: UIImage(named: "icon_test")).drf.builder
+            .contentMode(.scaleAspectFit).drf
+            .left.vertical.equal(with: .parent).offset(by: 12)
+            .size.equal(with: CGSize(sides: 56))
+        UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4).drf
+            .right.vertical.equal(with: .parent).offset(by: 12)
+            .left.equal(with: .right(of: .previous)).offset(by: 8)
             .insertStacked {
                 stackPlan
-        }
+            }
     }
     
     @LayoutPlan
@@ -42,7 +42,13 @@ class TableCell: TableFragmentCell {
         subtitleLabel
     }
     
-    override func calculatedCellHeight(for cellWidth: CGFloat) -> CGFloat {
-        80
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        applyPlan()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        applyPlan()
     }
 }
