@@ -64,10 +64,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertEqual(constraint, viewAnchorPair, relatedAnchorPair)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -81,10 +78,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertEqual(constraint, viewAnchorPair, relatedAnchorPair)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -110,10 +104,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertMoreThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -127,10 +118,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertMoreThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -156,10 +144,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertLessThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -173,10 +158,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertLessThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -223,10 +205,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertEqual(constraint, viewAnchorPair, relatedAnchorPair)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -240,10 +219,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertEqual(constraint, viewAnchorPair, relatedAnchorPair)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -269,10 +245,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertMoreThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -286,10 +259,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertMoreThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -315,10 +285,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertLessThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -332,10 +299,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertLessThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -382,10 +346,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertEqual(constraint, viewAnchorPair, relatedAnchorPair)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -399,10 +360,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertEqual(constraint, viewAnchorPair, relatedAnchorPair)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -428,10 +386,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertMoreThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -445,10 +400,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertMoreThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -474,10 +426,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertLessThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -491,10 +440,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertLessThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -538,10 +484,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertEqual(constraint, viewAnchorPair, relatedAnchorPair)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -555,10 +498,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertEqual(constraint, viewAnchorPair, relatedAnchorPair)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -584,10 +524,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertMoreThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -601,10 +538,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertMoreThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -630,10 +564,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertLessThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant - (offset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }
@@ -647,10 +578,7 @@ class SingleConstraintsCreationSpec: QuickSpec {
                         let constraint = constraints[index]
                         assertLessThan(constraint, viewAnchorPair, relatedAnchorPair, sign)
                         let deviation = constraint.constant + (inset * sign)
-                        guard deviation == 0 else {
-                            fail()
-                            return
-                        }
+                        expect(deviation).to(equal(0))
                     }
                 }
             }

@@ -23,6 +23,7 @@
 		BBBCC66C283CC8E4006B6809 /* HierarchyCreationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBCC66A283CC8DA006B6809 /* HierarchyCreationSpec.swift */; };
 		BBC9C43D277B0BE500D8A6F5 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9C43C277B0BE500D8A6F5 /* View.swift */; };
 		BBC9C43F277B0D1000D8A6F5 /* FragmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9C43E277B0D1000D8A6F5 /* FragmentViewController.swift */; };
+		BBFD5D3C283D1CDD0006107A /* PairConstraintsCreationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFD5D3B283D1CDD0006107A /* PairConstraintsCreationSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		BBBCC66A283CC8DA006B6809 /* HierarchyCreationSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchyCreationSpec.swift; sourceTree = "<group>"; };
 		BBC9C43C277B0BE500D8A6F5 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		BBC9C43E277B0D1000D8A6F5 /* FragmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FragmentViewController.swift; sourceTree = "<group>"; };
+		BBFD5D3B283D1CDD0006107A /* PairConstraintsCreationSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairConstraintsCreationSpec.swift; sourceTree = "<group>"; };
 		BD0E959F2DB3449C143219E9 /* Draftsman.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Draftsman.podspec; path = ../Draftsman.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BEBE17ACCF370BCD99DDE61E /* Pods-Draftsman_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Draftsman_Example.debug.xcconfig"; path = "Target Support Files/Pods-Draftsman_Example/Pods-Draftsman_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		D67A2DD748195AA8882D2C04 /* Pods_Draftsman_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Draftsman_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +141,7 @@
 				BB69DCDB283A6D6B0043A93D /* Draftsman_Tests-Bridging-Header.h */,
 				BBBCC668283C4B08006B6809 /* SingleConstraintsCreationSpec.swift */,
 				BBBCC66A283CC8DA006B6809 /* HierarchyCreationSpec.swift */,
+				BBFD5D3B283D1CDD0006107A /* PairConstraintsCreationSpec.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBBCC669283C4B08006B6809 /* SingleConstraintsCreationSpec.swift in Sources */,
+				BBFD5D3C283D1CDD0006107A /* PairConstraintsCreationSpec.swift in Sources */,
 				BBBCC66C283CC8E4006B6809 /* HierarchyCreationSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
