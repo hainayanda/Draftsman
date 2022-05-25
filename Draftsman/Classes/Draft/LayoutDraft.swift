@@ -14,6 +14,9 @@ open class LayoutDraft<View: UIView>: ViewPlanBuilder, ViewDraft {
     public var view: UIView { underlyingView }
     open override var insertablePlans: [ViewDraft] { [self] }
     var stackPlans: [ViewDraft] = []
+    override var allPlans: [ViewDraft] {
+        plans.added(withContentsOf: stackPlans)
+    }
     
     public init(view: View, plans: [ViewDraft] = []) {
         self.underlyingView = view
@@ -50,34 +53,6 @@ open class LayoutDraft<View: UIView>: ViewPlanBuilder, ViewDraft {
         return self
     }
     
-    func getContext(for view: UIView) -> PlanContext {
-        let context = context ?? PlanContext(view: view)
-        context.currentView = view
-        return context
-    }
-    
-    func removeAssociatedSubview(in view: UIView) {
-        guard let root = context?.root else { return }
-        view.subviews.forEach { subview in
-            guard subview.isPartOf(planned: root),
-                  !plans.contains(where: { $0.view == subview }),
-                  !stackPlans.contains(where: { $0.view == subview }) else { return }
-            subview.removeFromSuperview()
-            if let currentViewController = view.responderViewController,
-                let subViewController = subview.responderViewController,
-                subViewController != currentViewController {
-                subViewController.removeFromParent()
-            }
-        }
-    }
-    
-    func prepareBuild(for view: UIView) {
-        removeAssociatedSubview(in: view)
-        if shouldNotTranslatesAutoresizingMaskIntoConstraints(for: view) {
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    
     func buildRegularSubview(for context: PlanContext) -> [NSLayoutConstraint] {
         let view = context.currentView
         return buildSubview(plans: plans, for: context) {
@@ -89,41 +64,6 @@ open class LayoutDraft<View: UIView>: ViewPlanBuilder, ViewDraft {
         guard let stack = context.currentView as? UIStackView else { return [] }
         return buildSubview(plans: stackPlans, for: context) {
             stack.addArrangedSubview($0)
-        }
-    }
-    
-    func buildSubview(plans: [ViewDraft], for context: PlanContext, doAdd: (UIView) -> Void) -> [NSLayoutConstraint] {
-        let viewController = context.currentViewController
-        return plans.reduce([]) { partialResults, plan in
-            if let root = context.root {
-                plan.view.makeAssociated(with: root)
-            }
-            doAdd(plan.view)
-            if let currentViewController = viewController,
-               let subViewController = plan.view.responderViewController,
-                subViewController != currentViewController {
-                currentViewController.addChild(subViewController)
-            }
-            plan.context = context
-            return partialResults.added(withContentsOf: plan.build())
-        }
-    }
-    
-    func shouldNotTranslatesAutoresizingMaskIntoConstraints(for view: UIView) -> Bool {
-        if view is UITableViewCell || view is UICollectionViewCell {
-            return false
-        }
-        guard let responder = view.next else {
-            return false
-        }
-        if responder is UIViewController {
-            return false
-        } else if let cell = responder as? UITableViewCell, cell.contentView == view {
-            return false
-        } else if let cell = responder as? UICollectionViewCell, cell.contentView == view {
-            return false
-        } else {
-            return true
         }
     }
 }

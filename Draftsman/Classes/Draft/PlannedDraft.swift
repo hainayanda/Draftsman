@@ -31,6 +31,7 @@ open class PlannedDraft<Root: Planned, View: UIView>: LayoutDraft<View> {
             if let sameConstraint = oldConstraints.first(where: constraint.isSameDraftsmanConstraint) {
                 sameConstraint.constant = constraint.constant
                 sameConstraint.priority = constraint.priority
+                sameConstraint.identifier = constraint.identifier
                 keepedConstraints.append(sameConstraint)
             } else {
                 addedConstraints.append(constraint)
