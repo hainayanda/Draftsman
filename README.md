@@ -101,7 +101,7 @@ there are two methods to end planning constraints which can be called from both 
 
 the difference between the two is `apply` will activate the constraints but `build` will only create constraints without activating them. Apply return value is discardable so it's optional for you to use the created `NSLayoutConstraint` or not.
 
-You could always create a `UIViewController` or `UIView` and implement the `Planned` protocol, and call `applyPlan()` whenever you want the viewPlan to be applied:
+You could always create a `UIViewController` or `UIView` and implement the `Planned` protocol, and call `applyPlan()` whenever you want the `viewPlan` to be applied:
 
 ```swift
 import Draftsman
@@ -493,14 +493,14 @@ class MyViewController: UIViewController, Planned {
 
 Every time you call `applyPlan`, it will always try to recreate the view to be the same as what was declared in `viewPlan`.
 
-There are some typealias with Planned that you can use:
+There are some typealias with `Planned` that you can use:
 
 - **UIPlannedController** which is `UIViewController & Planned`
 - **UIPlannedView** which is `UIView & Planned`
 
 ### Planned Cell
 
-Planned Cell is Planned built specifically for a cell which declared like this:
+`PlannedCell` is `Planned` built specifically for a cell which declared like this:
 
 ```swift
 public protocol PlannedCell: Planned {
@@ -543,7 +543,7 @@ class TableCell: UITableView, PlannedCell {
 
 Every time you call `applyPlan`, it will always try to recreate the view to be the same as what was declared in `viewPlan`.
 
-There are some typealias with Planned that you can use:
+There are some typealias with `Planned` that you can use:
 
 - **UITablePlannedCell** which is `UITableViewCell & PlannedCell`
 - **UICollectionPlannedCell** which is `UICollectionViewCell & PlannedCell`
