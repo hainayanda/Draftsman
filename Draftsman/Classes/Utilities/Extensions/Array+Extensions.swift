@@ -14,13 +14,13 @@ extension Array where Element == NSLayoutConstraint {
     var validUniques: [NSLayoutConstraint] {
         var uniques: [NSLayoutConstraint] = []
         var mappedUniques: [String: NSLayoutConstraint] = [:]
-        for constraint in self {
+        for constraint in self.reversed() {
             guard let identifier = constraint.draftsmanIdentifier,
                   mappedUniques[identifier] == nil else {
                 continue
             }
             mappedUniques[identifier] = constraint
-            uniques.append(constraint)
+            uniques.insert(constraint, at: 0)
         }
         return uniques
     }
