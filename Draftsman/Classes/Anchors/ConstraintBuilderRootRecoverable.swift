@@ -27,7 +27,7 @@ public class ConstraintBuilderRootRecoverable<Root: ViewPlanBuilder & LayoutAnch
         fatalError("build(using:) should be overridden")
     }
     
-    func backToRoot<Return>(then doWork: (Root) -> Return) -> Return {
+    public func backToRoot<Return>(then doWork: (Root) -> Return) -> Return {
         // once back to root, this object will not be usable again and retain cycle is removed
         defer { root = nil }
         root.constraintBuilders.append(self)
