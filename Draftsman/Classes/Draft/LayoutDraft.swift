@@ -61,14 +61,14 @@ open class LayoutDraft<View: UIView>: ViewPlanBuilder, ViewDraft {
     }
     
     func buildStackSubview(for context: PlanContext) -> [NSLayoutConstraint] {
-        guard let stack = context.currentView as? UIStackView else { return [] }
+        guard let stack = context.currentView as? StackCompatible else { return [] }
         return buildSubview(plans: stackPlans, for: context) {
             stack.addArrangedSubview($0)
         }
     }
 }
 
-extension LayoutDraft: StackDraft where View: UIStackView {
+extension LayoutDraft: StackDraft where View: StackCompatible {
     
     convenience init(view: View, plans: [ViewDraft] = [], stackPlans: [ViewDraft]) {
         self.init(view: view, plans: plans)
