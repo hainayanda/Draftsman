@@ -48,10 +48,10 @@ class MainViewController: UIPlannedController {
     
     @LayoutPlan
     var stackPlan: ViewPlan {
-        buttonToTable.drf
-        buttonToCollection.drf
-        buttonToField.drf
-        buttonToFragment.drf
+        buttonToTable
+        buttonToCollection
+        buttonToField
+        buttonToFragment
     }
     
     override func viewDidLoad() {
