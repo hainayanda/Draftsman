@@ -30,7 +30,7 @@ extension PlanComponent where Self: UIView {
     }
 }
 
-extension PlanComponent where Self: UIStackView {
+extension PlanComponent where Self: StackCompatible {
     
     public func draftStackContent(@LayoutPlan _ layouter: () -> ViewPlan) -> LayoutDraft<Self> {
         drf.insertStacked(layouter)
