@@ -10,6 +10,7 @@ import Foundation
 public enum BuilderConfigErrorHandler {
     case fatalErrorOnAssigningLet
     case debugPrintOnAssigningLet
+    case printOnAssigningLet
     case manual((String) -> Void)
 }
 
@@ -21,6 +22,8 @@ public class BuilderConfig {
 
 func errorHappens(_ message: String) {
     switch BuilderConfig.shared.errorHandling {
+    case .printOnAssigningLet:
+        print(message)
     case .debugPrintOnAssigningLet:
         debugPrint(message)
     case .fatalErrorOnAssigningLet:

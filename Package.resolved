@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/hainayanda/Builder.git",
         "state": {
           "branch": null,
-          "revision": "c901a96996b9ee2cf1e8d6619d4ee70e739774fa",
-          "version": "1.0.3"
+          "revision": "01268107ca1754c200453446699092451ed340f5",
+          "version": "1.0.4"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/hainayanda/Clavier.git",
         "state": {
           "branch": null,
-          "revision": "a646111440bf434b9ea709a7f1785372ae5731ec",
-          "version": "2.0.0"
+          "revision": "fde955d2d64a1ead83f7e2275d2bf3912a62ac5e",
+          "version": "2.0.1"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {
           "branch": null,
-          "revision": "c93f16c25af5770f0d3e6af27c9634640946b068",
-          "version": "9.2.1"
+          "revision": "1f3bde57bde12f5e7b07909848c071e9b73d6edc",
+          "version": "10.0.0"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/Quick/Quick.git",
         "state": {
           "branch": null,
-          "revision": "bd86ca0141e3cfb333546de5a11ede63f0c4a0e6",
-          "version": "4.0.0"
+          "revision": "f9d519828bb03dfc8125467d8f7b93131951124c",
+          "version": "5.0.1"
         }
       }
     ]
