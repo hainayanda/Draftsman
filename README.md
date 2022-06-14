@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="512" height="256" src="draftsman.png"/>
+  <img width="192" height="192" src="draftsman.png"/>
 </p>
 
 # Draftsman
