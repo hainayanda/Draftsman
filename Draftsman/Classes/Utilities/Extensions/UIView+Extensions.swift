@@ -52,9 +52,43 @@ public extension UILabel {
         self.text = text
     }
     
-    convenience init(text: String?, font: UIFont) {
+    convenience init(text: String? = nil, font: UIFont) {
         self.init()
         self.text = text
+        self.font = font
+    }
+}
+
+public extension UITextField {
+    
+    convenience init(text: String?, placeholder: String? = nil) {
+        self.init()
+        self.text = text
+        self.placeholder = placeholder
+    }
+    
+    convenience init(text: String? = nil, placeholder: String? = nil, font: UIFont) {
+        self.init()
+        self.text = text
+        self.placeholder = placeholder
+        self.font = font
+    }
+    
+    convenience init(placeholder: String?) {
+        self.init()
+        self.placeholder = placeholder
+    }
+}
+
+public extension UITextView {
+    
+    convenience init(text: String?) {
+        self.init()
+        self.text = text
+    }
+    
+    convenience init(text: String? = nil, font: UIFont) {
+        self.init(text: text)
         self.font = font
     }
 }
