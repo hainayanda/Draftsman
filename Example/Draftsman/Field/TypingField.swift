@@ -13,9 +13,7 @@ import Builder
 
 class TypingField: UIPlannedView {
     
-    lazy var textField: UITextField = builder(UITextField())
-        .placeholder("Type here")
-        .build()
+    lazy var textField: UITextField = UITextField(placeholder: "Type here")
     
     lazy var button: UIButton = builder(UIButton())
         .layer.cornerRadius(8)
