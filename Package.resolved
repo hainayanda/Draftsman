@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/hainayanda/Builder.git",
         "state": {
           "branch": null,
-          "revision": "01268107ca1754c200453446699092451ed340f5",
-          "version": "1.0.4"
+          "revision": "135f18c811c2e75f4a2fc8aae5e02c6c37d8d672",
+          "version": "1.0.5"
         }
       },
       {
@@ -15,44 +15,8 @@
         "repositoryURL": "https://github.com/hainayanda/Clavier.git",
         "state": {
           "branch": null,
-          "revision": "fde955d2d64a1ead83f7e2275d2bf3912a62ac5e",
-          "version": "2.0.1"
-        }
-      },
-      {
-        "package": "CwlCatchException",
-        "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
-        "state": {
-          "branch": null,
-          "revision": "682841464136f8c66e04afe5dbd01ab51a3a56f2",
-          "version": "2.1.0"
-        }
-      },
-      {
-        "package": "CwlPreconditionTesting",
-        "repositoryURL": "https://github.com/mattgallagher/CwlPreconditionTesting.git",
-        "state": {
-          "branch": null,
-          "revision": "c21f7bab5ca8eee0a9998bbd17ca1d0eb45d4688",
-          "version": "2.1.0"
-        }
-      },
-      {
-        "package": "Nimble",
-        "repositoryURL": "https://github.com/Quick/Nimble.git",
-        "state": {
-          "branch": null,
-          "revision": "1f3bde57bde12f5e7b07909848c071e9b73d6edc",
-          "version": "10.0.0"
-        }
-      },
-      {
-        "package": "Quick",
-        "repositoryURL": "https://github.com/Quick/Quick.git",
-        "state": {
-          "branch": null,
-          "revision": "f9d519828bb03dfc8125467d8f7b93131951124c",
-          "version": "5.0.1"
+          "revision": "acd31f2629d20b2df77ccb440ab2cb6bc2f7cfc6",
+          "version": "2.0.2"
         }
       }
     ]
