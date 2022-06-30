@@ -1,7 +1,7 @@
 PODS:
   - Builder (1.0.4)
   - Clavier (2.0.1)
-  - Draftsman (3.0.3):
+  - Draftsman (3.0.4):
     - Builder (~> 1.0.4)
     - Clavier (~> 2.0.1)
   - Nimble (10.0.0)
@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Builder: 9ac1a38cfe5e84ef85ba7c56613046eae34f8f1b
   Clavier: 7458ac5d634bc424c38de23cc484bcf69595a9ec
-  Draftsman: 47df373ec3ed374aabb33cfd204fb7b897ac0458
+  Draftsman: 13dc1b7482400d3f85b5cffcc4d34af1cb355d1c
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
   Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
 

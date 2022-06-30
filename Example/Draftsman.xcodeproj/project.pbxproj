@@ -13,6 +13,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		7B36887CF43520F1127F0D60 /* Pods_Draftsman_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689F65CC83EDD28692981986 /* Pods_Draftsman_Tests.framework */; };
 		AB4D2D33F426881B3EEE6BAE /* Pods_Draftsman_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D67A2DD748195AA8882D2C04 /* Pods_Draftsman_Example.framework */; };
+		BB2A58E9286D884800D749C1 /* TriConstraintsCreationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A58E8286D884800D749C1 /* TriConstraintsCreationSpec.swift */; };
 		BB3A24342696C17800B8EBA0 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A24332696C17800B8EBA0 /* TableViewController.swift */; };
 		BB3A24362696C18100B8EBA0 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A24352696C18100B8EBA0 /* TableCell.swift */; };
 		BB3A24392696CC7B00B8EBA0 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3A24382696CC7B00B8EBA0 /* CollectionViewController.swift */; };
@@ -51,6 +52,7 @@
 		625F2AEFA617EF9E4711AB4B /* Pods-Draftsman_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Draftsman_Example.release.xcconfig"; path = "Target Support Files/Pods-Draftsman_Example/Pods-Draftsman_Example.release.xcconfig"; sourceTree = "<group>"; };
 		689F65CC83EDD28692981986 /* Pods_Draftsman_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Draftsman_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D647AACECE19977542CBD4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		BB2A58E8286D884800D749C1 /* TriConstraintsCreationSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriConstraintsCreationSpec.swift; sourceTree = "<group>"; };
 		BB3A24332696C17800B8EBA0 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		BB3A24352696C18100B8EBA0 /* TableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
 		BB3A24382696CC7B00B8EBA0 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				BBBCC66A283CC8DA006B6809 /* HierarchyCreationSpec.swift */,
 				BBFD5D3B283D1CDD0006107A /* PairConstraintsCreationSpec.swift */,
 				BB6E9FBC283E1EE400314D2B /* AxisConstraintsCreationSpec.swift */,
+				BB2A58E8286D884800D749C1 /* TriConstraintsCreationSpec.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB2A58E9286D884800D749C1 /* TriConstraintsCreationSpec.swift in Sources */,
 				BBBCC669283C4B08006B6809 /* SingleConstraintsCreationSpec.swift in Sources */,
 				BBFD5D3C283D1CDD0006107A /* PairConstraintsCreationSpec.swift in Sources */,
 				BBBCC66C283CC8E4006B6809 /* HierarchyCreationSpec.swift in Sources */,

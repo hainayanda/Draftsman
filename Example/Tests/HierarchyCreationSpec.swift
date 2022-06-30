@@ -25,11 +25,13 @@ class HierarchyCreationSpec: QuickSpec {
         }
         it("should add subview") {
             let constraints = stackView.drf.insert {
-                for subview in subviews {
+                subviews[0]
+                for (index, subview) in subviews.enumerated() where index > 0 {
                     subview
                 }
             }.insertStacked {
-                for arrangedSubview in arrangedSubviews {
+                arrangedSubviews[0]
+                for (index, arrangedSubview) in arrangedSubviews.enumerated() where index > 0 {
                     arrangedSubview
                 }
             }.build()
