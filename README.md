@@ -8,7 +8,7 @@ Draftsman is a DSL framework for Swift focused on builder pattern
 If you are still using version 2.3.x, Separated README is available [here](https://github.com/hainayanda/Draftsman/blob/master/README_2_3.md).
 If you are still using Swift 5.1, please use 1.1.x version. Separated README is available [here](https://github.com/hainayanda/Draftsman/blob/master/README_1_1_1.md).
 
-[![codebeat badge](https://codebeat.co/badges/4dab4a09-06c6-40f1-98d4-51e908de36c8)](https://codebeat.co/projects/github-com-hainayanda-draftsman-master)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/63fd3be1fad346548cd3055147421283)](https://www.codacy.com/gh/hainayanda/Draftsman/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hainayanda/Draftsman&amp;utm_campaign=Badge_Grade)
 ![build](https://github.com/hainayanda/Draftsman/workflows/build/badge.svg)
 ![test](https://github.com/hainayanda/Draftsman/workflows/test/badge.svg)
 [![SwiftPM Compatible](https://img.shields.io/badge/SwiftPM-Compatible-brightgreen)](https://swift.org/package-manager/)
@@ -36,14 +36,14 @@ Draftsman is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Draftsman', '~> 3.0.6'
+pod 'Draftsman', '~> 3.0.7'
 ```
 
 ### Swift Package Manager from XCode
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **<https://github.com/hainayanda/Draftsman.git>** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **3.0.6** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **3.0.7** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -52,7 +52,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hainayanda/Draftsman.git", .upToNextMajor(from: "3.0.6"))
+    .package(url: "https://github.com/hainayanda/Draftsman.git", .upToNextMajor(from: "3.0.7"))
 ]
 ```
 
