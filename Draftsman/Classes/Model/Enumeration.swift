@@ -172,7 +172,7 @@ public enum DimensionAnonymousAnchor {
     case height(of: AnonymousLayout)
     case width(of: AnonymousLayout)
     
-    var keypath: KeyPath<LayoutWithAnchors, NSLayoutDimension> {
+    @inlinable var keypath: KeyPath<LayoutWithAnchors, NSLayoutDimension> {
         switch self {
         case .height:
             return \.heightAnchor
@@ -181,7 +181,7 @@ public enum DimensionAnonymousAnchor {
         }
     }
     
-    var anonymousLayout: AnonymousLayout {
+    @inlinable var anonymousLayout: AnonymousLayout {
         switch self {
         case .height(let anonymous), .width(let anonymous):
             return anonymous

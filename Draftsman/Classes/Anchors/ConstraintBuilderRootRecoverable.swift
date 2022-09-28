@@ -15,7 +15,7 @@ public class ConstraintBuilderRootRecoverable<Root: ViewPlanBuilder & LayoutAnch
     public typealias Layout = Root.Layout
     /// To avoid retain cycle
     var root: Root!
-    public var insertablePlans: [ViewDraft] {
+    @inlinable public var insertablePlans: [ViewDraft] {
         backToRoot { $0.insertablePlans }
     }
     
@@ -23,7 +23,7 @@ public class ConstraintBuilderRootRecoverable<Root: ViewPlanBuilder & LayoutAnch
         self.root = root
     }
     
-    func build(using context: PlanContext) -> [NSLayoutConstraint] {
+    @inlinable func build(using context: PlanContext) -> [NSLayoutConstraint] {
         fatalError("build(using:) should be overridden")
     }
     
@@ -34,35 +34,35 @@ public class ConstraintBuilderRootRecoverable<Root: ViewPlanBuilder & LayoutAnch
         return doWork(root)
     }
     
-    public subscript<Property>(
+    @inlinable public subscript<Property>(
         dynamicMember keyPath: KeyPath<Root, Property>) -> Property {
             backToRoot { $0[keyPath: keyPath] }
         }
 }
 
 extension ConstraintBuilderRootRecoverable where Root: ViewDraft {
-    public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
+    @inlinable public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
         backToRoot { $0.insert(layouter) }
     }
     
-    public func build() -> [NSLayoutConstraint] {
+    @inlinable public func build() -> [NSLayoutConstraint] {
         backToRoot { $0.build() }
     }
     
     @discardableResult
-    public func apply() -> [NSLayoutConstraint] {
+    @inlinable public func apply() -> [NSLayoutConstraint] {
         backToRoot { $0.apply() }
     }
 }
 
 extension ConstraintBuilderRootRecoverable where Root: StackDraft {
-    public func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
+    @inlinable public func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
         backToRoot { $0.insertStacked(layouter) }
     }
 }
 
 extension ConstraintBuilderRootRecoverable {
-    public func priority(_ prio: Float) -> PrioritizedAnchorRelation<Root> {
+    @inlinable public func priority(_ prio: Float) -> PrioritizedAnchorRelation<Root> {
         backToRoot { _ in priority(UILayoutPriority(rawValue: prio)) }
     }
     
@@ -83,19 +83,19 @@ extension ConstraintBuilderRootRecoverable {
 
 extension ConstraintBuilderRootRecoverable where Root: ViewDraft {
     
-    public func resistVerticalExpansion(_ priority: UILayoutPriority) -> Root {
+    @inlinable public func resistVerticalExpansion(_ priority: UILayoutPriority) -> Root {
         backToRoot { $0.resistVerticalExpansion(priority) }
     }
     
-    public func resistHorizontalExpansion(_ priority: UILayoutPriority) -> Root {
+    @inlinable public func resistHorizontalExpansion(_ priority: UILayoutPriority) -> Root {
         backToRoot { $0.resistHorizontalExpansion(priority) }
     }
     
-    public func resistVerticalCompression(_ priority: UILayoutPriority) -> Root {
+    @inlinable public func resistVerticalCompression(_ priority: UILayoutPriority) -> Root {
         backToRoot { $0.resistVerticalCompression(priority) }
     }
     
-    public func resistHorizontalCompression(_ priority: UILayoutPriority) -> Root {
+    @inlinable public func resistHorizontalCompression(_ priority: UILayoutPriority) -> Root {
         backToRoot { $0.resistHorizontalCompression(priority) }
     }
 }

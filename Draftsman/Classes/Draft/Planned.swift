@@ -57,16 +57,7 @@ public protocol PlannedCell: Planned {
 public typealias UITablePlannedCell = UITableViewCell & PlannedCell
 public typealias UICollectionPlannedCell = UICollectionViewCell & PlannedCell
 
-extension PlannedCell where Self: UITableViewCell {
-    @LayoutPlan
-    public var viewPlan: ViewPlan {
-        contentView.drf.insert {
-            contentViewPlan
-        }
-    }
-}
-
-extension PlannedCell where Self: UICollectionViewCell {
+extension PlannedCell where Self: CellWithContentView {
     @LayoutPlan
     public var viewPlan: ViewPlan {
         contentView.drf.insert {

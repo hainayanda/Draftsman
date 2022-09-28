@@ -13,6 +13,7 @@ import Draftsman
 import Quick
 import Nimble
 
+// swiftlint:disable cyclomatic_complexity function_body_length type_body_length file_length
 class PairConstraintsCreationSpec: QuickSpec {
     
     override func spec() {
@@ -27,12 +28,12 @@ class PairConstraintsCreationSpec: QuickSpec {
             var signs: [NSLayoutYAxisAnchor: CGFloat]!
             beforeEach {
                 pairs = [
-                    view.topAnchor : relatedView.topAnchor,
-                    view.bottomAnchor : relatedView.bottomAnchor
+                    view.topAnchor: relatedView.topAnchor,
+                    view.bottomAnchor: relatedView.bottomAnchor
                 ]
                 signs = [
-                    view.topAnchor : 1,
-                    view.bottomAnchor : -1
+                    view.topAnchor: 1,
+                    view.bottomAnchor: -1
                 ]
             }
             it("should create equal pair y constraints") {
@@ -157,12 +158,12 @@ class PairConstraintsCreationSpec: QuickSpec {
             var signs: [NSLayoutXAxisAnchor: CGFloat]!
             beforeEach {
                 pairs = [
-                    view.leftAnchor : relatedView.leftAnchor,
-                    view.rightAnchor : relatedView.rightAnchor
+                    view.leftAnchor: relatedView.leftAnchor,
+                    view.rightAnchor: relatedView.rightAnchor
                 ]
                 signs = [
-                    view.leftAnchor : 1,
-                    view.rightAnchor : -1
+                    view.leftAnchor: 1,
+                    view.rightAnchor: -1
                 ]
             }
             it("should create equal pair x constraints") {
@@ -287,12 +288,12 @@ class PairConstraintsCreationSpec: QuickSpec {
             var signs: [NSLayoutXAxisAnchor: CGFloat]!
             beforeEach {
                 pairs = [
-                    view.leadingAnchor : relatedView.leadingAnchor,
-                    view.trailingAnchor : relatedView.trailingAnchor
+                    view.leadingAnchor: relatedView.leadingAnchor,
+                    view.trailingAnchor: relatedView.trailingAnchor
                 ]
                 signs = [
-                    view.leadingAnchor : 1,
-                    view.trailingAnchor : -1
+                    view.leadingAnchor: 1,
+                    view.trailingAnchor: -1
                 ]
             }
             it("should create equal pair x constraints") {
@@ -414,8 +415,9 @@ class PairConstraintsCreationSpec: QuickSpec {
         }
     }
 }
+// swiftlint:enable cyclomatic_complexity function_body_length type_body_length
 
-fileprivate func assertEqual(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutYAxisAnchor: NSLayoutYAxisAnchor]) {
+private func assertEqual(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutYAxisAnchor: NSLayoutYAxisAnchor]) {
     guard let secondAnchor = pairs.value(for: constraint.firstAnchor) else {
         fail()
         return
@@ -424,7 +426,7 @@ fileprivate func assertEqual(_ constraint: NSLayoutConstraint, _ pairs: [NSLayou
     expect(constraint.relation).to(equal(.equal))
 }
 
-fileprivate func assertEqual(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutXAxisAnchor: NSLayoutXAxisAnchor]) {
+private func assertEqual(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutXAxisAnchor: NSLayoutXAxisAnchor]) {
     guard let secondAnchor = pairs.value(for: constraint.firstAnchor) else {
         fail()
         return
@@ -433,34 +435,25 @@ fileprivate func assertEqual(_ constraint: NSLayoutConstraint, _ pairs: [NSLayou
     expect(constraint.relation).to(equal(.equal))
 }
 
-fileprivate func assertMoreThan(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutYAxisAnchor: NSLayoutYAxisAnchor], _ sign: CGFloat) {
+private func assertMoreThan(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutYAxisAnchor: NSLayoutYAxisAnchor], _ sign: CGFloat) {
     guard let secondAnchor = pairs.value(for: constraint.firstAnchor) else {
         fail()
         return
     }
     expect(secondAnchor).to(equal(constraint.secondAnchor))
-    expect(constraint.relation).to(equal(sign == 1 ? .greaterThanOrEqual : .lessThanOrEqual))
+    expect(constraint.relation).to(equal(sign == 1 ? .greaterThanOrEqual: .lessThanOrEqual))
 }
 
-fileprivate func assertMoreThan(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutXAxisAnchor: NSLayoutXAxisAnchor], _ sign: CGFloat) {
+private func assertMoreThan(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutXAxisAnchor: NSLayoutXAxisAnchor], _ sign: CGFloat) {
     guard let secondAnchor = pairs.value(for: constraint.firstAnchor) else {
         fail()
         return
     }
     expect(secondAnchor).to(equal(constraint.secondAnchor))
-    expect(constraint.relation).to(equal(sign == 1 ? .greaterThanOrEqual : .lessThanOrEqual))
+    expect(constraint.relation).to(equal(sign == 1 ? .greaterThanOrEqual: .lessThanOrEqual))
 }
 
-fileprivate func assertLessThan(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutYAxisAnchor: NSLayoutYAxisAnchor], _ sign: CGFloat) {
-    guard let secondAnchor = pairs.value(for: constraint.firstAnchor) else {
-        fail()
-        return
-    }
-    expect(secondAnchor).to(equal(constraint.secondAnchor))
-    expect(constraint.relation).to(equal(sign == 1 ? .lessThanOrEqual: .greaterThanOrEqual))
-}
-
-fileprivate func assertLessThan(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutXAxisAnchor: NSLayoutXAxisAnchor], _ sign: CGFloat) {
+private func assertLessThan(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutYAxisAnchor: NSLayoutYAxisAnchor], _ sign: CGFloat) {
     guard let secondAnchor = pairs.value(for: constraint.firstAnchor) else {
         fail()
         return
@@ -469,7 +462,16 @@ fileprivate func assertLessThan(_ constraint: NSLayoutConstraint, _ pairs: [NSLa
     expect(constraint.relation).to(equal(sign == 1 ? .lessThanOrEqual: .greaterThanOrEqual))
 }
 
-fileprivate extension Dictionary where Key: NSLayoutYAxisAnchor {
+private func assertLessThan(_ constraint: NSLayoutConstraint, _ pairs: [NSLayoutXAxisAnchor: NSLayoutXAxisAnchor], _ sign: CGFloat) {
+    guard let secondAnchor = pairs.value(for: constraint.firstAnchor) else {
+        fail()
+        return
+    }
+    expect(secondAnchor).to(equal(constraint.secondAnchor))
+    expect(constraint.relation).to(equal(sign == 1 ? .lessThanOrEqual: .greaterThanOrEqual))
+}
+
+private extension Dictionary where Key: NSLayoutYAxisAnchor {
     func value(for anchor: NSLayoutAnchor<AnyObject>) -> Value? {
         guard let key = keys.first(where: { $0 == anchor }) else {
             return nil
@@ -478,7 +480,7 @@ fileprivate extension Dictionary where Key: NSLayoutYAxisAnchor {
     }
 }
 
-fileprivate extension Dictionary where Key: NSLayoutXAxisAnchor {
+private extension Dictionary where Key: NSLayoutXAxisAnchor {
     func value(for anchor: NSLayoutAnchor<AnyObject>) -> Value? {
         guard let key = keys.first(where: { $0 == anchor }) else {
             return nil

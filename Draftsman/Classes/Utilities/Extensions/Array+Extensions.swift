@@ -12,31 +12,48 @@ import UIKit
 extension Array where Element == NSLayoutConstraint {
     
     var validUniques: [NSLayoutConstraint] {
-        var uniques: [NSLayoutConstraint] = []
         var mappedUniques: [String: NSLayoutConstraint] = [:]
-        for constraint in self.reversed() {
+        return reversed().reduce([]) { partialResult, constraint in
             guard let identifier = constraint.draftsmanIdentifier,
                   mappedUniques[identifier] == nil else {
-                continue
+                return partialResult
             }
             mappedUniques[identifier] = constraint
-            uniques.insert(constraint, at: 0)
+            return partialResult.inserted(with: constraint, at: 0)
         }
-        return uniques
     }
 }
 #endif
 
 extension Array {
-    func added(with element: Element) -> [Element] {
+    @inlinable func added(with element: Element) -> [Element] {
         var newArray = self
         newArray.append(element)
         return newArray
     }
     
-    func added<S: Sequence>(withContentsOf sequence: S) -> [Element] where S.Element == Element{
+    @inlinable func added<S: Sequence>(withContentsOf sequence: S) -> [Element] where S.Element == Element {
         var newArray = self
         newArray.append(contentsOf: sequence)
         return newArray
+    }
+    
+    @inlinable func inserted(with element: Element, at index: Int) -> [Element] {
+        var newArray = self
+        newArray.insert(element, at: index)
+        return newArray
+    }
+}
+
+extension Array where Element: NSLayoutConstraint {
+    func groupedByDraftsmanIdentifier() -> [String: NSLayoutConstraint] {
+        reduce([:]) { partialResult, constraint in
+            guard let draftsmanIdentifier = constraint.draftsmanIdentifier else {
+                return partialResult
+            }
+            var result = partialResult
+            result[draftsmanIdentifier] = constraint
+            return result
+        }
     }
 }

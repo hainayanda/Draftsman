@@ -30,7 +30,7 @@ struct AxisTestGroup {
 }
 
 class AxisConstraintsCreationSpec: QuickSpec {
-    
+    // swiftlint:disable cyclomatic_complexity function_body_length
     override func spec() {
         var view: UIView!
         var relationView: UIView!
@@ -137,9 +137,10 @@ class AxisConstraintsCreationSpec: QuickSpec {
             }
         }
     }
+    // swiftlint:enable cyclomatic_complexity function_body_length
 }
 
-fileprivate func assertEqual(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup) {
+private func assertEqual(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup) {
     let yIndex = constraints.count - 1
     let xIndex = yIndex - 1
     let xConstraint = constraints[xIndex]
@@ -153,7 +154,7 @@ fileprivate func assertEqual(_ constraints: [NSLayoutConstraint], _ viewGroup: A
     expect(yConstraint.constant).to(equal(0))
 }
 
-fileprivate func assertMoreThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup) {
+private func assertMoreThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup) {
     let yIndex = constraints.count - 1
     let xIndex = yIndex - 1
     let xConstraint = constraints[xIndex]
@@ -167,7 +168,7 @@ fileprivate func assertMoreThan(_ constraints: [NSLayoutConstraint], _ viewGroup
     expect(yConstraint.constant).to(equal(0))
 }
 
-fileprivate func assertLessThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup) {
+private func assertLessThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup) {
     let yIndex = constraints.count - 1
     let xIndex = yIndex - 1
     let xConstraint = constraints[xIndex]
@@ -181,7 +182,7 @@ fileprivate func assertLessThan(_ constraints: [NSLayoutConstraint], _ viewGroup
     expect(yConstraint.constant).to(equal(0))
 }
 
-fileprivate func assertEqual(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, offset: CGFloat) {
+private func assertEqual(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, offset: CGFloat) {
     let yIndex = constraints.count - 1
     let xIndex = yIndex - 1
     let xConstraint = constraints[xIndex]
@@ -198,7 +199,7 @@ fileprivate func assertEqual(_ constraints: [NSLayoutConstraint], _ viewGroup: A
     expect(yDeviation).to(equal(0))
 }
 
-fileprivate func assertMoreThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, offset: CGFloat) {
+private func assertMoreThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, offset: CGFloat) {
     let yIndex = constraints.count - 1
     let xIndex = yIndex - 1
     let xConstraint = constraints[xIndex]
@@ -215,7 +216,7 @@ fileprivate func assertMoreThan(_ constraints: [NSLayoutConstraint], _ viewGroup
     expect(yDeviation).to(equal(0))
 }
 
-fileprivate func assertLessThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, offset: CGFloat) {
+private func assertLessThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, offset: CGFloat) {
     let yIndex = constraints.count - 1
     let xIndex = yIndex - 1
     let xConstraint = constraints[xIndex]
@@ -232,7 +233,7 @@ fileprivate func assertLessThan(_ constraints: [NSLayoutConstraint], _ viewGroup
     expect(yDeviation).to(equal(0))
 }
 
-fileprivate func assertEqual(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, inset: CGFloat) {
+private func assertEqual(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, inset: CGFloat) {
     let yIndex = constraints.count - 1
     let xIndex = yIndex - 1
     let xConstraint = constraints[xIndex]
@@ -248,7 +249,7 @@ fileprivate func assertEqual(_ constraints: [NSLayoutConstraint], _ viewGroup: A
     expect(yDeviation).to(equal(0))
 }
 
-fileprivate func assertMoreThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, inset: CGFloat) {
+private func assertMoreThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, inset: CGFloat) {
     let yIndex = constraints.count - 1
     let xIndex = yIndex - 1
     let xConstraint = constraints[xIndex]
@@ -265,7 +266,7 @@ fileprivate func assertMoreThan(_ constraints: [NSLayoutConstraint], _ viewGroup
     expect(yDeviation).to(equal(0))
 }
 
-fileprivate func assertLessThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, inset: CGFloat) {
+private func assertLessThan(_ constraints: [NSLayoutConstraint], _ viewGroup: AxisTestGroup, _ relationGroup: AxisTestGroup, inset: CGFloat) {
     let yIndex = constraints.count - 1
     let xIndex = yIndex - 1
     let xConstraint = constraints[xIndex]

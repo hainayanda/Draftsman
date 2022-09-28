@@ -8,7 +8,8 @@
 import Foundation
 #if canImport(UIKit)
 import UIKit
-fileprivate var plannedIdentifierKey: String = "plannedIdentifierKey"
+
+private var plannedIdentifierKey: String = "plannedIdentifierKey"
 
 extension UIView {
     
@@ -32,39 +33,70 @@ extension UIView {
 
 public extension UIStackView {
     
-    convenience init(
+    @inlinable convenience init(
         axis: NSLayoutConstraint.Axis,
         distribution: UIStackView.Distribution = .fill,
         alignment: UIStackView.Alignment = .fill,
         spacing: CGFloat = .zero) {
-        self.init()
-        self.axis = axis
-        self.distribution = distribution
-        self.alignment = alignment
-        self.spacing = spacing
-    }
+            self.init()
+            self.axis = axis
+            self.distribution = distribution
+            self.alignment = alignment
+            self.spacing = spacing
+        }
 }
+
+@inlinable public func VStackView(
+    distribution: UIStackView.Distribution = .fill,
+    alignment: UIStackView.Alignment = .fill,
+    spacing: CGFloat = .zero) -> UIStackView {
+        .init(
+            axis: .vertical,
+            distribution: distribution,
+            alignment: alignment,
+            spacing: spacing
+        )
+    }
+
+@inlinable public func HStackView(
+    distribution: UIStackView.Distribution = .fill,
+    alignment: UIStackView.Alignment = .fill,
+    spacing: CGFloat = .zero) -> UIStackView {
+        .init(
+            axis: .horizontal,
+            distribution: distribution,
+            alignment: alignment,
+            spacing: spacing
+        )
+    }
+
+public protocol CellWithContentView: UIView {
+    var contentView: UIView { get }
+}
+
+extension UITableViewCell: CellWithContentView { }
+extension UICollectionViewCell: CellWithContentView { }
 
 public extension UILabel {
     
-    convenience init(text: String?) {
+    @inlinable convenience init(text: String?) {
         self.init()
         self.text = text
     }
     
-    convenience init(text: String? = nil, font: UIFont) {
+    @inlinable convenience init(text: String? = nil, font: UIFont) {
         self.init()
         self.text = text
         self.font = font
     }
     
-    convenience init(text: String? = nil, textColor: UIColor) {
+    @inlinable convenience init(text: String? = nil, textColor: UIColor) {
         self.init()
         self.text = text
         self.textColor = textColor
     }
     
-    convenience init(text: String? = nil, font: UIFont, textColor: UIColor) {
+    @inlinable convenience init(text: String? = nil, font: UIFont, textColor: UIColor) {
         self.init()
         self.text = text
         self.font = font
@@ -74,25 +106,25 @@ public extension UILabel {
 
 public extension UITextField {
     
-    convenience init(placeholder: String?) {
+    @inlinable convenience init(placeholder: String?) {
         self.init()
         self.placeholder = placeholder
     }
     
-    convenience init(text: String?, placeholder: String? = nil) {
+    @inlinable convenience init(text: String?, placeholder: String? = nil) {
         self.init()
         self.text = text
         self.placeholder = placeholder
     }
     
-    convenience init(text: String? = nil, placeholder: String? = nil, font: UIFont) {
+    @inlinable convenience init(text: String? = nil, placeholder: String? = nil, font: UIFont) {
         self.init()
         self.text = text
         self.placeholder = placeholder
         self.font = font
     }
     
-    convenience init(text: String? = nil, placeholder: String? = nil, textColor: UIColor) {
+    @inlinable convenience init(text: String? = nil, placeholder: String? = nil, textColor: UIColor) {
         self.init()
         self.text = text
         self.placeholder = placeholder
@@ -110,23 +142,23 @@ public extension UITextField {
 
 public extension UITextView {
     
-    convenience init(text: String?) {
+    @inlinable convenience init(text: String?) {
         self.init()
         self.text = text
     }
     
-    convenience init(text: String? = nil, font: UIFont) {
+    @inlinable convenience init(text: String? = nil, font: UIFont) {
         self.init(text: text)
         self.font = font
     }
     
-    convenience init(text: String? = nil, textColor: UIColor) {
+    @inlinable convenience init(text: String? = nil, textColor: UIColor) {
         self.init()
         self.text = text
         self.textColor = textColor
     }
     
-    convenience init(text: String? = nil, font: UIFont, textColor: UIColor) {
+    @inlinable convenience init(text: String? = nil, font: UIFont, textColor: UIColor) {
         self.init()
         self.text = text
         self.font = font
@@ -136,7 +168,7 @@ public extension UITextView {
 
 public extension UIButton {
     
-    convenience init(text: String?, textColor: UIColor) {
+    @inlinable convenience init(text: String?, textColor: UIColor) {
         self.init()
         self.setTitle(text, for: .normal)
         self.setTitleColor(textColor, for: .normal)

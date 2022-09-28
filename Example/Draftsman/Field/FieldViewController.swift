@@ -57,16 +57,23 @@ class FieldViewController: UIPlannedController {
     
     @objc func didTapButton(_ sender: Any) {
         if typingField.textField.isFirstResponder {
-            typingField.button.setTitle("Show", for: .normal)
             typingField.textField.resignFirstResponder()
         } else {
-            typingField.button.setTitle("Hide", for: .normal)
             typingField.textField.becomeFirstResponder()
         }
     }
 }
 
 extension FieldViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        typingField.button.setTitle("Hide", for: .normal)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        typingField.button.setTitle("Show", for: .normal)
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         let replacedText = NSString(string: currentText).replacingCharacters(in: range, with: string)

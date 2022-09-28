@@ -9,7 +9,7 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var draftsmanIdentifierKey: String = "draftsmanIdentifierKey"
+private var draftsmanIdentifierKey: String = "draftsmanIdentifierKey"
 
 extension NSLayoutConstraint {
     var draftsmanIdentifier: String? {
@@ -26,8 +26,10 @@ extension NSLayoutConstraint {
         return self
     }
     
-    func isSameDraftsmanConstraint(with constraint: NSLayoutConstraint) -> Bool {
-        draftsmanIdentifier == constraint.draftsmanIdentifier
+    @inlinable func copyValue(from constraint: NSLayoutConstraint) {
+        identifier = constraint.identifier
+        constant = constraint.constant
+        priority = constraint.priority
     }
 }
 #endif

@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: TriAnchorRelation
 
-public class TriAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor, UniAnchor: LayoutAxisAnchor, BiAnchor: LayoutAxisAnchor>:  ConstraintBuilderRootRecoverable<Root> {
+public class TriAnchorRelation<Root: ViewPlanBuilder & LayoutAnchor, UniAnchor: LayoutAxisAnchor, BiAnchor: LayoutAxisAnchor>: ConstraintBuilderRootRecoverable<Root> {
     let type: TriAnchorType
     let uniPair: AnchorPair<UniAnchor>
     let firstBiPair: AnchorPair<BiAnchor>
@@ -146,7 +146,8 @@ extension TriAnchorRelation {
 
 // MARK: TriAnchorWithConstantRelation
 
-public class TriAnchorWithConstantRelation<Root: ViewPlanBuilder & LayoutAnchor, UniAnchor: LayoutAxisAnchor, BiAnchor: LayoutAxisAnchor>:  ConstraintBuilderRootRecoverable<Root> {
+public class TriAnchorWithConstantRelation<Root: ViewPlanBuilder & LayoutAnchor, UniAnchor: LayoutAxisAnchor, BiAnchor: LayoutAxisAnchor>:
+    ConstraintBuilderRootRecoverable<Root> {
     let parent: TriAnchorRelation<Root, UniAnchor, BiAnchor>
     let constant: TriConstant
     

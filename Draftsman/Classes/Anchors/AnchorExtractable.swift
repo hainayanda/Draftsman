@@ -18,11 +18,11 @@ class AnchorExtractable<Anchor> {
 class PlainAnchorExtractable<Anchor>: AnchorExtractable<Anchor> {
     let anchor: Anchor
     
-    init(anchor: Anchor) {
+    @inlinable init(anchor: Anchor) {
         self.anchor = anchor
     }
     
-    override func anchor(from context: PlanContext) -> Anchor {
+    @inlinable override func anchor(from context: PlanContext) -> Anchor {
         anchor
     }
 }
@@ -31,12 +31,12 @@ class LayoutAnchorExtractable<Anchor>: AnchorExtractable<Anchor> {
     let keyPath: KeyPath<LayoutWithAnchors, Anchor>
     let layout: LayoutWithAnchors
     
-    init(keyPath: KeyPath<LayoutWithAnchors, Anchor>, layout: LayoutWithAnchors) {
+    @inlinable init(keyPath: KeyPath<LayoutWithAnchors, Anchor>, layout: LayoutWithAnchors) {
         self.keyPath = keyPath
         self.layout = layout
     }
     
-    override func anchor(from context: PlanContext) -> Anchor {
+    @inlinable override func anchor(from context: PlanContext) -> Anchor {
         layout[keyPath: keyPath]
     }
 }
@@ -45,12 +45,12 @@ class AnonymousAnchorExtractable<Anchor>: AnchorExtractable<Anchor> {
     let keyPath: KeyPath<LayoutWithAnchors, Anchor>
     let layout: AnonymousLayout
     
-    init(keyPath: KeyPath<LayoutWithAnchors, Anchor>, layout: AnonymousLayout) {
+    @inlinable init(keyPath: KeyPath<LayoutWithAnchors, Anchor>, layout: AnonymousLayout) {
         self.keyPath = keyPath
         self.layout = layout
     }
     
-    override func anchor(from context: PlanContext) -> Anchor {
+    @inlinable override func anchor(from context: PlanContext) -> Anchor {
         context.layout(of: layout)[keyPath: keyPath]
     }
 }
@@ -59,7 +59,7 @@ class AnonymousAnchorExtractable<Anchor>: AnchorExtractable<Anchor> {
 struct LayoutAnchorExtractor {
     let root: LayoutWithAnchors
     
-    subscript<Anchor>(dynamicMember keyPath: KeyPath<LayoutWithAnchors, Anchor>) -> AnchorExtractable<Anchor> {
+    @inlinable subscript<Anchor>(dynamicMember keyPath: KeyPath<LayoutWithAnchors, Anchor>) -> AnchorExtractable<Anchor> {
         return LayoutAnchorExtractable(keyPath: keyPath, layout: root)
     }
 }
@@ -68,7 +68,7 @@ struct LayoutAnchorExtractor {
 struct AnonymousAnchorExtractor {
     let root: AnonymousLayout
     
-    subscript<Anchor>(dynamicMember keyPath: KeyPath<LayoutWithAnchors, Anchor>) -> AnchorExtractable<Anchor> {
+    @inlinable subscript<Anchor>(dynamicMember keyPath: KeyPath<LayoutWithAnchors, Anchor>) -> AnchorExtractable<Anchor> {
         return AnonymousAnchorExtractable(keyPath: keyPath, layout: root)
     }
 }

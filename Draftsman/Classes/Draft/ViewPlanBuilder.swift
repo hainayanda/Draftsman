@@ -28,7 +28,7 @@ open class ViewPlanBuilder: ViewPlan {
     }
     
     @discardableResult
-    open func apply(to view: UIView) -> [NSLayoutConstraint] {
+    @inlinable open func apply(to view: UIView) -> [NSLayoutConstraint] {
         let constraints = build(for: view)
         NSLayoutConstraint.activate(constraints)
         return constraints
@@ -73,27 +73,23 @@ open class ViewPlanBuilder: ViewPlan {
     
     func prepareBuild(for view: UIView) {
         removeAssociatedSubview(in: view)
-        if shouldNotTranslatesAutoresizingMaskIntoConstraints(for: view) {
-            view.translatesAutoresizingMaskIntoConstraints = false
+        guard shouldNotTranslatesAutoresizingMaskIntoConstraints(for: view) else {
+            return
         }
+        view.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func shouldNotTranslatesAutoresizingMaskIntoConstraints(for view: UIView) -> Bool {
-        if view is UITableViewCell || view is UICollectionViewCell {
+    @inlinable func shouldNotTranslatesAutoresizingMaskIntoConstraints(for view: UIView) -> Bool {
+        guard !(view is CellWithContentView),
+                let responder = view.next,
+                !(responder is UIViewController) else {
             return false
         }
-        guard let responder = view.next else {
-            return false
-        }
-        if responder is UIViewController {
-            return false
-        } else if let cell = responder as? UITableViewCell, cell.contentView == view {
-            return false
-        } else if let cell = responder as? UICollectionViewCell, cell.contentView == view {
-            return false
-        } else {
+        guard let cell = responder as? CellWithContentView,
+                cell.contentView == view else {
             return true
         }
+        return false
     }
 }
 #endif

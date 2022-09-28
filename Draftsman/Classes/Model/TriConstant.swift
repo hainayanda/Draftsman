@@ -18,7 +18,7 @@ struct TriConstant {
 }
 
 extension TriConstant {
-    var negative: TriConstant {
+    @inlinable var negative: TriConstant {
         .init(
             uniConstant: -uniConstant,
             firstBiConstant: -firstBiConstant,

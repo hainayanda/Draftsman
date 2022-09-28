@@ -52,32 +52,32 @@ extension LayoutAnchor {
 // MARK: Shortcut Anchors
 
 extension LayoutAnchor {
-    public var horizontal: HorizontalAnchor<Self> {
+    @inlinable public var horizontal: HorizontalAnchor<Self> {
         left.right
     }
-    public var vertical: VerticalAnchor<Self> {
+    @inlinable public var vertical: VerticalAnchor<Self> {
         top.bottom
     }
-    public var localizedHorizontal: LocalizedHorizontalAnchor<Self> {
+    @inlinable public var localizedHorizontal: LocalizedHorizontalAnchor<Self> {
         leading.trailing
     }
-    public var edges: AllEdgesAnchor<Self> {
+    @inlinable public var edges: AllEdgesAnchor<Self> {
         horizontal.vertical
     }
-    public var localizedEdges: AllLocalizedEdgesAnchor<Self> {
+    @inlinable public var localizedEdges: AllLocalizedEdgesAnchor<Self> {
         localizedHorizontal.vertical
     }
-    public var center: CenterAnchor<Self> {
+    @inlinable public var center: CenterAnchor<Self> {
         centerX.centerY
     }
-    public var size: SizeAnchor<Self> {
+    @inlinable public var size: SizeAnchor<Self> {
         height.width
     }
 }
 
 extension LayoutDraft: LayoutAnchor {
     public typealias Layout = View
-    public var layoutExtractable: Layout { underlyingView }
+    @inlinable public var layoutExtractable: Layout { underlyingView }
 }
 
 public class LayoutGuide: LayoutAnchor {
@@ -86,13 +86,13 @@ public class LayoutGuide: LayoutAnchor {
     public var layoutExtractable: UILayoutGuide
     public lazy var context: PlanContext = .init(view: layoutExtractable.owningView ?? UIView())
     
-    init(guide: UILayoutGuide) {
+    @inlinable init(guide: UILayoutGuide) {
         self.layoutExtractable = guide
     }
 }
 
 extension UILayoutGuide {
-    public var drf: LayoutGuide {
+    @inlinable public var drf: LayoutGuide {
         .init(guide: self)
     }
 }
