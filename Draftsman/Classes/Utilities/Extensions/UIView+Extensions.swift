@@ -42,8 +42,15 @@ public extension UIStackView {
         self.distribution = distribution
         self.alignment = alignment
         self.spacing = spacing
+        }
     }
+
+public protocol CellWithContentView: UIView {
+    var contentView: UIView { get }
 }
+
+extension UITableViewCell: CellWithContentView { }
+extension UICollectionViewCell: CellWithContentView { }
 
 public extension UILabel {
     
