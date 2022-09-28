@@ -13,7 +13,7 @@ protocol ConstraintBuilder {
     func build(using context: PlanContext) -> [NSLayoutConstraint]
 }
 
-extension Array where Element == ConstraintBuilder {
+extension Array: ConstraintBuilder where Element == ConstraintBuilder {
     func build(using context: PlanContext) -> [NSLayoutConstraint] {
         reduce([]) { partialResult, builder in
             var result = partialResult
