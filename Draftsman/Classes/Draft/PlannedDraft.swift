@@ -24,23 +24,25 @@ open class PlannedDraft<Root: Planned, View: UIView>: LayoutDraft<View> {
         }
         context = context ?? PlanContext(root: root, view: view)
         let oldConstraints = root.appliedConstraints
-        let constraints = super.build(for: view).validUniques
-        var addedConstraints: [NSLayoutConstraint] = []
-        var keepedConstraints: [NSLayoutConstraint] = []
-        for constraint in constraints {
-            if let sameConstraint = oldConstraints.first(where: constraint.isSameDraftsmanConstraint) {
-                sameConstraint.constant = constraint.constant
-                sameConstraint.priority = constraint.priority
-                sameConstraint.identifier = constraint.identifier
-                keepedConstraints.append(sameConstraint)
-            } else {
-                addedConstraints.append(constraint)
+        let constraints = super.build(for: view)
+        let oldConstraintsGrouped = oldConstraints.groupedByDraftsmanIdentifier()
+        var keepedConstraintsGrouped: [String: NSLayoutConstraint] = [:]
+        let addedConstraints = constraints.filter {
+            guard let draftsmanIdentifier = $0.draftsmanIdentifier else {
+                return false
             }
+            guard let sameConstraint = oldConstraintsGrouped[draftsmanIdentifier] else {
+                return true
+            }
+            sameConstraint.copyValue(from: $0)
+            keepedConstraintsGrouped[draftsmanIdentifier] = sameConstraint
+            return false
         }
-        let removedConstraints: [NSLayoutConstraint] = oldConstraints.filter { old in
-            !keepedConstraints.contains(where: old.isSameDraftsmanConstraint)
+        let removedConstraints = oldConstraints.filter {
+            guard let draftsmanIdentifier = $0.draftsmanIdentifier else { return true }
+            return keepedConstraintsGrouped[draftsmanIdentifier] == nil
         }
-        return (removedConstraints, keepedConstraints, addedConstraints)
+        return (removedConstraints, Array(keepedConstraintsGrouped.values), addedConstraints)
     }
     
     open override func build(for view: UIView) -> [NSLayoutConstraint] {
