@@ -9,7 +9,7 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var draftsmanIdentifierKey: String = "draftsmanIdentifierKey"
+private var draftsmanIdentifierKey: String = "draftsmanIdentifierKey"
 
 extension NSLayoutConstraint {
     var draftsmanIdentifier: String? {

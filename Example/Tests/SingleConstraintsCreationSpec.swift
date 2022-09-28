@@ -13,6 +13,7 @@ import Draftsman
 import Quick
 import Nimble
 
+// swiftlint:disable cyclomatic_complexity function_body_length type_body_length file_length
 class SingleConstraintsCreationSpec: QuickSpec {
     
     override func spec() {
@@ -585,14 +586,22 @@ class SingleConstraintsCreationSpec: QuickSpec {
         }
     }
 }
+// swiftlint:enable cyclomatic_complexity function_body_length type_body_length
 
-fileprivate func assertEqual<Anchor: LayoutAxisAnchor>(_ constraint: NSLayoutConstraint, _ viewAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element, _ relatedAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element) {
+private func assertEqual<Anchor: LayoutAxisAnchor>(
+    _ constraint: NSLayoutConstraint,
+    _ viewAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element,
+    _ relatedAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element) {
     expect(constraint.firstAnchor).to(equal(viewAnchorPair.key as? NSLayoutAnchor<AnyObject>))
     expect(constraint.secondAnchor).to(equal(relatedAnchorPair.key as? NSLayoutAnchor<AnyObject>))
     expect(constraint.relation).to(equal(.equal))
 }
 
-fileprivate func assertMoreThan<Anchor: LayoutAxisAnchor>(_ constraint: NSLayoutConstraint, _ viewAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element, _ relatedAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element, _ sign: CGFloat) {
+private func assertMoreThan<Anchor: LayoutAxisAnchor>(
+    _ constraint: NSLayoutConstraint,
+    _ viewAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element,
+    _ relatedAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element,
+    _ sign: CGFloat) {
     expect(constraint.firstAnchor).to(equal(viewAnchorPair.key as? NSLayoutAnchor<AnyObject>))
     expect(constraint.secondAnchor).to(equal(relatedAnchorPair.key as? NSLayoutAnchor<AnyObject>))
     if sign == 1 {
@@ -602,7 +611,11 @@ fileprivate func assertMoreThan<Anchor: LayoutAxisAnchor>(_ constraint: NSLayout
     }
 }
 
-fileprivate func assertLessThan<Anchor: LayoutAxisAnchor>(_ constraint: NSLayoutConstraint, _ viewAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element, _ relatedAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element, _ sign: CGFloat) {
+private func assertLessThan<Anchor: LayoutAxisAnchor>(
+    _ constraint: NSLayoutConstraint,
+    _ viewAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element,
+    _ relatedAnchorPair: Dictionary<Anchor, SingleAnchor<LayoutDraft<UIView>, Anchor>>.Element,
+    _ sign: CGFloat) {
     expect(constraint.firstAnchor).to(equal(viewAnchorPair.key as? NSLayoutAnchor<AnyObject>))
     expect(constraint.secondAnchor).to(equal(relatedAnchorPair.key as? NSLayoutAnchor<AnyObject>))
     if sign == 1 {
@@ -612,13 +625,21 @@ fileprivate func assertLessThan<Anchor: LayoutAxisAnchor>(_ constraint: NSLayout
     }
 }
 
-fileprivate func assertEqual(_ constraint: NSLayoutConstraint, _ viewAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element, _ relatedAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element) {
+private func assertEqual(
+    _ constraint: NSLayoutConstraint,
+    _ viewAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element,
+    _ relatedAnchorPair: Dictionary<NSLayoutDimension,
+    DimensionAnchor<LayoutDraft<UIView>>>.Element) {
     expect(constraint.firstAnchor).to(equal(viewAnchorPair.key))
     expect(constraint.secondAnchor).to(equal(relatedAnchorPair.key))
     expect(constraint.relation).to(equal(.equal))
 }
 
-fileprivate func assertMoreThan(_ constraint: NSLayoutConstraint, _ viewAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element, _ relatedAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element, _ sign: CGFloat) {
+private func assertMoreThan(
+    _ constraint: NSLayoutConstraint,
+    _ viewAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element,
+    _ relatedAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element,
+    _ sign: CGFloat) {
     expect(constraint.firstAnchor).to(equal(viewAnchorPair.key))
     expect(constraint.secondAnchor).to(equal(relatedAnchorPair.key))
     if sign == 1 {
@@ -628,7 +649,10 @@ fileprivate func assertMoreThan(_ constraint: NSLayoutConstraint, _ viewAnchorPa
     }
 }
 
-fileprivate func assertLessThan(_ constraint: NSLayoutConstraint, _ viewAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element, _ relatedAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element, _ sign: CGFloat) {
+private func assertLessThan(
+    _ constraint: NSLayoutConstraint,
+    _ viewAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element,
+    _ relatedAnchorPair: Dictionary<NSLayoutDimension, DimensionAnchor<LayoutDraft<UIView>>>.Element, _ sign: CGFloat) {
     expect(constraint.firstAnchor).to(equal(viewAnchorPair.key))
     expect(constraint.secondAnchor).to(equal(relatedAnchorPair.key))
     if sign == 1 {

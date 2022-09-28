@@ -32,7 +32,7 @@ class MainViewController: UIPlannedController {
         .backgroundColor(.orange)
         .build()
     
-    lazy var stackView: UIStackView = UIStackView(axis: .vertical, spacing: 32)
+    lazy var stackView: UIStackView = VStackView(spacing: 32)
     
     @LayoutPlan
     var viewPlan: ViewPlan {
@@ -90,4 +90,3 @@ class MainViewController: UIPlannedController {
     }
     
 }
-

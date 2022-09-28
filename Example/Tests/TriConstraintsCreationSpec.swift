@@ -13,6 +13,7 @@ import Draftsman
 import Quick
 import Nimble
 
+// swiftlint:disable function_body_length type_body_length file_length
 class TriConstraintsCreationSpec: QuickSpec {
     override func spec() {
         var view: UIView!
@@ -489,6 +490,7 @@ class TriConstraintsCreationSpec: QuickSpec {
         }
     }
 }
+// swiftlint:enable cyclomatic_complexity function_body_length type_body_length
 
 func assertEqualHorizontal(constraints: [NSLayoutConstraint], for view: UIView, and relatedView: UIView, constant: CGFloat = 0) {
     expect(constraints[1].firstAnchor).to(equal(view.leftAnchor))
@@ -555,5 +557,4 @@ func assertLessThanVertical(constraints: [NSLayoutConstraint], for view: UIView,
     expect(constraints[2].relation).to(equal(.greaterThanOrEqual))
     expect(constraints[2].constant).to(equal(-constant))
 }
-
 #endif

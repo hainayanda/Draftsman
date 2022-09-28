@@ -14,11 +14,7 @@ import Builder
 class FragmentViewController: UIPlannedController {
     
     lazy var scrollView: UIScrollView = UIScrollView()
-    lazy var stackView: UIStackView = UIStackView(
-        axis: .vertical,
-        distribution: .equalSpacing,
-        alignment: .fill
-    )
+    lazy var stackView: UIStackView = VStackView(distribution: .equalSpacing)
     lazy var buttonAdd: UIButton = builder(UIButton())
         .layer.cornerRadius(8)
         .backgroundColor(.orange)
@@ -27,10 +23,8 @@ class FragmentViewController: UIPlannedController {
         .layer.cornerRadius(8)
         .backgroundColor(.orange)
         .build()
-    lazy var buttonStack: UIStackView = UIStackView(
-        axis: .vertical,
+    lazy var buttonStack: UIStackView = VStackView(
         distribution: .fillEqually,
-        alignment: .fill,
         spacing: 16
     )
     var fragments: [View] = [] {

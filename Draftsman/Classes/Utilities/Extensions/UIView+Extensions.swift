@@ -8,7 +8,8 @@
 import Foundation
 #if canImport(UIKit)
 import UIKit
-fileprivate var plannedIdentifierKey: String = "plannedIdentifierKey"
+
+private var plannedIdentifierKey: String = "plannedIdentifierKey"
 
 extension UIView {
     

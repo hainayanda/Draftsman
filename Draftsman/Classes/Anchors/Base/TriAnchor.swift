@@ -79,7 +79,9 @@ extension TriAnchor where Root.Layout: UIView, Root: ViewPlanBuilder {
         create(.lessThanOrEqual, to: otherAnchor)
     }
     
-    func create<OtherRoot: LayoutAnchor, Other: TriAnchor<OtherRoot, UniAnchor, BiAnchor>>(_ relation: NSLayoutConstraint.Relation, to otherAnchor: Other) -> TriAnchorRelation<Root, UniAnchor, BiAnchor> {
+    func create<OtherRoot: LayoutAnchor, Other: TriAnchor<OtherRoot, UniAnchor, BiAnchor>>(
+        _ relation: NSLayoutConstraint.Relation,
+        to otherAnchor: Other) -> TriAnchorRelation<Root, UniAnchor, BiAnchor> {
         .init(
             root: root,
             type: type,
