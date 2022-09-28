@@ -19,25 +19,25 @@ public struct LayoutPlan {
         expression?.insertablePlans ?? []
     }
     
-    public static func buildOptional(_ component: Component?) -> Component {
+    @inlinable public static func buildOptional(_ component: Component?) -> Component {
         component ?? []
     }
     
-    public static func buildEither(first component: Component) -> Component {
+    @inlinable public static func buildEither(first component: Component) -> Component {
         component
     }
     
-    public static func buildEither(second component: Component) -> Component {
+    @inlinable public static func buildEither(second component: Component) -> Component {
         component
     }
     
-    public static func buildArray(_ components: [Component]) -> Component {
+    @inlinable public static func buildArray(_ components: [Component]) -> Component {
         components.reduce([]) { partialResult, component in
             partialResult.added(withContentsOf: component)
         }
     }
     
-    public static func buildBlock(_ components: Component...) -> Component {
+    @inlinable public static func buildBlock(_ components: Component...) -> Component {
         buildArray(components)
     }
     

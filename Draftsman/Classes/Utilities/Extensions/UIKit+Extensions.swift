@@ -12,13 +12,13 @@ import UIKit
 // MARK: Convenience Init
 
 public extension CGSize {
-    init(sides: CGFloat) {
+    @inlinable init(sides: CGFloat) {
         self.init(width: sides, height: sides)
     }
 }
 
 public extension UIEdgeInsets {
-    init(horizontalInset: HorizontalConstant, verticalInset: VerticalConstant) {
+    @inlinable init(horizontalInset: HorizontalConstant, verticalInset: VerticalConstant) {
         self.init(
             top: verticalInset.top,
             left: horizontalInset.leading,
@@ -27,7 +27,7 @@ public extension UIEdgeInsets {
         )
     }
     
-    init(vertical: CGFloat, horizontal: CGFloat) {
+    @inlinable init(vertical: CGFloat, horizontal: CGFloat) {
         self.init(
             top: vertical,
             left: horizontal,
@@ -36,7 +36,7 @@ public extension UIEdgeInsets {
         )
     }
     
-    init(insets: CGFloat) {
+    @inlinable init(insets: CGFloat) {
         self.init(
             top: insets,
             left: insets,
@@ -45,7 +45,7 @@ public extension UIEdgeInsets {
         )
     }
     
-    init(vertical: CGFloat, left: CGFloat = .zero, right: CGFloat = .zero) {
+    @inlinable init(vertical: CGFloat, left: CGFloat = .zero, right: CGFloat = .zero) {
         self.init(
             top: vertical,
             left: left,
@@ -54,7 +54,7 @@ public extension UIEdgeInsets {
         )
     }
     
-    init(horizontal: CGFloat, top: CGFloat = .zero, bottom: CGFloat = .zero) {
+    @inlinable init(horizontal: CGFloat, top: CGFloat = .zero, bottom: CGFloat = .zero) {
         self.init(
             top: top,
             left: horizontal,
@@ -67,13 +67,13 @@ public extension UIEdgeInsets {
 // MARK: Negative
 
 extension UIEdgeInsets {
-    var negative: UIEdgeInsets {
+    @inlinable var negative: UIEdgeInsets {
         .init(top: -top, left: -left, bottom: -bottom, right: -right)
     }
 }
 
 extension CGSize {
-    var negative: CGSize {
+    @inlinable var negative: CGSize {
         .init(width: -width, height: -height)
     }
 }
@@ -81,11 +81,11 @@ extension CGSize {
 // MARK: Pair Constant
 
 extension UIEdgeInsets {
-    public var horizontal: HorizontalConstant {
+    @inlinable public var horizontal: HorizontalConstant {
         .init(left: left, right: right)
     }
     
-    public var vertical: VerticalConstant {
+    @inlinable public var vertical: VerticalConstant {
         .init(top: top, bottom: bottom)
     }
 }
@@ -96,19 +96,19 @@ public typealias EdgeOffsets = UIEdgeInsets
 // MARK: Auto
 
 extension CGFloat {
-    public var isNotVisible: Bool { self <= .zero }
-    public var isVisible: Bool { !isNotVisible }
+    @inlinable public var isNotVisible: Bool { self <= .zero }
+    @inlinable public var isVisible: Bool { !isNotVisible }
 }
 
 extension CGSize {
-    public var isNotVisible: Bool { width.isNotVisible || height.isNotVisible }
-    public var isVisible: Bool { width.isVisible && height.isVisible }
+    @inlinable public var isNotVisible: Bool { width.isNotVisible || height.isNotVisible }
+    @inlinable public var isVisible: Bool { width.isVisible && height.isVisible }
 }
 
 // MARK: Next Responder
 
 extension UIResponder {
-    var responderViewController: UIViewController? {
+    @inlinable var responderViewController: UIViewController? {
         if let selfController = self as? UIViewController {
             return selfController
         }

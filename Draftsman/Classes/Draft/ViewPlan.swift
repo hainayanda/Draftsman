@@ -34,34 +34,34 @@ public protocol StackDraft: ViewDraft {
 
 extension ViewDraft {
     @discardableResult
-    public func build() -> [NSLayoutConstraint] {
+    @inlinable public func build() -> [NSLayoutConstraint] {
         self.build(for: view)
     }
     
     @discardableResult
-    public func apply() -> [NSLayoutConstraint] {
+    @inlinable public func apply() -> [NSLayoutConstraint] {
         self.apply(to: view)
     }
 }
 
 extension ViewDraft {
     
-    public func resistVerticalExpansion(_ priority: UILayoutPriority) -> Self {
+    @inlinable public func resistVerticalExpansion(_ priority: UILayoutPriority) -> Self {
         view.setContentHuggingPriority(priority, for: .vertical)
         return self
     }
     
-    public func resistHorizontalExpansion(_ priority: UILayoutPriority) -> Self {
+    @inlinable public func resistHorizontalExpansion(_ priority: UILayoutPriority) -> Self {
         view.setContentHuggingPriority(priority, for: .horizontal)
         return self
     }
     
-    public func resistVerticalCompression(_ priority: UILayoutPriority) -> Self {
+    @inlinable public func resistVerticalCompression(_ priority: UILayoutPriority) -> Self {
         view.setContentCompressionResistancePriority(priority, for: .vertical)
         return self
     }
     
-    public func resistHorizontalCompression(_ priority: UILayoutPriority) -> Self {
+    @inlinable public func resistHorizontalCompression(_ priority: UILayoutPriority) -> Self {
         view.setContentCompressionResistancePriority(priority, for: .horizontal)
         return self
     }

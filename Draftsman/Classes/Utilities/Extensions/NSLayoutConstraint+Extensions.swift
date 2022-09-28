@@ -26,8 +26,10 @@ extension NSLayoutConstraint {
         return self
     }
     
-    func isSameDraftsmanConstraint(with constraint: NSLayoutConstraint) -> Bool {
-        draftsmanIdentifier == constraint.draftsmanIdentifier
+    @inlinable func copyValue(from constraint: NSLayoutConstraint) {
+        identifier = constraint.identifier
+        constant = constraint.constant
+        priority = constraint.priority
     }
 }
 #endif

@@ -25,14 +25,14 @@ extension PlanComponent where Self: UIView {
         LayoutDraft(view: self)
     }
     
-    public func draftContent(@LayoutPlan _ layouter: () -> ViewPlan) -> LayoutDraft<Self> {
+    @inlinable public func draftContent(@LayoutPlan _ layouter: () -> ViewPlan) -> LayoutDraft<Self> {
         drf.insert(layouter)
     }
 }
 
 extension PlanComponent where Self: StackCompatible {
     
-    public func draftStackContent(@LayoutPlan _ layouter: () -> ViewPlan) -> LayoutDraft<Self> {
+    @inlinable public func draftStackContent(@LayoutPlan _ layouter: () -> ViewPlan) -> LayoutDraft<Self> {
         drf.insertStacked(layouter)
     }
 }
@@ -45,7 +45,7 @@ extension PlanComponent where Self: UIViewController {
         LayoutDraft(view: self.view)
     }
     
-    public func draftContent(@LayoutPlan _ layouter: () -> ViewPlan) -> LayoutDraft<UIView> {
+    @inlinable public func draftContent(@LayoutPlan _ layouter: () -> ViewPlan) -> LayoutDraft<UIView> {
         drf.insert(layouter)
     }
 }

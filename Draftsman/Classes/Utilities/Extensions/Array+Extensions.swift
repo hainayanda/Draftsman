@@ -28,13 +28,13 @@ extension Array where Element == NSLayoutConstraint {
 #endif
 
 extension Array {
-    func added(with element: Element) -> [Element] {
+    @inlinable func added(with element: Element) -> [Element] {
         var newArray = self
         newArray.append(element)
         return newArray
     }
     
-    func added<S: Sequence>(withContentsOf sequence: S) -> [Element] where S.Element == Element{
+    @inlinable func added<S: Sequence>(withContentsOf sequence: S) -> [Element] where S.Element == Element {
         var newArray = self
         newArray.append(contentsOf: sequence)
         return newArray

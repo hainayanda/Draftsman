@@ -97,7 +97,7 @@ public final class BottomAnchor<Root: LayoutAnchor>: SingleAnchor<Root, NSLayout
         \.bottomAnchor
     }
     
-    override var offsetSign: AnchorOffsetSign {
+    @inlinable override var offsetSign: AnchorOffsetSign {
         .negative
     }
     
@@ -143,7 +143,7 @@ public final class RightAnchor<Root: LayoutAnchor>: SingleAnchor<Root, NSLayoutX
         \.rightAnchor
     }
     
-    override var offsetSign: AnchorOffsetSign {
+    @inlinable override var offsetSign: AnchorOffsetSign {
         .negative
     }
     
@@ -177,7 +177,7 @@ public final class LeadingAnchor<Root: LayoutAnchor>: SingleAnchor<Root, NSLayou
         \.leadingAnchor
     }
     
-    override var offsetSign: AnchorOffsetSign {
+    @inlinable override var offsetSign: AnchorOffsetSign {
         .positive
     }
     
@@ -211,7 +211,7 @@ public final class TrailingAnchor<Root: LayoutAnchor>: SingleAnchor<Root, NSLayo
         \.trailingAnchor
     }
     
-    override var offsetSign: AnchorOffsetSign {
+    @inlinable override var offsetSign: AnchorOffsetSign {
         .negative
     }
     
@@ -245,7 +245,7 @@ public final class CenterXAnchor<Root: LayoutAnchor>: SingleAnchor<Root, NSLayou
         \.centerXAnchor
     }
     
-    override var offsetSign: AnchorOffsetSign {
+    @inlinable override var offsetSign: AnchorOffsetSign {
         .positive
     }
     
@@ -267,7 +267,7 @@ public final class CenterYAnchor<Root: LayoutAnchor>: SingleAnchor<Root, NSLayou
         \.centerYAnchor
     }
     
-    override var offsetSign: AnchorOffsetSign {
+    @inlinable override var offsetSign: AnchorOffsetSign {
         .positive
     }
     

@@ -28,7 +28,7 @@ open class ViewPlanBuilder: ViewPlan {
     }
     
     @discardableResult
-    open func apply(to view: UIView) -> [NSLayoutConstraint] {
+    @inlinable open func apply(to view: UIView) -> [NSLayoutConstraint] {
         let constraints = build(for: view)
         NSLayoutConstraint.activate(constraints)
         return constraints
