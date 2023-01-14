@@ -24,22 +24,18 @@ class CollectionCell: UICollectionPlannedCell {
     
     @LayoutPlan
     var contentViewPlan: ViewPlan {
-        UIImageView(image: UIImage(named: "icon_test")).drf.builder
-            .contentMode(.scaleAspectFit).drf
-            .top.horizontal.equal(with: .parent).offset(by: 12)
-            .width.equal(with: .height(of: .mySelf))
-        UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4).drf
-            .bottom.horizontal.equal(with: .parent).offset(by: 12)
-            .top.equal(with: .bottom(of: .previous)).offset(by: 8)
-            .insertStacked {
-                stackDraft
+        VStacked(margins: UIEdgeInsets(insets: 12), spacing: 8) {
+            Margined(by: UIEdgeInsets(insets: 8)) {
+                UIImageView(image: UIImage(named: "icon_test")).drf.builder
+                    .contentMode(.scaleAspectFit).drf
+                    .widthMatchHeight()
             }
-    }
-    
-    @LayoutPlan
-    var stackDraft: ViewPlan {
-        titleLabel
-        subtitleLabel
+            VStacked(distribution: .fillEqually, spacing: 4) {
+                titleLabel
+                subtitleLabel
+            }
+        }
+        .fillParent()
     }
     
     override init(frame: CGRect) {

@@ -13,8 +13,6 @@ import Builder
 
 class FragmentViewController: UIPlannedController {
     
-    lazy var scrollView: UIScrollView = UIScrollView()
-    lazy var stackView: UIStackView = VStackView(distribution: .equalSpacing)
     lazy var buttonAdd: UIButton = builder(UIButton())
         .layer.cornerRadius(8)
         .backgroundColor(.orange)
@@ -23,62 +21,36 @@ class FragmentViewController: UIPlannedController {
         .layer.cornerRadius(8)
         .backgroundColor(.orange)
         .build()
-    lazy var buttonStack: UIStackView = VStackView(
-        distribution: .fillEqually,
-        spacing: 16
-    )
+    
     var fragments: [View] = [] {
         didSet {
             applyPlan()
         }
     }
+    
     var counter: Int = 0
     
     @LayoutPlan
     var viewPlan: ViewPlan {
-        scrollView.drf
-            .top.horizontal.equal(with: .safeArea)
-            .bottom.equal(to: buttonStack.topAnchor).offset(by: 16)
-            .insert {
-                scrollContent
+        VStacked(spacing: 16) {
+            VScrollableStacked(alignment: .fill) {
+                fragments.isEmpty ? emptyContent: fragments
             }
-        buttonStack.drf
-            .bottom.horizontal.equal(with: .safeArea).offset(by: 16)
-            .insertStacked {
+            VStacked(margins: UIEdgeInsets(insets: 16), distribution: .fillEqually, spacing: 16) {
                 buttonAdd
                 buttonRemove
             }
-    }
-    
-    @LayoutPlan
-    var scrollContent: ViewPlan {
-        stackView.drf
-            .width.equal(with: .parent)
-            .edges.equal(with: .parent)
-            .insertStacked {
-                if fragments.isEmpty {
-                    emptyContent
-                }
-                for fragment in fragments {
-                    fragment
-                }
-            }
+        }
+        .fillParent()
     }
     
     @LayoutPlan
     var emptyContent: ViewPlan {
-        spacing
+        SpacerView(60)
         UILabel().drf.builder
             .text("NO FRAGMENTS")
             .textAlignment(.center)
-        spacing
-    }
-    
-    @LayoutPlan
-    var spacing: ViewPlan {
-        UIView().drf
-            .height.equal(to: 60)
-            .builder.backgroundColor(.clear)
+        SpacerView(60)
     }
     
     override func viewDidLoad() {

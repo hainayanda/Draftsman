@@ -22,14 +22,13 @@ class TypingField: UIPlannedView {
     
     @LayoutPlan
     var viewPlan: ViewPlan {
-        textField.drf
-            .left.vertical.equal(with: .safeArea).offset(by: 8)
-            .right.equal(to: button.leftAnchor).offset(by: 8)
-            .height.equal(to: 30)
-        button.drf
-            .right.vertical.equal(with: .safeArea).offset(by: 8)
-            .width.equal(to: 64)
-            .height.equal(to: 30)
+        HStacked(margins: UIEdgeInsets(insets: 8)) {
+            textField.drf
+                .height.equal(to: 30)
+            button.drf
+                .sized(CGSize(width: 64, height: 30))
+        }
+        .fillParent()
     }
     
     override init(frame: CGRect) {

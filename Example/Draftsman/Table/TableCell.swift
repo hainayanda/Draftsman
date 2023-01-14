@@ -24,22 +24,16 @@ class TableCell: UITablePlannedCell {
     
     @LayoutPlan
     var contentViewPlan: ViewPlan {
-        UIImageView(image: UIImage(named: "icon_test")).drf.builder
-            .contentMode(.scaleAspectFit).drf
-            .left.vertical.equal(with: .parent).offset(by: 12)
-            .size.equal(with: CGSize(sides: 56))
-        UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4).drf
-            .right.vertical.equal(with: .parent).offset(by: 12)
-            .left.equal(with: .right(of: .previous)).offset(by: 8)
-            .insertStacked {
-                stackPlan
+        HStacked(margins: UIEdgeInsets(insets: 12), spacing: 8) {
+            UIImageView(image: UIImage(named: "icon_test")).drf
+                .widthMatchHeight()
+                .builder.contentMode(.scaleAspectFit).drf
+            VStacked(margins: UIEdgeInsets(insets: 8), distribution: .fillEqually) {
+                titleLabel
+                subtitleLabel
             }
-    }
-    
-    @LayoutPlan
-    var stackPlan: ViewPlan {
-        titleLabel
-        subtitleLabel
+        }
+        .fillParent()
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

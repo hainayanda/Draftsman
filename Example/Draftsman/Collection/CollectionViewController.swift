@@ -32,12 +32,8 @@ class CollectionViewController: UIViewController, Planned {
         .minimumInteritemSpacing(.zero)
         .itemSize(CGSize(width: cellWidth, height: cellWidth * 1.2))
         .build()
-    lazy var collectionView: UICollectionView = builder(
-        UICollectionView(
-            frame: .zero,
-            collectionViewLayout: collectionLayout
-        )
-    )
+    
+    lazy var collectionView: UICollectionView = builder(UICollectionView(frame: .zero, collectionViewLayout: collectionLayout))
         .backgroundColor(.white)
         .allowsSelection(false)
         .dataSource(self)
@@ -46,8 +42,8 @@ class CollectionViewController: UIViewController, Planned {
     @LayoutPlan
     var viewPlan: ViewPlan {
         collectionView.drf
-            .horizontal.equal(with: .safeArea)
-            .vertical.equal(with: .parent)
+            .matchSafeAreaH()
+            .matchParentV()
     }
     
     override func viewDidLoad() {
