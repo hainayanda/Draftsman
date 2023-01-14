@@ -9,7 +9,25 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
+private var useAppleKeyboardLayoutGuideKey: String = "usingAppleKeyboardLayoutGuideIfAvailableKey"
+
 extension UIView {
+    
+    public var useAppleKeyboardLayoutGuideIfAvailable: Bool {
+        get {
+            (objc_getAssociatedObject(self, &useAppleKeyboardLayoutGuideKey) as? Bool)
+            ?? ClavierGlobalConfig.useAppleKeyboardLayoutGuideIfAvailable
+        }
+        set {
+            objc_setAssociatedObject(
+                self,
+                &useAppleKeyboardLayoutGuideKey,
+                newValue,
+                .OBJC_ASSOCIATION_RETAIN
+            )
+        }
+    }
+    
     public var clavierLayoutGuide: UILayoutGuide {
         return clavierLayoutGuideFactory(usingSafeArea: false)
     }
@@ -19,7 +37,7 @@ extension UIView {
     }
     
     func clavierLayoutGuideFactory(usingSafeArea: Bool) -> UILayoutGuide {
-        guard #available(iOS 15.0, *) else {
+        guard #available(iOS 15.0, *), useAppleKeyboardLayoutGuideIfAvailable else {
             return oldiOSKeyboardLayoutGuide(usingSafeArea)
         }
         return iOS15KeyboardLayoutGuide(usingSafeArea)

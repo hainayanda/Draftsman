@@ -32,14 +32,14 @@ Clavier is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Clavier', '~> 2.0.1'
+pod 'Clavier', '~> 2.0.3'
 ```
 
 ### Swift Package Manager from XCode
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/hainayanda/Clavier.git** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **2.0.1** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **2.0.3** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -48,7 +48,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hainayanda/Clavier.git", .upToNextMajor(from: "2.0.1"))
+    .package(url: "https://github.com/hainayanda/Clavier.git", .upToNextMajor(from: "2.0.3"))
 ]
 ```
 
@@ -116,6 +116,16 @@ let frameIntersectWithKeyboard: CGRect = view.safeClavierLayoutGuide.layoutFrame
 ## iOS 15
 
 On iOS 15, Clavier will defaultly use `keyboardLayoutGuide` from UIKit. on `safeClavierLayoutGuide`, it will use custom class that utilize `keyboardLayoutGuide` and `safeAreaLayoutGuide`
+
+You can explicitly disable iOS 15 `keyboardLayoutGuide` if you want by set directly with the view or by using global config.
+
+```swift
+myView.usingAppleKeyboardLayoutGuideIfAvailable = false
+
+// or to apply as default with all view
+
+ClavierGlobalConfig.usingAppleKeyboardLayoutGuideIfAvailable = false
+```
 
 # Contribute
 
