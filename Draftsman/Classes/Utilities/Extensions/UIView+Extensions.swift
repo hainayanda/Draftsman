@@ -35,6 +35,7 @@ public extension UIStackView {
     
     @inlinable convenience init(
         axis: NSLayoutConstraint.Axis,
+        margins: UIEdgeInsets? = nil,
         distribution: UIStackView.Distribution = .fill,
         alignment: UIStackView.Alignment = .fill,
         spacing: CGFloat = .zero) {
@@ -43,6 +44,10 @@ public extension UIStackView {
             self.distribution = distribution
             self.alignment = alignment
             self.spacing = spacing
+            if let margins {
+                self.layoutMargins = margins
+                self.isLayoutMarginsRelativeArrangement = true
+            }
         }
 }
 
