@@ -61,7 +61,7 @@ public class ScrollableStackView: UIScrollView, Planned {
             self.alignment = alignment
             self.spacing = spacing
             super.init(frame: frame)
-            if let margins {
+            if let margins = margins {
                 self.stackView.layoutMargins = margins
                 self.stackView.isLayoutMarginsRelativeArrangement = true
             }

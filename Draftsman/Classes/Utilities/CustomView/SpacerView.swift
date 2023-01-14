@@ -28,7 +28,7 @@ public class SpacerView: UIView {
     
     func apply(axis: NSLayoutConstraint.Axis) {
         spaceConstraint?.isActive = false
-        guard let dimension else {
+        guard let dimension = self.dimension else {
             super.setContentCompressionResistancePriority(.defaultLow, for: axis)
             super.setContentHuggingPriority(.defaultLow, for: axis)
             super.setContentCompressionResistancePriority(

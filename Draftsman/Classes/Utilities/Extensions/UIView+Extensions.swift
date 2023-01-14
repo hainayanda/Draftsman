@@ -44,7 +44,7 @@ public extension UIStackView {
             self.distribution = distribution
             self.alignment = alignment
             self.spacing = spacing
-            if let margins {
+            if let margins = margins {
                 self.layoutMargins = margins
                 self.isLayoutMarginsRelativeArrangement = true
             }
