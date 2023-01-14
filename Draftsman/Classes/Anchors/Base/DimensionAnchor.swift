@@ -45,7 +45,7 @@ extension DimensionAnchor where Root.Layout: UIView, Root: ViewPlanBuilder {
         create(.lessThanOrEqual, to: otherAnchor)
     }
     
-    func create(_ relation: NSLayoutConstraint.Relation, to otherAnchor: NSLayoutDimension)  -> DimensionAnchorRelation<Root> {
+    func create(_ relation: NSLayoutConstraint.Relation, to otherAnchor: NSLayoutDimension) -> DimensionAnchorRelation<Root> {
         .init(
             root: root,
             firstAnchor: anchor.extractable,

@@ -15,6 +15,7 @@ public class ConstraintBuilderRootRecoverable<Root: ViewPlanBuilder & LayoutAnch
     public typealias Layout = Root.Layout
     /// To avoid retain cycle
     var root: Root!
+    
     @inlinable public var insertablePlans: [ViewDraft] {
         backToRoot { $0.insertablePlans }
     }
@@ -41,6 +42,7 @@ public class ConstraintBuilderRootRecoverable<Root: ViewPlanBuilder & LayoutAnch
 }
 
 extension ConstraintBuilderRootRecoverable where Root: ViewDraft {
+    @discardableResult
     @inlinable public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
         backToRoot { $0.insert(layouter) }
     }
@@ -56,6 +58,7 @@ extension ConstraintBuilderRootRecoverable where Root: ViewDraft {
 }
 
 extension ConstraintBuilderRootRecoverable where Root: StackDraft {
+    @discardableResult
     @inlinable public func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Root {
         backToRoot { $0.insertStacked(layouter) }
     }
