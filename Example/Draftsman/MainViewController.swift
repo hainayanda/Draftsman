@@ -32,26 +32,18 @@ class MainViewController: UIPlannedController {
         .backgroundColor(.orange)
         .build()
     
-    lazy var stackView: UIStackView = VStackView(spacing: 32)
-    
     @LayoutPlan
     var viewPlan: ViewPlan {
-        stackView.drf
-            .center.equal(with: .parent)
-            .horizontal.equal(with: .safeArea).offset(by: 16)
-            .vertical.moreThan(with: .safeArea).offset(by: 16)
-            .resistVerticalExpansion(.required)
-            .insertStacked {
-                stackPlan
-            }
-    }
-    
-    @LayoutPlan
-    var stackPlan: ViewPlan {
-        buttonToTable
-        buttonToCollection
-        buttonToField
-        buttonToFragment
+        VStacked(spacing: 32) {
+            buttonToTable
+            buttonToCollection
+            buttonToField
+            buttonToFragment
+        }
+        .centered()
+        .matchSafeAreaH().offset(by: 16)
+        .vertical.moreThan(with: .safeArea).offset(by: 16)
+        .resistVerticalExpansion(.required)
     }
     
     override func viewDidLoad() {

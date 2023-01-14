@@ -8,6 +8,7 @@
 import Foundation
 #if canImport(UIKit)
 import UIKit
+import Clavier
 
 open class LayoutDraft<View: UIView>: ViewPlanBuilder, ViewDraft {
     public var underlyingView: View
@@ -20,6 +21,7 @@ open class LayoutDraft<View: UIView>: ViewPlanBuilder, ViewDraft {
     
     public init(view: View, plans: [ViewDraft] = []) {
         self.underlyingView = view
+        view.useAppleKeyboardLayoutGuideIfAvailable = false
         super.init(plans: plans)
     }
     
@@ -47,6 +49,7 @@ open class LayoutDraft<View: UIView>: ViewPlanBuilder, ViewDraft {
         return constraints
     }
     
+    @discardableResult
     public func insert(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
         let viewPlan = layouter()
         plans.append(contentsOf: viewPlan.insertablePlans)
@@ -64,6 +67,7 @@ open class LayoutDraft<View: UIView>: ViewPlanBuilder, ViewDraft {
         guard let stack = context.currentView as? StackCompatible else { return [] }
         return buildSubview(plans: stackPlans, for: context) {
             stack.addArrangedSubview($0)
+            ($0 as? SpacerView)?.apply(axis: stack.axis)
         }
     }
 }
@@ -75,6 +79,7 @@ extension LayoutDraft: StackDraft where View: StackCompatible {
         self.stackPlans = stackPlans
     }
     
+    @discardableResult
     public func insertStacked(@LayoutPlan _ layouter: () -> ViewPlan) -> Self {
         let viewPlan = layouter()
         stackPlans.append(contentsOf: viewPlan.insertablePlans)

@@ -35,6 +35,7 @@ public extension UIStackView {
     
     @inlinable convenience init(
         axis: NSLayoutConstraint.Axis,
+        margins: UIEdgeInsets? = nil,
         distribution: UIStackView.Distribution = .fill,
         alignment: UIStackView.Alignment = .fill,
         spacing: CGFloat = .zero) {
@@ -43,32 +44,12 @@ public extension UIStackView {
             self.distribution = distribution
             self.alignment = alignment
             self.spacing = spacing
+            if let margins = margins {
+                self.layoutMargins = margins
+                self.isLayoutMarginsRelativeArrangement = true
+            }
         }
 }
-
-@inlinable public func VStackView(
-    distribution: UIStackView.Distribution = .fill,
-    alignment: UIStackView.Alignment = .fill,
-    spacing: CGFloat = .zero) -> UIStackView {
-        .init(
-            axis: .vertical,
-            distribution: distribution,
-            alignment: alignment,
-            spacing: spacing
-        )
-    }
-
-@inlinable public func HStackView(
-    distribution: UIStackView.Distribution = .fill,
-    alignment: UIStackView.Alignment = .fill,
-    spacing: CGFloat = .zero) -> UIStackView {
-        .init(
-            axis: .horizontal,
-            distribution: distribution,
-            alignment: alignment,
-            spacing: spacing
-        )
-    }
 
 public protocol CellWithContentView: UIView {
     var contentView: UIView { get }

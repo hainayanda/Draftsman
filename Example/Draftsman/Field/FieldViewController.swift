@@ -21,28 +21,22 @@ class FieldViewController: UIPlannedController {
     
     lazy var typingField: TypingField = .init()
     
-    lazy var baseView: UIView = UIView()
-    lazy var imageView: UIImageView = UIImageView(image: UIImage(named: "image_test"))
-    
     @LayoutPlan
     var viewPlan: ViewPlan {
-        baseView.drf
-            .centerY.lessThan(with: .parent)
-            .horizontal.equal(with: .safeArea).offset(by: 16)
-            .bottom.moreThan(to: typingField.drf.top).offset(by: 8)
-            .insert {
-                imageView.drf.builder
-                    .contentMode(.scaleAspectFill)
-                    .clipsToBounds(true).drf
-                    .top.horizontal.equal(with: .parent).offset(by: 12)
-                    .height.equal(with: .width(of: .mySelf)).multiplied(by: 0.75)
-                typingLabel.drf
-                    .bottom.horizontal.equal(with: .parent).offset(by: 12)
-                    .top.equal(with: .bottom(of: .previous)).offset(by: 8)
-            }
+        VStacked(margins: UIEdgeInsets(insets: 12), spacing: 8) {
+            UIImageView(image: UIImage(named: "image_test")).drf
+                .height.equal(with: .width(of: .mySelf)).multiplied(by: 0.75)
+                .builder.contentMode(.scaleAspectFill)
+                .clipsToBounds(true)
+            typingLabel
+        }
+        .centerY.lessThan(with: .parent)
+        .matchSafeAreaH().offset(by: 16)
+        .bottom.moreThan(to: typingField.drf.top).offset(by: 8)
+        
         typingField.drf
-            .horizontal.equal(with: .parent)
-            .bottom.equal(with: .top(of: .keyboard)).priority(.required)
+            .matchParentH()
+            .onTopOfKeyboard().priority(.required)
     }
     
     override func viewDidLoad() {

@@ -15,8 +15,8 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/hainayanda/Clavier.git", from: "2.0.2"),
-        .package(url: "https://github.com/hainayanda/Builder.git", from: "1.0.5"),
+        .package(url: "https://github.com/hainayanda/Clavier.git", from: "2.0.3"),
+        .package(url: "https://github.com/hainayanda/Builder.git", from: "1.1.0"),
         // uncomment code below to test
 //        .package(url: "https://github.com/Quick/Quick.git", from: "5.0.1"),
 //        .package(url: "https://github.com/Quick/Nimble.git", from: "10.0.0")

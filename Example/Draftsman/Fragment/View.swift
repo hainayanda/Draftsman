@@ -21,27 +21,17 @@ class View: UIPlannedView {
         .font(.systemFont(ofSize: 12))
         .build()
     
-    lazy var imageView: UIImageView = UIImageView(image: UIImage(named: "icon_test"))
-    lazy var stackView: UIStackView = UIStackView(axis: .vertical, distribution: .fillEqually, spacing: 4)
-    
     @LayoutPlan
     var viewPlan: ViewPlan {
-        imageView.drf.builder
-            .contentMode(.scaleAspectFit).drf
-            .left.vertical.equal(with: .parent).offset(by: 12)
-            .size.equal(with: CGSize(sides: 56))
-        stackView.drf
-            .right.vertical.equal(with: .parent).offset(by: 12)
-            .left.equal(with: .right(of: .previous)).offset(by: 8)
-            .insertStacked {
-                stackPlan
+        HStacked(margins: UIEdgeInsets(insets: 12), spacing: 8) {
+            UIImageView(image: UIImage(named: "icon_test")).drf
+                .sized(CGSize(sides: 56))
+            VStacked(distribution: .fillEqually, spacing: 4) {
+                titleLabel
+                subtitleLabel
             }
-    }
-    
-    @LayoutPlan
-    var stackPlan: ViewPlan {
-        titleLabel
-        subtitleLabel
+        }
+        .fillParent()
     }
     
     override init(frame: CGRect) {

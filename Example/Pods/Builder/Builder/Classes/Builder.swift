@@ -7,7 +7,7 @@
 
 import Foundation
 
-public func builder<B: Buildable>(_ type: B.Type) -> Builder<B> {
+public func builder<B: Initializable>(_ type: B.Type) -> Builder<B> {
     Builder(type)
 }
 
@@ -61,7 +61,7 @@ public final class Builder<Object>: Maker {
     public func build() -> Object { underlyingObject }
 }
 
-public extension Builder where Object: Buildable {
+public extension Builder where Object: Initializable {
     convenience init(_ type: Object.Type) {
         self.init(.init())
     }

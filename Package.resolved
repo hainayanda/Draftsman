@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/hainayanda/Builder.git",
         "state": {
           "branch": null,
-          "revision": "135f18c811c2e75f4a2fc8aae5e02c6c37d8d672",
-          "version": "1.0.5"
+          "revision": "e04db3d4ea46bf4c374ecc1a31d6de4d48dac156",
+          "version": "1.1.0"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/hainayanda/Clavier.git",
         "state": {
           "branch": null,
-          "revision": "acd31f2629d20b2df77ccb440ab2cb6bc2f7cfc6",
-          "version": "2.0.2"
+          "revision": "a669eece7105cee029a3c11a5084169fe44879fd",
+          "version": "2.0.3"
         }
       }
     ]

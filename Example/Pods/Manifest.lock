@@ -1,14 +1,14 @@
 PODS:
-  - Builder (1.0.4)
-  - Clavier (2.0.1)
-  - Draftsman (3.0.6):
-    - Builder (~> 1.0.4)
-    - Clavier (~> 2.0.1)
+  - Builder (1.1.0)
+  - Clavier (2.0.3)
+  - Draftsman (3.0.7):
+    - Builder (~> 1.1.0)
+    - Clavier (~> 2.0.3)
   - Nimble (10.0.0)
   - Quick (5.0.1)
 
 DEPENDENCIES:
-  - Builder (~> 1.0.3)
+  - Builder (~> 1.1.0)
   - Draftsman (from `../`)
   - Nimble (~> 10.0.0)
   - Quick (~> 5.0.1)
@@ -25,12 +25,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Builder: 9ac1a38cfe5e84ef85ba7c56613046eae34f8f1b
-  Clavier: 7458ac5d634bc424c38de23cc484bcf69595a9ec
-  Draftsman: fe416d9ec7af0fa9a29b78acb2dca539f8b335fc
+  Builder: ff3e1eaccb18e8fcd9f02a90c90a4ed7eb6a0e7b
+  Clavier: 485f4d379f7ee2fea8d5cf7d10fe2ec3e89b479c
+  Draftsman: 3fd01c6d11e1aa2b0cd4729a7dff2cf71f334672
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
   Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
 
-PODFILE CHECKSUM: 7a970c8ab798864f6bc417cdee1122164b8b9942
+PODFILE CHECKSUM: 22ee20e964edf626f63289a8f406ffe4d5f3d7f7
 
 COCOAPODS: 1.11.3

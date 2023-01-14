@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="512" height="192" src="builder.png"/>
+</p>
+
 # Builder
 
 Builder is Swift builder pattern library that utilize dynamicCallable and dynamicMemberLookup as its core.
@@ -31,14 +35,14 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 Builder is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Builder', '~> 1.0.4'
+pod 'Builder', '~> 1.1.0'
 ```
 
 ### Swift Package Manager from XCode
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/hainayanda/Builder.git** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **1.0.4** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **1.1.0** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -47,7 +51,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/hainayanda/Builder.git", .upToNextMajor(from: "1.0.4"))
+  .package(url: "https://github.com/hainayanda/Builder.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
@@ -110,10 +114,25 @@ let myObject: MyObject = builder(MyObject())
 
 ## Buildable
 
-There's a protocol named Buildable which declared like this:
+There's a protocol named Buildable that allowed your object to have a `bld` computed property that will return a Builder object for you to use:
 
 ```swift
-public protocol Buildable {
+let myObject: MyObject = MyBuildable().bld
+    .string("some string")
+    .int(10)
+    .double(1.2)
+    .subObject.string("some string")
+    .subObject.int(10)
+    .subObject.double(1.2)
+    .build()
+```
+
+## Initializable
+
+There's a protocol named Initializable which declared like this:
+
+```swift
+public protocol Initializable {
     init()
 }
 ```
@@ -121,12 +140,14 @@ public protocol Buildable {
 its just to ensure you can call builder global function by only passing its `Type`:
 
 ```swift
-let view: MyObjectImplementBuildable = builder(MyObjectImplementBuildable.self)
+let view: MyObjectImplementInitializable = builder(MyObjectImplementInitializable.self)
     .string("some string")
     .int(10)
     .double(1.2)
     .build()
 ```
+
+Initializable is implementing Buildable by default
 
 ## Error Handling
 
