@@ -56,7 +56,7 @@ dependencies: [
 ]
 ```
 
-Use it in your target as `Draftsman`
+Use it in your target as a `Draftsman`
 
 ```swift
  .target(
@@ -77,7 +77,7 @@ Draftsman is available under the MIT license. See the LICENSE file for more info
 
 ## Basic Usage
 
-Draftsman is `NSLayoutConstraints` and `UIView` hierarchy builder. Draftsman uses a new resultBuilder from Swift that makes the Declarative approach possible.
+Draftsman is the `NSLayoutConstraints` and `UIView` hierarchy builder. Draftsman uses a new resultBuilder from Swift that makes the Declarative approach possible.
 
 ***
 
@@ -186,7 +186,7 @@ class MyViewController: UIViewController, Planned {
 
 ### View Hierarchy
 
-You can create view hierarchy while creating a constraints by using `draftContent` or `drf.insert` method and `insert` method for subview draft (`draftStackedContent` or `drf.insertStacked` and `insertStacked` if its arranged subviews in `UIStackView`). Don't forget to call `apply()` or `build()`, Both will rearrange the view hierarchy but only `apply()` will activate the constraints created.
+You can create a view hierarchy while creating constraints by using the `draftContent` or `drf.insert` method and `insert` method for the subview draft (`draftStackedContent` or `drf.insertStacked` and `insertStacked` if its arranged subviews in `UIStackView`). Don't forget to call `apply()` or `build()`, Both will rearrange the view hierarchy but only `apply()` will activate the constraints created.
 
 ```swift
 view.draftContent {
@@ -201,7 +201,7 @@ view.draftContent {
 }.apply()
 ```
 
-The hierarchy of View is just like how the closure is declared in your code.
+The hierarchy of Views is just like how the closure is declared in your code.
 The above code actually will do the following instruction sequentially:
 
 1. `view` create and insert a new `UIView()`
@@ -228,7 +228,7 @@ You could insert components as much as you need, it will fit all the Views just 
 
 ### Using Builder
 
-You can build your view using [Builder](https://github.com/hainayanda/Builder) library built-in in the Draftsman by calling `builder` property and get back to Draftsman by calling `drf` again:
+You can build your view using [Builder](https://github.com/hainayanda/Builder) library built-in in the Draftsman by calling the `builder` property and get back to Draftsman by calling `drf` again:
 
 ```swift
 myView.drf
@@ -271,12 +271,12 @@ This can be used to create a constraint using one of these three methods:
 - **moreThan(to:)**
 - **lessThan(to:)**
 
-Those methods can accept basic `NSLayoutAnchor` from `UIKit` or using `Anchor` from `Draftsman` as long it's in the same Axis.
-To add a constant, use one of `offset(by:)` or `inset(by:)` methods. offset` is spacing going to the outer part of the anchor and `inset` are spacing going to the inner part of the anchor:
+Those methods can accept basic `NSLayoutAnchor` from `UIKit` or use `Anchor` from `Draftsman` as long it's in the same Axis.
+To add a constant, use one of the `offset(by:)` or `inset(by:)` methods. offset` is the spacing going to the outer part of the anchor and `inset` are spacing going to the inner part of the anchor:
 
 ![alt text](https://github.com/hainayanda/Draftsman/blob/master/offset_and_inset.png)
 
-For center anchor, offset and inset can be described by this picture:
+For center anchor, offset and inset can be described in this picture:
 
 ![alt text](https://github.com/hainayanda/Draftsman/blob/master/offset_and_inset_center.png)
 
@@ -306,8 +306,8 @@ This can be used to create a constraint using one of these three methods:
 - **moreThan(to:)**
 - **lessThan(to:)**
 
-Those methods can accept basic `NSLayoutDimension` from `UIKit` or using dimension `Anchor` from `Draftsman`.
-To add a constant, use one of `added(by:)`, `substracted(by:)` or `multiplied(by: )`  method.
+Those methods can accept basic `NSLayoutDimension` from `UIKit` or use dimension `Anchor` from `Draftsman`.
+To add a constant, use one of the `added(by:)`, `substracted(by:)`, or `multiplied(by: )` methods.
 You can then add priority or/and an identifier for the constraints created.
 
 Dimensioning can be achieved using constant too:
@@ -319,7 +319,7 @@ myView.drf
     .width.lessThan(to: 128).priority(.required).identifier("width")
 ```
 
-Very similar except it accept `CGFloat`
+Very similar except it accepts `CGFloat`
 
 ### Combining Two or More Anchors
 
@@ -331,7 +331,7 @@ myView.drf
     .bottom.left.right.moreThan(to: anyOther.drf.top.left.right)
 ```
 
-It will be the similar to single anchors, but you can only be passed `Draftsman Anchor` with the same Axis combination:
+It will be similar to single anchors, but you can only be passed `Draftsman Anchor` with the same Axis combination:
 
 - all same anchors combination can be related to each other
 - **top.left**, **top.right**, **bottom.left**, **bottom.right** and **centerX.centerY** are all can be related to each other
@@ -372,8 +372,8 @@ for offsets and insets, `CGFloat` is compatible with all. But if you need to ass
 - **VerticalInsets** for vertical anchors insets
 - **HorizontalOffsets** for horizontal anchors offsets
 - **HorizontalInsets** for horizontal anchors insets
-- **AxisOffsets** for cross position anchors offsets which is just a typealias of `CGPoint`
-- **AxisInsets** for cross position anchors insets which is just a typealias of `CGPoint`
+- **AxisOffsets** for cross position anchors offsets which are just a typealias of `CGPoint`
+- **AxisInsets** for cross position anchors insets which are just a typealias of `CGPoint`
 - **EdgeOffsets** for 3 and 4 position anchors offsets which is just a typealias of `UIEdgeInsets`
 - **EdgeInsets** for 3 and 4 position anchors insets which is just a typealias of `UIEdgeInsets`
 
@@ -387,7 +387,7 @@ myView.drf
     .bottom.horizontal.moreThan(to: view.safeAreaLayoutGuide)
 ```
 
-On the example above, it will create equal constraints between `myView` vertical anchors and `otherView` vertical anchors, then it will create another with `myView` bottom and `view.safeAreaLayoutGuide` bottom.
+In the example above, it will create equal constraints between `myView` vertical anchors and `otherView` vertical anchors, then it will create another with `myView` bottom and `view.safeAreaLayoutGuide` bottom.
 
 ### Anonymous Anchor
 
@@ -448,7 +448,7 @@ available explicit anchors are:
 
 ### Layout Constraints Shortcuts
 
-There are several shortcuts for building a layout constraints that can be accessed via `drf`:
+There are several shortcuts for building layout constraints that can be accessed via `drf`:
 
 - **fillParent()** which shortcuts of `edges.equal(with: .parent)`
 - **fillSafeArea()** which shortcuts of `edges.equal(with: .safeArea)`
@@ -493,22 +493,22 @@ UIScrollView().drf.insertStacked {
 
 ### ScrollableStackView
 
-There are custom `UIView` named `ScrollableStackView` which basically a `UIStackView` inside `UIScrollView`. You can use it if you need to stackView that can be scrolled if the content is bigger than the container. It has 2 public init that can be used:
+There are custom `UIView` named `ScrollableStackView` which is a `UIStackView` inside `UIScrollView`. You can use it if you need a `UIStackView` that can be scrolled if the content is bigger than the container. It has 2 public init that can be used:
 
 - **init(frame: CGRect)**
 - **init(frame: CGRect = .zero, axis: NSLayoutConstraint.Axis, margins: UIEdgeInsets? = nil, alignment: UIStackView.Alignment = .center, spacing: CGFloat = .zero)**
 
-Other than that, it can be used like regular `UIStackView` and regular `UIScrollView` minus capability to change its distribution, since it needed to make sure the view behave like what it should.
+Other than that, it can be used like regular `UIStackView` and regular `UIScrollView` minus the capability to change its distribution, since it needed to make sure the view behaves as it should.
 
 ***
 
 ## Layout Helper
 
-There are some helper that can be used if you want your `viewPlan` shorter and less explicit. This helper will accept `LayoutPlan` closure so you dont need to access it via `drf` but directly on its init
+Some helpers can be used if you want your `viewPlan` shorter and less explicit. This helper will accept `LayoutPlan` closure so you don't need to access it via `drf` but directly on its init
 
 ### HStacked and VStacked
 
-HStacked and VStacked basically an shortcut to create vertical and horizontal UIStackView without creating it explicitly. It has 3 public init that can be used:
+`HStacked` and `VStacked` are a shortcut to create vertical and horizontal UIStackView without creating it explicitly. It has 3 public init that can be used:
 
 - **init(_ stack: UIStackView = UIStackView(), @LayoutPlan _ layouter: () -> ViewPlan) {**
 - **init(margins: UIEdgeInsets? = nil, distribution: UIStackView.Distribution = .fill, alignment: UIStackView.Alignment = .fill, spacing: CGFloat = .zero, @LayoutPlan _ layouter: () -> ViewPlan)**
@@ -539,7 +539,7 @@ UIStackView(axis: .vertical, distribution: .fillEqually).drf
 
 ### HScrollableStacked and VScrollableStacked
 
-`HScrollableStacked` and `VScrollableStacked` basically an shortcut to create vertical and horizontal `ScrollableStackView` without creating it explicitly. It has 3 public init that can be used:
+`HScrollableStacked` and `VScrollableStacked` are a shortcut to create vertical and horizontal `ScrollableStackView` without creating it explicitly. It has 3 public init that can be used:
 
 - **init(_ stack: ScrollableStackView = ScrollableStackView(), @LayoutPlan _ layouter: () -> ViewPlan) {**
 - **init(margins: UIEdgeInsets? = nil, alignment: UIStackView.Alignment = .fill, spacing: CGFloat = .zero, @LayoutPlan _ layouter: () -> ViewPlan)**
@@ -570,7 +570,7 @@ ScrollableStackView(axis: .horizontal, alignment: .fill).drf
 
 ### Margined
 
-`Margined` is an simple way to add a margin to any `UIView`. Example:
+`Margined` is a simple way to add a margin to any `UIView`. Example:
 
 ```swift
 Margined(by: 12) { 
@@ -732,4 +732,4 @@ You can use `UIPlannedStack` since its a typealias of `UIStackView & PlannedStac
 
 ## Contribute
 
-You know how, just clone and do pull request
+You know how, just clone and do a pull request
