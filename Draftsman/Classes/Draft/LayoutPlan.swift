@@ -9,6 +9,12 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
+extension Array: PlanComponent where Element: PlanComponent {
+    public var insertablePlans: [ViewDraft] {
+        flatMap { $0.insertablePlans }
+    }
+}
+
 @resultBuilder
 public struct LayoutPlan {
     public typealias Expression = PlanComponent?
