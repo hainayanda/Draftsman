@@ -46,30 +46,6 @@ public extension UIStackView {
         }
 }
 
-@inlinable public func VStackView(
-    distribution: UIStackView.Distribution = .fill,
-    alignment: UIStackView.Alignment = .fill,
-    spacing: CGFloat = .zero) -> UIStackView {
-        .init(
-            axis: .vertical,
-            distribution: distribution,
-            alignment: alignment,
-            spacing: spacing
-        )
-    }
-
-@inlinable public func HStackView(
-    distribution: UIStackView.Distribution = .fill,
-    alignment: UIStackView.Alignment = .fill,
-    spacing: CGFloat = .zero) -> UIStackView {
-        .init(
-            axis: .horizontal,
-            distribution: distribution,
-            alignment: alignment,
-            spacing: spacing
-        )
-    }
-
 public protocol CellWithContentView: UIView {
     var contentView: UIView { get }
 }
