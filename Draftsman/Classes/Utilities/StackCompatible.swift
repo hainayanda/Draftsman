@@ -11,6 +11,9 @@ import UIKit
 
 public protocol StackCompatible where Self: UIView {
     var arrangedSubviews: [UIView] { get }
+    var axis: NSLayoutConstraint.Axis { get set }
+    var layoutMargins: UIEdgeInsets { get set }
+    var isLayoutMarginsRelativeArrangement: Bool { get set }
     func addArrangedSubview(_ view: UIView)
     func removeArrangedSubview(_ view: UIView)
     func insertArrangedSubview(_ view: UIView, at stackIndex: Int)
