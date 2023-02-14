@@ -14,13 +14,14 @@ open class LayoutDraft<View: UIView>: ViewPlanBuilder, ViewDraft {
     public var underlyingView: View
     public var view: UIView { underlyingView }
     open override var insertablePlans: [ViewDraft] { [self] }
-    var stackPlans: [ViewDraft] = []
+    var stackPlans: [ViewDraft]
     override var allPlans: [ViewDraft] {
         plans.added(withContentsOf: stackPlans)
     }
     
-    public init(view: View, plans: [ViewDraft] = []) {
+    public init(view: View, plans: [ViewDraft] = [], stackPlans: [ViewDraft] = []) {
         self.underlyingView = view
+        self.stackPlans = stackPlans
         view.useAppleKeyboardLayoutGuideIfAvailable = false
         super.init(plans: plans)
     }
