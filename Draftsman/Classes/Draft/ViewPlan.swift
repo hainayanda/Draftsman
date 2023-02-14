@@ -9,6 +9,8 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
+typealias EmptyViewPlan = [UIView]
+
 public protocol ViewPlan: PlanComponent {
     func build(for view: UIView) -> [NSLayoutConstraint]
     @discardableResult
