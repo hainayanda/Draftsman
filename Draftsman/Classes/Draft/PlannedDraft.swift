@@ -13,9 +13,9 @@ open class PlannedDraft<Root: Planned, View: UIView>: LayoutDraft<View> {
     typealias PopulatedConstraints = (removed: [NSLayoutConstraint], keeped: [NSLayoutConstraint], added: [NSLayoutConstraint])
     var root: Root
     
-    public init(root: Root, view: View, plans: [ViewDraft]) {
+    public init(root: Root, view: View, plans: [ViewDraft], stackPlans: [ViewDraft] = []) {
         self.root = root
-        super.init(view: view, plans: plans)
+        super.init(view: view, plans: plans, stackPlans: stackPlans)
     }
     
     func buildAndPopulate(for view: UIView) -> PopulatedConstraints {
