@@ -72,22 +72,23 @@ public protocol PlannedStack: Planned {
 }
 
 public typealias UIPlannedStack = UIStackView & PlannedStack
+public typealias UIPlannedScrollableStack = ScrollableStackView & PlannedStack
 
-extension PlannedStack where Self: UIStackView {
+extension PlannedStack where Self: StackCompatible {
     @LayoutPlan
-    public var viewPlan: ViewPlan {
-        drf.insertStacked {
-            stackViewPlan
-        }
-    }
+    public var viewPlan: ViewPlan { EmptyViewPlan() }
 }
 
 extension Planned where Self: UIView {
     
     @discardableResult
     public func applyPlan() -> [NSLayoutConstraint] {
-        let appliedConstraints = PlannedDraft(root: self, view: self, plans: viewPlan.insertablePlans)
-            .apply()
+        let appliedConstraints = PlannedDraft(
+            root: self,
+            view: self,
+            plans: viewPlan.insertablePlans,
+            stackPlans: (self as? PlannedStack)?.stackViewPlan.insertablePlans ?? []
+        ).apply()
         self.appliedConstraints = appliedConstraints
         self.viewPlanApplied = true
         return appliedConstraints
