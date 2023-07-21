@@ -11,7 +11,9 @@ import UIKit
 import Draftsman
 import Builder
 
-class CollectionViewController: UIViewController, Planned {
+class CollectionViewController: UIPlannedController {
+    
+    @Published var cells: [Int] = []
     
     var cellWidth: CGFloat {
         if #available(iOS 11.0, *) {
@@ -36,12 +38,17 @@ class CollectionViewController: UIViewController, Planned {
     lazy var collectionView: UICollectionView = builder(UICollectionView(frame: .zero, collectionViewLayout: collectionLayout))
         .backgroundColor(.white)
         .allowsSelection(false)
-        .dataSource(self)
         .build()
     
     @LayoutPlan
     var viewPlan: ViewPlan {
         collectionView.drf
+            .renderCells(observing: $cells) { number in
+                render(CollectionCell.self) { cell in
+                    cell.titleLabel.text = "Cell\(number)"
+                    cell.subtitleLabel.text = "Cell at index \(number)"
+                }
+            }
             .matchSafeAreaH()
             .matchParentV()
     }
@@ -51,24 +58,12 @@ class CollectionViewController: UIViewController, Planned {
         title = "Collection View"
         view.backgroundColor = .white
         applyPlan()
-        collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: "CollectionCell")
-        collectionView.reloadData()
-    }
-    
-}
-
-extension CollectionViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        100
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: CollectionCell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "CollectionCell",
-            for: indexPath) as? CollectionCell ?? CollectionCell()
-        cell.titleLabel.text = "Cell\(indexPath.item)"
-        cell.subtitleLabel.text = "Cell at index \(indexPath.item)"
-        return cell
+        cells = (0..<10).map { $0 }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+            self?.cells = (0..<10).shuffled() + (10..<20).shuffled()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [weak self] in
+            self?.cells = (0..<100).map { $0 }
+        }
     }
 }
