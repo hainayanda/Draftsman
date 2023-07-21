@@ -8,7 +8,8 @@
 import Foundation
 
 extension NSDiffableDataSourceSnapshot where SectionIdentifierType == Int {
-    @inlinable func snapshot<S: Sequence>(fromItems sequence: S) -> NSDiffableDataSourceSnapshot where S.Element == ItemIdentifierType {
+    @inlinable func snapshot<S: Sequence>(
+        fromItems sequence: S) -> NSDiffableDataSourceSnapshot where S.Element == ItemIdentifierType {
         let currentSnapshot = self
         var snapshot = NSDiffableDataSourceSnapshot()
         snapshot.appendSections([0])
@@ -22,7 +23,8 @@ extension NSDiffableDataSourceSnapshot where SectionIdentifierType == Int {
 }
 
 extension NSDiffableDataSourceSnapshot {
-    @inlinable func snapshot<S: Sequence>(fromSections sequence: S) -> NSDiffableDataSourceSnapshot where S.Element: SectionCompatible, S.Element.Identifier == SectionIdentifierType, S.Element.Item == ItemIdentifierType {
+    @inlinable func snapshot<S: Sequence>(
+        fromSections sequence: S) -> NSDiffableDataSourceSnapshot where S.Element: SectionCompatible, S.Element.Identifier == SectionIdentifierType, S.Element.Item == ItemIdentifierType {
         let currentSnapshot = self
         var snapshot = NSDiffableDataSourceSnapshot()
         let sections = sequence.map { $0.identifier }
