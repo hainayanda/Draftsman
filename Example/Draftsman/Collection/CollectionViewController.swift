@@ -35,22 +35,16 @@ class CollectionViewController: UIPlannedController {
         .itemSize(CGSize(width: cellWidth, height: cellWidth * 1.2))
         .build()
     
-    lazy var collectionView: UICollectionView = builder(UICollectionView(frame: .zero, collectionViewLayout: collectionLayout))
-        .backgroundColor(.white)
-        .allowsSelection(false)
-        .build()
-    
     @LayoutPlan
     var viewPlan: ViewPlan {
-        collectionView.drf
-            .renderCells(observing: $cells) { number in
-                render(CollectionCell.self) { cell in
-                    cell.titleLabel.text = "Cell\(number)"
-                    cell.subtitleLabel.text = "Cell at index \(number)"
-                }
-            }
-            .matchSafeAreaH()
-            .matchParentV()
+        Collectioned(collectionLayout, forCell: CollectionCell.self, observing: $cells) { cell, number in
+            cell.titleLabel.text = "Cell\(number)"
+            cell.subtitleLabel.text = "Cell at index \(number)"
+        }
+        .matchSafeAreaH()
+        .matchParentV()
+        .builder.backgroundColor(.white)
+        .allowsSelection(false)
     }
     
     override func viewDidLoad() {

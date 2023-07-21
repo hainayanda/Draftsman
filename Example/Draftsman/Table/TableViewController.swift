@@ -16,17 +16,14 @@ class TableViewController: UIPlannedController {
     
     @LayoutPlan
     var viewPlan: ViewPlan {
-        UITableView().drf
-            .builder.backgroundColor(.white)
-            .allowsSelection(false)
-            .drf.renderCells(observing: $cells, animation: .automatic) { number in
-                render(TableCell.self) { cell in
-                    cell.titleLabel.text = "Cell\(number)"
-                    cell.subtitleLabel.text = "Cell at index \(number)"
-                }
-            }
-            .matchSafeAreaH()
-            .matchParentV()
+        Tabled(forCell: TableCell.self, observing: $cells, animation: .automatic) { cell, number in
+            cell.titleLabel.text = "Cell\(number)"
+            cell.subtitleLabel.text = "Cell at index \(number)"
+        }
+        .matchSafeAreaH()
+        .matchParentV()
+        .builder.backgroundColor(.white)
+        .allowsSelection(false)
     }
     
     override func viewDidLoad() {

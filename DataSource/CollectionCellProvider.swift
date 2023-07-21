@@ -39,6 +39,7 @@ struct CollectionCellApplicator<Cell: UICollectionViewCell>: CollectionCellProvi
 
 extension LayoutDraft where View: UICollectionView {
     
+    @discardableResult
     public func renderCells<S: Sequence, Cell: UICollectionViewCell>(
         _ type: Cell.Type,
         using sequence: S,
@@ -50,6 +51,7 @@ extension LayoutDraft where View: UICollectionView {
             }
         }
     
+    @discardableResult
     public func renderCells<S: Sequence>(
         using sequence: S,
         cellProvider: @escaping (S.Element) -> CollectionCellProvider) -> Self where S.Element: Hashable {
@@ -59,6 +61,7 @@ extension LayoutDraft where View: UICollectionView {
             return self
         }
     
+    @discardableResult
     public func renderCells<P: Publisher, Cell: UICollectionViewCell>(
         _ type: Cell.Type,
         observing publisher: P,
@@ -70,6 +73,7 @@ extension LayoutDraft where View: UICollectionView {
             }
         }
     
+    @discardableResult
     public func renderCells<P: Publisher>(
         observing publisher: P,
         cellProvider: @escaping (P.Output.Element) -> CollectionCellProvider) -> Self where P.Output: Sequence, P.Output.Element: Hashable {
@@ -78,6 +82,7 @@ extension LayoutDraft where View: UICollectionView {
             return self
         }
     
+    @discardableResult
     public func renderSections<S: Sequence, Cell: UICollectionViewCell>(
         _ type: Cell.Type,
         using sequence: S,
@@ -89,6 +94,7 @@ extension LayoutDraft where View: UICollectionView {
             }
         }
     
+    @discardableResult
     public func renderSections<S: Sequence>(
         using sequence: S,
         cellProvider: @escaping (S.Element.Item) -> CollectionCellProvider) -> Self where S.Element: SectionCompatible {
@@ -98,6 +104,7 @@ extension LayoutDraft where View: UICollectionView {
             return self
         }
     
+    @discardableResult
     public func renderSections<P: Publisher, Cell: UICollectionViewCell>(
         _ type: Cell.Type,
         observing publisher: P,
@@ -109,6 +116,7 @@ extension LayoutDraft where View: UICollectionView {
             }
         }
     
+    @discardableResult
     public func renderSections<P: Publisher>(
         observing publisher: P,
         cellProvider: @escaping (P.Output.Element.Item) -> CollectionCellProvider) -> Self where P.Output: Sequence, P.Output.Element: SectionCompatible {

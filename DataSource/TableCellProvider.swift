@@ -39,6 +39,7 @@ struct TableCellApplicator<Cell: UITableViewCell>: TableCellProvider {
 
 extension LayoutDraft where View: UITableView {
     
+    @discardableResult
     public func renderCells<S: Sequence, Cell: UITableViewCell>(
         _ type: Cell.Type,
         using sequence: S,
@@ -51,6 +52,7 @@ extension LayoutDraft where View: UITableView {
             }
         }
     
+    @discardableResult
     public func renderCells<S: Sequence>(
         using sequence: S,
         animation: UITableView.RowAnimation? = nil,
@@ -61,6 +63,7 @@ extension LayoutDraft where View: UITableView {
             return self
         }
     
+    @discardableResult
     public func renderCells<P: Publisher, Cell: UITableViewCell>(
         _ type: Cell.Type,
         observing publisher: P,
@@ -73,6 +76,7 @@ extension LayoutDraft where View: UITableView {
             }
         }
     
+    @discardableResult
     public func renderCells<P: Publisher>(
         observing publisher: P,
         animation: UITableView.RowAnimation? = nil,
@@ -82,6 +86,7 @@ extension LayoutDraft where View: UITableView {
             return self
         }
     
+    @discardableResult
     public func renderSections<S: Sequence, Cell: UITableViewCell>(
         _ type: Cell.Type,
         using sequence: S,
@@ -94,6 +99,7 @@ extension LayoutDraft where View: UITableView {
             }
         }
     
+    @discardableResult
     public func renderSections<S: Sequence>(
         using sequence: S,
         animation: UITableView.RowAnimation? = nil,
@@ -104,6 +110,7 @@ extension LayoutDraft where View: UITableView {
             return self
         }
     
+    @discardableResult
     public func renderSections<P: Publisher, Cell: UITableViewCell>(
         _ type: Cell.Type,
         observing publisher: P,
@@ -116,6 +123,7 @@ extension LayoutDraft where View: UITableView {
             }
         }
     
+    @discardableResult
     public func renderSections<P: Publisher>(
         observing publisher: P,
         animation: UITableView.RowAnimation? = nil,
