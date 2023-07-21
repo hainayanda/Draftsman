@@ -6,6 +6,7 @@
 //
 
 import Foundation
+#if canImport(UIKit)
 import UIKit
 import Combine
 
@@ -16,7 +17,7 @@ public extension LayoutDraft {
 }
 
 @dynamicMemberLookup
-public class LayoutDraftSubscriber<View: UIView> {
+final public class LayoutDraftSubscriber<View: UIView> {
     
     let draft: LayoutDraft<View>
     var cancellables: Set<AnyCancellable> = .init()
@@ -55,3 +56,4 @@ extension LayoutDraftSubscriber {
         }
     }
 }
+#endif
