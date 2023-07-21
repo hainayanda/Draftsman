@@ -143,7 +143,7 @@ extension LayoutDraft where View: UITableView {
             let cancellable = publisher
                 .receive(on: RunLoop.main)
                 .sink {  _ in } receiveValue: { [weak dataSource] items in
-                    guard let dataSource else { return }
+                    guard let dataSource = dataSource else { return }
                     let newSnapshot = dataSource.snapshot().snapshot(fromItems: items)
                     dataSource.apply(newSnapshot, animation: animation)
                 }
@@ -157,7 +157,7 @@ extension LayoutDraft where View: UITableView {
             let cancellable = publisher
                 .receive(on: RunLoop.main)
                 .sink {  _ in } receiveValue: { [weak dataSource] items in
-                    guard let dataSource else { return }
+                    guard let dataSource = dataSource else { return }
                     let newSnapshot = dataSource.snapshot().snapshot(fromSections: items)
                     dataSource.apply(newSnapshot, animation: animation)
                 }
@@ -233,7 +233,7 @@ private extension UITableView {
 
 extension UITableViewDiffableDataSource {
     @inlinable func apply(_ snapshot: NSDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>, animation: UITableView.RowAnimation?) {
-        guard let animation else {
+        guard let animation = animation else {
             apply(snapshot, animatingDifferences: false)
             return
         }

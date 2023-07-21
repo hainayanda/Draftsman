@@ -134,7 +134,7 @@ extension LayoutDraft where View: UICollectionView {
             let cancellable = publisher
                 .receive(on: RunLoop.main)
                 .sink {  _ in } receiveValue: { [weak dataSource] items in
-                    guard let dataSource else { return }
+                    guard let dataSource = dataSource else { return }
                     let newSnapshot = dataSource.snapshot().snapshot(fromItems: items)
                     dataSource.apply(newSnapshot)
                 }
@@ -147,7 +147,7 @@ extension LayoutDraft where View: UICollectionView {
             let cancellable = publisher
                 .receive(on: RunLoop.main)
                 .sink {  _ in } receiveValue: { [weak dataSource] items in
-                    guard let dataSource else { return }
+                    guard let dataSource = dataSource else { return }
                     let newSnapshot = dataSource.snapshot().snapshot(fromSections: items)
                     dataSource.apply(newSnapshot)
                 }
