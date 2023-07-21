@@ -68,8 +68,8 @@ class FragmentViewController: UIPlannedController {
     
     @objc func addFragment(_ sender: Any) {
         let fragment = View()
-        fragment.titleLabel.text = "Added"
-        fragment.subtitleLabel.text = "New fragment with index of: \(counter)"
+        fragment.title = "Added"
+        fragment.subtitle = "New fragment with index of: \(counter)"
         fragments.append(fragment)
         counter += 1
     }

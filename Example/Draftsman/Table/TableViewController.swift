@@ -18,8 +18,8 @@ class TableViewController: UIPlannedController {
     @LayoutPlan
     var viewPlan: ViewPlan {
         Tabled(forCell: TableCell.self, observing: $cells, animation: .automatic) { cell, number in
-            cell.titleLabel.text = "Cell\(number)"
-            cell.subtitleLabel.text = "Cell at index \(number)"
+            cell.title = "Cell\(number)"
+            cell.subtitle = "Cell at index \(number)"
         }
         .matchSafeAreaH()
         .matchParentV()

@@ -10,14 +10,11 @@ import Foundation
 import UIKit
 import Draftsman
 import Builder
+import Combine
 
 class FieldViewController: UIPlannedController {
     
-    lazy var typingLabel: UILabel = builder(UILabel(text: "will be replaced"))
-        .textAlignment(.center)
-        .font(.boldSystemFont(ofSize: 28))
-        .numberOfLines(0)
-        .build()
+    @Published var typingLabel: String? = "will be replaced"
     
     lazy var typingField: TypingField = .init()
     
@@ -28,7 +25,10 @@ class FieldViewController: UIPlannedController {
                 .height.equal(with: .width(of: .mySelf)).multiplied(by: 0.75)
                 .builder.contentMode(.scaleAspectFill)
                 .clipsToBounds(true)
-            typingLabel
+            UILabel().drf.builder
+                .textAlignment(.center)
+                .font(.boldSystemFont(ofSize: 28))
+                .numberOfLines(0)
         }
         .centerY.lessThan(with: .parent)
         .matchSafeAreaH().offset(by: 16)
@@ -71,7 +71,7 @@ extension FieldViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         let replacedText = NSString(string: currentText).replacingCharacters(in: range, with: string)
-        typingLabel.text = replacedText
+        typingLabel = replacedText
         return true
     }
 }

@@ -39,8 +39,8 @@ class CollectionViewController: UIPlannedController {
     @LayoutPlan
     var viewPlan: ViewPlan {
         Collectioned(collectionLayout, forCell: CollectionCell.self, observing: $cells) { cell, number in
-            cell.titleLabel.text = "Cell\(number)"
-            cell.subtitleLabel.text = "Cell at index \(number)"
+            cell.title = "Cell\(number)"
+            cell.subtitle = "Cell at index \(number)"
         }
         .matchSafeAreaH()
         .matchParentV()
