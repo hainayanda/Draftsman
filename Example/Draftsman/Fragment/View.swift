@@ -10,16 +10,14 @@ import Foundation
 import UIKit
 import Draftsman
 import Builder
+import Combine
 
 class View: UIPlannedView {
-    lazy var titleLabel: UILabel = builder(UILabel())
-        .textAlignment(.left)
-        .font(.boldSystemFont(ofSize: 14))
-        .build()
-    var subtitleLabel: UILabel = builder(UILabel())
-        .textAlignment(.left)
-        .font(.systemFont(ofSize: 12))
-        .build()
+    
+    @Published var title: String?
+    @Published var subtitle: String?
+    
+    var cancellables: Set<AnyCancellable> = .init()
     
     @LayoutPlan
     var viewPlan: ViewPlan {
@@ -27,8 +25,16 @@ class View: UIPlannedView {
             UIImageView(image: UIImage(named: "icon_test")).drf
                 .sized(CGSize(sides: 56))
             VStacked(distribution: .fillEqually, spacing: 4) {
-                titleLabel
-                subtitleLabel
+                UILabel().drf.builder
+                    .textAlignment(.left)
+                    .font(.boldSystemFont(ofSize: 14))
+                    .subscriber.text(to: $title)
+                    .storeAll(in: &cancellables)
+                UILabel().drf.builder
+                    .textAlignment(.left)
+                    .font(.systemFont(ofSize: 12))
+                    .subscriber.text(to: $subtitle)
+                    .storeAll(in: &cancellables)
             }
         }
         .fillParent()

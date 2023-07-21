@@ -24,6 +24,7 @@ public final class LayoutDraftBuilder<View: UIView>: Maker {
     }
     let draft: LayoutDraft<View>
     public var drf: LayoutDraft<View> { draft }
+    public var subscriber: LayoutDraftSubscriber<View> { draft.subcriber }
     
     init(_ draft: LayoutDraft<View>) {
         self.draft = draft

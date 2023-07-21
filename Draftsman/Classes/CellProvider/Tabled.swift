@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Combine
 
-public class Tabled: LayoutDraft<UITableView> {
+public final class Tabled: LayoutDraft<UITableView> {
     
     @inlinable public init<S: Sequence, Cell: UITableViewCell>(
         _ tableView: UITableView = UITableView(),

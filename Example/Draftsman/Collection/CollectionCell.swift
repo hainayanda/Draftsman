@@ -10,29 +10,38 @@ import Foundation
 import UIKit
 import Draftsman
 import Builder
+import Combine
 
 class CollectionCell: UICollectionPlannedCell {
     
-    lazy var titleLabel: UILabel = builder(UILabel())
-        .textAlignment(.center)
-        .font(.boldSystemFont(ofSize: 14))
-        .build()
-    var subtitleLabel: UILabel = builder(UILabel())
-        .textAlignment(.center)
-        .font(.systemFont(ofSize: 12))
-        .build()
+    @Published var image: UIImage? = UIImage(named: "icon_test")
+    @Published var title: String?
+    @Published var subtitle: String?
+    
+    var cancellables: Set<AnyCancellable> = .init()
     
     @LayoutPlan
     var contentViewPlan: ViewPlan {
         VStacked(margins: UIEdgeInsets(insets: 12), spacing: 8) {
             Margined(by: UIEdgeInsets(insets: 8)) {
-                UIImageView(image: UIImage(named: "icon_test")).drf.builder
+                UIImageView().drf.builder
                     .contentMode(.scaleAspectFit).drf
                     .widthMatchHeight()
+                    .builder.contentMode(.scaleAspectFit)
+                    .subscriber.image(to: $image)
+                    .storeAll(in: &cancellables)
             }
             VStacked(distribution: .fillEqually, spacing: 4) {
-                titleLabel
-                subtitleLabel
+                UILabel().drf.builder
+                    .textAlignment(.left)
+                    .font(.boldSystemFont(ofSize: 14))
+                    .subscriber.text(to: $title)
+                    .storeAll(in: &cancellables)
+                UILabel().drf.builder
+                    .textAlignment(.left)
+                    .font(.systemFont(ofSize: 12))
+                    .subscriber.text(to: $subtitle)
+                    .storeAll(in: &cancellables)
             }
         }
         .fillParent()

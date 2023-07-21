@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Combine
 
-public class Collectioned: LayoutDraft<UICollectionView> {
+public final class Collectioned: LayoutDraft<UICollectionView> {
     
     @inlinable public init<S: Sequence, Cell: UICollectionViewCell>(
         _ collectionViewLayout: UICollectionViewLayout,

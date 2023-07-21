@@ -27,7 +27,7 @@ class PlainAnchorExtractable<Anchor>: AnchorExtractable<Anchor> {
     }
 }
 
-class LayoutAnchorExtractable<Anchor>: AnchorExtractable<Anchor> {
+final class LayoutAnchorExtractable<Anchor>: AnchorExtractable<Anchor> {
     let keyPath: KeyPath<LayoutWithAnchors, Anchor>
     let layout: LayoutWithAnchors
     
