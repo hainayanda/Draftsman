@@ -13,3 +13,13 @@ public protocol SectionCompatible {
     var identifier: Identifier { get }
     var items: [Item] { get }
 }
+
+public struct Sectioned<Identifier: Hashable, Item: Hashable>: SectionCompatible {
+    public let identifier: Identifier
+    public let items: [Item]
+    
+    public init<S: Sequence>(_ identifier: Identifier, items: S) where S.Element == Item {
+        self.identifier = identifier
+        self.items = Array(items)
+    }
+}

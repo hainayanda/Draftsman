@@ -16,7 +16,7 @@ public protocol CollectionCellProvider {
     func applicator(_ collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell?
 }
 
-public func render<Cell: UICollectionViewCell>(_ cellType: Cell.Type, applicator: @escaping (Cell) -> Void) -> CollectionCellProvider {
+public func render<Cell: UICollectionViewCell>(_ cellType: Cell.Type, applicator: @escaping (Cell) -> Void = { _ in }) -> CollectionCellProvider {
     CollectionCellApplicator<Cell>(applicator: applicator)
 }
 
