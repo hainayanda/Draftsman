@@ -184,6 +184,31 @@ class MyViewController: UIViewController, Planned {
 }
 ```
 
+Working with UITableView or UICollectionView? Do it easily with Draftsman and Combine:
+
+```swift
+import Draftsman
+import Combine
+
+class MyViewController: UIViewController, Planned {
+    
+    @Published var models: [MyModel] = []
+    
+    @LayoutPlan
+    var viewPlan: ViewPlan {
+        Tabled(forCell: MyTableCell.self, observing: $models) { cell, model in
+            cell.apply(model)
+        }
+        .fillParent()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        applyPlan()
+    }
+}
+```
+
 ### View Hierarchy
 
 You can create a view hierarchy while creating constraints by using the `draftContent` or `drf.insert` method and `insert` method for the subview draft (`draftStackedContent` or `drf.insertStacked` and `insertStacked` if its arranged subviews in `UIStackView`). Don't forget to call `apply()` or `build()`, Both will rearrange the view hierarchy but only `apply()` will activate the constraints created.
@@ -467,6 +492,112 @@ There are several shortcuts for building layout constraints that can be accessed
 
 ***
 
+## UITableView and UICollectionView
+
+Working with `UITableView` and `UICollectionView` is very easy with Draftsman. Just call `renderCells` and any sequence of Hashables:
+
+```swift
+UITableView().drf.renderCells(using: myArrayOfHashables) { item in
+    MyTableCell.render { cell in
+        cell.apply(with: item)
+    }
+}
+```
+
+Multiple cell for different item? Just render it:
+
+```swift
+UITableView().drf.renderCells(using: myArrayOfEnum) { item in
+    switch item { 
+    case .typeOne:
+        MyTableCellOne.render { cell in
+            cell.apply(with: item)
+        }
+    case .typeTwo:
+        render { cell in
+            cell.apply(with: item)
+        }
+    }
+}
+```
+
+This applied for `UICollectionView` too:
+
+```swift
+UICollectionView().drf.renderCells(using: myArrayOfHashables) { item in
+    MyCollectionCell.render { cell in
+        cell.apply(with: item)
+    }
+}
+```
+
+This functionality is powered by `UITableViewDiffableDataSource` and `UICollectionViewDiffableDataSource`.
+
+### SectionCompatible
+
+If you work with sectioned `UITableView` or `UICollectionView`, call `renderSections` instead and pass `SectionCompatible` sequence:
+
+```swift
+UITableView().drf.renderSections(using: myArrayOfSectionCompatibles) { item in
+    MyTableCell.render { cell in
+        cell.apply(with: item)
+    }
+}
+```
+
+The `SectionCompatible` is a protocol that declared like this:
+
+```swift
+public protocol SectionCompatible {
+    associatedtype Identifier: Hashable
+    associatedtype Item: Hashable
+    var identifier: Identifier { get }
+    var items: [Item] { get }
+}
+```
+
+You can use `Sectioned` struct instead if you don't want to implement `SectionCompatible`:
+
+```swift
+Sectioned(myIdentifier, items: myArrayOfItems)
+```
+
+### Render Cell using Combine
+
+Most of the time your cell is changing overtime and you don't want to render the whole table all over again. In that case, you can use Combine `Publisher` instead of Sequence:
+
+```swift
+
+@Published var myItems: [Item] = []
+
+...
+...
+
+UITableView().drf.renderCells(observing: $myItems) { item in
+    MyTableCell.render { cell in
+        cell.apply(with: item)
+    }
+}
+```
+
+Whenever the publisher publish changes, the table view will update according to the items published. This applies to `renderSections` too:
+
+```swift
+
+@Published var mySections: [Sectioned<MySection, Item>] = []
+
+...
+...
+
+UITableView().drf.renderSections(observing: $mySections) { item in
+    MyTableCell.render { cell in
+        cell.apply(with: item)
+    }
+}
+```
+
+All of this are available both on `UITableView` and `UICollectionView`
+
 ## Custom View
 
 ### SpacerView
@@ -566,6 +697,34 @@ ScrollableStackView(axis: .horizontal, alignment: .fill).drf
         MyView()
         OtherView()
     }
+```
+
+### Tabled and Collectioned
+
+`renderCells`, `renderSections` both on `UITableView` and `UICollectionView` can be created and called at init by using `Tabled` or `Collectioned`:
+
+```swift
+Tabled(forCell: MyCell.self, observing: $items) { cell, item in
+    cell.apply(item)
+}
+```
+
+This will be equivalent with:
+
+```swift
+UITableView().drf.renderCells(observing: $items) { item in
+    MyCell.render { cell in
+        cell.apply(with: item)
+    }
+}
+```
+
+same with `UICollectionView`:
+
+```swift
+Collectioned(forCell: MyCell.self, observing: $items) { cell, item in
+    cell.apply(item)
+}
 ```
 
 ### Margined
