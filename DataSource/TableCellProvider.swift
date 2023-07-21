@@ -39,6 +39,18 @@ struct TableCellApplicator<Cell: UITableViewCell>: TableCellProvider {
 
 extension LayoutDraft where View: UITableView {
     
+    public func renderCells<S: Sequence, Cell: UITableViewCell>(
+        _ type: Cell.Type,
+        using sequence: S,
+        animation: UITableView.RowAnimation? = nil,
+        applicator: @escaping (Cell, S.Element) -> Void) -> Self where S.Element: Hashable {
+            renderCells(using: sequence, animation: animation) { item in
+                render(Cell.self) { cell in
+                    applicator(cell, item)
+                }
+            }
+        }
+    
     public func renderCells<S: Sequence>(
         using sequence: S,
         animation: UITableView.RowAnimation? = nil,
@@ -47,6 +59,18 @@ extension LayoutDraft where View: UITableView {
             let newSnapshot = dataSource.snapshot().snapshot(fromItems: sequence)
             dataSource.apply(newSnapshot, animation: animation)
             return self
+        }
+    
+    public func renderCells<P: Publisher, Cell: UITableViewCell>(
+        _ type: Cell.Type,
+        observing publisher: P,
+        animation: UITableView.RowAnimation? = nil,
+        applicator: @escaping (Cell, P.Output.Element) -> Void) -> Self where P.Output: Sequence, P.Output.Element: Hashable {
+            renderCells(observing: publisher, animation: animation) { item in
+                render(Cell.self) { cell in
+                    applicator(cell, item)
+                }
+            }
         }
     
     public func renderCells<P: Publisher>(
@@ -58,6 +82,18 @@ extension LayoutDraft where View: UITableView {
             return self
         }
     
+    public func renderSections<S: Sequence, Cell: UITableViewCell>(
+        _ type: Cell.Type,
+        using sequence: S,
+        animation: UITableView.RowAnimation? = nil,
+        applicator: @escaping (Cell, S.Element.Item) -> Void) -> Self where S.Element: SectionCompatible {
+            renderSections(using: sequence, animation: animation) { item in
+                render(Cell.self) { cell in
+                    applicator(cell, item)
+                }
+            }
+        }
+    
     public func renderSections<S: Sequence>(
         using sequence: S,
         animation: UITableView.RowAnimation? = nil,
@@ -66,6 +102,18 @@ extension LayoutDraft where View: UITableView {
             let newSnapshot = dataSource.snapshot().snapshot(fromSections: sequence)
             dataSource.apply(newSnapshot, animation: animation)
             return self
+        }
+    
+    public func renderSections<P: Publisher, Cell: UITableViewCell>(
+        _ type: Cell.Type,
+        observing publisher: P,
+        animation: UITableView.RowAnimation? = nil,
+        applicator: @escaping (Cell, P.Output.Element.Item) -> Void) -> Self where P.Output: Sequence, P.Output.Element: SectionCompatible {
+            renderSections(observing: publisher, animation: animation) { item in
+                render(Cell.self) { cell in
+                    applicator(cell, item)
+                }
+            }
         }
     
     public func renderSections<P: Publisher>(

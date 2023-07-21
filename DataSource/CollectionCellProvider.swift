@@ -39,6 +39,17 @@ struct CollectionCellApplicator<Cell: UICollectionViewCell>: CollectionCellProvi
 
 extension LayoutDraft where View: UICollectionView {
     
+    public func renderCells<S: Sequence, Cell: UICollectionViewCell>(
+        _ type: Cell.Type,
+        using sequence: S,
+        applicator: @escaping (Cell, S.Element) -> Void) -> Self where S.Element: Hashable {
+            renderCells(using: sequence) { item in
+                render(Cell.self) { cell in
+                    applicator(cell, item)
+                }
+            }
+        }
+    
     public func renderCells<S: Sequence>(
         using sequence: S,
         cellProvider: @escaping (S.Element) -> CollectionCellProvider) -> Self where S.Element: Hashable {
@@ -46,6 +57,17 @@ extension LayoutDraft where View: UICollectionView {
             let newSnapshot = dataSource.snapshot().snapshot(fromItems: sequence)
             dataSource.apply(newSnapshot)
             return self
+        }
+    
+    public func renderCells<P: Publisher, Cell: UICollectionViewCell>(
+        _ type: Cell.Type,
+        observing publisher: P,
+        applicator: @escaping (Cell, P.Output.Element) -> Void) -> Self where P.Output: Sequence, P.Output.Element: Hashable {
+            renderCells(observing: publisher) { item in
+                render(Cell.self) { cell in
+                    applicator(cell, item)
+                }
+            }
         }
     
     public func renderCells<P: Publisher>(
@@ -56,6 +78,17 @@ extension LayoutDraft where View: UICollectionView {
             return self
         }
     
+    public func renderSections<S: Sequence, Cell: UICollectionViewCell>(
+        _ type: Cell.Type,
+        using sequence: S,
+        applicator: @escaping (Cell, S.Element.Item) -> Void) -> Self where S.Element: SectionCompatible {
+            renderSections(using: sequence) { item in
+                render(Cell.self) { cell in
+                    applicator(cell, item)
+                }
+            }
+        }
+    
     public func renderSections<S: Sequence>(
         using sequence: S,
         cellProvider: @escaping (S.Element.Item) -> CollectionCellProvider) -> Self where S.Element: SectionCompatible {
@@ -63,6 +96,17 @@ extension LayoutDraft where View: UICollectionView {
             let newSnapshot = dataSource.snapshot().snapshot(fromSections: sequence)
             dataSource.apply(newSnapshot)
             return self
+        }
+    
+    public func renderSections<P: Publisher, Cell: UICollectionViewCell>(
+        _ type: Cell.Type,
+        observing publisher: P,
+        applicator: @escaping (Cell, P.Output.Element.Item) -> Void) -> Self where P.Output: Sequence, P.Output.Element: SectionCompatible {
+            renderSections(observing: publisher) { item in
+                render(Cell.self) { cell in
+                    applicator(cell, item)
+                }
+            }
         }
     
     public func renderSections<P: Publisher>(
