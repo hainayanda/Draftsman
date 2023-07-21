@@ -262,6 +262,27 @@ myView.drf
     .drf.bottom.moreThan(to: .safeArea)
 ```
 
+### Using Combine
+
+You can assign using Combine Publisher by call `subscriber` property and get back to Draftsman by calling `storeAll(in:)`:
+
+```swift
+@Published var myText: String?
+@Published var myColor: UIColor?
+
+var cancellables: Set<AnyCancellable> = .init()
+
+...
+...
+
+UILabel().drf
+    .center.equal(to: .parent)
+    .subscriber.text(to: $myText)
+    .textColor(to: $myColor)
+    .storeAll(in: &cancellables)
+    .bottom.moreThan(to: .safeArea)
+```
+
 ***
 
 ### Basic Positioning
@@ -514,7 +535,7 @@ UITableView().drf.renderCells(using: myArrayOfEnum) { item in
             cell.apply(with: item)
         }
     case .typeTwo:
-        render { cell in
+        MyTableCellTwo.render { cell in
             cell.apply(with: item)
         }
     }
