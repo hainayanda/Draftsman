@@ -6,6 +6,7 @@
 //
 
 import Foundation
+#if canImport(UIKit)
 import UIKit
 import Combine
 
@@ -87,3 +88,4 @@ public class Tabled: LayoutDraft<UITableView> {
             renderSections(observing: publisher, animation: animation, cellProvider: cellProvider)
         }
 }
+#endif

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+#if canImport(UIKit)
 import UIKit
 import Combine
 
@@ -147,3 +148,4 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderSections(observing: publisher, cellProvider: cellProvider)
         }
 }
+#endif

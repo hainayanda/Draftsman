@@ -6,6 +6,7 @@
 //
 
 import Foundation
+#if canImport(UIKit)
 import UIKit
 import Combine
 
@@ -240,3 +241,4 @@ extension UITableViewDiffableDataSource {
         apply(snapshot, animatingDifferences: true)
     }
 }
+#endif

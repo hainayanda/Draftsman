@@ -6,6 +6,8 @@
 //
 
 import Foundation
+#if canImport(UIKit)
+import UIKit
 
 extension NSDiffableDataSourceSnapshot where SectionIdentifierType == Int {
     @inlinable func snapshot<S: Sequence>(
@@ -57,3 +59,4 @@ extension Sequence where Element: Hashable {
         return result
     }
 }
+#endif

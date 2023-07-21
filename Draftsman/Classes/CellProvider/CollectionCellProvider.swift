@@ -6,6 +6,7 @@
 //
 
 import Foundation
+#if canImport(UIKit)
 import UIKit
 import Combine
 
@@ -217,3 +218,4 @@ private extension UICollectionView {
         objc_setAssociatedObject(self, &cancellableKey, nil, .OBJC_ASSOCIATION_RETAIN)
     }
 }
+#endif
