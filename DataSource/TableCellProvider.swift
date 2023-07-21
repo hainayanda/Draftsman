@@ -23,11 +23,11 @@ struct TableCellApplicator<Cell: UITableViewCell>: TableCellProvider {
     
     let applicator: (Cell) -> Void
     
-    init(applicator: @escaping (Cell) -> Void) {
+    @inlinable init(applicator: @escaping (Cell) -> Void) {
         self.applicator = applicator
     }
     
-    func applicator(_ tableView: UITableView, indexPath: IndexPath) -> UITableViewCell? {
+    @inlinable func applicator(_ tableView: UITableView, indexPath: IndexPath) -> UITableViewCell? {
         tableView.registerIfNeeded(cell: Cell.self)
         guard let cell = tableView.dequeue(cell: Cell.self, for: indexPath) else { return nil }
         applicator(cell)
@@ -40,7 +40,7 @@ struct TableCellApplicator<Cell: UITableViewCell>: TableCellProvider {
 extension LayoutDraft where View: UITableView {
     
     @discardableResult
-    public func renderCells<S: Sequence, Cell: UITableViewCell>(
+    @inlinable public func renderCells<S: Sequence, Cell: UITableViewCell>(
         _ type: Cell.Type,
         using sequence: S,
         animation: UITableView.RowAnimation? = nil,
@@ -64,7 +64,7 @@ extension LayoutDraft where View: UITableView {
         }
     
     @discardableResult
-    public func renderCells<P: Publisher, Cell: UITableViewCell>(
+    @inlinable public func renderCells<P: Publisher, Cell: UITableViewCell>(
         _ type: Cell.Type,
         observing publisher: P,
         animation: UITableView.RowAnimation? = nil,
@@ -87,7 +87,7 @@ extension LayoutDraft where View: UITableView {
         }
     
     @discardableResult
-    public func renderSections<S: Sequence, Cell: UITableViewCell>(
+    @inlinable public func renderSections<S: Sequence, Cell: UITableViewCell>(
         _ type: Cell.Type,
         using sequence: S,
         animation: UITableView.RowAnimation? = nil,
@@ -111,7 +111,7 @@ extension LayoutDraft where View: UITableView {
         }
     
     @discardableResult
-    public func renderSections<P: Publisher, Cell: UITableViewCell>(
+    @inlinable public func renderSections<P: Publisher, Cell: UITableViewCell>(
         _ type: Cell.Type,
         observing publisher: P,
         animation: UITableView.RowAnimation? = nil,
@@ -135,7 +135,7 @@ extension LayoutDraft where View: UITableView {
     
     // MARK: Internal methods
     
-    private func listenChange<Item: Hashable, P: Publisher>(
+    func listenChange<Item: Hashable, P: Publisher>(
         for dataSource: UITableViewDiffableDataSource<Int, Item>,
         publisher: P,
         animation: UITableView.RowAnimation?) where P.Output: Sequence, P.Output.Element == Item {
@@ -149,7 +149,7 @@ extension LayoutDraft where View: UITableView {
             underlyingView.retain(cancellable: cancellable)
         }
     
-    private func listenChange<Section: Hashable, Item: Hashable, P: Publisher>(
+    func listenChange<Section: Hashable, Item: Hashable, P: Publisher>(
         for dataSource: UITableViewDiffableDataSource<Section, Item>,
         publisher: P,
         animation: UITableView.RowAnimation?) where P.Output: Sequence, P.Output.Element: SectionCompatible, P.Output.Element.Identifier == Section, P.Output.Element.Item == Item {
@@ -163,7 +163,7 @@ extension LayoutDraft where View: UITableView {
             underlyingView.retain(cancellable: cancellable)
         }
     
-    private func prepareDataSource<Section: Hashable, Item: Hashable>(
+    func prepareDataSource<Section: Hashable, Item: Hashable>(
         for section: Section.Type,
         cellProvider: @escaping (Item) -> TableCellProvider) -> UITableViewDiffableDataSource<Section, Item> {
             let dataSource = underlyingView
@@ -230,8 +230,8 @@ private extension UITableView {
 
 // MARK: UITableViewDiffableDataSource + Extensions
 
-private extension UITableViewDiffableDataSource {
-    func apply(_ snapshot: NSDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>, animation: UITableView.RowAnimation?) {
+extension UITableViewDiffableDataSource {
+    @inlinable func apply(_ snapshot: NSDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>, animation: UITableView.RowAnimation?) {
         guard let animation else {
             apply(snapshot, animatingDifferences: false)
             return

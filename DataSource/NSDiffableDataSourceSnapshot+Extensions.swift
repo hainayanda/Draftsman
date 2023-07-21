@@ -8,7 +8,7 @@
 import Foundation
 
 extension NSDiffableDataSourceSnapshot where SectionIdentifierType == Int {
-    func snapshot<S: Sequence>(fromItems sequence: S) -> NSDiffableDataSourceSnapshot where S.Element == ItemIdentifierType {
+    @inlinable func snapshot<S: Sequence>(fromItems sequence: S) -> NSDiffableDataSourceSnapshot where S.Element == ItemIdentifierType {
         let currentSnapshot = self
         var snapshot = NSDiffableDataSourceSnapshot()
         snapshot.appendSections([0])
@@ -22,7 +22,7 @@ extension NSDiffableDataSourceSnapshot where SectionIdentifierType == Int {
 }
 
 extension NSDiffableDataSourceSnapshot {
-    func snapshot<S: Sequence>(fromSections sequence: S) -> NSDiffableDataSourceSnapshot where S.Element: SectionCompatible, S.Element.Identifier == SectionIdentifierType, S.Element.Item == ItemIdentifierType {
+    @inlinable func snapshot<S: Sequence>(fromSections sequence: S) -> NSDiffableDataSourceSnapshot where S.Element: SectionCompatible, S.Element.Identifier == SectionIdentifierType, S.Element.Item == ItemIdentifierType {
         let currentSnapshot = self
         var snapshot = NSDiffableDataSourceSnapshot()
         let sections = sequence.map { $0.identifier }
@@ -40,8 +40,8 @@ extension NSDiffableDataSourceSnapshot {
 
 // MARK: Sequence + Extensions
 
-private extension Sequence where Element: Hashable {
-    func intersection<S: Sequence>(with sequence: S) -> [Element] where S.Element == Element {
+extension Sequence where Element: Hashable {
+    @inlinable func intersection<S: Sequence>(with sequence: S) -> [Element] where S.Element == Element {
         var present: [S.Element: Void] = [:]
         var result: [S.Element] = []
         forEach { mine in

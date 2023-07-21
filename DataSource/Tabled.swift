@@ -11,7 +11,7 @@ import Combine
 
 public class Tabled: LayoutDraft<UITableView> {
     
-    public init<S: Sequence, Cell: UITableViewCell>(
+    @inlinable public init<S: Sequence, Cell: UITableViewCell>(
         _ tableView: UITableView = UITableView(),
         forCell type: Cell.Type,
         using sequence: S,
@@ -21,7 +21,7 @@ public class Tabled: LayoutDraft<UITableView> {
             renderCells(type, using: sequence, animation: animation, applicator: applicator)
         }
     
-    public init<S: Sequence>(
+    @inlinable public init<S: Sequence>(
         _ tableView: UITableView = UITableView(),
         using sequence: S,
         animation: UITableView.RowAnimation? = nil,
@@ -30,7 +30,7 @@ public class Tabled: LayoutDraft<UITableView> {
             renderCells(using: sequence, animation: animation, cellProvider: cellProvider)
     }
     
-    public init<P: Publisher, Cell: UITableViewCell>(
+    @inlinable public init<P: Publisher, Cell: UITableViewCell>(
         _ tableView: UITableView = UITableView(),
         forCell type: Cell.Type,
         observing publisher: P,
@@ -40,7 +40,7 @@ public class Tabled: LayoutDraft<UITableView> {
             renderCells(type, observing: publisher, animation: animation, applicator: applicator)
         }
     
-    public init<P: Publisher>(
+    @inlinable public init<P: Publisher>(
         _ tableView: UITableView = UITableView(),
         observing publisher: P,
         animation: UITableView.RowAnimation? = nil,
@@ -49,7 +49,7 @@ public class Tabled: LayoutDraft<UITableView> {
             renderCells(observing: publisher, animation: animation, cellProvider: cellProvider)
         }
     
-    public init<S: Sequence, Cell: UITableViewCell>(
+    @inlinable public init<S: Sequence, Cell: UITableViewCell>(
         _ tableView: UITableView = UITableView(),
         forCell type: Cell.Type,
         using sequence: S,
@@ -59,7 +59,7 @@ public class Tabled: LayoutDraft<UITableView> {
             renderSections(type, using: sequence, animation: animation, applicator: applicator)
         }
     
-    public init<S: Sequence>(
+    @inlinable public init<S: Sequence>(
         _ tableView: UITableView = UITableView(),
         using sequence: S,
         animation: UITableView.RowAnimation? = nil,
@@ -68,7 +68,7 @@ public class Tabled: LayoutDraft<UITableView> {
                 renderSections(using: sequence, animation: animation, cellProvider: cellProvider)
         }
     
-    public init<P: Publisher, Cell: UITableViewCell>(
+    @inlinable public init<P: Publisher, Cell: UITableViewCell>(
         _ tableView: UITableView = UITableView(),
         forCell type: Cell.Type,
         observing publisher: P,
@@ -78,7 +78,7 @@ public class Tabled: LayoutDraft<UITableView> {
             renderSections(type, observing: publisher, animation: animation, applicator: applicator)
         }
     
-    public init<P: Publisher>(
+    @inlinable public init<P: Publisher>(
         _ tableView: UITableView = UITableView(),
         observing publisher: P,
         animation: UITableView.RowAnimation? = nil,

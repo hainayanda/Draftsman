@@ -11,7 +11,7 @@ import Combine
 
 public class Collectioned: LayoutDraft<UICollectionView> {
     
-    public init<S: Sequence, Cell: UICollectionViewCell>(
+    @inlinable public init<S: Sequence, Cell: UICollectionViewCell>(
         _ collectionViewLayout: UICollectionViewLayout,
         forCell type: Cell.Type,
         using sequence: S,
@@ -20,7 +20,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderCells(type, using: sequence, applicator: applicator)
         }
     
-    public init<S: Sequence, Cell: UICollectionViewCell>(
+    @inlinable public init<S: Sequence, Cell: UICollectionViewCell>(
         _ collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()),
         forCell type: Cell.Type,
         using sequence: S,
@@ -29,7 +29,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderCells(type, using: sequence, applicator: applicator)
         }
     
-    public init<S: Sequence>(
+    @inlinable public init<S: Sequence>(
         _ collectionViewLayout: UICollectionViewLayout,
         using sequence: S,
         cellProvider: @escaping (S.Element) -> CollectionCellProvider) where S.Element: Hashable {
@@ -37,7 +37,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderCells(using: sequence, cellProvider: cellProvider)
         }
     
-    public init<S: Sequence>(
+    @inlinable public init<S: Sequence>(
         _ collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()),
         using sequence: S,
         cellProvider: @escaping (S.Element) -> CollectionCellProvider) where S.Element: Hashable {
@@ -45,7 +45,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderCells(using: sequence, cellProvider: cellProvider)
         }
     
-    public init<P: Publisher, Cell: UICollectionViewCell>(
+    @inlinable public init<P: Publisher, Cell: UICollectionViewCell>(
         _ collectionViewLayout: UICollectionViewLayout,
         forCell type: Cell.Type,
         observing publisher: P,
@@ -54,7 +54,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderCells(type, observing: publisher, applicator: applicator)
         }
     
-    public init<P: Publisher, Cell: UICollectionViewCell>(
+    @inlinable public init<P: Publisher, Cell: UICollectionViewCell>(
         _ collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()),
         forCell type: Cell.Type,
         observing publisher: P,
@@ -63,7 +63,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderCells(type, observing: publisher, applicator: applicator)
         }
     
-    public init<P: Publisher>(
+    @inlinable public init<P: Publisher>(
         _ collectionViewLayout: UICollectionViewLayout,
         observing publisher: P,
         cellProvider: @escaping (P.Output.Element) -> CollectionCellProvider) where P.Output: Sequence, P.Output.Element: Hashable {
@@ -71,7 +71,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderCells(observing: publisher, cellProvider: cellProvider)
         }
     
-    public init<P: Publisher>(
+    @inlinable public init<P: Publisher>(
         _ collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()),
         observing publisher: P,
         cellProvider: @escaping (P.Output.Element) -> CollectionCellProvider) where P.Output: Sequence, P.Output.Element: Hashable {
@@ -79,7 +79,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderCells(observing: publisher, cellProvider: cellProvider)
         }
     
-    public init<S: Sequence, Cell: UICollectionViewCell>(
+    @inlinable public init<S: Sequence, Cell: UICollectionViewCell>(
         _ collectionViewLayout: UICollectionViewLayout,
         forCell type: Cell.Type,
         using sequence: S,
@@ -88,7 +88,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderSections(type, using: sequence, applicator: applicator)
         }
     
-    public init<S: Sequence, Cell: UICollectionViewCell>(
+    @inlinable public init<S: Sequence, Cell: UICollectionViewCell>(
         _ collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()),
         forCell type: Cell.Type,
         using sequence: S,
@@ -97,7 +97,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderSections(type, using: sequence, applicator: applicator)
         }
     
-    public init<S: Sequence>(
+    @inlinable public init<S: Sequence>(
         _ collectionViewLayout: UICollectionViewLayout,
         using sequence: S,
         cellProvider: @escaping (S.Element.Item) -> CollectionCellProvider) where S.Element: SectionCompatible {
@@ -105,7 +105,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderSections(using: sequence, cellProvider: cellProvider)
         }
     
-    public init<S: Sequence>(
+    @inlinable public init<S: Sequence>(
         _ collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()),
         using sequence: S,
         cellProvider: @escaping (S.Element.Item) -> CollectionCellProvider) where S.Element: SectionCompatible {
@@ -113,7 +113,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderSections(using: sequence, cellProvider: cellProvider)
         }
     
-    public init<P: Publisher, Cell: UICollectionViewCell>(
+    @inlinable public init<P: Publisher, Cell: UICollectionViewCell>(
         _ collectionViewLayout: UICollectionViewLayout,
         forCell type: Cell.Type,
         observing publisher: P,
@@ -122,7 +122,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderSections(type, observing: publisher, applicator: applicator)
         }
     
-    public init<P: Publisher, Cell: UICollectionViewCell>(
+    @inlinable public init<P: Publisher, Cell: UICollectionViewCell>(
         _ collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()),
         forCell type: Cell.Type,
         observing publisher: P,
@@ -131,7 +131,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderSections(type, observing: publisher, applicator: applicator)
         }
     
-    public init<P: Publisher>(
+    @inlinable public init<P: Publisher>(
         _ collectionViewLayout: UICollectionViewLayout,
         observing publisher: P,
         cellProvider: @escaping (P.Output.Element.Item) -> CollectionCellProvider) where P.Output: Sequence, P.Output.Element: SectionCompatible {
@@ -139,7 +139,7 @@ public class Collectioned: LayoutDraft<UICollectionView> {
             renderSections(observing: publisher, cellProvider: cellProvider)
         }
     
-    public init<P: Publisher>(
+    @inlinable public init<P: Publisher>(
         _ collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()),
         observing publisher: P,
         cellProvider: @escaping (P.Output.Element.Item) -> CollectionCellProvider) where P.Output: Sequence, P.Output.Element: SectionCompatible {
