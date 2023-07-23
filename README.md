@@ -253,18 +253,27 @@ You could insert components as much as you need, it will fit all the Views just 
 
 ### Using Builder
 
-You can build your view using [Builder](https://github.com/hainayanda/Builder) library built-in in the Draftsman by calling the `builder` property and get back to Draftsman by calling `drf` again:
+For most of the time, you can build your view using [Builder](https://github.com/hainayanda/Builder) library built-in in the Draftsman by calling the property name and get back to Draftsman by calling `drf` again:
 
 ```swift
 myView.drf
-    .center.equal(to: .parent)
-    .builder.backgroundColor(.black)
+    .backgroundColor(.black)
     .drf.bottom.moreThan(to: .safeArea)
+    .center.equal(to: .parent)
+```
+
+In case the property is not mapped then you can call builder before calling the property name:
+
+```swift
+myView.drf.builder
+    .backgroundColor(.black)
+    .drf.bottom.moreThan(to: .safeArea)
+    .center.equal(to: .parent)
 ```
 
 ### Using Combine
 
-You can assign using Combine Publisher by call `subscriber` property and get back to Draftsman by calling `storeAll(in:)`:
+For most of the time, you can using Combine Publisher to automatically assign to the property by calling the property name and get back to Draftsman by calling `storeAll(in:)`:
 
 ```swift
 @Published var myText: String?
@@ -276,10 +285,21 @@ var cancellables: Set<AnyCancellable> = .init()
 ...
 
 UILabel().drf
-    .center.equal(to: .parent)
-    .subscriber.text(to: $myText)
+    .text(to: $myText)
     .textColor(to: $myColor)
     .storeAll(in: &cancellables)
+    .center.equal(to: .parent)
+    .bottom.moreThan(to: .safeArea)
+```
+
+In case the property is not mapped then you can call subscriber before calling the property name:
+
+```swift
+UILabel().drf.subscriber
+    .text(to: $myText)
+    .textColor(to: $myColor)
+    .storeAll(in: &cancellables)
+    .center.equal(to: .parent)
     .bottom.moreThan(to: .safeArea)
 ```
 

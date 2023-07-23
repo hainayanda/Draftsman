@@ -22,10 +22,10 @@ class FieldViewController: UIPlannedController {
     var viewPlan: ViewPlan {
         VStacked(margins: UIEdgeInsets(insets: 12), spacing: 8) {
             UIImageView(image: UIImage(named: "image_test")).drf
-                .height.equal(with: .width(of: .mySelf)).multiplied(by: 0.75)
-                .builder.contentMode(.scaleAspectFill)
+                .contentMode(.scaleAspectFill)
                 .clipsToBounds(true)
-            UILabel().drf.builder
+                .height.equal(with: .width(of: .mySelf)).multiplied(by: 0.75)
+            UILabel().drf
                 .textAlignment(.center)
                 .font(.boldSystemFont(ofSize: 28))
                 .numberOfLines(0)

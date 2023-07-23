@@ -42,10 +42,10 @@ class CollectionViewController: UIPlannedController {
             cell.title = "Cell\(number)"
             cell.subtitle = "Cell at index \(number)"
         }
+        .backgroundColor(.white)
+        .allowsSelection(false)
         .matchSafeAreaH()
         .matchParentV()
-        .builder.backgroundColor(.white)
-        .allowsSelection(false)
     }
     
     override func viewDidLoad() {

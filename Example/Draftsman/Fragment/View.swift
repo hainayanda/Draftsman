@@ -25,15 +25,15 @@ class View: UIPlannedView {
             UIImageView(image: UIImage(named: "icon_test")).drf
                 .sized(CGSize(sides: 56))
             VStacked(distribution: .fillEqually, spacing: 4) {
-                UILabel().drf.builder
+                UILabel().drf
                     .textAlignment(.left)
                     .font(.boldSystemFont(ofSize: 14))
-                    .subscriber.text(to: $title)
+                    .text(assignedBy: $title)
                     .storeAll(in: &cancellables)
-                UILabel().drf.builder
+                UILabel().drf
                     .textAlignment(.left)
                     .font(.systemFont(ofSize: 12))
-                    .subscriber.text(to: $subtitle)
+                    .text(assignedBy: $subtitle)
                     .storeAll(in: &cancellables)
             }
         }
