@@ -124,5 +124,12 @@ extension LayoutDraft where View: UILabel {
     @inlinable public func preferredMaxLayoutWidth<P: Publisher>(assignedBy publisher: P) -> LayoutDraftSubscriber<View> where P.Output == CGFloat, P.Failure == Never {
         self.subcriber.preferredMaxLayoutWidth(publisher)
     }
+    @inlinable public func lineBreakMode(_ lineBreakMode: NSLineBreakMode) -> LayoutDraft<View> {
+        underlyingView.lineBreakMode = lineBreakMode
+        return self
+    }
+    @inlinable public func lineBreakMode<P: Publisher>(assignedBy publisher: P) -> LayoutDraftSubscriber<View> where P.Output == NSLineBreakMode, P.Failure == Never {
+        self.subcriber.lineBreakMode(publisher)
+    }
 }
 #endif
