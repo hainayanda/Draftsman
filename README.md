@@ -273,7 +273,7 @@ myView.drf.builder
 
 ### Using Combine
 
-For most of the time, you can using Combine Publisher to automatically assign to the property by calling the property name and get back to Draftsman by calling `storeAll(in:)`:
+For most of the time, you can using Combine Publisher to automatically assign to the property by calling the property name and get back to Draftsman by calling `storeAll(in:)` or `stored()`:
 
 ```swift
 @Published var myText: String?
@@ -291,6 +291,8 @@ UILabel().drf
     .center.equal(to: .parent)
     .bottom.moreThan(to: .safeArea)
 ```
+
+The differences between `storeAll(in:)` and `stored()` is, `stored()` will retain the cancellable into the view itself. This better be used if you just want to subscribe this property using this method once, unless you know what you're doing.
 
 In case the property is not mapped then you can call subscriber before calling the property name:
 
