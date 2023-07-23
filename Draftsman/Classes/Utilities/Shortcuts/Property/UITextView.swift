@@ -103,7 +103,6 @@ extension LayoutDraft where View: UITextView {
     @inlinable public func textContainerInset<P: Publisher>(assignedBy publisher: P) -> LayoutDraftSubscriber<View> where P.Output == UIEdgeInsets, P.Failure == Never {
         self.subcriber.textContainerInset(publisher)
     }
-    @available(iOS 13.0, *)
     @inlinable public func usesStandardTextScaling(_ usesStandardTextScaling: Bool) -> LayoutDraft<View> {
         underlyingView.usesStandardTextScaling = usesStandardTextScaling
         return self

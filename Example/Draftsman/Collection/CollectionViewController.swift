@@ -17,17 +17,10 @@ class CollectionViewController: UIPlannedController {
     @Published var cells: [Int] = []
     
     var cellWidth: CGFloat {
-        if #available(iOS 11.0, *) {
-            return min(
-                view.safeAreaLayoutGuide.layoutFrame.width,
-                view.safeAreaLayoutGuide.layoutFrame.height
-            ) / 2
-        } else {
-            return min(
-                view.frame.width - view.layoutMargins.horizontal.total,
-                view.frame.height - view.layoutMargins.vertical.total
-            ) / 2
-        }
+        min(
+            view.safeAreaLayoutGuide.layoutFrame.width,
+            view.safeAreaLayoutGuide.layoutFrame.height
+        ) / 2
     }
     
     lazy var collectionLayout: UICollectionViewFlowLayout = builder(UICollectionViewFlowLayout())

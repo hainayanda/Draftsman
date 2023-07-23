@@ -17,9 +17,7 @@ public protocol StackCompatible where Self: UIView {
     func addArrangedSubview(_ view: UIView)
     func removeArrangedSubview(_ view: UIView)
     func insertArrangedSubview(_ view: UIView, at stackIndex: Int)
-    @available(iOS 11.0, *)
     func setCustomSpacing(_ spacing: CGFloat, after arrangedSubview: UIView)
-    @available(iOS 11.0, *)
     func customSpacing(after arrangedSubview: UIView) -> CGFloat
 }
 
