@@ -24,23 +24,22 @@ class CollectionCell: UICollectionPlannedCell {
     var contentViewPlan: ViewPlan {
         VStacked(margins: UIEdgeInsets(insets: 12), spacing: 8) {
             Margined(by: UIEdgeInsets(insets: 8)) {
-                UIImageView().drf.builder
-                    .contentMode(.scaleAspectFit).drf
-                    .widthMatchHeight()
-                    .builder.contentMode(.scaleAspectFit)
-                    .subscriber.image(to: $image)
+                UIImageView().drf
+                    .contentMode(.scaleAspectFill)
+                    .image(assignedBy: $image)
                     .storeAll(in: &cancellables)
+                    .widthMatchHeight()
             }
-            VStacked(distribution: .fillEqually, spacing: 4) {
-                UILabel().drf.builder
+            VStacked(margins: UIEdgeInsets(horizontal: 26), distribution: .fillEqually, spacing: 4) {
+                UILabel().drf
                     .textAlignment(.left)
                     .font(.boldSystemFont(ofSize: 14))
-                    .subscriber.text(to: $title)
+                    .text(assignedBy: $title)
                     .storeAll(in: &cancellables)
-                UILabel().drf.builder
+                UILabel().drf
                     .textAlignment(.left)
                     .font(.systemFont(ofSize: 12))
-                    .subscriber.text(to: $subtitle)
+                    .text(assignedBy: $subtitle)
                     .storeAll(in: &cancellables)
             }
         }
