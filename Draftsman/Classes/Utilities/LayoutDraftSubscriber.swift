@@ -37,6 +37,15 @@ final public class LayoutDraftSubscriber<View: UIView> {
         }
         return draft
     }
+    
+    public func stored() -> LayoutDraft<View> {
+        var draftsmanCancellables = underlyingView.draftsmanCancellables
+        for cancellable in self.cancellables {
+            draftsmanCancellables.insert(cancellable)
+        }
+        underlyingView.draftsmanCancellables = draftsmanCancellables
+        return draft
+    }
 }
 
 extension LayoutDraftSubscriber {
@@ -53,6 +62,19 @@ extension LayoutDraftSubscriber {
                     .store(in: &subscribeable.cancellables)
             }
             return subscribeable
+        }
+    }
+}
+
+private var draftsmanCancellablesKey: String = "draftsmanCancellablesKey"
+
+private extension UIView {
+    var draftsmanCancellables: Set<AnyCancellable> {
+        get {
+            objc_getAssociatedObject(self, &draftsmanCancellablesKey) as? Set<AnyCancellable> ?? .init()
+        }
+        set {
+            objc_setAssociatedObject(self, &draftsmanCancellablesKey, newValue, .OBJC_ASSOCIATION_RETAIN)
         }
     }
 }

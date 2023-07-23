@@ -113,12 +113,10 @@ extension ScrollableStackView: StackCompatible {
         stackView.insertArrangedSubview(view, at: stackIndex)
     }
     
-    @available(iOS 11.0, *)
     public func setCustomSpacing(_ spacing: CGFloat, after arrangedSubview: UIView) {
         stackView.setCustomSpacing(spacing, after: arrangedSubview)
     }
     
-    @available(iOS 11.0, *)
     public func customSpacing(after arrangedSubview: UIView) -> CGFloat {
         stackView.customSpacing(after: arrangedSubview)
     }

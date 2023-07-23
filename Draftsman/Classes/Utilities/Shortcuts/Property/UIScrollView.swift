@@ -96,7 +96,6 @@ extension LayoutDraft where View: UIScrollView {
     @inlinable public func showsHorizontalScrollIndicator<P: Publisher>(assignedBy publisher: P) -> LayoutDraftSubscriber<View> where P.Output == Bool, P.Failure == Never {
         self.subcriber.showsHorizontalScrollIndicator(publisher)
     }
-    @available(iOS 11.1, *)
     @inlinable public func verticalScrollIndicatorInsets(_ verticalScrollIndicatorInsets: UIEdgeInsets) -> LayoutDraft<View> {
         underlyingView.verticalScrollIndicatorInsets = verticalScrollIndicatorInsets
         return self
@@ -104,7 +103,6 @@ extension LayoutDraft where View: UIScrollView {
     @inlinable public func verticalScrollIndicatorInsets<P: Publisher>(assignedBy publisher: P) -> LayoutDraftSubscriber<View> where P.Output == UIEdgeInsets, P.Failure == Never {
         self.subcriber.verticalScrollIndicatorInsets(publisher)
     }
-    @available(iOS 11.1, *)
     @inlinable public func horizontalScrollIndicatorInsets(_ horizontalScrollIndicatorInsets: UIEdgeInsets) -> LayoutDraft<View> {
         underlyingView.horizontalScrollIndicatorInsets = horizontalScrollIndicatorInsets
         return self
