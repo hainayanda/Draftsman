@@ -101,5 +101,17 @@ extension ConstraintBuilderRootRecoverable where Root: ViewDraft {
     @inlinable public func resistHorizontalCompression(_ priority: UILayoutPriority) -> Root {
         backToRoot { $0.resistHorizontalCompression(priority) }
     }
+    
+    @inlinable public func resistSizeExpansion(_ priority: UILayoutPriority) -> Root {
+        resistVerticalExpansion(priority).resistHorizontalExpansion(priority)
+    }
+    
+    @inlinable public func resistSizeCompression(_ priority: UILayoutPriority) -> Root {
+        resistVerticalCompression(priority).resistHorizontalCompression(priority)
+    }
+    
+    @inlinable public func resistSizeAdjustment(_ priority: UILayoutPriority) -> Root {
+        resistSizeExpansion(priority).resistSizeCompression(priority)
+    }
 }
 #endif

@@ -28,6 +28,9 @@ public protocol ViewDraft: ViewPlan, AnyObject {
     func resistHorizontalExpansion(_ priority: UILayoutPriority) -> Self
     func resistVerticalCompression(_ priority: UILayoutPriority) -> Self
     func resistHorizontalCompression(_ priority: UILayoutPriority) -> Self
+    func resistSizeExpansion(_ priority: UILayoutPriority) -> Self
+    func resistSizeCompression(_ priority: UILayoutPriority) -> Self
+    func resistSizeAdjustment(_ priority: UILayoutPriority) -> Self
 }
 
 public protocol StackDraft: ViewDraft {
@@ -66,6 +69,15 @@ extension ViewDraft {
     @inlinable public func resistHorizontalCompression(_ priority: UILayoutPriority) -> Self {
         view.setContentCompressionResistancePriority(priority, for: .horizontal)
         return self
+    }
+    @inlinable public func resistSizeExpansion(_ priority: UILayoutPriority) -> Self {
+        resistVerticalExpansion(priority).resistHorizontalExpansion(priority)
+    }
+    @inlinable public func resistSizeCompression(_ priority: UILayoutPriority) -> Self {
+        resistVerticalCompression(priority).resistHorizontalCompression(priority)
+    }
+    @inlinable public func resistSizeAdjustment(_ priority: UILayoutPriority) -> Self {
+        resistSizeExpansion(priority).resistSizeCompression(priority)
     }
 }
 #endif
