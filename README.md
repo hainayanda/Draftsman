@@ -285,8 +285,8 @@ var cancellables: Set<AnyCancellable> = .init()
 ...
 
 UILabel().drf
-    .text(to: $myText)
-    .textColor(to: $myColor)
+    .text(assignedBy: $myText)
+    .textColor(by: $myColor)
     .storeAll(in: &cancellables)
     .center.equal(to: .parent)
     .bottom.moreThan(to: .safeArea)
@@ -296,8 +296,8 @@ In case the property is not mapped then you can call subscriber before calling t
 
 ```swift
 UILabel().drf.subscriber
-    .text(to: $myText)
-    .textColor(to: $myColor)
+    .text(assignedBy: $myText)
+    .textColor(by: $myColor)
     .storeAll(in: &cancellables)
     .center.equal(to: .parent)
     .bottom.moreThan(to: .safeArea)
