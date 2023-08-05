@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A85146B2A7DE57D004E6553 /* CACornerMaskExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8514652A7DE57D004E6553 /* CACornerMaskExtensionsSpec.swift */; };
+		3A85146C2A7DE57D004E6553 /* UIEdgeExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8514662A7DE57D004E6553 /* UIEdgeExtensionsSpec.swift */; };
+		3A85146D2A7DE57D004E6553 /* CGSizeExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8514672A7DE57D004E6553 /* CGSizeExtensionsSpec.swift */; };
+		3A85146E2A7DE57D004E6553 /* UIColorExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8514682A7DE57D004E6553 /* UIColorExtensionsSpec.swift */; };
+		3A85146F2A7DE57D004E6553 /* UIResponderExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8514692A7DE57D004E6553 /* UIResponderExtensionsSpec.swift */; };
+		3A8514702A7DE57D004E6553 /* CGRectExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A85146A2A7DE57D004E6553 /* CGRectExtensionsSpec.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* MainViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
@@ -39,6 +45,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A8514652A7DE57D004E6553 /* CACornerMaskExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CACornerMaskExtensionsSpec.swift; sourceTree = "<group>"; };
+		3A8514662A7DE57D004E6553 /* UIEdgeExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIEdgeExtensionsSpec.swift; sourceTree = "<group>"; };
+		3A8514672A7DE57D004E6553 /* CGSizeExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSizeExtensionsSpec.swift; sourceTree = "<group>"; };
+		3A8514682A7DE57D004E6553 /* UIColorExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensionsSpec.swift; sourceTree = "<group>"; };
+		3A8514692A7DE57D004E6553 /* UIResponderExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIResponderExtensionsSpec.swift; sourceTree = "<group>"; };
+		3A85146A2A7DE57D004E6553 /* CGRectExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtensionsSpec.swift; sourceTree = "<group>"; };
 		4A43813E4194728B2B5BBDA7 /* Pods_Draftsman_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Draftsman_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58F0DD0BC0DE4B115C948F94 /* Pods_Draftsman_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Draftsman_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* Draftsman_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Draftsman_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +160,12 @@
 				BBFD5D3B283D1CDD0006107A /* PairConstraintsCreationSpec.swift */,
 				BB6E9FBC283E1EE400314D2B /* AxisConstraintsCreationSpec.swift */,
 				BB2A58E8286D884800D749C1 /* TriConstraintsCreationSpec.swift */,
+				3A8514652A7DE57D004E6553 /* CACornerMaskExtensionsSpec.swift */,
+				3A85146A2A7DE57D004E6553 /* CGRectExtensionsSpec.swift */,
+				3A8514672A7DE57D004E6553 /* CGSizeExtensionsSpec.swift */,
+				3A8514682A7DE57D004E6553 /* UIColorExtensionsSpec.swift */,
+				3A8514662A7DE57D004E6553 /* UIEdgeExtensionsSpec.swift */,
+				3A8514692A7DE57D004E6553 /* UIResponderExtensionsSpec.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -458,10 +476,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A85146E2A7DE57D004E6553 /* UIColorExtensionsSpec.swift in Sources */,
 				BB2A58E9286D884800D749C1 /* TriConstraintsCreationSpec.swift in Sources */,
 				BBBCC669283C4B08006B6809 /* SingleConstraintsCreationSpec.swift in Sources */,
 				BBFD5D3C283D1CDD0006107A /* PairConstraintsCreationSpec.swift in Sources */,
 				BBBCC66C283CC8E4006B6809 /* HierarchyCreationSpec.swift in Sources */,
+				3A85146F2A7DE57D004E6553 /* UIResponderExtensionsSpec.swift in Sources */,
+				3A8514702A7DE57D004E6553 /* CGRectExtensionsSpec.swift in Sources */,
+				3A85146B2A7DE57D004E6553 /* CACornerMaskExtensionsSpec.swift in Sources */,
+				3A85146D2A7DE57D004E6553 /* CGSizeExtensionsSpec.swift in Sources */,
+				3A85146C2A7DE57D004E6553 /* UIEdgeExtensionsSpec.swift in Sources */,
 				BB6E9FBD283E1EE500314D2B /* AxisConstraintsCreationSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
