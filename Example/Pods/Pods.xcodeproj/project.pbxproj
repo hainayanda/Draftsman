@@ -65,6 +65,12 @@
 		3A785D832A6CF50D00CEABA3 /* UISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A785D822A6CF50D00CEABA3 /* UISwitch.swift */; };
 		3A785D852A6CF53D00CEABA3 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A785D842A6CF53D00CEABA3 /* UITableView.swift */; };
 		3A785D872A6CF62100CEABA3 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A785D862A6CF62100CEABA3 /* Cell.swift */; };
+		3A85145C2A7DE2CF004E6553 /* CACornerMask+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A85145B2A7DE2CF004E6553 /* CACornerMask+Extensions.swift */; };
+		3A85145E2A7DE2F9004E6553 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A85145D2A7DE2F9004E6553 /* CGFloat+Extensions.swift */; };
+		3A8514602A7DE354004E6553 /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A85145F2A7DE354004E6553 /* CGRect+Extensions.swift */; };
+		3A8514622A7DE37C004E6553 /* UIEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8514612A7DE37C004E6553 /* UIEdgeInsets+Extensions.swift */; };
+		3A8514642A7DE3A4004E6553 /* CGSize+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8514632A7DE3A4004E6553 /* CGSize+Extensions.swift */; };
+		3A8514722A7DE5C2004E6553 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8514712A7DE5C2004E6553 /* UIColor+Extensions.swift */; };
 		3A9F89902A6AE7E200B92708 /* LayoutDraftSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9F898F2A6AE7E200B92708 /* LayoutDraftSubscriber.swift */; };
 		3ABDA920FDD838A534E55347FF35ACCC /* BeNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5420A8B56100A9E8660BB3307C7263B /* BeNil.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		3B59EB43186F324A79D05C3201369283 /* QuickSpecBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 944A04A4BE75CF2ADAE59870D3BE9DCC /* QuickSpecBase.m */; };
@@ -117,7 +123,7 @@
 		7DF5C2582E1C9DE5BC6BF84C0AF1337B /* BeCloseTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FB3A4B1E95498D10920FB9E6F4E24 /* BeCloseTo.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		80428B0834B1272AB4E96E00D3FAA081 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ED380BFA14D19D1CC116A51D49983 /* Example.swift */; };
 		80DB7C67B0D7A32BF885B5CD17C745A1 /* NimbleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5311553D90AA5588351B2EEA4A9F6B11 /* NimbleEnvironment.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
-		81EF4520E5E93059B449147FC1F47D65 /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651642BA4B5E4922967CEBDFB28ABCCE /* UIKit+Extensions.swift */; };
+		81EF4520E5E93059B449147FC1F47D65 /* UIResponder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651642BA4B5E4922967CEBDFB28ABCCE /* UIResponder+Extensions.swift */; };
 		84590E005ADAF6AE44386659CF3DEF07 /* Builder-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C47B11874DCB0ACCD44C2F88025FADAD /* Builder-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		86037D5CAD49EC09A2B944ADBF561059 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E8249B5A2384FB931142268AE36B7C /* Errors.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		86AC7B24036C850C9720EF5E371F9181 /* TriAnchorRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5129A0B1CC0CB5F57FBC07A61734B385 /* TriAnchorRelation.swift */; };
@@ -354,6 +360,12 @@
 		3A785D822A6CF50D00CEABA3 /* UISwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISwitch.swift; sourceTree = "<group>"; };
 		3A785D842A6CF53D00CEABA3 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		3A785D862A6CF62100CEABA3 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		3A85145B2A7DE2CF004E6553 /* CACornerMask+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CACornerMask+Extensions.swift"; sourceTree = "<group>"; };
+		3A85145D2A7DE2F9004E6553 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
+		3A85145F2A7DE354004E6553 /* CGRect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
+		3A8514612A7DE37C004E6553 /* UIEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
+		3A8514632A7DE3A4004E6553 /* CGSize+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Extensions.swift"; sourceTree = "<group>"; };
+		3A8514712A7DE5C2004E6553 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		3A9F898F2A6AE7E200B92708 /* LayoutDraftSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutDraftSubscriber.swift; sourceTree = "<group>"; };
 		3E23F98786DC55B14F9F1A25A51A5AF1 /* ScrollableStackView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScrollableStackView.swift; sourceTree = "<group>"; };
 		3E68B74DF1D2389F061F16081E84F881 /* QuickSpec.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QuickSpec.h; path = Sources/QuickObjectiveC/QuickSpec.h; sourceTree = "<group>"; };
@@ -387,7 +399,7 @@
 		5EBC8F300895E39EA0DF6D6B2B5E6BCD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		607145B5272CD9823BCD6E8A38B9E725 /* Quad.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Quad.swift; sourceTree = "<group>"; };
 		60BCE8590B988E71894E4D7989749C18 /* Builder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Builder.release.xcconfig; sourceTree = "<group>"; };
-		651642BA4B5E4922967CEBDFB28ABCCE /* UIKit+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
+		651642BA4B5E4922967CEBDFB28ABCCE /* UIResponder+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIResponder+Extensions.swift"; sourceTree = "<group>"; };
 		66043F8E8A1F2E882412029A18F7BFAE /* BeginWith.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeginWith.swift; path = Sources/Nimble/Matchers/BeginWith.swift; sourceTree = "<group>"; };
 		66193B5682C346C6FFBBA53B7E1318E4 /* CwlCatchException.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CwlCatchException.m; path = Carthage/Checkouts/CwlCatchException/Sources/CwlCatchExceptionSupport/CwlCatchException.m; sourceTree = "<group>"; };
 		6677C1AC5191A6873A09393290751EAF /* Stringers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stringers.swift; path = Sources/Nimble/Utils/Stringers.swift; sourceTree = "<group>"; };
@@ -701,9 +713,15 @@
 			isa = PBXGroup;
 			children = (
 				B6DD1F3FC8DF719BAE79A265567C8CA3 /* Array+Extensions.swift */,
+				3A85145B2A7DE2CF004E6553 /* CACornerMask+Extensions.swift */,
+				3A85145D2A7DE2F9004E6553 /* CGFloat+Extensions.swift */,
+				3A85145F2A7DE354004E6553 /* CGRect+Extensions.swift */,
+				3A8514632A7DE3A4004E6553 /* CGSize+Extensions.swift */,
 				207A0E8B4D102A092CC2C21A281D1935 /* NSLayoutConstraint+Extensions.swift */,
 				232A43059EBEDD42BFB5F510EB8B87D2 /* NSLayoutDimension+Extensions.swift */,
-				651642BA4B5E4922967CEBDFB28ABCCE /* UIKit+Extensions.swift */,
+				3A8514712A7DE5C2004E6553 /* UIColor+Extensions.swift */,
+				3A8514612A7DE37C004E6553 /* UIEdgeInsets+Extensions.swift */,
+				651642BA4B5E4922967CEBDFB28ABCCE /* UIResponder+Extensions.swift */,
 				5508F864F5F6AACE4EBF55E649641633 /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
@@ -1438,6 +1456,7 @@
 				7588A4E8E1EA26916333E96B99FAF552 /* CollectionCellProvider.swift in Sources */,
 				3A785D832A6CF50D00CEABA3 /* UISwitch.swift in Sources */,
 				265A6B16E47F31DB38879AA2E51D32B4 /* Collectioned.swift in Sources */,
+				3A8514722A7DE5C2004E6553 /* UIColor+Extensions.swift in Sources */,
 				B01C5A3EAD28A2C0EA0901570CA3A427 /* ConstraintBuilder.swift in Sources */,
 				87599A1E546D9CA0A030885A0CBC7231 /* ConstraintBuilderRootRecoverable.swift in Sources */,
 				B3DB578F7A8C554E587BA261B5F1B431 /* ContainerShortcuts.swift in Sources */,
@@ -1457,6 +1476,7 @@
 				316CC4344316CA8514B650A3C9F74696 /* LayoutWithAnchors.swift in Sources */,
 				38DD30F6B3ABA2BE34EFAC4DAF5B8732 /* NSDiffableDataSourceSnapshot+Extensions.swift in Sources */,
 				005F1292E907A4B5507CE6EC14757C04 /* NSLayoutConstraint+Extensions.swift in Sources */,
+				3A8514642A7DE3A4004E6553 /* CGSize+Extensions.swift in Sources */,
 				67F5C6B8C04CE2ADB858633E47F847FD /* NSLayoutDimension+Extensions.swift in Sources */,
 				3A785D872A6CF62100CEABA3 /* Cell.swift in Sources */,
 				EB1809A0685B31306648A4094B173E21 /* Pair.swift in Sources */,
@@ -1469,6 +1489,7 @@
 				1F280E97CB3B39FE4A1B92546BEE6C1B /* PlannedDraft.swift in Sources */,
 				59F2F1B6DEFB5EF08A6FCC3AE8B64A43 /* PrioritizedAnchorRelation.swift in Sources */,
 				3A785D7F2A6CF49B00CEABA3 /* UIStackView.swift in Sources */,
+				3A8514622A7DE37C004E6553 /* UIEdgeInsets+Extensions.swift in Sources */,
 				582A511AE74DEE16A5D7F6CC5AFEB41E /* Quad.swift in Sources */,
 				3A0E796F36CA8FC7FC5086B9FA634956 /* QuadAnchor.swift in Sources */,
 				3A9F89902A6AE7E200B92708 /* LayoutDraftSubscriber.swift in Sources */,
@@ -1487,8 +1508,10 @@
 				3A785D6D2A6CF0DA00CEABA3 /* UIView.swift in Sources */,
 				3505E4F84D0400EA42D0D35D54E18E18 /* SpacerView.swift in Sources */,
 				3A785D712A6CF15700CEABA3 /* UITextView.swift in Sources */,
+				3A8514602A7DE354004E6553 /* CGRect+Extensions.swift in Sources */,
 				D1B96BF6FE7A32F1DAFB92BADA7A85A1 /* StackCompatible.swift in Sources */,
 				956E3DC25B9FDF6CF3955FC1DD3A4A23 /* StackedShortcuts.swift in Sources */,
+				3A85145E2A7DE2F9004E6553 /* CGFloat+Extensions.swift in Sources */,
 				DA20F329F71D304485B6AD9F0A6F28D8 /* TableCellProvider.swift in Sources */,
 				C536C5FB1F3FD94CBC2275B4D0AB4457 /* Tabled.swift in Sources */,
 				8F659145988A30C9475120FD2455EDDF /* TriAnchor.swift in Sources */,
@@ -1497,9 +1520,10 @@
 				33C2F3BDF0C2BDA6FBC57CD87B2A46B9 /* TriConstant.swift in Sources */,
 				5F6BD49B12B8C3DE148A1043190D2FE6 /* Trio.swift in Sources */,
 				3A785D6F2A6CF0E200CEABA3 /* UILabel.swift in Sources */,
-				81EF4520E5E93059B449147FC1F47D65 /* UIKit+Extensions.swift in Sources */,
+				81EF4520E5E93059B449147FC1F47D65 /* UIResponder+Extensions.swift in Sources */,
 				73DB3596E87DDEEEDE003507B3A83861 /* UIView+Extensions.swift in Sources */,
 				78B0E859E8B9CDF5BA9956CA11FD4341 /* ViewPlan.swift in Sources */,
+				3A85145C2A7DE2CF004E6553 /* CACornerMask+Extensions.swift in Sources */,
 				A4156FF5FF70AA16743AE3974034BEA3 /* ViewPlanBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
